@@ -1,0 +1,14 @@
+
+Welcome to <b><font color=#2f6400>GeneWeb</font></b> 7.1-beta
+
+Go to your Web browser and open one of the following addresses:
+       http://127.0.0.1:2316/
+       http://localhost:2316/
+
+Warning: for this program to work, you must not close this window!
+
+If none of theses addresses work, you may have to configure, in your browser,
+options like "work off-line" or "do not use the proxy for local addresses"
+or "do not connect to Internet for the address 'localhost'".
+
+Ready 2025-09-25 11:34 port 2316...
