@@ -80,10 +80,10 @@ fi
 
 # Define routes to snapshot (name::path relative to base)
 # GeneWeb serves pages under: http://localhost:PORT/BASE_NAME/path
-# Keep it simple: just home page in EN and FR as per wiki/test policy
 ROUTES="
 home::
 home_fr::?lang=fr
+person_charles::?p=Charles&n=Windsor
 "
 
 DIFF_FILE="$REP_DIR/diff.txt"
@@ -126,7 +126,8 @@ echo "$ROUTES" | while IFS= read -r item; do
   # Normalize HTML (trim trailing spaces, collapse multiple spaces, remove volatile data)
   sed -E 's/[[:space:]]+$//g; s/[[:space:]]{2,}/ /g' "$RAW" | \
     sed -E 's/\?i=[0-9]+/?i=RANDOM/g; s/\&i=[0-9]+/\&i=RANDOM/g' | \
-    sed -E 's/var q_time = [0-9.]+;/var q_time = TIME;/g' > "$NORM"
+    sed -E 's/var q_time = [0-9.]+;/var q_time = TIME;/g' | \
+    sed -E 's/fa-dice-[a-z]+/fa-dice-RANDOM/g' > "$NORM"
   
   if [ "$MODE" = "create" ]; then
     cp "$NORM" "$GOLD_DIR/expected_${name}.html.norm"
