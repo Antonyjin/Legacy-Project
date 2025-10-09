@@ -11,52 +11,59 @@ jobs:
       LC_ALL: C.UTF-8
       TZ: UTC
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup OCaml environment
-        uses: avsm/setup-ocaml@v3
+      # Correct action name (was avsm/setup-ocaml -> now ocaml/setup-ocaml)
+      - name: Setup OCaml and opam
+        uses: ocaml/setup-ocaml@v3
         with:
           ocaml-compiler: 5.1.1
+          cache: true
 
-      - name: Install dependencies
+      - name: Install project dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y make m4 curl
-          opam install dune -y
-          eval $(opam env)
+          eval "$(opam env)"
+          opam update
+          # Install dependencies declared in the repository (opam files)
+          opam install . --deps-only -y
 
       - name: Build GeneWeb
         run: |
-          eval $(opam env)
+          eval "$(opam env)"
           make distrib
-          chmod +x ./gw/gwd
+          chmod +x ./gw/gwd || true
+          ls -la ./gw || true
 
       - name: Smoke test GeneWeb HTTP server
         run: |
-          eval $(opam env)
+          set -e
+          eval "$(opam env)"
           ./gw/gwd -hd ./gw -bd ./bases -p 23179 -lang en > gwd.out 2>&1 &
           GWD_PID=$!
           sleep 3
-          CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/test/ || true)
+          # Probe /test/ then /base/ for HTTP 200
+          set +e
+          CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/test/)
           if [ "$CODE" != "200" ]; then
-            CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/base/ || true)
+            CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/base/)
           fi
+          set -e
           if [ "$CODE" != "200" ]; then
-            echo "Smoke check failed (HTTP $CODE). gwd output (last 80 lines):"
+            echo "Smoke check failed (HTTP $CODE). Last 80 lines of gwd.out:"
             tail -n 80 gwd.out || true
             kill "$GWD_PID" 2>/dev/null || true
             exit 1
           fi
           kill "$GWD_PID" 2>/dev/null || true
 
-      - name: Run Golden validation
+      - name: Golden validate
         run: |
-          eval $(opam env)
-          chmod +x ./scripts/golden/run_golden.sh
+          eval "$(opam env)"
+          chmod +x ./scripts/golden/run_golden.sh || true
           bash ./scripts/golden/run_golden.sh validate
 
-      - name: Upload golden diff (only if failed)
+      - name: Upload golden diff on failure
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
