@@ -1,69 +1,151 @@
-# GeneWeb Modern - Projet Legacy (Rattrapage 5ème année)
+# GeneWeb
 
-## 🎯 Objectif du Projet
+[![build status](https://github.com/geneweb/geneweb/actions/workflows/ci.yml/badge.svg)](https://github.com/geneweb/geneweb/actions/workflows/ci.yml)
 
-Modernisation du logiciel de généalogie GeneWeb (OCaml legacy) vers une stack moderne Python/React/MySQL, dans le cadre d'un projet de rattrapage sur 1-2 mois.
+GeneWeb is an open source genealogy software written in OCaml. It comes
+with a Web interface and can be used off-line or as a Web service.
 
-## 📚 Documentation Projet
+## Documentation
 
-| Document | Objectif | Évaluation |
-|----------|----------|------------|
-| **[PROJECT_ANALYSIS.md](./PROJECT_ANALYSIS.md)** | Analyse legacy + justification migration | 📊 Expertise métier |
-| **[TECHNICAL_GUIDE.md](./TECHNICAL_GUIDE.md)** | Architecture + implémentation + tests | 🔧 Compétences techniques |
-| **[QA_STRATEGY.md](./QA_STRATEGY.md)** | Stratégie qualité (Golden Master, Playwright) | 🧪 Méthodologie QA |
-| **[SECURITY_STRATEGY.md](./SECURITY_STRATEGY.md)** | Audit sécurité + protection moderne | 🔒 Sécurité |
-| **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** | Hébergement + justification choix | 🚀 Déploiement |
-| **[ACTION_PLAN.md](./ACTION_PLAN.md)** | Planning réaliste 6-8 semaines | 📅 Gestion projet |
-| **[REALISTIC_PROJECT_SCOPE.md](./REALISTIC_PROJECT_SCOPE.md)** | Scope MVP adapté au délai | 🎯 Pragmatisme |
-| **[IMPACT_ANALYSIS.md](./IMPACT_ANALYSIS.md)** | Impact utilisateurs + mitigation | 📈 Analyse risques |
+- Documentation maintained by the community: https://geneweb.tuxfamily.org/
+- GeneWeb API (generated from source): http://geneweb.github.io/geneweb/
+- GeneWeb overview (realized by OCamlPro): https://geneweb.github.io/
 
-## 🎯 Vue d'Ensemble Technique
+## Quick and easy live GeneWeb test
 
-**Stack** : React + Python + MySQL  
-**Architecture** : 3-tiers moderne  
-**Objectif** : Interface moderne + Performance + Sécurité  
+- Test your GeneWeb database on current master: https://github.com/geneweb/geneweb/blob/master/geneweb_colab.ipynb
 
-Détails complets → **[TECHNICAL_GUIDE.md](./TECHNICAL_GUIDE.md)**
+## Installation (for users)
 
-## 🚀 Démarrage Rapide
+WARNING: before installing a new version of GeneWeb, it is highly recommended to save
+your bases into .gw formatted files.
 
-```bash
-# Setup complet en 2 commandes
-docker-compose up -d
-open http://localhost:3000
+When installing a version of GeneWeb with the "pre-release" qualifier, you are
+participating to the collective test effort (thanks for your contribution). You should keep aside the previous version
+you were using and refrain from extensive updates or additions in your bases
+until the "release" qualifier is effective.
+
+Any problem you encounter or issue you want to raise should be entered on the issue page
+of the GitHub repository (https://github.com/geneweb/geneweb/issues).
+
+Download the file corresponding to your environment from
+the [releases page](https://github.com/geneweb/geneweb/releases).
+
+Extract the distribution folder and place it at the location of your choice. You may also rename it.
+Its content is as follows (this example is for a GNU/Linux distribution;
+other distributions are very similar):
+
+```
+distribution/
+├── bases
+├── CHANGES.txt
+├── gw
+   ├── a.gwf
+   ├── connex
+   ├── consang
+   ├── etc
+   ├── ged2gwb
+   ├── gwb2ged
+   ├── gwc
+   ├── gwd
+   ├── gwd.arg
+   ├── gwdiff
+   ├── gwfixbase
+   ├── gwsetup
+   ├── gwu
+   ├── images
+   ├── lang
+   ├── plugins
+   ├── setup
+   └── update_nldb
+├── gwd.sh
+├── gwsetup.sh
+├── install-cgi
+├── install-cgi.sh
+├── LICENSE.txt
+├── LISEZMOI.txt
+├── README.txt
+└── START.htm
 ```
 
-**Accès** : Frontend `localhost:3000` | API `localhost:8000/docs`
+Starting the GeneWeb servers may depend on your specific environment.
 
-## 📅 Planning Projet
+### Windows
 
-| Phase | Durée | Objectif | Status |
-|-------|--------|----------|---------|
-| **Sprint 1** | Sem 1-2 | Foundation + MVP | 🔄 En cours |
-| **Sprint 2** | Sem 3-4 | Features démonstrables | ⏳ Planifié |
-| **Sprint 3** | Sem 5-6 | Qualité + Sécurité | ⏳ Planifié |
-| **Sprint 4** | Sem 7-8 | Finalisation + Demo | ⏳ Planifié |
+TODO
 
-## 🎓 Contexte Académique
+### MacOS
 
-**Projet**: Rattrapage 5ème année EPITECH  
-**Durée**: 6-8 semaines  
-**Objectif**: Démonstration compétences techniques + analyse métier  
-**Évaluation**: Documentation + Prototype fonctionnel + Soutenance  
+Apple provides a security mechanism preventing users from executing applications
+which are not provided by authenticated developers. Such applications cannot be started
+by double-clicking on their icons.
+Apple provides a two-step mechanism circumventing this security:
+* Right-click on the application icon (```gwd``` and ```gwsetup```). This will pop-up a window
+mentioning the security issue and providing an "open" button. Click on this button to open
+the application. Ignore the resulting messages as no parameters were provided.
+* Once ```gwd``` and ```gwsetup``` have been started in this fashion, they will be white-listed
+on your machine and subsequent opens will succeed.
 
-## 👥 Équipe
+After white-listing ```gwd``` and ```gwsetup```, double-click on the ```geneweb.command```
+file which will launch both servers with appropriate parameters.
+With the configuration provided in this launch command, the bases are located in
+the ```bases``` folder.
+You may reorganize your folder structure (and launch command) as described in the
+documentation at https://geneweb.tuxfamily.org/.
 
-- **Développeur**: [Votre nom]
-- **Encadrement**: [Nom professeur/mentor]
+### Linux
 
-## 📞 Contact
+Quite similar to the MacOS solution, without the security check.
+```xxx.command``` files have an equivalent ```xxx.sh``` variant.
 
-- **GitHub**: [Lien repository]
-- **Email**: [Votre email]
-- **Présentation**: [Date soutenance]
+### Security considerations
 
----
+On UNIX-like operating systems, special privileges are often required to open
+a port below `1024`. If you have no other choice but to use such a port, we
+recommend the following approaches:
+- On `Linux`, use capabilites as follows:
+```console
+sudo setcap 'cap_net_bind_service=+ep' gwd
+./gwd -p 80
+```
+- On `macOS`, use `launchd` to redirect the port on 80.
 
-**Status Projet**: 🔄 En développement actif  
-**Dernière MAJ**: [Date actuelle]  
-**Prochaine étape**: Implémentation MVP Sprint 1
+## Resources
+
+* Documentation: https://geneweb.tuxfamily.org/wiki/GeneWeb
+* Mailing list: https://framalistes.org/sympa/subscribe/geneweb
+* IRC: irc://irc.libera.chat/geneweb
+* Git: https://github.com/geneweb/geneweb
+* Forum: https://www.geneanet.org/forum/GeneWeb-85
+* Wikipedia: https://en.wikipedia.org/wiki/GeneWeb
+
+## Contribute
+
+See [Contributor guidelines](CONTRIBUTING.md).
+
+### Installation (for developers)
+
+See [geneweb.opam](./geneweb.opam).
+
+### Build instructions
+
+1. Run the configuration script
+   ```
+   $ ocaml ./configure.ml
+   ```
+2. Build the distribution
+   ```
+   $ make clean distrib
+   ```
+
+You can have a description of available configuration options using
+```
+$ ocaml ./configure.ml --help
+```
+
+## Copyright
+
+All files marked in this distribution are Copyright (c) 1998-2016 INRIA
+(Institut National de Recherche en Informatique et Automatique) and
+distributed under the GNU GENERAL PUBLIC LICENSE. See [LICENSE](LICENSE) file
+for details.
