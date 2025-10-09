@@ -1,0 +1,6 @@
+# Temporary test artifacts (generated during test runs)
+tmp/
+
+# Test reports (generated on validation failures)
+reports/diff.txt
+
