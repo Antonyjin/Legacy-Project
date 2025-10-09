@@ -1,0 +1,8 @@
+# .github/workflows/sanity.yml
+name: sanity
+on: [push, pull_request]
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "hello"

@@ -23,14 +23,12 @@ jobs:
           ocaml-compiler: 5.1.1
           cache: true
 
-      # Evite le prompt sandbox bwrap en CI
       - name: Prepare opam (disable sandboxing)
         run: |
           opam init -y --reinit --disable-sandboxing
           eval "$(opam env)"
           opam update
 
-      # Détecte où se trouvent les sources GeneWeb (racine ou sous-dossier GeneWeb)
       - name: Locate GeneWeb root
         id: gwroot
         run: |
@@ -97,7 +95,6 @@ jobs:
         run: |
           chmod +x ./scripts/golden/run_golden.sh || true
           bash ./scripts/golden/run_golden.sh validate
-        # le script est à la racine du repo d'après ton exemple
 
       - name: Upload golden diff on failure
         if: ${{ failure() }}
