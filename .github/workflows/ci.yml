@@ -10,39 +10,55 @@ jobs:
     env:
       LC_ALL: C.UTF-8
       TZ: UTC
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Correct action name (was avsm/setup-ocaml -> now ocaml/setup-ocaml)
       - name: Setup OCaml and opam
         uses: ocaml/setup-ocaml@v3
         with:
           ocaml-compiler: 5.1.1
           cache: true
 
-      - name: Install project dependencies
+      - name: Prepare opam (disable sandbox in CI)
         run: |
+          opam init -y --reinit --disable-sandboxing
           eval "$(opam env)"
           opam update
-          # Install dependencies declared in the repository (opam files)
-          opam install . --deps-only -y
 
-      - name: Build GeneWeb
+      - name: Install build dependencies
         run: |
           eval "$(opam env)"
-          make distrib
+          # Pull deps from opam files; add dune explicitly
+          opam install . --deps-only -y
+          opam install dune -y
+
+      - name: Configure GeneWeb
+        run: |
+          eval "$(opam env)"
+          # Generate build config and make rules
+          ocaml ./configure.ml
+
+      - name: Build GeneWeb (distrib or all)
+        run: |
+          eval "$(opam env)"
+          set -e
+          if make -n distrib >/dev/null 2>&1; then
+            make clean distrib
+          else
+            make clean all
+          fi
           chmod +x ./gw/gwd || true
           ls -la ./gw || true
 
-      - name: Smoke test GeneWeb HTTP server
+      - name: Smoke test HTTP server
         run: |
           set -e
           eval "$(opam env)"
           ./gw/gwd -hd ./gw -bd ./bases -p 23179 -lang en > gwd.out 2>&1 &
           GWD_PID=$!
-          sleep 3
-          # Probe /test/ then /base/ for HTTP 200
+          sleep 4
           set +e
           CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/test/)
           if [ "$CODE" != "200" ]; then
@@ -50,8 +66,8 @@ jobs:
           fi
           set -e
           if [ "$CODE" != "200" ]; then
-            echo "Smoke check failed (HTTP $CODE). Last 80 lines of gwd.out:"
-            tail -n 80 gwd.out || true
+            echo "Smoke check failed (HTTP $CODE). Tail of gwd.out:"
+            tail -n 120 gwd.out || true
             kill "$GWD_PID" 2>/dev/null || true
             exit 1
           fi
