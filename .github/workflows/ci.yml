@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      LC_ALL: C.UTF-8
+      TZ: UTC
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Make executables
+        run: |
+          chmod +x GeneWeb/gw/* || true
+          chmod +x scripts/golden/run_golden.sh || true
+
+      - name: Integration smoke
+        run: |
+          set -e
+          GeneWeb/gw/gwd -hd GeneWeb/gw -bd GeneWeb/bases -p 23179 -lang en &
+          GWD_PID=$!
+          sleep 2
+          curl -sf http://localhost:23179/test/ | grep -qi geneweb
+          kill "$GWD_PID" 2>/dev/null || true
+
+      - name: Golden validate
+        run: bash scripts/golden/run_golden.sh validate
+
+      - name: Upload golden diff (on failure)
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-diff
+          path: tests/golden/reports/diff.txt
+          if-no-files-found: ignore
+
