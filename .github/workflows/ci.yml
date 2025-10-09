@@ -26,20 +26,22 @@ jobs:
           set -e
           ./gw/gwd -hd ./gw -bd ./bases -p 23179 -lang en > gwd.out 2>&1 &
           GWD_PID=$!
-          sleep 4
+          sleep 3
+          # Quick smoke: just verify gwd is serving (golden tests will do full validation)
           set +e
-          CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/test/?m=NG)
+          CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/test)
           if [ "$CODE" != "200" ]; then
-            CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/base/?m=NG)
+            CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/base)
           fi
           set -e
-          # Accept server up if not 5xx/000 (GeneWeb may 404 on some roots)
+          # Accept server up if not 5xx/000
           if [ "$CODE" = "000" ] || [ "$CODE" -ge 500 ]; then
             echo "Smoke check failed (HTTP $CODE). Tail of gwd.out:"
-            tail -n 120 gwd.out || true
+            tail -n 100 gwd.out || true
             kill "$GWD_PID" 2>/dev/null || true
             exit 1
           fi
+          echo "gwd smoke check passed (HTTP $CODE)"
           kill "$GWD_PID" 2>/dev/null || true
 
       - name: Golden validate (repo root)
