@@ -6,32 +6,42 @@ on:
 
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     env:
       LC_ALL: C.UTF-8
       TZ: UTC
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Make executables
-        run: |
-          chmod +x GeneWeb/gw/* || true
-          chmod +x scripts/golden/run_golden.sh || true
+      - name: Setup OCaml environment
+        uses: avsm/setup-ocaml@v3
+        with:
+          ocaml-compiler: 5.1.1
 
-      - name: Integration smoke
+      - name: Install dependencies
         run: |
-          set -e
-          GeneWeb/gw/gwd -hd GeneWeb/gw -bd GeneWeb/bases -p 23179 -lang en > gwd.out 2>&1 &
+          sudo apt-get update
+          sudo apt-get install -y make m4 curl
+          opam install dune -y
+          eval $(opam env)
+
+      - name: Build GeneWeb
+        run: |
+          eval $(opam env)
+          make distrib
+          chmod +x ./gw/gwd
+
+      - name: Smoke test GeneWeb HTTP server
+        run: |
+          eval $(opam env)
+          ./gw/gwd -hd ./gw -bd ./bases -p 23179 -lang en > gwd.out 2>&1 &
           GWD_PID=$!
           sleep 3
-          # Try /test/ then fallback to /base/, assert HTTP 200
-          set +e
-          CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/test/)
+          CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/test/ || true)
           if [ "$CODE" != "200" ]; then
-            CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/base/)
+            CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/base/ || true)
           fi
-          set -e
           if [ "$CODE" != "200" ]; then
             echo "Smoke check failed (HTTP $CODE). gwd output (last 80 lines):"
             tail -n 80 gwd.out || true
@@ -40,14 +50,16 @@ jobs:
           fi
           kill "$GWD_PID" 2>/dev/null || true
 
-      - name: Golden validate
-        run: bash scripts/golden/run_golden.sh validate
+      - name: Run Golden validation
+        run: |
+          eval $(opam env)
+          chmod +x ./scripts/golden/run_golden.sh
+          bash ./scripts/golden/run_golden.sh validate
 
-      - name: Upload golden diff (on failure)
+      - name: Upload golden diff (only if failed)
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
           name: golden-diff
           path: tests/golden/reports/diff.txt
           if-no-files-found: ignore
-
