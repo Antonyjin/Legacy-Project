@@ -21,26 +21,27 @@ jobs:
           ocaml-compiler: 5.1.1
           cache: true
 
-      - name: Prepare opam (disable sandbox in CI)
+      - name: Disable opam sandboxing (CI-safe)
         run: |
           opam init -y --reinit --disable-sandboxing
           eval "$(opam env)"
           opam update
 
-      - name: Install build dependencies
+      - name: Install deps (inside GeneWeb)
+        working-directory: GeneWeb
         run: |
           eval "$(opam env)"
-          # Pull deps from opam files; add dune explicitly
           opam install . --deps-only -y
           opam install dune -y
 
       - name: Configure GeneWeb
+        working-directory: GeneWeb
         run: |
           eval "$(opam env)"
-          # Generate build config and make rules
           ocaml ./configure.ml
 
-      - name: Build GeneWeb (distrib or all)
+      - name: Build GeneWeb
+        working-directory: GeneWeb
         run: |
           eval "$(opam env)"
           set -e
@@ -52,7 +53,8 @@ jobs:
           chmod +x ./gw/gwd || true
           ls -la ./gw || true
 
-      - name: Smoke test HTTP server
+      - name: Smoke test gwd
+        working-directory: GeneWeb
         run: |
           set -e
           eval "$(opam env)"
@@ -73,7 +75,7 @@ jobs:
           fi
           kill "$GWD_PID" 2>/dev/null || true
 
-      - name: Golden validate
+      - name: Golden validate (repo root)
         run: |
           eval "$(opam env)"
           chmod +x ./scripts/golden/run_golden.sh || true
