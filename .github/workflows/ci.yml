@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     env:
       LC_ALL: C.UTF-8
       TZ: UTC
