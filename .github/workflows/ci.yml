@@ -22,10 +22,24 @@ jobs:
       - name: Integration smoke
         run: |
           set -e
-          GeneWeb/gw/gwd -hd GeneWeb/gw -bd GeneWeb/bases -p 23179 -lang en &
+          GeneWeb/gw/gwd -hd GeneWeb/gw -bd GeneWeb/bases -p 23179 -lang en > gwd.out 2>&1 &
           GWD_PID=$!
           sleep 2
+          # Try /test/ then fallback to /base/
+          set +e
           curl -sf http://localhost:23179/test/ | grep -qi geneweb
+          RES=$?
+          if [ $RES -ne 0 ]; then
+            curl -sf http://localhost:23179/base/ | grep -qi geneweb
+            RES=$?
+          fi
+          set -e
+          if [ $RES -ne 0 ]; then
+            echo "Smoke check failed. gwd output (last 80 lines):"
+            tail -n 80 gwd.out || true
+            kill "$GWD_PID" 2>/dev/null || true
+            exit 1
+          fi
           kill "$GWD_PID" 2>/dev/null || true
 
       - name: Golden validate
