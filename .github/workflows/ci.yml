@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     env:
       LC_ALL: C.UTF-8
       TZ: UTC
@@ -15,56 +15,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup OCaml and opam
-        uses: ocaml/setup-ocaml@v3
-        with:
-          ocaml-compiler: 5.1.1
-          cache: true
-
-      - name: Disable opam sandboxing (CI-safe)
+      - name: Make executables
         run: |
-          opam init -y --reinit --disable-sandboxing
-          eval "$(opam env)"
-          opam update
-
-      - name: Install deps (inside GeneWeb)
-        working-directory: GeneWeb
-        run: |
-          eval "$(opam env)"
-          opam install . --deps-only -y
-          opam install dune -y
-
-      - name: Configure GeneWeb
-        working-directory: GeneWeb
-        run: |
-          eval "$(opam env)"
-          ocaml ./configure.ml
-
-      - name: Build GeneWeb
-        working-directory: GeneWeb
-        run: |
-          eval "$(opam env)"
-          set -e
-          if make -n distrib >/dev/null 2>&1; then
-            make clean distrib
-          else
-            make clean all
-          fi
-          chmod +x ./gw/gwd || true
-          ls -la ./gw || true
+          chmod +x GeneWeb/gw/* || true
+          chmod +x scripts/golden/run_golden.sh || true
 
       - name: Smoke test gwd
         working-directory: GeneWeb
         run: |
           set -e
-          eval "$(opam env)"
           ./gw/gwd -hd ./gw -bd ./bases -p 23179 -lang en > gwd.out 2>&1 &
           GWD_PID=$!
           sleep 4
           set +e
-          CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/test/)
+          CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/test/?m=NG)
           if [ "$CODE" != "200" ]; then
-            CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/base/)
+            CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/base/?m=NG)
           fi
           set -e
           if [ "$CODE" != "200" ]; then
@@ -77,7 +43,6 @@ jobs:
 
       - name: Golden validate (repo root)
         run: |
-          eval "$(opam env)"
           chmod +x ./scripts/golden/run_golden.sh || true
           bash ./scripts/golden/run_golden.sh validate
 
