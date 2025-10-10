@@ -83,6 +83,34 @@ jobs:
           echo "gwd smoke check passed (HTTP $CODE)"
           kill "$GWD_PID" 2>/dev/null || true
 
+      - name: Export GEDCOM test
+        working-directory: GeneWeb
+        run: |
+          set -e
+          # Export GEDCOM from test.gwb (or base.gwb if test doesn't exist)
+          if [ -d bases/test.gwb ]; then
+            BASE_PATH="bases/test.gwb"
+          elif [ -d bases/base.gwb ]; then
+            BASE_PATH="bases/base.gwb"
+          else
+            echo "Export check failed: no test.gwb or base.gwb found"
+            exit 1
+          fi
+          # Run gwb2ged export
+          ./gw/gwb2ged "$BASE_PATH" -o /tmp/export_test.ged
+          # Check file exists and has content
+          if [ ! -f /tmp/export_test.ged ]; then
+            echo "Export check failed: output file not created"
+            exit 1
+          fi
+          FILE_SIZE=$(wc -c < /tmp/export_test.ged)
+          if [ "$FILE_SIZE" -eq 0 ]; then
+            echo "Export check failed: output file is empty"
+            exit 1
+          fi
+          echo "Export check passed (file size: $FILE_SIZE bytes)"
+          rm -f /tmp/export_test.ged
+
       - name: Golden validate (repo root)
         run: |
           chmod +x ./scripts/golden/run_golden.sh || true
