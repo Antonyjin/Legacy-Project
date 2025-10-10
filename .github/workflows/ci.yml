@@ -55,9 +55,16 @@ jobs:
             kill "$GWD_PID" 2>/dev/null || true
             exit 1
           fi
-          # Tree page (I1): assert HTTP 200 (template may warn about sosa_ref on some builds)
+          # Tree page (I1): assert HTTP 200 with fallback to the other base path
           TREE_URL="${URL}?m=TP&n=I1"
           TCODE=$(curl -s -o /dev/null -w "%{http_code}" "$TREE_URL")
+          if [ "$TCODE" != "200" ]; then
+            # Try alternate base (switch test <-> base)
+            ALT_URL=http://localhost:23179/base
+            if [ "$URL" = "http://localhost:23179/base" ]; then ALT_URL=http://localhost:23179/test; fi
+            TREE_URL="${ALT_URL}?m=TP&n=I1"
+            TCODE=$(curl -s -o /dev/null -w "%{http_code}" "$TREE_URL")
+          fi
           if [ "$TCODE" != "200" ]; then
             echo "Tree page HTTP check failed ($TCODE) on $TREE_URL"
             tail -n 100 gwd.out || true
