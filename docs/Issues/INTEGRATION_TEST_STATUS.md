@@ -11,13 +11,13 @@ This document tracks the status of all Integration Test (IT) issues for the Gene
 |-------|-------|--------|-------|
 | #48 | [IT] Home page (200 + marker) | ✅ **Implemented** | CI validates HTTP 200 + "geneweb" marker |
 | #49 | [IT] Person page (Charles Windsor) | ✅ **Implemented** | CI validates HTTP 200 + name/person/id markers |
+| #52 | [IT] FR localization | ✅ **Implemented** | CI validates HTTP 200 + French text (Accueil/Personne/Famille) |
 | #50 | [IT] Tree page (200 + rendering) | ⏭️ **Skipped** | Requires Sosa configuration - out of scope |
 | #51 | [IT] Search (200 + results) | ⏭️ **Skipped** | Requires Sosa configuration - out of scope |
-| #52 | [IT] FR localization | 🔄 **Next** | To be implemented |
 | #53 | [IT] Logging validation | 🔄 **Pending** | To be implemented |
 | #54 | [IT] Export GEDCOM | 🔄 **Pending** | To be implemented |
 
-## Implemented Tests (2/7)
+## Implemented Tests (3/7)
 
 ### ✅ #48: Home Page
 **Location**: `.github/workflows/ci.yml` lines 48-49  
@@ -34,6 +34,13 @@ This document tracks the status of all Integration Test (IT) issues for the Gene
 - Assert HTTP 200
 - Assert response contains "name|person|id" markers
 
+### ✅ #52: FR Localization
+**Location**: `.github/workflows/ci.yml` lines 59-67  
+**Validation**:
+- GET `/?lang=fr`
+- Assert HTTP 200
+- Assert response contains French text ("Accueil|Personne|Famille")
+
 ## Skipped Tests (2/7)
 
 ### ⏭️ #50: Tree Page
@@ -48,12 +55,7 @@ This document tracks the status of all Integration Test (IT) issues for the Gene
 **Documentation**: `docs/Issues/ISSUE_51_SKIPPED.md`  
 **Alternative**: Manual testing with configured base
 
-## Pending Tests (3/7)
-
-### 🔄 #52: FR Localization
-**Goal**: Validate French localization works  
-**Plan**: GET `/?lang=fr`, assert French text in response  
-**Priority**: High (easy to implement)
+## Pending Tests (2/7)
 
 ### 🔄 #53: Logging Validation
 **Goal**: Validate `gwd.log` written without critical errors  
@@ -68,18 +70,18 @@ This document tracks the status of all Integration Test (IT) issues for the Gene
 ## Test Coverage Summary
 
 **Total IT Issues**: 7  
-**Implemented**: 2 (29%)  
+**Implemented**: 3 (43%)  
 **Skipped (documented)**: 2 (29%)  
-**Remaining**: 3 (42%)  
+**Remaining**: 2 (28%)  
 
-**Effective Coverage**: 4/7 (57%) - considering skipped tests are documented and justified
+**Effective Coverage**: 5/7 (71%) - considering skipped tests are documented and justified
 
 ## Next Steps
 
-1. **Immediate**: Implement #52 (FR localization) - easiest remaining test
-2. **Short-term**: Implement #53 (logging) and #54 (export)
-3. **Documentation**: Close #50 and #51 on GitHub with prepared comments
-4. **Review**: Assess if remaining 3 tests provide sufficient coverage for defense
+1. ✅ **Done**: Implemented #52 (FR localization)
+2. **Next**: Implement #53 (logging) and #54 (export)
+3. **Documentation**: Close #50, #51, and #52 on GitHub
+4. **Review**: Assess if remaining 2 tests provide sufficient coverage for defense
 
 ## Related Documentation
 
@@ -91,10 +93,11 @@ This document tracks the status of all Integration Test (IT) issues for the Gene
 
 ## Conclusion
 
-Current integration test coverage is **adequate** for a legacy preservation project:
-- ✅ Core functionality validated (home, person, golden tests)
+Current integration test coverage is **strong** for a legacy preservation project:
+- ✅ Core functionality validated (home, person, FR localization, golden tests)
 - ✅ Known limitations documented (Sosa-dependent features)
-- 🔄 3 additional tests pending (localization, logging, export)
+- 🔄 2 additional tests pending (logging, export)
 
-Completing the remaining 3 tests will bring coverage to **71% (5/7)**, which is solid for the project scope.
+Current coverage: **71% (5/7)**  
+Completing the remaining 2 tests will bring coverage to **86% (6/7)**, which is excellent for the project scope.
 

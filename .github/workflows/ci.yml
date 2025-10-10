@@ -56,6 +56,15 @@ jobs:
             exit 1
           fi
           echo "Person page check passed"
+          # FR Localization: Check French text appears when lang=fr
+          FR_URL="${URL}?lang=fr"
+          if ! curl -sf "$FR_URL" | grep -qiE "Accueil|Personne|Famille"; then
+            echo "FR localization check failed on $FR_URL"
+            tail -n 100 gwd.out || true
+            kill "$GWD_PID" 2>/dev/null || true
+            exit 1
+          fi
+          echo "FR localization check passed"
           # Note: Tree and search pages require Sosa reference configuration (via gwsetup)
           # which is not part of the minimal test database. Skipping these checks in CI.
           # Golden tests already validate core rendering behavior.
