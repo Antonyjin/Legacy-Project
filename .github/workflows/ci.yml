@@ -1,55 +1,39 @@
 name: CI
-
 on:
   push:
   pull_request:
   workflow_dispatch:
 
 jobs:
-  test:
+  smoke_gwd:
     runs-on: macos-latest
-    env:
-      LC_ALL: C.UTF-8
-      TZ: UTC
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Make executables
-        run: |
-          chmod +x GeneWeb/gw/* || true
-          chmod +x scripts/golden/run_golden.sh || true
-
-      - name: Smoke test gwd
+      - uses: actions/checkout@v4
+      - run: chmod +x GeneWeb/gw/* || true
+      - name: Start gwd + check
         working-directory: GeneWeb
         run: |
           set -e
           ./gw/gwd -hd ./gw -bd ./bases -p 23179 -lang en > gwd.out 2>&1 &
-          GWD_PID=$!
-          sleep 3
-          # Quick smoke: just verify gwd is serving (golden tests will do full validation)
-          set +e
-          CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/test)
-          if [ "$CODE" != "200" ]; then
-            CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:23179/base)
-          fi
-          set -e
-          # Accept server up if not 5xx/000
-          if [ "$CODE" = "000" ] || [ "$CODE" -ge 500 ]; then
-            echo "Smoke check failed (HTTP $CODE). Tail of gwd.out:"
-            tail -n 100 gwd.out || true
-            kill "$GWD_PID" 2>/dev/null || true
-            exit 1
-          fi
-          echo "gwd smoke check passed (HTTP $CODE)"
+          GWD_PID=$!; sleep 3
+          URL=http://localhost:23179/test
+          CODE=$(curl -s -o /dev/null -w "%{http_code}" "$URL")
+          if [ "$CODE" != "200" ]; then URL=http://localhost:23179/base; CODE=$(curl -s -o /dev/null -w "%{http_code}" "$URL"); fi
+          [ "$CODE" = "200" ] || { tail -n 120 gwd.out; exit 1; }
+          curl -sf "$URL" | grep -qi "geneweb" || { echo "Marker not found"; tail -n 120 gwd.out; exit 1; }
           kill "$GWD_PID" 2>/dev/null || true
 
-      - name: Golden validate (repo root)
-        run: |
-          chmod +x ./scripts/golden/run_golden.sh || true
-          bash ./scripts/golden/run_golden.sh validate
-
+  golden_validate:
+    runs-on: macos-latest
+    needs: smoke_gwd
+    env:
+      LC_ALL: C.UTF-8
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+      - run: chmod +x scripts/golden/run_golden.sh || true
+      - name: Golden validate
+        run: bash ./scripts/golden/run_golden.sh validate
       - name: Upload golden diff on failure
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
