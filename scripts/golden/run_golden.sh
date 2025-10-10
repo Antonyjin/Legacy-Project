@@ -127,7 +127,10 @@ echo "$ROUTES" | while IFS= read -r item; do
   sed -E 's/[[:space:]]+$//g; s/[[:space:]]{2,}/ /g' "$RAW" | \
     sed -E 's/\?i=[0-9]+/?i=RANDOM/g; s/\&i=[0-9]+/\&i=RANDOM/g' | \
     sed -E 's/var q_time = [0-9.]+;/var q_time = TIME;/g' | \
-    sed -E 's/fa-dice-[a-z]+/fa-dice-RANDOM/g' > "$NORM"
+    sed -E 's/fa-dice-[a-z]+/fa-dice-RANDOM/g' | \
+    # Mask age computations that vary day-to-day
+    sed -E 's/=[[:space:]]*[0-9,]+ days old/= AGE_DAYS old/g' | \
+    sed -E 's/[0-9]+ years, [0-9]+ months, [0-9]+ days old/AGE_YMD old/g' > "$NORM"
   
   if [ "$MODE" = "create" ]; then
     cp "$NORM" "$GOLD_DIR/expected_${name}.html.norm"
