@@ -12,7 +12,7 @@ jobs:
       LC_ALL: C.UTF-8
       TZ: UTC
 
-    steps:a
+    steps:
       - name: Checkout
         uses: actions/checkout@v4
 
