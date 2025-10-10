@@ -56,13 +56,13 @@ jobs:
             exit 1
           fi
           # Tree page (I1): assert HTTP 200 with fallback to the other base path
-          TREE_URL="${URL}?m=TP&n=I1"
+          TREE_URL="${URL}?m=TP&n=I1&sosa=I1"
           TCODE=$(curl -s -o /dev/null -w "%{http_code}" "$TREE_URL")
           if [ "$TCODE" != "200" ]; then
             # Try alternate base (switch test <-> base)
             ALT_URL=http://localhost:23179/base
             if [ "$URL" = "http://localhost:23179/base" ]; then ALT_URL=http://localhost:23179/test; fi
-            TREE_URL="${ALT_URL}?m=TP&n=I1"
+            TREE_URL="${ALT_URL}?m=TP&n=I1&sosa=I1"
             TCODE=$(curl -s -o /dev/null -w "%{http_code}" "$TREE_URL")
           fi
           if [ "$TCODE" != "200" ]; then
@@ -71,12 +71,12 @@ jobs:
           fi
 
           # Search page: HTTP 200 + at least one result marker
-          SEARCH_URL="${URL}?m=LR&v=John"
+          SEARCH_URL="${URL}?m=LR&v=John&sosa=I1"
           SCODE=$(curl -s -o /dev/null -w "%{http_code}" "$SEARCH_URL")
           if [ "$SCODE" != "200" ]; then
             ALT_URL=http://localhost:23179/base
             if [ "$URL" = "http://localhost:23179/base" ]; then ALT_URL=http://localhost:23179/test; fi
-            SEARCH_URL="${ALT_URL}?m=LR&v=John"
+            SEARCH_URL="${ALT_URL}?m=LR&v=John&sosa=I1"
             SCODE=$(curl -s -o /dev/null -w "%{http_code}" "$SEARCH_URL")
           fi
           if [ "$SCODE" != "200" ] || ! curl -sf "$SEARCH_URL" | grep -qiE "result|person|search"; then
