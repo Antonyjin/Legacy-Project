@@ -65,6 +65,18 @@ jobs:
             exit 1
           fi
           echo "FR localization check passed"
+          # Logging: Check gwd.log exists and has no critical errors
+          if [ ! -f gwd.out ]; then
+            echo "Logging check failed: gwd.out not found"
+            exit 1
+          fi
+          if grep -qiE "fatal|exception|stack" gwd.out; then
+            echo "Logging check failed: critical errors found in gwd.out"
+            grep -iE "fatal|exception|stack" gwd.out || true
+            kill "$GWD_PID" 2>/dev/null || true
+            exit 1
+          fi
+          echo "Logging check passed (no critical errors)"
           # Note: Tree and search pages require Sosa reference configuration (via gwsetup)
           # which is not part of the minimal test database. Skipping these checks in CI.
           # Golden tests already validate core rendering behavior.
