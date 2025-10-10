@@ -5,6 +5,7 @@ Overview
 - Surfaces covered here:
   - GEDCOM export from an existing base (`test.gwb`)
   - HTML home page rendered by `gwd` on that base (English and French)
+  - HTML person page (Charles Windsor) with key fields (name, person, id)
 
 Directories
 - goldens/v1/            # stored references (versioned)
@@ -26,15 +27,16 @@ Usage
    ```
 
 Outputs
-- goldens/v1/expected_export.ged.norm    # normalized GEDCOM export
-- goldens/v1/expected_home.html.norm     # home page (English)
-- goldens/v1/expected_home_fr.html.norm  # home page (French)
+- goldens/v1/expected_export.ged.norm         # normalized GEDCOM export
+- goldens/v1/expected_home.html.norm          # home page (English)
+- goldens/v1/expected_home_fr.html.norm       # home page (French)
+- goldens/v1/expected_person_charles.html.norm # person page (Charles Windsor)
 - reports/diff.txt (only on validate when differences exist)
 
 Normalization
 The script automatically normalizes volatile data to prevent false failures:
 - **GEDCOM**: Removes timestamps (DATE/TIME fields)
-- **HTML**: Removes random IDs (`?i=123` → `?i=RANDOM`), query times (`q_time = 0.007` → `q_time = TIME`)
+- **HTML**: Removes random IDs (`?i=123` → `?i=RANDOM`), query times (`q_time = 0.007` → `q_time = TIME`), dice icons (`fa-dice-one` → `fa-dice-RANDOM`)
 - **Whitespace**: Trims trailing spaces and collapses multiple spaces
 
 Notes

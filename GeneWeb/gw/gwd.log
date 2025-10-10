@@ -1,7 +1,0 @@
-GeneWeb 7.1-beta - Possible addresses:
-http://localhost:2317/base
-http://127.0.0.1:2317/base
-http://Antonys-MacBook-Pro.local:2317/base
-where "base" is the name of the database
-Type “Ctrl+C” to stop the service
-Ready 2025-09-25 11:34 port 2317...
