@@ -42,6 +42,27 @@ jobs:
             kill "$GWD_PID" 2>/dev/null || true
             exit 1
           fi
+          # Determine base URL for content checks
+          URL=http://localhost:23179/test
+          if [ "$CODE" != "200" ]; then URL=http://localhost:23179/base; fi
+          # Home page contains marker
+          curl -sf "$URL" | grep -qi "geneweb" || { echo "Marker not found on home"; tail -n 100 gwd.out; kill "$GWD_PID" 2>/dev/null || true; exit 1; }
+          # Person page (Charles Windsor): 200 + key markers
+          PERSON_URL="${URL}?p=Charles&n=Windsor"
+          if ! curl -sf "$PERSON_URL" | grep -qiE "name|person|id"; then
+            echo "Person page markers missing on $PERSON_URL"
+            tail -n 100 gwd.out || true
+            kill "$GWD_PID" 2>/dev/null || true
+            exit 1
+          fi
+          # Tree page (I1): 200 + node/person markers
+          TREE_URL="${URL}?m=TP&n=I1"
+          if ! curl -sf "$TREE_URL" | grep -qiE "svg|node|person"; then
+            echo "Tree page markers missing on $TREE_URL"
+            tail -n 100 gwd.out || true
+            kill "$GWD_PID" 2>/dev/null || true
+            exit 1
+          fi
           echo "gwd smoke check passed (HTTP $CODE)"
           kill "$GWD_PID" 2>/dev/null || true
 
