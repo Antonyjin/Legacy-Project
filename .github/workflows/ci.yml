@@ -2,12 +2,18 @@ name: CI
 
 on:
   push:
+    branches:
+      - main
+      - master
   pull_request:
+    branches:
+      - main
+      - master
   workflow_dispatch:
 
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     env:
       LC_ALL: C.UTF-8
       TZ: UTC
@@ -16,8 +22,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Make executables
+      - name: Download GeneWeb Linux binaries
         run: |
+          # Download official GeneWeb Linux binaries
+          wget -q https://github.com/geneweb/geneweb/releases/download/v7.0.0/geneweb-7.0.0-linux-x86_64.tar.gz
+          tar -xzf geneweb-7.0.0-linux-x86_64.tar.gz
+          # Replace macOS binaries with Linux ones
+          cp -r geneweb-7.0.0-linux-x86_64/gw/* GeneWeb/gw/
           chmod +x GeneWeb/gw/* || true
           chmod +x scripts/golden/run_golden.sh || true
 
