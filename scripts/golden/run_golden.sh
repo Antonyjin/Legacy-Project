@@ -84,6 +84,7 @@ ROUTES="
 home::
 home_fr::?lang=fr
 person_charles::?p=Charles&n=Windsor
+family_charles::?m=F&p=charles&n=windsor
 "
 
 DIFF_FILE="$REP_DIR/diff.txt"

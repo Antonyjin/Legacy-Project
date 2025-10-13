@@ -4,7 +4,10 @@ http://127.0.0.1:23179/base
 http://Antonys-MacBook-Pro.local:23179/base
 where "base" is the name of the database
 Type “Ctrl+C” to stop the service
-Ready 2025-10-09 14:36 port 23179...
+Ready 2025-10-13 17:58 port 23179...
+File /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/G-ING-900-PAR-9-1-legacy-15/GeneWeb/gw/etc/menubar.txt, line 172, characters 39-51:
+Failed - unbound var "sosa_ref.key"
+
 File /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/G-ING-900-PAR-9-1-legacy-15/GeneWeb/gw/etc/menubar.txt, line 172, characters 39-51:
 Failed - unbound var "sosa_ref.key"
 
