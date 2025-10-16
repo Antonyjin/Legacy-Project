@@ -1,0 +1,899 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- $Id: ancmenu.txt v7.1 10/01/2023 20:01:49 $ -->
+<!-- Copyright (c) 1998-2007 INRIA -->
+<title>Ancestors of Charles III Philip Arthur George Windsor</title>
+<meta name="robots" content="none">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="shortcut icon" href="images/favicon_gwd.png">
+<link rel="shortcut icon" href="images/favicon_gwd.png"><!-- $Id: css.txt v7.1 04/11/2023 04:28:54 $ -->
+<link rel="stylesheet" href="css/bootstrap.min.css?version=4.6.2">
+<link rel="stylesheet" href="css/all.min.css?version=6.5.1">
+<link rel="stylesheet" href="css/select2.min.css?version=4.1.0rc">
+<link rel="stylesheet" href="css/css.css">
+</head>
+<body>
+<meta name="format-detection" content="telephone=no" />
+<div class="container ml-xs-auto">
+<!-- $Id: perso_utils v7.1 13/08/2023 16:55:48 $ -->
+<!-- $Id: menubar.txt v7.1 17/04/2024 19:21:12 $ -->
+<nav class="navbar sticky-top navbar-light bg-white justify-content-center navbar-expand-md pt-0">
+<div class="btn-toolbar bg-white" role="toolbar">
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+<ul class="nav nav-tabs">
+<li class="nav-item dropdown">
+<a id="load_once_p_mod" class="nav-link dropdown-toggle text-secondary dropdown-toggle-split" data-toggle="dropdown"
+href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Modules"><span class="fas fa-address-card fa-fw mr-1" aria-hidden="true"></span><span class="sr-only">Modules</span></a>
+<div class="dropdown-menu dropdown-menu-transl-pmod">
+<div class="d-inline-flex justify-content-around mx-1">
+<form class="form-group mx-1" name="upd_url" method="get" action="test">
+<div class="d-flex justify-content-between mx-2 mt-2 img-prfx" data-prfx="images/modules">
+<div class="d-inline-flex">
+<div class="input-group">
+<input type="text" pattern="^((?:([a-z][0-9]){1,15})|zz)" name="p_mod" id="p_mod" class="form-control"
+value=""
+placeholder="Select personalized modules" maxlength="40">
+<div class="input-group-append">
+<button type="submit" class="btn btn-outline-success" title="Submit"><i class="fa fa-check fa-lg"></i></button>
+<button type="button" class="btn btn-outline-danger" id="p_mod_clear" title="Delete"><i class="fa fa-xmark fa-lg mx-1"></i></button>
+</div>
+</div>
+<input type="hidden" name="p" value="charles">
+<input type="hidden" name="n" value="windsor">
+<button type="button" class="btn btn-outline-danger ml-2" id="p_mod_rm" title="Remove the last added module" value=""><i class="fa fa-backward"></i></button>
+<button type="submit" class="btn btn-outline-secondary ml-2 mr-1" id='zz'
+title="Default template" data-toggle="popover" data-trigger="hover"
+data-html="true" data-content="<img class='w-100' src='images/modules/zz_1.jpg'>"><i class="fa fa-arrow-rotate-left"></i></button>
+</div>
+<a role="button" class="btn btn-outline-primary"
+href="test?m=A&p=Charles&n=Windsor&wide=on"
+title="Full width display"><i class="fa fa-desktop fa-fw" aria-hidden="true"></i><span class="sr-only">Full width display</span></a>
+</div>
+<div class="mx-2 mt-2">Select each module by clicking on the corresponding button (max 15).</div>
+<div class="alert alert-warning alert-dismissible fade show mt-1 mb-2 d-none" role="alert">
+<div class="d-none alert-opt">Invalid option <strong id="alert-option"></strong> for module <strong id="alert-module"></strong>. Please enter a valid option number.</div>
+<div class="d-none alert-mod">Invalid module <strong id="alert-module-2"></strong>. Please enter a valid module initial.</div>
+</div>
+<div id="p_mod_table"></div>
+</form>
+<div class="form-group d-none d-md-block mx-1">
+<img src="images/modules/menubar_1.jpg" alt="menubar for p_mod_builder" aria-hidden="true">
+<div id="p_mod_builder"></div>
+</div>
+</div>
+</div>
+</li>
+<li class="nav-item">
+<a class="nav-link " id="self"
+href="test?p=charles&n=windsor" title="Charles Windsor">
+<span class="fa fa-user-large fa-fw male" aria-hidden="true"></span>
+<span class="sr-only">Charles Windsor</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link " id="mod_ind" href="test?m=MOD_IND&i=RANDOM" title="Update individual Charles Windsor (P)" accesskey="P"><span class="fa fa-user-pen fa-fw male" aria-hidden="true"></span><span class="sr-only">Update individual (P)</span></a>
+</li>
+<li class="nav-item dropdown">
+<a id="load_once_copylink" class="nav-link dropdown-toggle text-secondary "
+data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true" title="Tools individual"><span class="fa fa-user-gear" aria-hidden="true"></span><span class="sr-only">Tools individual</span></a>
+<div class="dropdown-menu dropdown-menu-transl">
+<a class="dropdown-item"
+href="test?pz=charles&nz=windsor&m=A&p=Charles&n=Windsor"
+title="Browse using Charles III Philip Arthur George Windsor as Sosa reference" accesskey="S"><i class="far fa-circle-dot fa-fw male mr-1"></i> Update Sosa 1: Charles III Philip Arthur George Windsor</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?m=A&p=Charles&n=Windsor&cgl=on" target="_blank"><i class="fa fa-link-slash fa-fw mr-2" title="Without GeneWeb links"></i>Without GeneWeb links</a><div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?m=CHG_EVT_IND_ORD&i=RANDOM" title="Change order of individual events"><span class="fa fa-sort fa-fw mr-2"></span>Reverse events</a>
+<a class="dropdown-item" href="test?m=SND_IMAGE&i=RANDOM">
+<i class="far fa-file-image fa-fw mr-2"></i>Add picture</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?m=MRG&i=RANDOM" title="Merge Charles.0 Windsor with…"><span class="fa fa-compress fa-fw text-danger mr-2"></span>Merge individuals</a>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=DEL_IND&i=RANDOM" title="Delete Charles III Philip Arthur George Windsor"><span class="fa fa-trash-can fa-fw text-danger mr-2"></span>Delete individual</a>
+<a href="test?p=anne+elizabeth+alice&n=windsor" id="next_sibling" class="d-none"></a>
+<div class="dropdown-divider"></div>
+<div class="btn-group pr-4" role="group">
+<button class="dropdown-item permalink-copy mr-1 pr-0" type="button"
+title="Copy the link exterior to the clipboard
+"
+data-bname="test"
+data-query="p=charles&n=windsor&m=A"><i class="fas fa-link fa-fw mr-2"></i>Copy the permalink exterior</button>
+<button class="disabled dropdown-item mx-0 px-0">/</button>
+<button class="mx-1 px-0 dropdown-item permalink-friend-copy" type="button"
+title="Copy the link friend to the clipboard
+">friend</button>
+<button class="disabled dropdown-item mx-0 px-0">/</button>
+<button class="ml-1 px-0 dropdown-item permalink-wizard-copy" type="button"
+title="Copy the link wizard to the clipboard
+">wizard</button>
+</div>
+<div class="dropdown-divider"></div>
+<button class="dropdown-item simple-copy" type="button" title="Copy the link wiki to the clipboard"
+data-wikilink="[[Charles/Windsor]]"><i class="far fa-clipboard fa-fw mr-2"></i>[[Charles/Windsor]]</button>
+<button class="dropdown-item full-copy" type="button" title="Copy the link wikitext to the clipboard"
+data-wikilink="[[Charles/Windsor/0/Charles Windsor]]"><i class="far fa-clipboard fa-fw mr-2"></i>[[Charles/Windsor/0/Charles Windsor]]</button>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" role="button" title="Search Charles III Philip Arthur George Windsor on Geneanet
+"
+href="https://www.geneanet.org/fonds/individus/?sourcename=&size=50&sexe=&nom=Windsor&ignore_each_patronyme=&with_variantes_nom=1&prenom=Charles&prenom_operateur=or&ignore_each_prenom=&profession=&ignore_each_profession=&nom_conjoint=&ignore_each_patronyme_conjoint=&prenom_conjoint=&prenom_conjoint_operateur=or&ignore_each_prenom_conjoint=&place__0__=Buckingham%20Palace,%20London,%20England&zonegeo__0__=&country__0__=&region__0__=&subregion__0__=&place__1__=&zonegeo__1__=&country__1__=&region__1__=&subregion__1__=&place__2__=&zonegeo__2__=&country__2__=&region__2__=&subregion__2__=&place__3__=&zonegeo__3__=&country__3__=&region__3__=&subregion__3__=&place__4__=&zonegeo__4__=&country__4__=&region__4__=&subregion__4__=&type_periode=between&from=1933&to=&exact_day=&exact_month=&exact_year=&nom_pere=&ignore_each_patronyme_pere=&prenom_pere=&prenom_pere_operateur=or&ignore_each_prenom_pere=&nom_mere=Windsor&ignore_each_patronyme_mere=&with_variantes_nom_mere=1&prenom_mere=&prenom_mere_operateur=or&ignore_each_prenom_mere=&with_parents=0&go=1" target="_blank" rel="noreferrer, noopener"><i class="fa fa-magnifying-glass fa-fw mr-2"></i>Search Charles III Philip Arthur George Windsor on Geneanet
+</a>
+</div>
+</li>
+<li class="nav-item">
+<a class="nav-link " id="mod_fam_1" href="test?m=MOD_FAM&i=RANDOM&ip=0"
+title="Update family with Diana Frances Spencer (F)"
+accesskey="F"><span class="fa fa-user-pen male" aria-hidden="true"></span><span class="fa fa-user female" aria-hidden="true"></span><span class="small align-top"><sup>1</sup></span><span class="sr-only"> Update family with Diana Frances Spencer (F)</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link " id="mod_fam_2" href="test?m=MOD_FAM&i=RANDOM&ip=0"
+title="Update family with Camilla Rosemary Shand (G)"
+accesskey="G"><span class="fa fa-user-pen male" aria-hidden="true"></span><span class="fa fa-user female" aria-hidden="true"></span><span class="small align-top"><sup>2</sup></span><span class="sr-only"> Update family with Camilla Rosemary Shand (G)</span>
+</a>
+</li>
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle text-secondary
+"
+data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="false"
+title="Tools families"><span class="fa fa-user-plus" aria-hidden="true"></span><span class="fa fa-user-gear" aria-hidden="true"></span><span class="sr-only">Tools families</span></a>
+<div class="dropdown-menu dropdown-menu-transl">
+<a class="dropdown-item" id="add_fam" href="test?m=ADD_FAM&ip=0" title="Add family (A)" accesskey="A"><span class="fa fa-plus fa-fw mr-2"></span>Add family</a>
+<div class="dropdown-divider"></div>
+<span class="dropdown-header">Marriage with Diana Frances Spencer</span>
+<a class="dropdown-item" href="test?m=CHG_EVT_FAM_ORD&i=RANDOM&ip=0" title="Change order of family events"><span class="fa fa-sort fa-fw mr-2"></span>Reverse events</a>
+<a class="dropdown-item" href="test?m=DEL_FAM&i=RANDOM&ip=0"><span class="fa fa-trash fa-fw text-danger mr-2"></span>Delete family</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?m=INV_FAM&i=RANDOM&f=2"
+title="Reverse families 1 and 2"><span class="fa fa-right-left fa-rotate-90 fa-fw mr-1"></span> Reverse families<span class="sr-only"> 1 and 2</span>
+</a>
+<div class="dropdown-divider"></div>
+<span class="dropdown-header">Marriage with Camilla Rosemary Shand</span>
+<a class="dropdown-item" href="test?m=CHG_EVT_FAM_ORD&i=RANDOM&ip=0" title="Change order of family events"><span class="fa fa-sort fa-fw mr-2"></span>Reverse events</a>
+<a class="dropdown-item" href="test?m=DEL_FAM&i=RANDOM&ip=0"><span class="fa fa-trash fa-fw text-danger mr-2"></span>Delete family</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?m=CHG_CHN&ip=0"><span class="fa fa-child fa-fw mr-1"></span> Update surname of children</a>
+</div>
+</li>
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle text-secondary active" data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="false"><span class="fa fa-code-fork fa-fw" title="Ancestors"></span></a>
+<div class="dropdown-menu dropdown-menu-transl">
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=A"><span class="fa fa-gear fa-fw mr-2"></span>Ancestors</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" id="anc_tree" href="test?p=charles&n=windsor&m=A&t=T&v=5" title="Tree (Y)" accesskey="Y"><span class="fa fa-code-fork fa-fw mr-2"></span>Ascending tree</a>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=H&v=5" title="Horizontal tree"><span class="fa fa-timeline fa-rotate-90 fa-fw mr-2"></span>Horizontal tree</a>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=Z&v=6&maxv=8&num=on&birth=on&birth_place=on&marr=on&marr_date=on&marr_place=on&child=on&death=on&death_place=on&age=on&occu=on&repeat=on&gen=1&ns=1&hl=1"><span class="fa fa-table fa-fw mr-2"></span>Table ancestors</a>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=G&v=3&maxv=8&siblings=on&alias=on&parents=on&rel=on&witn=on&notes=on&src=on&hide=on"><span class="fa fa-newspaper fa-fw mr-2"></span>Full display</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?i=RANDOM&m=A&t=F&tf1=sb&v=8&maxv=8"><span class="fa fa-align-justify fa-fw mr-2"></span>Lines by name</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=FC&v=5"><span class="fa fa-chart-pie fa-fw mr-2"></span>Fanchart</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=T&t1=CT&hi=H&v=5&scale=100&fs=17&sosa=on" title="Compact tree with Charles III Philip Arthur George Windsor"><span class="fa fa-table-cells fa-fw mr-2"></span>Compact tree</a>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=T&t1=h6&sosa=1" title="H-tree 6 generation with CSS (127 ind.)"><span class="fa fa-border-none fa-fw mr-2"></span>6 generations</a>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=T&t1=m" title="8 generations H tree"><span class="fa fa-chess-board fa-fw mr-2"></span>8 generations</a>
+</div>
+</li>
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle text-secondary" data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="false"><span class="fa fa-sitemap fa-fw" title="Descendants"></span></a>
+<div class="dropdown-menu dropdown-menu-transl">
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=D"><span class="fa fa-gear fa-fw mr-2"></span>Descendants</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=D&t=V&v=3"><span class="fa fa-sitemap fa-fw mr-2"></span>Descendants tree</a>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=D&t=TV&v=3"><span class="fa fa-sitemap fa-fw mr-2"></span>Compact descendants tree</a>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=D&t=D&v=3"><span class="fa fa-code-branch fa-rotate-90 fa-fw mr-2"></span>Descendant tree view</a>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=D&t=I&v=2&num=on&birth=on&birth_place=on&marr=on&marr_date=on&marr_place=on&child=on&death=on&death_place=on&age=on&occu=on&gen=1&ns=1&hl=1"><span class="fa fa-table fa-fw mr-2"></span>Table descendants</a>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=D&t=L&v=3&maxv=2&siblings=on&alias=on&parents=on&rel=on&witn=on&notes=on&src=on&hide=on"><span class="fa fa-newspaper fa-fw mr-2"></span>Full display</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=D&t=A&num=on&v=2"><span class="fa fa-code-branch fa-flip-vertical fa-fw mr-2"></span>D’Aboville</a>
+</div>
+</li>
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle text-secondary" data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="false" title="Relationship"><span class="fa fa-user-group"></span></a>
+<div class="dropdown-menu dropdown-menu-transl">
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=R" title="Relationship computing (R)" accesskey="R"><span class="fa fa-gear fa-fw mr-2"></span>Relationship computing</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?m=C&p=charles&n=windsor&v=3"
+title="Relationship with a parent"><span class="fa fa-elevator fa-fw mr-2"></span>Relationship</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?m=F&p=charles&n=windsor" title="Family">
+<span class="fa fa-users fa-fw mr-2"></span>Family
+</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=C&t=AN"><span class="fa fa-cake-candles fa-fw mr-2"></span>Family birthday</a>
+</div>
+</li>
+<li class="nav-item">
+<a class="nav-link text-secondary" href="test?m=SND_IMAGE_C&i=RANDOM" title="Add/delete pictures (I)" accesskey="I">
+<span class="fa fa-image fa-fw" aria-hidden="true"></span><span class="sr-only">Add/delete pictures</span></a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<!-- $Id: home.txt v7.1 07/09/2023 00:49:55 $ -->
+<div class="d-flex flex-column fix_top fix_left">
+<a tabindex="1" role="button" class="btn btn-sm btn-link p-0 border-0" href="test?" title="Home">
+<i class="fa fa-house fa-fw fa-sm" aria-hidden="true"></i><i class="sr-only">Home</i></a>
+<a tabindex="3" role="button" class="btn btn-sm btn-link p-0 border-0" data-toggle="modal" data-target="#searchmodal"
+accesskey="S" title="Search"><i class="fa fa-magnifying-glass fa-fw fa-xs" aria-hidden="true"></i><span class="sr-only">Search</span></a>
+<a role="button" class="btn btn-sm btn-link p-0 border-0"
+href="test?m=A&i=RANDOM"
+title="Display a random individual (while staying on this tool)"><i class="fa fa-dice-RANDOM fa-fw fa-xs" aria-hidden="true"></i><span class="sr-only">Display a random individual</span></a>
+<div class="btn btn-sm p-0 border-0" id="q_time"><i class="fa fa-hourglass-half fa-fw fa-xs p-0"></i></div>
+<div class="btn btn-sm p-0 border-0 d-none" id="nb_errors"><i class="fa fa-bug fa-fw fa-xs p-0"></i></div>
+</div>
+<div class="modal" id="searchmodal" role="dialog" aria-labelledby="searchpopup" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+<div class="modal-content">
+<div class="modal-body" id="ModalSearch">
+<form id="collapse_search" method="get" action="test?">
+<input type="hidden" name="m" value="S">
+<div class="d-flex justify-content-center">
+<h5 class="rounded modal-title my-2 text-center w-50 align-self-center" id="searchpopup">Search individual</h5>
+<div class="col-8">
+<label class="sr-only" for="n">Search public name</label>
+<input type="search" id="n" class="form-control form-control-lg" name="n" placeholder="Surname, public name, alias"
+autofocus>
+<label class="sr-only" for="p">Search firstname</label>
+<input type="search" id="p" class="form-control form-control-lg mt-2" name="p" placeholder="First name">
+</div>
+<button class="btn btn-outline-primary" type="submit" title="Search"><i class="fa fa-magnifying-glass fa-lg mx-2"></i> Search</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+<script><!--
+function no_options () {
+/* On décoche toutes les options, only/image_off/cgl */
+$('input[type=checkbox][name!="only"][name!="image"][name!="cgl"]').prop('checked', false);
+}
+function long_display_options () {
+/* On décoche toutes les options, sauf celles de l’affichage long et only/image_off/cgl. */
+$('input[type="checkbox"]:not([id^=ld_])[name!="only"][name!="image"][name!="cgl"]').prop('checked', false);
+/* On coche celles que l’on veut si aucune de l’affichage long n’est cochée. */
+if ($('input[type=checkbox]:not(:checked)[id^=ld_]').length === $('input[type=checkbox][id^=ld_]').length) {
+$('input[type="checkbox"][id=ld_siblings]').prop('checked', true);
+$('input[type="checkbox"][id=ld_notes]').prop('checked', true);
+$('input[type="checkbox"][id=ld_src]').prop('checked', true);
+}
+}
+function table_options () {
+/* On décoche toutes les options, sauf celles du tableau et only/image_off/cgl. */
+$('input[type="checkbox"]:not([id^=t_])[name!="only"][name!="image"][name!="cgl"]').prop("checked", false);
+/* On coche celles que l’on veut si aucune du tableau n’est cochée. */
+if ($('input[type=checkbox]:not(:checked)[id^=t_]').length === $('input[type=checkbox][id^=t_]').length) {
+$('input[type=checkbox][id=t_num]').prop('checked', true);
+$('input[type=checkbox][id=t_birth_date]').prop('checked', true);
+$('input[type=checkbox][id=t_birth_place]').prop('checked', true);
+$('input[type=checkbox][id=t_marr]').prop('checked', true);
+$('input[type=checkbox][id=t_marr_date]').prop('checked', true);
+$('input[type=checkbox][id=t_marr_place]').prop('checked', true);
+$('input[type=checkbox][id=t_child]').prop('checked', true);
+$('input[type=checkbox][id=t_death_date]').prop('checked', true);
+$('input[type=checkbox][id=t_death_place]').prop('checked', true);
+$('input[type=checkbox][id=t_occu]').prop('checked', true);
+$('input[type=checkbox][id=t_ns]').prop('checked', true);
+$('input[type=checkbox][id=t_gen]').prop('checked', true);
+$('input[type=checkbox][id=t_repeat]').prop('checked', true);
+}
+}
+function book_of_ascendants_options () {
+/* On décoche toutes les options, sauf celles du livre ascendant et only/image_off/cgl. */
+$('input[type=checkbox]:not([id^=boa_])[name!="only"][name!="image"][name!="cgl"]').prop("checked", false);
+/* On coche celles que l’on veut si aucune du tableau n’est cochée. */
+if ($('input[type=checkbox]:not(:checked)[id^=boa_]').length === $('input[type=checkbox][id^=boa_]').length) {
+$('input[type=checkbox][id=boa_parents]').prop('checked', true);
+$('input[type=checkbox][id=boa_siblings]').prop('checked', true);
+$('input[type=checkbox][id=boa_marr]').prop('checked', true);
+}
+}
+function tree_options () {
+/* On décoche toutes les options, image_off/cgl */
+$('input[type=checkbox]:not([id^=tree_])[name!="image"][name!="cgl"]').prop("checked", false);
+}
+function missing_ancestors_options () {
+$('input[type=checkbox]:not([id^=ma_])[name!="only"][name!="image"][name!="cgl"]').prop("checked", false);
+if ($('input[type=checkbox]:not(:checked)[id^=ma_]').length === $('input[type=checkbox][id^=ma_]').length) {
+$('input[type=checkbox][id=ma_birth]').prop('checked', true);
+$('input[type=checkbox][id=ma_death]').prop('checked', true);
+}
+}
+function missing_events_options () {
+$('input[type=checkbox]:not([id^=me_])[name!="only"][name!="image"][name!="cgl"]').prop("checked", false);
+if ($('input[type=checkbox]:not(:checked)[id^=me_]').length === $('input[type=checkbox][id^=me_]').length) {
+$('input[type=checkbox][id=me_date]').prop('checked', true);
+$('input[type=checkbox][id=me_gen]').prop('checked', true);
+$('input[type=checkbox][id=me_repeat]').prop('checked', true);
+/* On active l’input cachée et désactivée pour les évènements manquants. */
+$('input[type=hidden][name=evt]').prop('disabled', false);
+}
+}
+--></script>
+<h1 class="text-center">Ancestors of Charles III Philip Arthur George Windsor</h1>
+<form class="needs-validation" novalidate method="get" action="test">
+<div class="d-flex justify-content-around">
+<input type="hidden" name="p" value="charles">
+<input type="hidden" name="n" value="windsor">
+<input type="hidden" name="m" value="A">
+<div class="d-flex flex-column">
+<div class="d-flex flex-column">
+<div class="d-flex flex-column was-validated">
+<label class="sr-only" for="v">Select generation:</label>
+<select class="custom-select " id="v" name="v" required title="up to 2^n-2 / only 2^(n-1)">
+<option value="" label=" "></option>
+<option value="1" title="" class="d-flex px-2"
+(%!temporary limit if long to render at high v%)
+data-lex='parents'
+data-noa='2'
+data-noa_l='2'
+ data-sty=' style="background:linear-gradient(90deg,
+rgba(155,200,255,.5) 0%,rgba(210,230,255,.5) 0%,rgba(210,230,255,.5) 100%,rgba(255,210,180,.5) 100%,rgba(255,210,180,.5) 100%,rgba(255,255,255,0) 100%"'
+data-sty_l=' style="background: linear-gradient(90deg,
+rgba(180,200,220,.5) 100%,rgba(255,210,180,.5) 100%,rgba(255,210,180,.5) 100%,rgba(255,255,255,0) 100%"'
+data-pp='/2 (100 %)
+'
+data-pp_l='/2 (100 %)'
+data-per='1921-2022'
+> the 1st generation </option>
+<option value="2" title="" class="d-flex px-2"
+(%!temporary limit if long to render at high v%)
+data-lex='grandparents'
+data-noa='6'
+data-noa_l='4'
+ data-sty=' style="background:linear-gradient(90deg,
+rgba(155,200,255,.5) 33%,rgba(210,230,255,.5) 33%,rgba(210,230,255,.5) 100%,rgba(255,210,180,.5) 100%,rgba(255,210,180,.5) 100%,rgba(255,255,255,0) 100%"'
+data-sty_l=' style="background: linear-gradient(90deg,
+rgba(180,200,220,.5) 100%,rgba(255,210,180,.5) 100%,rgba(255,210,180,.5) 100%,rgba(255,255,255,0) 100%"'
+data-pp='/6 (100 %)
+'
+data-pp_l='/4 (100 %)'
+data-per='1882-2002'
+> the 2nd generation </option>
+<option value="3" title="" class="d-flex px-2"
+(%!temporary limit if long to render at high v%)
+data-lex='great-grand-parents'
+data-noa='10'
+data-noa_l='4'
+ data-sty=' style="background:linear-gradient(90deg,
+rgba(155,200,255,.5) 42%,rgba(210,230,255,.5) 42%,rgba(210,230,255,.5) 71%,rgba(255,210,180,.5) 71%,rgba(255,210,180,.5) 71%,rgba(255,255,255,0) 71%"'
+data-sty_l=' style="background: linear-gradient(90deg,
+rgba(180,200,220,.5) 50%,rgba(255,210,180,.5) 50%,rgba(255,210,180,.5) 50%,rgba(255,255,255,0) 50%"'
+data-pp='/14 (71 %)
+'
+data-pp_l='/8 (50 %)'
+data-per='1863-1953'
+> the 3rd generation </option>
+<option value="4" title="" class="d-flex px-2"
+(%!temporary limit if long to render at high v%)
+data-lex='great-great-grandparents'
+data-noa='14'
+data-noa_l='4'
+ data-sty=' style="background:linear-gradient(90deg,
+rgba(155,200,255,.5) 33%,rgba(210,230,255,.5) 33%,rgba(210,230,255,.5) 46%,rgba(255,210,180,.5) 46%,rgba(255,210,180,.5) 46%,rgba(255,255,255,0) 46%"'
+data-sty_l=' style="background: linear-gradient(90deg,
+rgba(180,200,220,.5) 25%,rgba(255,210,180,.5) 25%,rgba(255,210,180,.5) 25%,rgba(255,255,255,0) 25%"'
+data-pp='/30 (46 %)
+'
+data-pp_l='/16 (25 %)'
+data-per='1841-1925'
+> the 4th generation </option>
+<option value="5" title="" class="d-flex px-2"
+(%!temporary limit if long to render at high v%)
+data-lex='great-great-great-grandparents'
+data-noa='16'
+data-noa_l='2'
+data-path='+2' data-path_l='+2' data-sty=' style="background:linear-gradient(90deg,
+rgba(155,200,255,.5) 22%,rgba(210,230,255,.5) 22%,rgba(210,230,255,.5) 25%,rgba(255,210,180,.5) 25%,rgba(255,210,180,.5) 29%,rgba(255,255,255,0) 29%"'
+data-sty_l=' style="background: linear-gradient(90deg,
+rgba(180,200,220,.5) 6%,rgba(255,210,180,.5) 6%,rgba(255,210,180,.5) 12%,rgba(255,255,255,0) 12%"'
+data-pp='/62 (25-29 %)
+'
+data-pp_l='/32 (6-12 %)'
+data-per='1819-1901'
+> the 5th generation </option>
+<option value="6" title="" class="d-flex px-2"
+(%!temporary limit if long to render at high v%)
+data-lex='4th-great-grandparents'
+data-noa='18'
+data-noa_l='2'
+data-path='+4' data-path_l='+2' data-sty=' style="background:linear-gradient(90deg,
+rgba(155,200,255,.5) 12%,rgba(210,230,255,.5) 12%,rgba(210,230,255,.5) 14%,rgba(255,210,180,.5) 14%,rgba(255,210,180,.5) 17%,rgba(255,255,255,0) 17%"'
+data-sty_l=' style="background: linear-gradient(90deg,
+rgba(180,200,220,.5) 3%,rgba(255,210,180,.5) 3%,rgba(255,210,180,.5) 6%,rgba(255,255,255,0) 6%"'
+data-pp='/126 (14-17 %)
+'
+data-pp_l='/64 (3-6 %)'
+data-per='1765-1837'
+> the 6th generation </option>
+<option value="7" title="" class="d-flex px-2"
+(%!temporary limit if long to render at high v%)
+data-lex='5th-great-grandparents'
+data-noa='20'
+data-noa_l='2'
+data-path='+6' data-path_l='+2' data-sty=' style="background:linear-gradient(90deg,
+rgba(155,200,255,.5) 7%,rgba(210,230,255,.5) 7%,rgba(210,230,255,.5) 7%,rgba(255,210,180,.5) 7%,rgba(255,210,180,.5) 10%,rgba(255,255,255,0) 10%"'
+data-sty_l=' style="background: linear-gradient(90deg,
+rgba(180,200,220,.5) 1%,rgba(255,210,180,.5) 1%,rgba(255,210,180,.5) 3%,rgba(255,255,255,0) 3%"'
+data-pp='/254 (7-10 %)
+'
+data-pp_l='/128 (1-3 %)'
+data-per='1762-1830'
+> the 7th generation </option>
+<option value="8" title="" class="d-flex px-2"
+(%!temporary limit if long to render at high v%)
+data-lex='6th-great-grandparents'
+data-noa='22'
+data-noa_l='2'
+data-path='+8' data-path_l='+2' data-sty=' style="background:linear-gradient(90deg,
+rgba(155,200,255,.5) 3%,rgba(210,230,255,.5) 3%,rgba(210,230,255,.5) 4%,rgba(255,210,180,.5) 4%,rgba(255,210,180,.5) 5%,rgba(255,255,255,0) 5%"'
+data-sty_l=' style="background: linear-gradient(90deg,
+rgba(180,200,220,.5) 0%,rgba(255,210,180,.5) 0%,rgba(255,210,180,.5) 1%,rgba(255,255,255,0) 1%"'
+data-pp='/510 (4-5 %)
+'
+data-pp_l='/256 '
+data-per='1738-1820'
+> the 8th generation </option>
+</select>
+<div class="invalid-feedback ml-1">
+<i class="fas fa-triangle-exclamation mr-1"></i>Select generation
+</div>
+</div>
+<div class="d-flex justify-content-end mt-2">
+<div class="order-2 align-self-center ml-4">
+<button type="submit" class="btn btn-outline-primary">Ok</button>
+</div>
+<div class="order-1">
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="only" name="only">
+<label class="custom-control-label" for="only">Only the selected generation<span class="text-primary ml-1">✱</span></label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="image" name="im" value="0">
+<label class="custom-control-label" for="image">Hide pictures<span class="text-info ml-1">✘</span></label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="cgl" name="cgl">
+<label class="custom-control-label" for="cgl">Without GeneWeb links</label>
+</div>
+</div>
+</div>
+</div>
+<div class="d-flex">
+<div>
+<hr>
+<div class="custom-control custom-radio text-nowrap">
+<input type="radio" class="custom-control-input" id="tN" name="t" value="N" checked onclick="no_options()">
+<label class="custom-control-label" for="tN"><i class="fa fa-align-left fa-fw mr-1"></i>Short display <span class="text-primary">✱</span></label>
+</div>
+<div class="custom-control custom-radio text-nowrap">
+<input type="radio" class="custom-control-input" id="tG" name="t" value="G" onclick="long_display_options()">
+<label class="custom-control-label" for="tG"><i class="fa fa-align-justify fa-fw mr-1"></i>Full display <span class="text-primary">✱</span></label>
+</div>
+<div class="ml-4">
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ld_siblings" name="siblings">
+<label class="custom-control-label" for="ld_siblings">Siblings</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ld_rel" name="rel">
+<label class="custom-control-label" for="ld_rel">Relationships</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ld_notes" name="notes">
+<label class="custom-control-label" for="ld_notes">Individual note</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ld_src" name="src">
+<label class="custom-control-label" for="ld_src">Sources</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ld_witn" name="relwitn">
+<label class="custom-control-label" for="ld_witn">Witnesses<span class="text-muted"> (marriages)</span></label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ld_comm" name="comm">
+<label class="custom-control-label" for="ld_comm">Comment<span class="text-muted"> (marriages)</span></label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ld_inline" name="inline">
+<label class="custom-control-label" for="ld_inline">Add notes and sources to content</label>
+</div>
+</div>
+</div>
+<div class="mx-1">
+<hr>
+<div class="custom-control custom-radio text-nowrap">
+<input type="radio" class="custom-control-input" id="tP" name="t" value="P" onclick="book_of_ascendants_options()">
+<label class="custom-control-label" for="tP"><i class="far fa-address-book fa-fw mr-1"></i>Ancestry book <span class="text-primary">✱</span><span class="text-info">✘</span> </label>
+</div>
+<div class="ml-4">
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="boa_sosa" name="sosa">
+<label class="custom-control-label" for="boa_sosa">Sosa</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="boa_note" name="note">
+<label class="custom-control-label" for="boa_note">Notes</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="boa_parents" name="parents">
+<label class="custom-control-label" for="boa_parents">Parents</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="boa_siblings" name="siblings">
+<label class="custom-control-label" for="boa_siblings">Siblings</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="boa_relations" name="rel">
+<label class="custom-control-label" for="boa_relations">Relationships</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="boa_marr" name="marr">
+<label class="custom-control-label" for="boa_marr">Marriages</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="boa_children" name="children">
+<label class="custom-control-label" for="boa_children">Children</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="boa_comm" name="comm">
+<label class="custom-control-label" for="boa_comm">Marriage notes</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="boa_asc" name="asc">
+<label class="custom-control-label" for="boa_asc">Ascending tree</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="boa_src" name="src">
+<label class="custom-control-label" for="boa_src">Sources</label>
+</div>
+</div>
+</div>
+<div>
+<hr>
+<div class="custom-control custom-radio text-nowrap">
+<input type="radio" class="custom-control-input" id="tY" name="t" value="Y" onclick="no_options()">
+<label class="custom-control-label" for="tY"><i class="fa fa-table fa-fw mr-1"></i>Table by couple <span class="text-primary">✱</span><span class="text-info">✘</span></label>
+</div>
+<div class="custom-control custom-radio text-nowrap">
+<input type="radio" class="custom-control-input" id="tZ" name="t" value="Z" onclick="table_options()">
+<label class="custom-control-label" for="tZ"><i class="fa fa-table fa-fw mr-1"></i>Table <span class="text-primary">✱</span><span class="text-info">✘</span></label>
+</div>
+<div class="ml-1">
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_num" name="num">
+<label class="custom-control-label" for="t_num">Sosa No.</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_tt" name="tt" value="1">
+<label class="custom-control-label" for="t_tt">Titles</label>
+</div>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_fn" name="fn" value="1">
+<label class="custom-control-label" for="t_fn">[show first names]</label>
+</div>
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_marr" name="marr">
+<label class="custom-control-label" for="t_marr">Spouses</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_child" name="child">
+<label class="custom-control-label" for="t_child">Number of children</label>
+</div>
+</div>
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_birth_date" name="birth">
+<label class="custom-control-label" for="t_birth_date" title="Date of birth">Date</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_birth_place" name="birth_place">
+<label class="custom-control-label" for="t_birth_place">Where born</label>
+</div>
+</div>
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_baptism_date" name="baptism">
+<label class="custom-control-label" for="t_baptism_date" title="Date of baptism">Date</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_baptism_place" name="baptism_place">
+<label class="custom-control-label" for="t_baptism_place">Place of baptism</label>
+</div>
+</div>
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_marr_date" name="marr_date">
+<label class="custom-control-label" for="t_marr_date" title="Date of marriage">Date</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_marr_place" name="marr_place">
+<label class="custom-control-label" for="t_marr_place">Where married</label>
+</div>
+</div>
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_death_date" name="death">
+<label class="custom-control-label" for="t_death_date" title="Date of death">Date</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_death_place" name="death_place">
+<label class="custom-control-label" for="t_death_place">Where dead</label>
+</div>
+</div>
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_burial_date" name="burial">
+<label class="custom-control-label" for="t_burial_date" title="Date of burial">Date</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_burial_place" name="burial_place">
+<label class="custom-control-label" for="t_burial_place">Place of burial</label>
+</div>
+</div>
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_age" name="age">
+<label class="custom-control-label" for="t_age" title="Age or age at death">Age</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_occu" name="occu">
+<label class="custom-control-label" for="t_occu">Occupations</label>
+</div>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="t_ns" name="ns" value="1">
+<label class="custom-control-label" for="t_ns">View notes and sources</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="t_gen" name="gen" value="1">
+<label class="custom-control-label" for="t_gen">Display the generations</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="t_hl" name="hl" value="1">
+<label class="custom-control-label" for="t_hl">Highlight incomplete data</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="t_repeat" name="repeat">
+<label class="custom-control-label" for="t_repeat">Display pedigree collapse</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-auto order-2 p-0 ml-2">
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tA" name="t" value="A" onclick="tree_options()">
+<label class="custom-control-label" for="tA"><i class="fa fa-person fa-fw mr-1"></i>Male line <span class="text-info">✘</span></label>
+</div>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tC" name="t" value="C" onclick="tree_options()">
+<label class="custom-control-label" for="tC"><i class="fa fa-person-dress fa-fw mr-1"></i>Female line <span class="text-info">✘</span></label>
+</div>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tT" name="t" value="T" onclick="tree_options()">
+<label class="custom-control-label" for="tT"><i class="fa fa-sitemap fa-rotate-180 fa-fw mr-1"></i>Ascending tree <span class="text-info">✘</span><span class="text-muted"><br> (maximum 7 generations)
+</span></label>
+</div>
+<div class="ml-4">
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="tree_marriage" name="ma" value="0">
+<label class="custom-control-label" for="tree_marriage">Hide date of marriage</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="tree_dag" name="dag">
+<label class="custom-control-label" for="tree_dag">Fusion implexes<i class="fa fa-shuffle fa-fw ml-1"></i></label>
+</div>
+</div>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tH" name="t" value="H" onclick="tree_options()">
+<label class="custom-control-label" for="tH"><i class="fa fa-code-branch fa-rotate-90 fa-fw mr-1"></i>Horizontal tree <span class="text-info">✘</span><span class="text-muted">(maximum 8 generations)
+</span>
+</label>
+</div>
+<hr>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tL" name="t" value="L" onclick="no_options()">
+<label class="custom-control-label" for="tL"><i class="fa fa-share-nodes fa-fw mr-1"></i>List <span class="text-muted">(maximum 8 generations)
+</span>
+</label>
+</div>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tE" name="t" value="E" onclick="no_options()">
+<label class="custom-control-label" for="tE"><i class="fa fa-table fa-fw mr-1"></i>List by name, place & date</label>
+</div>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tF" name="t" value="F" onclick="no_options()">
+<label class="custom-control-label" for="tF"><i class="fa fa-table fa-fw mr-1"></i>Lines by name</label>
+</div>
+<hr>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tM" name="t" value="M" onclick="missing_ancestors_options()">
+<label class="custom-control-label" for="tM"><i class="fa fa-question fa-fw mr-1"></i>Unknown ancestors <span class="text-primary">✱</span></label>
+</div>
+<div class="ml-4">
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ma_birth" name="birth">
+<label class="custom-control-label" for="ma_birth">Date and place of birth</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ma_death" name="death">
+<label class="custom-control-label" for="ma_death">Date and place of death</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ma_spouse" name="spouse">
+<label class="custom-control-label" for="ma_spouse">Spouses</label>
+</div>
+</div>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tMevt" name="t" value="M" onclick="missing_events_options()">
+<label class="custom-control-label" for="tMevt"><i class="fa fa-question fa-fw mr-1"></i>Missing events <span class="text-primary">✱</span></label>
+</div>
+<input type="hidden" name="evt" value="on" disabled>
+<div class="ml-4">
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="me_marr" name="marr">
+<label class="custom-control-label" for="me_marr">Compute all marriages</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="me_date" name="date">
+<label class="custom-control-label" for="me_date">Include unsure dates</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="me_gen" name="gen">
+<label class="custom-control-label" for="me_gen">Display the generations</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="me_repeat" name="repeat">
+<label class="custom-control-label" for="me_repeat">Display pedigree collapse</label>
+</div>
+</div>
+</div>
+</div>
+</form>
+<script>
+ var q_time = TIME;
+ var nb_errors = 2;
+ var errors_list = "\u{000A}";
+ var home_time = document.getElementById('q_time');
+ var home_errors = document.getElementById('nb_errors');
+ if (home_time != null) {
+ home_time.title = "Query treated in " + q_time + " s";
+ if (q_time < 3) {
+ home_time.classList.add("text-success");
+ } else if (q_time < 8) {
+ home_time.classList.add("text-warning");
+ } else {
+ home_time.classList.add("text-danger");
+ }
+ }
+ if (home_errors != null) {
+ if (nb_errors > 0) {
+ home_errors.title = nb_errors +" error(s)!";
+ home_errors.classList.remove("d-none");
+ }
+ if (errors_list != "") {
+ home_errors.title = home_errors.title + errors_list + ".";
+ }
+ }
+</script><!-- $Id: copyr.txt 7.1-beta 18/12/2023 22:03:44 $ -->
+<div class="d-flex ml-auto justify-content-end m-2" id="copyr">
+<div class="btn-group dropup align-self-center">
+<button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenu1"
+data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+title=""><span class="sr-only">lang</span><span class="text-uppercase" title="View in: English">en</span><span class="sr-only">, view in</span></button>
+<div class="dropdown-menu scrollable-lang" aria-labelledby="dropdownMenu1">
+<a class="dropdown-item" id="lang_af" href="test?lang=af&m=A&p=Charles&n=Windsor" title="lang af"><code>af&nbsp;&nbsp;&nbsp; </code>Afrikaans</a>
+<a class="dropdown-item" id="lang_ar" href="test?lang=ar&m=A&p=Charles&n=Windsor" title="lang ar"><code>ar&nbsp;&nbsp;&nbsp; </code>Arabic</a>
+<a class="dropdown-item" id="lang_bg" href="test?lang=bg&m=A&p=Charles&n=Windsor" title="lang bg"><code>bg&nbsp;&nbsp;&nbsp; </code>Bulgarian</a>
+<a class="dropdown-item" id="lang_br" href="test?lang=br&m=A&p=Charles&n=Windsor" title="lang br"><code>br&nbsp;&nbsp;&nbsp; </code>Breton</a>
+<a class="dropdown-item" id="lang_ca" href="test?lang=ca&m=A&p=Charles&n=Windsor" title="lang ca"><code>ca&nbsp;&nbsp;&nbsp; </code>Catalan</a>
+<a class="dropdown-item" id="lang_co" href="test?lang=co&m=A&p=Charles&n=Windsor" title="lang co"><code>co&nbsp;&nbsp;&nbsp; </code>Corsican</a>
+<a class="dropdown-item" id="lang_cs" href="test?lang=cs&m=A&p=Charles&n=Windsor" title="lang cs"><code>cs&nbsp;&nbsp;&nbsp; </code>Czech</a>
+<a class="dropdown-item" id="lang_da" href="test?lang=da&m=A&p=Charles&n=Windsor" title="lang da"><code>da&nbsp;&nbsp;&nbsp; </code>Danish</a>
+<a class="dropdown-item" id="lang_de" href="test?lang=de&m=A&p=Charles&n=Windsor" title="lang de"><code>de&nbsp;&nbsp;&nbsp; </code>German</a>
+<a class="dropdown-item" id="lang_eo" href="test?lang=eo&m=A&p=Charles&n=Windsor" title="lang eo"><code>eo&nbsp;&nbsp;&nbsp; </code>Esperanto</a>
+<a class="dropdown-item" id="lang_es" href="test?lang=es&m=A&p=Charles&n=Windsor" title="lang es"><code>es&nbsp;&nbsp;&nbsp; </code>Spanish</a>
+<a class="dropdown-item" id="lang_et" href="test?lang=et&m=A&p=Charles&n=Windsor" title="lang et"><code>et&nbsp;&nbsp;&nbsp; </code>Estonian</a>
+<a class="dropdown-item" id="lang_fi" href="test?lang=fi&m=A&p=Charles&n=Windsor" title="lang fi"><code>fi&nbsp;&nbsp;&nbsp; </code>Finnish</a>
+<a class="dropdown-item" id="lang_fr" href="test?lang=fr&m=A&p=Charles&n=Windsor" title="lang fr"><code>fr&nbsp;&nbsp;&nbsp; </code>French</a>
+<a class="dropdown-item" id="lang_he" href="test?lang=he&m=A&p=Charles&n=Windsor" title="lang he"><code>he&nbsp;&nbsp;&nbsp; </code>Hebrew</a>
+<a class="dropdown-item" id="lang_is" href="test?lang=is&m=A&p=Charles&n=Windsor" title="lang is"><code>is&nbsp;&nbsp;&nbsp; </code>Icelandic</a>
+<a class="dropdown-item" id="lang_it" href="test?lang=it&m=A&p=Charles&n=Windsor" title="lang it"><code>it&nbsp;&nbsp;&nbsp; </code>Italian</a>
+<a class="dropdown-item" id="lang_lt" href="test?lang=lt&m=A&p=Charles&n=Windsor" title="lang lt"><code>lt&nbsp;&nbsp;&nbsp; </code>Lithuanian</a>
+<a class="dropdown-item" id="lang_lv" href="test?lang=lv&m=A&p=Charles&n=Windsor" title="lang lv"><code>lv&nbsp;&nbsp;&nbsp; </code>Latvian</a>
+<a class="dropdown-item" id="lang_nl" href="test?lang=nl&m=A&p=Charles&n=Windsor" title="lang nl"><code>nl&nbsp;&nbsp;&nbsp; </code>Dutch</a>
+<a class="dropdown-item" id="lang_no" href="test?lang=no&m=A&p=Charles&n=Windsor" title="lang no"><code>no&nbsp;&nbsp;&nbsp; </code>Norwegian</a>
+<a class="dropdown-item" id="lang_oc" href="test?lang=oc&m=A&p=Charles&n=Windsor" title="lang oc"><code>oc&nbsp;&nbsp;&nbsp; </code>Occitan</a>
+<a class="dropdown-item" id="lang_pl" href="test?lang=pl&m=A&p=Charles&n=Windsor" title="lang pl"><code>pl&nbsp;&nbsp;&nbsp; </code>Polish</a>
+<a class="dropdown-item" id="lang_pt" href="test?lang=pt&m=A&p=Charles&n=Windsor" title="lang pt"><code>pt&nbsp;&nbsp;&nbsp; </code>Portuguese</a>
+<a class="dropdown-item" id="lang_pt-br" href="test?lang=pt-br&m=A&p=Charles&n=Windsor" title="lang pt-br"><code>pt-br </code>Brazilian-Portuguese</a>
+<a class="dropdown-item" id="lang_ro" href="test?lang=ro&m=A&p=Charles&n=Windsor" title="lang ro"><code>ro&nbsp;&nbsp;&nbsp; </code>Romanian</a>
+<a class="dropdown-item" id="lang_ru" href="test?lang=ru&m=A&p=Charles&n=Windsor" title="lang ru"><code>ru&nbsp;&nbsp;&nbsp; </code>Russian</a>
+<a class="dropdown-item" id="lang_sk" href="test?lang=sk&m=A&p=Charles&n=Windsor" title="lang sk"><code>sk&nbsp;&nbsp;&nbsp; </code>Slovak</a>
+<a class="dropdown-item" id="lang_sl" href="test?lang=sl&m=A&p=Charles&n=Windsor" title="lang sl"><code>sl&nbsp;&nbsp;&nbsp; </code>Slovenian</a>
+<a class="dropdown-item" id="lang_sv" href="test?lang=sv&m=A&p=Charles&n=Windsor" title="lang sv"><code>sv&nbsp;&nbsp;&nbsp; </code>Swedish</a>
+<a class="dropdown-item" id="lang_tr" href="test?lang=tr&m=A&p=Charles&n=Windsor" title="lang tr"><code>tr&nbsp;&nbsp;&nbsp; </code>Turkish</a>
+<a class="dropdown-item" id="lang_zh" href="test?lang=zh&m=A&p=Charles&n=Windsor" title="lang zh"><code>zh&nbsp;&nbsp;&nbsp; </code>Chinese</a>
+</div>
+</div>
+<div class="d-inline-flex flex-column justify-content-end align-self-center ml-3">
+<div class="ml-auto">
+<a role="button" class="mr-1"
+href="test?templ=templm&m=A&p=Charles&n=Windsor"
+title="templm"><i class="fab fa-markdown" aria-hidden="true"></i><span class="sr-only">switch to templm</span></a>
+<a href="https://github.com//tree/2ab85d8"
+title="Line HEAD compiled on 2024-04-18 from commit 2ab85d8 (2024-04-18)">GeneWeb v. 7.1-beta</a>
+</div>
+<div class="btn-group">
+<span>&copy; <a href="https://www.inria.fr" target="_blank" rel="noreferrer, noopener">INRIA</a> 1998-2007</span>
+<a href="https://geneweb.tuxfamily.org/wiki/GeneWeb" class="ml-1"
+target="_blank" rel="noreferrer, noopener" title="Documentation GeneWeb"><i class="fab fa-wikipedia-w"></i></a><a href="https://github.com/geneweb/geneweb" class="ml-1"
+target="_blank" rel="noreferrer, noopener" title="GeneWeb on Github"><i class="fab fa-github"></i></a>
+</div>
+</div>
+</div>
+</div>
+<!-- $Id: js.txt v7.1 02/12/2023 12:35:50 $ -->
+<script src="js/jquery.min.js?version=3.7.1"></script>
+<script src="js/bootstrap.bundle.min.js?version=4.6.1"></script>
+<script src="js/select2.min.js?version=4.1.0rc"></script>
+<script src="js/select2-maximize-height.min.js?version=1.0.4"></script>
+<script>
+$('#load_once_p_mod').one('click', function() {
+$.getScript('js/p_mod.js');
+});
+$('#load_once_copylink').one('click', function() {
+$.getScript('js/copylink.js');
+});
+</script>
+<script><!-- focus on found autofocus input in opening BS modal -->
+$('.modal').on('shown.bs.modal', function() {
+$(this).find('[autofocus]').focus();
+});
+</script>
+<script>
+$(document).ready(function() {
+$("#v").select2({
+templateResult: function(el) { return '<div' + (($('#only').is(':checked')) ? ($(el.element).data('sty_l') || '') : ($(el.element).data('sty') || '')) + '" class="d-flex justify-content-around text-right ' + ($(el.element).prop('class') || '') + '"><span class="onlycheck pl-2 text-right" title="' + ($(el.element).data('lex') || '') + '">' + (($('#only').is(':checked')) ? "only" : "up to") + el.text + '</span><span class="ml-2 text-nowrap">' + ($(el.element).data('per') || '') + '</span>' + (($('#only').is(':checked')) ? ('') : ('<div class="col-3 ml-auto text-right">+' + ($(el.element).data('noa_l') || '') + '<span class="ancmenu-implex">' + ($(el.element).data('path_l') || '') + '</span></div>')) + '<span class="col-3 text-right" title="'+ (($('#only').is(':checked')) ? (($(el.element).data('noa_l') || '') + ($(el.element).data('path_l') || '') + ($(el.element).data('pp_l') || '')) : (($(el.element).data('noa') || '') + ($(el.element).data('path') || '') + ($(el.element).data('pp') || ''))) + '">' + (($('#only').is(':checked')) ? (($(el.element).data('noa_l') || '') + '<span class="ancmenu-implex">' + ($(el.element).data('path_l') || '')) : (($(el.element).data('noa') || '') + '<span class="ancmenu-implex">' + ($(el.element).data('path') || ''))) + '</span></span></div>'; },
+templateSelection: function(el) { return '<span class="onlycheck">' + (($('#only').is(':checked')) ? "only" : "up to") + '</span><span>' + el.text + '</span><span class="ml-auto noa"> ' + (($('#only').is(':checked')) ? ('(' + ($(el.element).data('noa_l') || '') + '<span class="ancmenu-implex">' + ($(el.element).data('path_l') || '') + '</span>)') : ('(' + ($(el.element).data('noa') || '') + '<span class="ancmenu-implex">' + ($(el.element).data('path') || '') + '</span>)')) + '</span><span class=" d-none noa_l"> ' + (($('#only').is(':checked')) ? ('(' + ($(el.element).data('noa') || '') + '<span class="ancmenu-implex">' + ($(el.element).data('path') || '') + '</span>)') : ('(' + ($(el.element).data('noa_l') || '') + '<span class="ancmenu-implex">' + ($(el.element).data('path_l') || '') + '</span>)')) + '</span>'; },
+escapeMarkup: function(markup) { return markup; },
+width: "resolve",
+allowClear: false,
+placeholder: "… select generation (max 8)",
+theme: "classic"
+}).maximizeSelect2Height();
+});
+$("body").on('change', '#only', function() {
+($('#only').is(':checked')) ? ($('.onlycheck').text("only"), $('.noa').addClass("d-none"), $('.noa_l').removeClass("d-none"))
+: ($('.onlycheck').text("up to"), $('.noa').removeClass("d-none"), $('.noa_l').addClass("d-none"))
+});
+</script>
+<script>
+(function () {
+'use strict';
+// Fetch all the forms we want to apply custom Bootstrap validation styles to
+var forms = document.querySelectorAll('.needs-validation');
+// Loop over them and prevent submission
+Array.prototype.slice.call(forms)
+.forEach(function (form) {
+form.addEventListener('submit', function (event) {
+if (!form.checkValidity()) {
+event.preventDefault();
+event.stopPropagation();
+}
+form.classList.add('was-validated');
+}, false);
+});
+});
+</script>
+</body>
+</html>
