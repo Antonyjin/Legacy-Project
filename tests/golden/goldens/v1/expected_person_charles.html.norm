@@ -52,7 +52,7 @@ data-html="true" data-content="<img class='w-100' src='images/modules/zz_1.jpg'>
 href="test?p=Charles&n=Windsor&wide=on"
 title="Full width display"><i class="fa fa-desktop fa-fw" aria-hidden="true"></i><span class="sr-only">Full width display</span></a>
 </div>
-<div class="mx-2 mt-2">Select each module by clicking on the corresponding button (max 15).</div>
+<div class="mx-2 mt-2">Select each module by clicking on the corresponding button (max 15).</div>
 <div class="alert alert-warning alert-dismissible fade show mt-1 mb-2 d-none" role="alert">
 <div class="d-none alert-opt">Invalid option <strong id="alert-option"></strong> for module <strong id="alert-module"></strong>. Please enter a valid option number.</div>
 <div class="d-none alert-mod">Invalid module <strong id="alert-module-2"></strong>. Please enter a valid module initial.</div>
@@ -112,7 +112,7 @@ title="Copy the link wizard to the clipboard
 <button class="dropdown-item simple-copy" type="button" title="Copy the link wiki to the clipboard"
 data-wikilink="[[Charles/Windsor]]"><i class="far fa-clipboard fa-fw mr-2"></i>[[Charles/Windsor]]</button>
 <button class="dropdown-item full-copy" type="button" title="Copy the link wikitext to the clipboard"
-data-wikilink="[[Charles/Windsor/0/Charles Windsor]]"><i class="far fa-clipboard fa-fw mr-2"></i>[[Charles/Windsor/0/Charles Windsor]]</button>
+data-wikilink="[[Charles/Windsor/0/Charles Windsor]]"><i class="far fa-clipboard fa-fw mr-2"></i>[[Charles/Windsor/0/Charles Windsor]]</button>
 <div class="dropdown-divider"></div>
 <a class="dropdown-item" role="button" title="Search Charles III Philip Arthur George Windsor on Geneanet
 "
@@ -145,7 +145,7 @@ title="Tools families"><span class="fa fa-user-plus" aria-hidden="true"></span><
 <a class="dropdown-item" href="test?m=DEL_FAM&i=RANDOM&ip=0"><span class="fa fa-trash fa-fw text-danger mr-2"></span>Delete family</a>
 <div class="dropdown-divider"></div>
 <a class="dropdown-item" href="test?m=INV_FAM&i=RANDOM&f=2"
-title="Reverse families 1 and 2"><span class="fa fa-right-left fa-rotate-90 fa-fw mr-1"></span> Reverse families<span class="sr-only"> 1 and 2</span>
+title="Reverse families 1 and 2"><span class="fa fa-right-left fa-rotate-90 fa-fw mr-1"></span> Reverse families<span class="sr-only"> 1 and 2</span>
 </a>
 <div class="dropdown-divider"></div>
 <span class="dropdown-header">Marriage with Camilla Rosemary Shand</span>
@@ -170,7 +170,7 @@ title="Reverse families 1 and 2"><span class="fa fa-right-left fa-rotate-90 fa-f
 <a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=FC&v=5"><span class="fa fa-chart-pie fa-fw mr-2"></span>Fanchart</a>
 <div class="dropdown-divider"></div>
 <a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=T&t1=CT&hi=H&v=5&scale=100&fs=17&sosa=on" title="Compact tree with Charles III Philip Arthur George Windsor"><span class="fa fa-table-cells fa-fw mr-2"></span>Compact tree</a>
-<a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=T&t1=h6&sosa=1" title="H-tree 6 generation with CSS (127 ind.)"><span class="fa fa-border-none fa-fw mr-2"></span>6 generations</a>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=T&t1=h6&sosa=1" title="H-tree 6 generation with CSS (127 ind.)"><span class="fa fa-border-none fa-fw mr-2"></span>6 generations</a>
 <a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=T&t1=m" title="8 generations H tree"><span class="fa fa-chess-board fa-fw mr-2"></span>8 generations</a>
 </div>
 </li>
@@ -273,7 +273,7 @@ autofocus>
 <i class="fa fa-mars male fa-xs mr-1"></i></a><a href="test?p=philip&n=mountbatten">Philip Mountbatten</a> <bdo dir=ltr>1921-2021</bdo>
 <br>
 └ <img src="images/married.png" alt="married" title="married">
-1947 <a href="test?p=elizabeth&n=windsor" class="female-underline">Elizabeth II Alexandra Mary Windsor</a><span title="96 years"
+1947 <a href="test?p=elizabeth&n=windsor" class="female-underline">Elizabeth II Alexandra Mary Windsor</a><span title="96 years"
 class="text-nowrap"> <bdo dir=ltr>1926-2022</bdo></span><div class="float-right">4</div></li>
 </ul>
 </li>
@@ -308,7 +308,7 @@ class="text-nowrap"> <bdo dir=ltr>1926-2022</bdo></span><div class="float-right"
 <i class="fa fa-venus female fa-xs mr-1"></i></a><a href="test?p=elizabeth&n=windsor">Elizabeth II Alexandra Mary Windsor</a> <bdo dir=ltr>1926-2022</bdo>
 <br>
 └ <img src="images/married.png" alt="married" title="married">
-1947 <a href="test?p=philip&n=mountbatten" class="male-underline">Philip Mountbatten</a><span title="99 years"
+1947 <a href="test?p=philip&n=mountbatten" class="male-underline">Philip Mountbatten</a><span title="99 years"
 class="text-nowrap"> <bdo dir=ltr>1921-2021</bdo></span><div class="float-right">4</div></li>
 <li style="list-style-type:square">
 <a href="test?m=MOD_IND&i=RANDOM" title="Update Margaret Rose Windsor">
@@ -347,9 +347,9 @@ Charles III Philip Arthur George Windsor<span class="font-weight-light small"> <
 <span class="fa-li"><i class="fas fa-baby"></i></span>
 Born <a href="test?m=CAL&yg=1948&mg=11&dg=14&tg=1" class="date">on&nbsp;14&nbsp;November&nbsp;1948</a> in Buckingham Palace, London, England</li>
 <li class="mt-1" title="Age
-= 28,092 days old">
+= AGE_DAYS old">
 <span class="fa-li"><i class="far fa-id-card"></i></span>
-76 years, 10 months, 29 days old</li>
+AGE_YMD old</li>
 </ul>
 </div>
 </div>
@@ -358,18 +358,18 @@ Born <a href="test?m=CAL&yg=1948&mg=11&dg=14&tg=1" class="date">on&nbsp;14&nbsp;
 Marriages and children<span class="ml-2"><a href="test?p=charles&n=windsor&m=D&t=T&v=1"><img class="mx-1 mb-1" src="images/gui_create.png" height="18" alt="tree desc." title="Descendants tree up to the children (with spouse)"></a>
 </span>
 </h2>
-<ul class="pl-4 py-0"><li style="vertical-align: middle;list-style-type: circle"><a href="test?m=MOD_FAM&i=RANDOM&ip=0"><i class="fa fa-wrench fa-xs male" title="Update family with Diana Frances Spencer"></i></a> Married <a href="test?m=CAL&yg=1981&mg=7&dg=29&tg=1" class="date">on&nbsp;29&nbsp;July&nbsp;1981</a> to <a href="test?p=diana+frances&n=spencer" class="female-underline">Diana Frances Spencer</a><span title="36 years"
+<ul class="pl-4 py-0"><li style="vertical-align: middle;list-style-type: circle"><a href="test?m=MOD_FAM&i=RANDOM&ip=0"><i class="fa fa-wrench fa-xs male" title="Update family with Diana Frances Spencer"></i></a> Married <a href="test?m=CAL&yg=1981&mg=7&dg=29&tg=1" class="date">on&nbsp;29&nbsp;July&nbsp;1981</a> to <a href="test?p=diana+frances&n=spencer" class="female-underline">Diana Frances Spencer</a><span title="36 years"
 class="text-nowrap"> <bdo dir=ltr>1961-1997</bdo></span>, with two children:
 <ul><li style="vertical-align: middle;list-style-type: square;"><a href="test?m=MOD_IND&i=RANDOM" title="Update William Arthur Philip Louis Windsor">
 <i class="fa fa-mars male fa-xs mr-1"></i></a><a href="test?p=william+arthur+philip+louis&n=windsor" title="Display William Arthur Philip Louis Windsor">William Arthur Philip Louis</a><a href="test?m=MOD_IND&i=RANDOM"><span class="text-nowrap font-italic"
-title="Update William Arthur Philip Louis Windsor (43 years)"> <bdo dir=ltr>1982</bdo></span></a></li></ul>
+title="Update William Arthur Philip Louis Windsor (43 years)"> <bdo dir=ltr>1982</bdo></span></a></li></ul>
 <ul><li style="vertical-align: middle;list-style-type: square;"><a href="test?m=MOD_IND&i=RANDOM" title="Update Harry Windsor">
 <i class="fa fa-mars male fa-xs mr-1"></i></a><a href="test?p=harry&n=windsor" title="Display Harry <em>Harry</em> Windsor">Harry</a><a href="test?m=MOD_IND&i=RANDOM"><span class="text-nowrap font-italic"
-title="Update Harry Windsor (41 years)"> <bdo dir=ltr>1984</bdo></span></a></li></ul>
+title="Update Harry Windsor (41 years)"> <bdo dir=ltr>1984</bdo></span></a></li></ul>
 <div class="mb-1 text-muted">
 Divorced <em><a href="test?m=CAL&yg=1992&mg=12&dg=9&tg=1" class="date">on&nbsp;9&nbsp;December&nbsp;1992</a></em>.</div>
 </li></ul>
-<ul class="pl-4 py-0"><li style="vertical-align: middle;list-style-type: circle"><a href="test?m=MOD_FAM&i=RANDOM&ip=0"><i class="fa fa-wrench fa-xs male" title="Update family with Camilla Rosemary Shand"></i></a> Married <a href="test?m=CAL&yg=2005&mg=4&dg=9&tg=1" class="date">on&nbsp;9&nbsp;April&nbsp;2005</a> to <a href="test?p=camilla+rosemary&n=shand" class="female-underline">Camilla Rosemary Shand</a><span title="78 years"
+<ul class="pl-4 py-0"><li style="vertical-align: middle;list-style-type: circle"><a href="test?m=MOD_FAM&i=RANDOM&ip=0"><i class="fa fa-wrench fa-xs male" title="Update family with Camilla Rosemary Shand"></i></a> Married <a href="test?m=CAL&yg=2005&mg=4&dg=9&tg=1" class="date">on&nbsp;9&nbsp;April&nbsp;2005</a> to <a href="test?p=camilla+rosemary&n=shand" class="female-underline">Camilla Rosemary Shand</a><span title="78 years"
 class="text-nowrap"> <bdo dir=ltr>1947</bdo></span></li></ul>
 <!-- $Id: modules/chronologie.txt v7.1 04/03/2023 09:51:04 $ -->
 <!-- $Id: modules/notes.txt v7.1 15/12/2022 23:41:44 $ -->
@@ -391,22 +391,22 @@ Although he has travelled widely as a representative of the crown, Charles has b
 <tr><td colspan="4" class="align-bottom"><br>
 <a href="test?i=RANDOM"><span>Prince Andrew of Greece</span><br><span class="text-nowrap">?</span></a><br><a href="test?m=MOD_IND&i=RANDOM" title="Update Prince Andrew of Greece ?">
 <div class="text-nowrap font-italic"
-title="Update Prince Andrew of Greece ? (62 years)"> <bdo dir=ltr>1882-1944</bdo></div></a></td>
+title="Update Prince Andrew of Greece ? (62 years)"> <bdo dir=ltr>1882-1944</bdo></div></a></td>
 <td></td>
 <td colspan="4" class="align-bottom"><br>
 <a href="test?p=alice+of+battenberg&n=x&oc=84"><span>Alice of Battenberg</span><br><span class="text-nowrap">x</span></a><br><a href="test?m=MOD_IND&i=RANDOM" title="Update Alice of Battenberg.84 x">
 <div class="text-nowrap font-italic"
-title="Update Alice of Battenberg.84 x (84 years)"> <bdo dir=ltr>1885-1969</bdo></div></a></td>
+title="Update Alice of Battenberg.84 x (84 years)"> <bdo dir=ltr>1885-1969</bdo></div></a></td>
 <td></td>
 <td colspan="4" class="align-bottom"><br>
 <a href="test?p=george+vi&n=windsor"><span>George VI</span><br><span class="text-nowrap">Windsor</span></a><br><a href="test?m=MOD_IND&i=RANDOM" title="Update George VI Windsor">
 <div class="text-nowrap font-italic"
-title="Update George VI Windsor (56 years)"> <bdo dir=ltr>1895-1952</bdo></div></a></td>
+title="Update George VI Windsor (56 years)"> <bdo dir=ltr>1895-1952</bdo></div></a></td>
 <td></td>
 <td colspan="4" class="align-bottom"><br>
 <a href="test?p=elizabeth+angela+marguerite&n=bowes+lyon"><span>Elizabeth Angela Marguerite</span><br><span class="text-nowrap">Bowes-Lyon</span></a><br><a href="test?m=MOD_IND&i=RANDOM" title="Update Elizabeth Angela Marguerite Bowes-Lyon">
 <div class="text-nowrap font-italic"
-title="Update Elizabeth Angela Marguerite Bowes-Lyon (101 years)"> <bdo dir=ltr>1900-2002</bdo></div></a></td>
+title="Update Elizabeth Angela Marguerite Bowes-Lyon (101 years)"> <bdo dir=ltr>1900-2002</bdo></div></a></td>
 </tr>
 <tr>
 <td></td>
@@ -459,13 +459,13 @@ title="Update Elizabeth Angela Marguerite Bowes-Lyon (101 years)"> <bdo dir=ltr
 <td colspan="2"></td>
 <td colspan="5" class="align-bottom"><a href="test?p=philip&n=mountbatten"><span>Philip</span><br><span class="text-nowrap">Mountbatten</span></a><br><a href="test?m=MOD_IND&i=RANDOM" title="Update Philip Mountbatten">
 <div class="text-nowrap font-italic"
-title="Update Philip Mountbatten (99 years)"> <bdo dir=ltr>1921-2021</bdo></div></a></td>
+title="Update Philip Mountbatten (99 years)"> <bdo dir=ltr>1921-2021</bdo></div></a></td>
 <td colspan="2"></td>
 <td></td>
 <td colspan="2"></td>
 <td colspan="5" class="align-bottom"><a href="test?p=elizabeth&n=windsor"><span>Elizabeth II Alexandra Mary</span><br><span class="text-nowrap">Windsor</span></a><br><a href="test?m=MOD_IND&i=RANDOM" title="Update Elizabeth Windsor">
 <div class="text-nowrap font-italic"
-title="Update Elizabeth Windsor (96 years)"> <bdo dir=ltr>1926-2022</bdo></div></a></td>
+title="Update Elizabeth Windsor (96 years)"> <bdo dir=ltr>1926-2022</bdo></div></a></td>
 <td colspan="2"></td>
 </tr>
 <tr>
@@ -504,16 +504,16 @@ title="Next sibling"><i class="fa fa-caret-right fa-sm text-success"></i></a>
 <ul>
 <li style="vertical-align: middle;list-style-type: square;"><a href="test?m=MOD_IND&i=RANDOM" title="Update Charles Windsor">
 <i class="fa fa-mars male fa-xs mr-1"></i></a><b>Charles III Philip Arthur George Windsor</b><a href="test?m=MOD_IND&i=RANDOM"><span class="text-nowrap font-italic"
-title="Update Charles Windsor (76 years)"> <bdo dir=ltr>1948</bdo></span></a></li>
+title="Update Charles Windsor (76 years)"> <bdo dir=ltr>1948</bdo></span></a></li>
 <li style="vertical-align: middle;list-style-type: square;"><a href="test?m=MOD_IND&i=RANDOM" title="Update Anne Elizabeth Alice Windsor">
 <i class="fa fa-venus female fa-xs mr-1"></i></a><a href="test?p=anne+elizabeth+alice&n=windsor" title="Display Anne Elizabeth Alice Windsor">Anne Elizabeth Alice Windsor</a><a href="test?m=MOD_IND&i=RANDOM"><span class="text-nowrap font-italic"
-title="Update Anne Elizabeth Alice Windsor (75 years)"> <bdo dir=ltr>1950</bdo></span></a></li>
+title="Update Anne Elizabeth Alice Windsor (75 years)"> <bdo dir=ltr>1950</bdo></span></a></li>
 <li style="vertical-align: middle;list-style-type: square;"><a href="test?m=MOD_IND&i=RANDOM" title="Update Andrew Albert Christian Windsor">
 <i class="fa fa-mars male fa-xs mr-1"></i></a><a href="test?p=andrew+albert+christian&n=windsor" title="Display Andrew Albert Christian Windsor">Andrew Albert Christian Windsor</a><a href="test?m=MOD_IND&i=RANDOM"><span class="text-nowrap font-italic"
-title="Update Andrew Albert Christian Windsor (65 years)"> <bdo dir=ltr>1960</bdo></span></a></li>
+title="Update Andrew Albert Christian Windsor (65 years)"> <bdo dir=ltr>1960</bdo></span></a></li>
 <li style="vertical-align: middle;list-style-type: square;"><a href="test?m=MOD_IND&i=RANDOM" title="Update Edward Anthony Richard Windsor">
 <i class="fa fa-mars male fa-xs mr-1"></i></a><a href="test?p=edward+anthony+richard&n=windsor" title="Display Edward Anthony Richard Windsor">Edward Anthony Richard Windsor</a><a href="test?m=MOD_IND&i=RANDOM"><span class="text-nowrap font-italic"
-title="Update Edward Anthony Richard Windsor (61 years)"> <bdo dir=ltr>1964</bdo></span></a></li>
+title="Update Edward Anthony Richard Windsor (61 years)"> <bdo dir=ltr>1964</bdo></span></a></li>
 </ul>
 <!-- $Id: modules/relations.txt v7.1 17/11/2023 10:30:00 $ -->
 </div>
@@ -525,7 +525,7 @@ title="Update Edward Anthony Richard Windsor (61 years)"> <bdo dir=ltr>1964</bd
  var home_time = document.getElementById('q_time');
  var home_errors = document.getElementById('nb_errors');
  if (home_time != null) {
- home_time.title = "Query treated in " + q_time + " s";
+ home_time.title = "Query treated in " + q_time + " s";
  if (q_time < 3) {
  home_time.classList.add("text-success");
  } else if (q_time < 8) {
@@ -536,7 +536,7 @@ title="Update Edward Anthony Richard Windsor (61 years)"> <bdo dir=ltr>1964</bd
  }
  if (home_errors != null) {
  if (nb_errors > 0) {
- home_errors.title = nb_errors +" error(s)!";
+ home_errors.title = nb_errors +" error(s)!";
  home_errors.classList.remove("d-none");
  }
  if (errors_list != "") {
@@ -590,10 +590,10 @@ title=""><span class="sr-only">lang</span><span class="text-uppercase" title="Vi
 href="test?templ=templm&p=Charles&n=Windsor"
 title="templm"><i class="fab fa-markdown" aria-hidden="true"></i><span class="sr-only">switch to templm</span></a>
 <a href="https://github.com//tree/2ab85d8"
-title="Line HEAD compiled on 2024-04-18 from commit 2ab85d8 (2024-04-18)">GeneWeb v. 7.1-beta</a>
+title="Line HEAD compiled on 2024-04-18 from commit 2ab85d8 (2024-04-18)">GeneWeb v. 7.1-beta</a>
 </div>
 <div class="btn-group">
-<span>&copy; <a href="https://www.inria.fr" target="_blank" rel="noreferrer, noopener">INRIA</a> 1998-2007</span>
+<span>&copy; <a href="https://www.inria.fr" target="_blank" rel="noreferrer, noopener">INRIA</a> 1998-2007</span>
 <a href="https://geneweb.tuxfamily.org/wiki/GeneWeb" class="ml-1"
 target="_blank" rel="noreferrer, noopener" title="Documentation GeneWeb"><i class="fab fa-wikipedia-w"></i></a><a href="https://github.com/geneweb/geneweb" class="ml-1"
 target="_blank" rel="noreferrer, noopener" title="GeneWeb on Github"><i class="fab fa-github"></i></a>

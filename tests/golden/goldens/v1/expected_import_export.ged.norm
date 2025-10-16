@@ -4,18 +4,17 @@
 2 NAME gwb2ged
 2 CORP INRIA
 3 ADDR http://www.geneweb.org
-2 DATA test.gwb
-1 DATE 13 OCT 2025
-2 TIME 17:58:55
-1 FILE export.ged
+2 DATA test_import.gwb
+1 DATE <normalized>
+2 TIME <normalized>
+1 FILE export2.ged
 1 GEDC
 2 VERS 5.5.1
 2 FORM LINEAGE-LINKED
 1 CHAR UTF-8
 1 NOTE test
 0 @I1@ INDI
-1 NAME Charles /Windsor/
-2 GIVN Charles III Philip Arthur George
+1 NAME "Charles" III Philip Arthur George /Windsor/
 1 SEX M
 1 BIRT
 2 DATE 14 NOV 1948
@@ -23,42 +22,41 @@
 1 FAMC @F1@
 1 FAMS @F2@
 1 FAMS @F3@
-1 NOTE Prince Charles, born in 1948, Prince of Wales and heir apparent to the 
-2 CONC throne of the United Kingdom of Great Britain and Northern Ireland. He 
+1 NOTE Prince Charles, born in 1948, Prince of Wales and heir apparent to the
+2 CONC throne of the United Kingdom of Great Britain and Northern Ireland. He
 2 CONC is the son of Queen Elizabeth II and her husband, Philip Mountbatten, d
-2 CONC uke of Edinburgh. Charles's full name is Charles Philip Arthur George. 
-2 CONC His titles, in addition to Prince of Wales, are duke of Cornwall; duke 
-2 CONC of Rothesay; earl of Carrick; and Baron Renfrew, lord of the Isles and 
+2 CONC uke of Edinburgh. Charles's full name is Charles Philip Arthur George.
+2 CONC His titles, in addition to Prince of Wales, are duke of Cornwall; duke
+2 CONC of Rothesay; earl of Carrick; and Baron Renfrew, lord of the Isles and
 2 CONC great steward of Scotland.
-2 CONT 
+2 CONT
 2 CONT Breaking with the tradition of educating royal children at home, his pa
 2 CONC rents enrolled Prince Charles in private schools in England and Scotlan
-2 CONC d. He attended the Cheam School in Berkshire as a boarder from the age 
+2 CONC d. He attended the Cheam School in Berkshire as a boarder from the age
 2 CONC of 9 to 14 and the school his father attended, Gordonstoun, in Scotland
-2 CONC  from age 14 to 18. He has described his school years as unhappy and se
-2 CONC ems to have been especially ill-suited for the rugged and spartan condi
-2 CONC tions at Gordonstoun, the school chosen by the Duke of Edinburgh to tou
-2 CONC ghen up his son. After Gordonstoun, Charles entered Trinity College at 
-2 CONC the University of Cambridge, where he studied archaeology, anthropology
-2 CONC , and history. Charles became the first heir to the British crown to ea
-2 CONC rn a university degree when he graduated with honours from Cambridge Un
-2 CONC iversity in June 1970. That year he also assumed his seat in the House 
-2 CONC of Lords, the upper chamber of the British Parliament. At the age of 20
-2 CONC , in 1969, he was formally invested as the Prince of Wales, a title he 
-2 CONC had been given in 1958. Charles served in the Royal Air Force and the R
-2 CONC oyal Navy from 1971 to 1977.
-2 CONT 
+2 CONT from age 14 to 18. He has described his school years as unhappy and see
+2 CONC ms to have been especially ill-suited for the rugged and spartan condit
+2 CONC ions at Gordonstoun, the school chosen by the Duke of Edinburgh to toug
+2 CONC hen up his son. After Gordonstoun, Charles entered Trinity College at t
+2 CONC he University of Cambridge, where he studied archaeology, anthropology,
+2 CONC  and history. Charles became the first heir to the British crown to ear
+2 CONC n a university degree when he graduated with honours from Cambridge Uni
+2 CONC versity in June 1970. That year he also assumed his seat in the House o
+2 CONC f Lords, the upper chamber of the British Parliament. At the age of 20,
+2 CONC  in 1969, he was formally invested as the Prince of Wales, a title he h
+2 CONC ad been given in 1958. Charles served in the Royal Air Force and the Ro
+2 CONC yal Navy from 1971 to 1977.
+2 CONT
 2 CONT Although he has travelled widely as a representative of the crown, Char
 2 CONC les has been viewed as a man with little to do while waiting to succeed
-2 CONC  to the throne. As one solution he founded the Princes Trust, an organi
-2 CONC zation established to provide opportunities for young people through tr
-2 CONC aining, education, and financial support. As its president he has remai
-2 CONC ned closely involved with the trust. Charles is also involved with some
-2 CONC  200 other charitable organizations that reflect his wide range of inte
-2 CONC rests, from architecture to alternative medicine and conservation.Y
+2 CONT to the throne. As one solution he founded the Princes Trust, an organiz
+2 CONC ation established to provide opportunities for young people through tra
+2 CONC ining, education, and financial support. As its president he has remain
+2 CONC ed closely involved with the trust. Charles is also involved with some
+2 CONT 200 other charitable organizations that reflect his wide range of inter
+2 CONC ests, from architecture to alternative medicine and conservation.Y
 0 @I2@ INDI
-1 NAME Elizabeth /Windsor/
-2 GIVN Elizabeth II Alexandra Mary
+1 NAME "Elizabeth" II Alexandra Mary /Windsor/
 1 SEX F
 1 BIRT
 2 DATE 21 APR 1926
@@ -75,18 +73,18 @@
 1 NOTE Elizabeth II, born in 1926, queen of the United Kingdom of Great Britai
 2 CONC n and Northern Ireland. Elizabeth Alexandra Mary was born in London, th
 2 CONC e first child of the duke and duchess of York, later King George VI and
-2 CONC  Queen Elizabeth. Her sister, Princess Margaret, was born in 1930. The 
-2 CONC two princesses were educated at home by a Scottish governess.
-2 CONT 
+2 CONT Queen Elizabeth. Her sister, Princess Margaret, was born in 1930. The t
+2 CONC wo princesses were educated at home by a Scottish governess.
+2 CONT
 2 CONT After her father succeeded to the throne in 1936, Princess Elizabeth, a
-2 CONC s heiress presumptive, began studies in constitutional history and law 
+2 CONC s heiress presumptive, began studies in constitutional history and law
 2 CONC to prepare for her future position as queen. As she became older, Eliza
 2 CONC beth began to take part in public life. She was 14 years old when she m
 2 CONC ade her first radio broadcast, a speech to the children of the Commonwe
 2 CONC alth of Nations in October 1940. When she was 16 she carried out her fi
 2 CONC rst public engagement, an inspection of the Grenadier Guards in April 1
 2 CONC 942.
-2 CONT 
+2 CONT
 2 CONT During World War II (1939-1945) Elizabeth and her younger sister were s
 2 CONC ent for safety from Buckingham Palace in London to live first at Balmor
 2 CONC al, Scotland, and later at the royal lodge at Windsor, England. Althoug
@@ -94,12 +92,12 @@
 2 CONC e during the war, she herself was most eager to join the Auxiliary Terr
 2 CONC itorial Service, the women's branch of the British Army. She was finall
 2 CONC y allowed to join in March 1945.
-2 CONT 
-2 CONT On November 20, 1947, Elizabeth married Philip Mountbatten, the former 
-2 CONC Prince Philip of Greece, at Westminster Abbey in London. He had become 
+2 CONT
+2 CONT On November 20, 1947, Elizabeth married Philip Mountbatten, the former
+2 CONC Prince Philip of Greece, at Westminster Abbey in London. He had become
 2 CONC a British subject nine months earlier and was married under the title o
 2 CONC f Prince Philip, duke of Edinburgh. A year later Elizabeth gave birth t
-2 CONC o a son, Charles. In 1950 she gave birth to a daughter, Anne. A second 
+2 CONC o a son, Charles. In 1950 she gave birth to a daughter, Anne. A second
 2 CONC son, Andrew, was born to Elizabeth in 1960, and a third, Edward, in 196
 2 CONC 4.Y
 0 @I3@ INDI
@@ -113,12 +111,12 @@
 1 FAMC @F5@
 1 FAMS @F6@
 1 NOTE Edward VII (1841-1910), king of the United Kingdom of Great Britain and
-2 CONC  Ireland and emperor of India (1901-1910). The Edwardian period is name
-2 CONC d after him. Edward was born on November 9, 1841, in Buckingham Palace,
-2 CONC  London, the eldest son of Queen Victoria and Prince Albert, and was ch
-2 CONC ristened Albert Edward. He studied at the universities of Edinburgh, Ox
-2 CONC ford, and Cambridge.
-2 CONT 
+2 CONT Ireland and emperor of India (1901-1910). The Edwardian period is named
+2 CONC  after him. Edward was born on November 9, 1841, in Buckingham Palace,
+2 CONT London, the eldest son of Queen Victoria and Prince Albert, and was chr
+2 CONC istened Albert Edward. He studied at the universities of Edinburgh, Oxf
+2 CONC ord, and Cambridge.
+2 CONT
 2 CONT In 1860 he visited Canada, inaugurating the custom of goodwill visits b
 2 CONC y members of the British royal family, particularly the Prince of Wales
 2 CONC , to British dominions and foreign countries. In 1863 Edward married Al
@@ -127,34 +125,34 @@
 2 CONC lic functions, which Queen Victoria had laid aside on going into virtua
 2 CONC l retirement after the death of the prince consort in 1861. Edward trav
 2 CONC elled extensively. In Russia and France, particularly, he made valuable
-2 CONC  personal contacts in political and social circles.
-2 CONT 
+2 CONT personal contacts in political and social circles.
+2 CONT
 2 CONT At home, his popularity was increased both as Prince of Wales and as ki
 2 CONC ng by his interest in sports, notably yachting and horse racing; his ho
 2 CONC rses won the Derby in 1896, 1900, and 1909 and the Grand National at Li
 2 CONC verpool in 1900. Edward succeeded to the throne in 1901. From the begin
-2 CONC ning of his reign he adopted a policy of promoting international amity 
+2 CONC ning of his reign he adopted a policy of promoting international amity
 2 CONC in Europe, where political tension had been mounting. His visits to var
 2 CONC ious European capitals from 1901 to 1904 and return visits to him by Eu
 2 CONC ropean rulers helped promote the signing of arbitration treaties in 190
 2 CONC 3-1904 between Britain and France, Spain, Italy, Germany, and Portugal.
-2 CONC  He was also an important force behind two agreements that strengthened
-2 CONC  the position of Britain on the Continent, the Entente Cordiale of 1904
-2 CONC  between France and Britain, and a pact between Russia and Britain in 1
-2 CONC 907.  In 1909 the king and queen paid a diplomatic visit to Emperor Wil
-2 CONC liam II of Germany (Edwards's nephew) that temporarily dispelled German
-2 CONC  suspicion that the increasingly friendly relations between Britain and
-2 CONC  France and Russia were aimed at weakening Germany. Because of his effo
-2 CONC rts to increase international amity the king became known as Edward the
-2 CONC  Peacemaker.
-2 CONT 
+2 CONT He was also an important force behind two agreements that strengthened
+2 CONT the position of Britain on the Continent, the Entente Cordiale of 1904
+2 CONT between France and Britain, and a pact between Russia and Britain in 19
+2 CONC 07.  In 1909 the king and queen paid a diplomatic visit to Emperor Will
+2 CONC iam II of Germany (Edwards's nephew) that temporarily dispelled German
+2 CONT suspicion that the increasingly friendly relations between Britain and
+2 CONT France and Russia were aimed at weakening Germany. Because of his effor
+2 CONC ts to increase international amity the king became known as Edward the
+2 CONT Peacemaker.
+2 CONT
 2 CONT Edward died at Buckingham Palace on May 6, 1910, having reigned for onl
 2 CONC y nine years. Three daughters and two sons were born of the marriage be
 2 CONC tween Edward and Alexandra. The sons were Prince Albert Victor, duke of
-2 CONC  Clarence, and George, duke of York, who succeeded Edward as George V. 
-2 CONC In 1896 Edwards youngest daughter, Princess Maude Charlotte Mary Victor
-2 CONC ia, married her cousin, Prince Charles of Denmark, who later became Kin
-2 CONC g Hkon VII of Norway.Y
+2 CONT Clarence, and George, duke of York, who succeeded Edward as George V. I
+2 CONC n 1896 Edwards youngest daughter, Princess Maude Charlotte Mary Victori
+2 CONC a, married her cousin, Prince Charles of Denmark, who later became King
+2 CONC  Hkon VII of Norway.Y
 0 @I4@ INDI
 1 NAME Alexandra of Denmark "Alix" /?/
 2 NICK Alix
@@ -180,26 +178,26 @@
 1 NOTE George V (1865-1936), king of the United Kingdom of Great Britain and N
 2 CONC orthern Ireland, and emperor of India (1910-1936), of the house of Saxe
 2 CONC -Coburg-Gotha (later changed to Windsor).  George was born in London on
-2 CONC  June 3, 1865, the second son of Edward VII. Known as the Sailor Prince
-2 CONC , he entered the Royal Navy in 1877 and during an active career rose to
-2 CONC  the rank of vice admiral in 1903.
-2 CONT 
+2 CONT June 3, 1865, the second son of Edward VII. Known as the Sailor Prince,
+2 CONC  he entered the Royal Navy in 1877 and during an active career rose to
+2 CONT the rank of vice admiral in 1903.
+2 CONT
 2 CONT The death in 1892 of his elder brother, Albert Victor, duke of Clarence
 2 CONC , made George second in line to the succession. He married his brother'
 2 CONC s fiancÃ©, Princess Victoria Mary of Teck, later Mary, queen consort of
-2 CONC  England, and was created duke of York in 1892. After his father succee
-2 CONC ded Queen Victoria in 1901, George became Prince of Wales and succeeded
-2 CONC  to the throne upon his father's death in 1910.
-2 CONT 
-2 CONT Six children were born to George and Mary: Edward Albert, later Edward 
+2 CONT England, and was created duke of York in 1892. After his father succeed
+2 CONC ed Queen Victoria in 1901, George became Prince of Wales and succeeded
+2 CONT to the throne upon his father's death in 1910.
+2 CONT
+2 CONT Six children were born to George and Mary: Edward Albert, later Edward
 2 CONC VIII; Albert Frederick George, later George VI; Victoria Alexandra Alic
 2 CONC e Mary; Henry William Frederick Albert, duke of Gloucester; George Edwa
 2 CONC rd Alexander Edmund, duke of Kent; and John Charles Francis. The most n
 2 CONC otable event of the reign of George V was World War I. Following Englan
 2 CONC d's declaration of war on Germany, the king renounced all the German ti
-2 CONC tles belonging to him and his family and changed the name of the royal 
+2 CONC tles belonging to him and his family and changed the name of the royal
 2 CONC house to Windsor.
-2 CONT 
+2 CONT
 2 CONT He died at Sandringham House, Norfolk, on January 20, 1936. He was succ
 2 CONC eeded by Edward VIII.Y
 0 @I6@ INDI
@@ -227,40 +225,40 @@
 2 CONC d Northern Ireland, and emperor of India (January 20-December 11, 1936)
 2 CONC , later known as the duke of Windsor. Edward was born Jun e 23, 1894, i
 2 CONC n White Lodge, Richmond Park, and was educated at the naval preparatory
-2 CONC  college at Osborne; the Royal Naval College, Dartmouth; and Magdalen C
-2 CONC ollege, University of Oxford.
-2 CONT 
+2 CONT college at Osborne; the Royal Naval College, Dartmouth; and Magdalen Co
+2 CONC llege, University of Oxford.
+2 CONT
 2 CONT During World War I he served with the Grenadier Guards in France, Italy
-2 CONC , Flanders, and Egypt. In 1919 he undertook the first of many official 
+2 CONC , Flanders, and Egypt. In 1919 he undertook the first of many official
 2 CONC goodwill tours to Canada and other countries. In the 1920s and 1930s he
-2 CONC  supported slum-clearance projects, aid to the unemployed, and improvem
-2 CONC ent of the working conditions of British miners.
-2 CONT 
-2 CONT On the death of his father, King George V, in January 1936, Edward was 
-2 CONC proclaimed King Edward VIII. Before long, rumours circulated about his 
+2 CONT supported slum-clearance projects, aid to the unemployed, and improveme
+2 CONC nt of the working conditions of British miners.
+2 CONT
+2 CONT On the death of his father, King George V, in January 1936, Edward was
+2 CONC proclaimed King Edward VIII. Before long, rumours circulated about his
 2 CONC alleged romance with an American, Mrs. Wallis Warfield Simpson, then ma
 2 CONC rried to her second husband, a London shipping broker. On October 20, 1
 2 CONC 936, Prime Minister Stanley Baldwin counselled Edward, as king and head
-2 CONC  of the Church of England, to remove all cause for the rumours. A week 
-2 CONC later Mrs. Simpson was granted a divorce, to become final in six months
-2 CONC . In November the king confided to Baldwin that he intended to marry Mr
-2 CONC s. Simpson even if it meant his abdication. A morganatic marriage was p
-2 CONC roposed, but the cabinet was unwilling to accept this compromise. On De
-2 CONC cember 11, 1936, therefore, the king abdicated in favour of his brother
-2 CONC , the duke of York, who became King George VI. Edward received the titl
-2 CONC e duke of Windsor and married Mrs. Simpson in June 1937. Because his wi
-2 CONC fe was not accorded the privileges of a royal duchess in England, the d
-2 CONC uke of Windsor resided abroad.
-2 CONT 
+2 CONT of the Church of England, to remove all cause for the rumours. A week l
+2 CONC ater Mrs. Simpson was granted a divorce, to become final in six months.
+2 CONC  In November the king confided to Baldwin that he intended to marry Mrs
+2 CONC . Simpson even if it meant his abdication. A morganatic marriage was pr
+2 CONC oposed, but the cabinet was unwilling to accept this compromise. On Dec
+2 CONC ember 11, 1936, therefore, the king abdicated in favour of his brother,
+2 CONC  the duke of York, who became King George VI. Edward received the title
+2 CONC  duke of Windsor and married Mrs. Simpson in June 1937. Because his wif
+2 CONC e was not accorded the privileges of a royal duchess in England, the du
+2 CONC ke of Windsor resided abroad.
+2 CONT
 2 CONT In 1937 he observed social and housing conditions in Germany and visite
 2 CONC d Adolf Hitler. During World War II he served as a major general in the
-2 CONC  British Expeditionary Force, and he was governor of the Bahamas from 1
-2 CONC 940 to 1945. After the war he lived as a private British citizen, chief
-2 CONC ly in the United States and France. At the funeral of George VI in Febr
-2 CONC uary 1952, he took part in a British royal ceremony for the first time 
-2 CONC since his abdication. The duke wrote A King's Story (1951) which was ma
-2 CONC de into a film in 1967, and Windsor Revisited (1960). He died May 28, 1
-2 CONC 972, in Paris.Y
+2 CONT British Expeditionary Force, and he was governor of the Bahamas from 19
+2 CONC 40 to 1945. After the war he lived as a private British citizen, chiefl
+2 CONC y in the United States and France. At the funeral of George VI in Febru
+2 CONC ary 1952, he took part in a British royal ceremony for the first time s
+2 CONC ince his abdication. The duke wrote A King's Story (1951) which was mad
+2 CONC e into a film in 1967, and Windsor Revisited (1960). He died May 28, 19
+2 CONC 72, in Paris.Y
 0 @I8@ INDI
 1 NAME Bessie Wallis /Warfield/
 1 SEX F
@@ -282,15 +280,15 @@
 2 PLAC Sandringham, Norfolk, England
 1 FAMC @F7@
 1 FAMS @F4@
-1 NOTE George VI (1895-1952), king of the United Kingdom of Great Britain and 
-2 CONC Northern Ireland (1936-1952), and emperor of India (1936-1947), of the 
+1 NOTE George VI (1895-1952), king of the United Kingdom of Great Britain and
+2 CONC Northern Ireland (1936-1952), and emperor of India (1936-1947), of the
 2 CONC house of Windsor. George was born at Sandringham House, Norfolk, on Dec
 2 CONC ember 14, 1895, the second son of King George V, and he was educated at
-2 CONC  Trinity College, University of Cambridge, and the Royal Naval College 
-2 CONC on the Isle of Wight. In 1923 he married Lady Elizabeth Bowes-Lyon, and
-2 CONC  they had two daughters: Elizabeth Alexandra Mary, later Queen Elizabet
-2 CONC h II, and Margaret Rose.
-2 CONT 
+2 CONT Trinity College, University of Cambridge, and the Royal Naval College o
+2 CONC n the Isle of Wight. In 1923 he married Lady Elizabeth Bowes-Lyon, and
+2 CONT they had two daughters: Elizabeth Alexandra Mary, later Queen Elizabeth
+2 CONC  II, and Margaret Rose.
+2 CONT
 2 CONT George succeeded to the throne after the abdication of his older brothe
 2 CONC r, Edward VIII. Following his coronation in 1937, King George, accompan
 2 CONC ied by the queen consort, began a series of state goodwill visits, trav
@@ -298,12 +296,12 @@
 2 CONC hese visits were interrupted by World War II, during which the king vis
 2 CONC ited many fronts in Europe, but were resumed in 1947, when the royal fa
 2 CONC mily spent several months in South Africa.
-2 CONT 
+2 CONT
 2 CONT In the last three years of his life, illness prevented any further trip
 2 CONC s. The reign of George VI was marked by the relinquishment of the title
-2 CONC  of emperor of India, following the partition of India in 1947 into Pak
-2 CONC istan and India. He died at Sandringham on February 6, 1952, and was su
-2 CONC cceeded by Elizabeth II.Y
+2 CONT of emperor of India, following the partition of India in 1947 into Paki
+2 CONC stan and India. He died at Sandringham on February 6, 1952, and was suc
+2 CONC ceeded by Elizabeth II.Y
 0 @I10@ INDI
 1 NAME Elizabeth Angela Marguerite /Bowes-Lyon/
 1 SEX F
@@ -334,43 +332,43 @@
 2 DATE 31 AUG 1997
 2 PLAC Paris, France
 1 FAMS @F2@
-1 NOTE Princess Diana (1961-1997), Princess of Wales from 1981 to 1997. Diana 
+1 NOTE Princess Diana (1961-1997), Princess of Wales from 1981 to 1997. Diana
 2 CONC was born Diana Frances Spencer in Sandringham, Norfolk, England. Her fa
 2 CONC ther, Edward Spencer, was heir to an earldom, and her mother was the da
 2 CONC ughter of the 4th Baron Fermoy. Diana was educated at Riddlesworth Hall
 2 CONC , a preparatory school in Norfolk, and later at the West Heath School i
-2 CONC n Kent. She attended finishing school in Switzerland at Chateaux d'Oex 
+2 CONC n Kent. She attended finishing school in Switzerland at Chateaux d'Oex
 2 CONC at Montreux. From 1979 until 1981 Diana worked as a kindergarten teache
 2 CONC r at the exclusive Young England School in Pimlico, London.
-2 CONT 
+2 CONT
 2 CONT On February 24, 1981, her engagement to Prince Charles, son of Queen El
 2 CONC izabeth II and the heir to the British throne were announced. They were
-2 CONC  married in Saint Paulâs Cathedral in an internationally televised ce
-2 CONC remony on July 29, 1981, with an audience numbering in the hundreds of 
-2 CONC millions. Diana was the first Englishwoman to marry an heir to the Brit
-2 CONC ish throne in more than 300 years. The couple had two sons: Prince Will
-2 CONC iam Arthur Philip Lou is (born June 21, 1982) and Prince Henry Charles 
-2 CONC Albert David (popularly called Harry, born September 15, 1984).
-2 CONT 
+2 CONT married in Saint Paulâs Cathedral in an internationally televised cer
+2 CONC emony on July 29, 1981, with an audience numbering in the hundreds of m
+2 CONC illions. Diana was the first Englishwoman to marry an heir to the Briti
+2 CONC sh throne in more than 300 years. The couple had two sons: Prince Willi
+2 CONC am Arthur Philip Lou is (born June 21, 1982) and Prince Henry Charles A
+2 CONC lbert David (popularly called Harry, born September 15, 1984).
+2 CONT
 2 CONT By the late 1980s, strains in the royal couple's marriage had been wide
 2 CONC ly publicized, and in December 1992 a separation was announced. By that
-2 CONC  time Diana had adopted charity work as her royal duty. In 1993 she bri
-2 CONC efly withdrew from public activities in an effort to avoid the negative
-2 CONC  publicity focused on her separation from Prince Charles. Formal divorc
-2 CONC e proceedings began in early 1996, and in August 1996 Diana and Charles
-2 CONC  were legally divorced. After the divorce it was agreed that Diana woul
-2 CONC d be known as Lady Diana, Princess of Wales, and would no longer be per
-2 CONC mitted to use the title Her Royal Highness. The couple had joint custod
-2 CONC y of their children.
-2 CONT 
+2 CONT time Diana had adopted charity work as her royal duty. In 1993 she brie
+2 CONC fly withdrew from public activities in an effort to avoid the negative
+2 CONT publicity focused on her separation from Prince Charles. Formal divorce
+2 CONC  proceedings began in early 1996, and in August 1996 Diana and Charles
+2 CONT were legally divorced. After the divorce it was agreed that Diana would
+2 CONC  be known as Lady Diana, Princess of Wales, and would no longer be perm
+2 CONC itted to use the title Her Royal Highness. The couple had joint custody
+2 CONC  of their children.
+2 CONT
 2 CONT Diana actively supported many charities related to homeless and deprive
 2 CONC d children, drug abuse, breast cancer, and victims of acquired immunode
-2 CONC ficiency syndrome (AIDS). In 1987 Diana sat with a man dying from AIDS 
+2 CONC ficiency syndrome (AIDS). In 1987 Diana sat with a man dying from AIDS
 2 CONC and shook his hand, a gesture credited with promoting acceptance and co
 2 CONC mpassion for people with the disease. She was the vice president of the
-2 CONC  British Red Cross and served as a member of the International Red Cros
-2 CONC s advisory board. In 1997 Diana visited Angola and Bosnia and Herzegovi
-2 CONC na in support of a Red Cross campaign to ban landmines.Y
+2 CONT British Red Cross and served as a member of the International Red Cross
+2 CONC  advisory board. In 1997 Diana visited Angola and Bosnia and Herzegovin
+2 CONC a in support of a Red Cross campaign to ban landmines.Y
 0 @I13@ INDI
 1 NAME William Arthur Philip Louis /Windsor/
 1 SEX M
@@ -868,8 +866,7 @@
 2 PLAC Monte Carlo, Monaco
 1 FAMS @F10@
 0 @I87@ INDI
-1 NAME Edward /x/
-2 GIVN Edward IV of York
+1 NAME "Edward" IV of York /x/
 1 SEX M
 1 BIRT
 2 DATE 28 APR 1442
@@ -1028,8 +1025,7 @@
 1 FAMC @F46@
 1 FAMS @F54@
 0 @I102@ INDI
-1 NAME James /Stuart/
-2 GIVN James IV King of Scotland
+1 NAME "James" IV King of Scotland /Stuart/
 1 SEX M
 1 BIRT
 2 DATE 17 MAR 1473
@@ -1040,8 +1036,7 @@
 1 FAMC @F55@
 1 FAMS @F54@
 0 @I103@ INDI
-1 NAME James /Stuart/
-2 GIVN James V King of Scotland
+1 NAME "James" V King of Scotland /Stuart/
 1 SEX M
 1 BIRT
 2 DATE 10 APR 1512
@@ -1083,8 +1078,7 @@
 2 PLAC Kirk o' Field, Edinburgh, Scotland
 1 FAMS @F57@
 0 @I107@ INDI
-1 NAME James /Stuart/
-2 GIVN James I of England
+1 NAME "James" I of England /Stuart/
 1 NAME James VI of Scotland //
 1 SEX M
 1 BIRT
@@ -1627,8 +1621,7 @@
 2 PLAC Poitiers, Angevin Empire
 1 FAMS @F79@
 0 @I160@ INDI
-1 NAME Edward /x/
-2 GIVN Edward, the Black Prince
+1 NAME "Edward", the Black Prince /x/
 1 SEX M
 1 BIRT
 2 DATE 15 JUN 1330
@@ -1679,8 +1672,8 @@
 1 FAMC @F83@
 1 FAMS @F82@
 0 @I165@ INDI
-1 NAME "William" I William the Conqueror /?/
-2 GIVN William the Conqueror
+1 NAME "William" the Conqueror /?/
+2 GIVN "William" I William the Conqueror
 2 NICK William the Conqueror
 1 SEX M
 1 BIRT
@@ -2207,14 +2200,6 @@
 1 HUSB @I91@
 1 WIFE @I96@
 1 CHIL @I97@
-0 @F51@ FAM
-1 MARR
-2 DATE 28 JUL 1540
-2 PLAC Oatlands Palace, Surrey
-1 DIV
-2 DATE 23 NOV 1541
-1 HUSB @I91@
-1 WIFE @I98@
 0 @F50@ FAM
 1 MARR
 2 DATE 06 JAN 1540
@@ -2223,6 +2208,14 @@
 2 DATE 09 JUL 1540
 1 HUSB @I91@
 1 WIFE @I99@
+0 @F51@ FAM
+1 MARR
+2 DATE 28 JUL 1540
+2 PLAC Oatlands Palace, Surrey
+1 DIV
+2 DATE 23 NOV 1541
+1 HUSB @I91@
+1 WIFE @I98@
 0 @F52@ FAM
 1 MARR
 2 DATE 12 JUL 1543

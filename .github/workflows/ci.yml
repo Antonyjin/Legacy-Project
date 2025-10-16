@@ -1,5 +1,9 @@
 name: CI
 
+# Note: Uses macOS runner since repo includes prebuilt macOS binaries
+# For Linux support, binaries would need to be built from source
+# Public repos have unlimited Actions minutes, so no cost concern
+
 on:
   push:
     branches:
@@ -12,8 +16,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  test-macos:
+    runs-on: macos-latest
+    name: Test on macOS (prebuilt binaries)
     env:
       LC_ALL: C.UTF-8
       TZ: UTC
@@ -22,15 +27,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download GeneWeb Linux binaries
+      - name: Make executables
         run: |
-          # Download official GeneWeb Linux binaries
-          wget -q https://github.com/geneweb/geneweb/releases/download/v7.0.0/geneweb-7.0.0-linux-x86_64.tar.gz
-          tar -xzf geneweb-7.0.0-linux-x86_64.tar.gz
-          # Replace macOS binaries with Linux ones
-          cp -r geneweb-7.0.0-linux-x86_64/gw/* GeneWeb/gw/
           chmod +x GeneWeb/gw/* || true
           chmod +x scripts/golden/run_golden.sh || true
+          chmod +x scripts/golden/test_gedcom_import.sh || true
 
       - name: Smoke test gwd
         working-directory: GeneWeb
@@ -127,10 +128,17 @@ jobs:
           chmod +x ./scripts/golden/run_golden.sh || true
           bash ./scripts/golden/run_golden.sh validate
 
+      - name: GEDCOM import roundtrip test
+        run: |
+          chmod +x ./scripts/golden/test_gedcom_import.sh || true
+          bash ./scripts/golden/test_gedcom_import.sh validate
+
       - name: Upload golden diff on failure
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
           name: golden-diff
-          path: tests/golden/reports/diff.txt
+          path: |
+            tests/golden/reports/diff.txt
+            tests/golden/reports/import_diff.txt
           if-no-files-found: ignore
