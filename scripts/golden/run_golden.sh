@@ -126,8 +126,8 @@ echo "$ROUTES" | while IFS= read -r item; do
   
   # Normalize HTML (trim trailing spaces, collapse multiple spaces, remove volatile data)
   sed -E 's/[[:space:]]+$//g; s/[[:space:]]{2,}/ /g' "$RAW" | \
-    # Normalize ALL whitespace after &#010; (HTML newline entity) to single space
-    sed -E 's/&#010;[[:space:]]+/\&#010; /g' | \
+    # Normalize ALL whitespace (including non-breaking spaces \u00A0) after &#010;
+    sed -E 's/&#010;([ \t]|\xC2\xA0)+/\&#010; /g' | \
     sed -E 's/\?i=[0-9]+/?i=RANDOM/g; s/\&i=[0-9]+/\&i=RANDOM/g' | \
     sed -E 's/var q_time = [0-9.]+;/var q_time = TIME;/g' | \
     sed -E 's/fa-dice-[a-z]+/fa-dice-RANDOM/g' | \
