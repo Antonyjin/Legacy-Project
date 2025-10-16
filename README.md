@@ -220,9 +220,6 @@ lsof -ti:2317 | xargs kill -9  # macOS/Linux
 - **Issues**: https://github.com/Antonyjin/Legacy-Project/issues
 - **Upstream GeneWeb**: https://geneweb.tuxfamily.org/
 
-### 📅 Timeline
-
-**Defense window**: October 20–24, 2025
 
 ### 📜 License
 

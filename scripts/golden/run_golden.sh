@@ -88,6 +88,7 @@ family_charles::?m=F&p=charles&n=windsor
 calendar::?m=CAL
 firstnames::?m=P
 surnames::?m=N
+statistics::?m=STAT
 "
 # Note: Relationship page (?m=C or ?m=REL) requires Sosa reference configuration
 # See docs/Issues/ISSUE_85_SKIPPED.md for details

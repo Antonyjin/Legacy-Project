@@ -11,6 +11,7 @@ Overview
   - HTML calendar page (birthdays/anniversaries) with normalized timestamps
   - HTML first name list page (alphabetical listing with counts)
   - HTML surname list page (alphabetical listing with counts)
+  - HTML statistics page (base stats: person count, family count, distribution)
 
 Directories
 - goldens/v1/            # stored references (versioned)
@@ -55,6 +56,7 @@ Outputs
 - goldens/v1/expected_calendar.html.norm          # calendar page (birthdays/anniversaries)
 - goldens/v1/expected_firstnames.html.norm        # first name list page (alphabetical with counts)
 - goldens/v1/expected_surnames.html.norm          # surname list page (alphabetical with counts)
+- goldens/v1/expected_statistics.html.norm        # statistics page (base stats: counts, distribution)
 - reports/diff.txt (only on validate when differences exist)
 - reports/import_diff.txt (only on GEDCOM import test failures)
 
