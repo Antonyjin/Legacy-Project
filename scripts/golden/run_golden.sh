@@ -142,8 +142,8 @@ echo "$ROUTES" | while IFS= read -r item; do
     sed -E 's/[0-9]+ years, [0-9]+ months, [0-9]+ days old/AGE_YMD old/g' | \
     # Mask ages in tooltips (after &#010; normalization)
     sed -E 's/&#010; [0-9,]+ years/\&#010; AGE_YEARS years/g' | \
-    # Mask timestamps in calendar page (HH:MM:SS format)
-    sed -E 's/[0-9]{2}:[0-9]{2}:[0-9]{2}/HH:MM:SS/g' > "$NORM"
+    # Mask timestamps in calendar page header (only in h3 tags, not HTML comments)
+    sed -E 's/(<h3[^>]*>[^<]+ - )[0-9]{2}:[0-9]{2}:[0-9]{2}/\1HH:MM:SS/g' > "$NORM"
   
   if [ "$MODE" = "create" ]; then
     cp "$NORM" "$GOLD_DIR/expected_${name}.html.norm"

@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- $Id: calendar.txt v7.1 10/01/2023 HH:MM:SS $ -->
+<!-- $Id: calendar.txt v7.1 10/01/2023 20:01:49 $ -->
 <!-- Copyright (c) 1998-2007 INRIA -->
 <title>Calendars</title>
 <meta name="robots" content="none">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="shortcut icon" href="images/favicon_gwd.png">
-<!-- $Id: css.txt v7.1 04/11/2023 HH:MM:SS $ -->
+<!-- $Id: css.txt v7.1 04/11/2023 04:28:54 $ -->
 <link rel="stylesheet" href="css/bootstrap.min.css?version=4.6.2">
 <link rel="stylesheet" href="css/all.min.css?version=6.5.1">
 <link rel="stylesheet" href="css/css.css">
 </head>
 <body>
 <meta name="format-detection" content="telephone=no" />
-<!-- $Id: home.txt v7.1 07/09/2023 HH:MM:SS $ -->
+<!-- $Id: home.txt v7.1 07/09/2023 00:49:55 $ -->
 <div class="d-flex flex-column fix_top fix_left">
 <a tabindex="1" role="button" class="btn btn-sm btn-link p-0 border-0" href="test?" title="Home">
 <i class="fa fa-house fa-fw fa-sm" aria-hidden="true"></i><i class="sr-only">Home</i></a>
@@ -212,7 +212,7 @@ Julian day: 2,460,965</div>
  home_errors.title = home_errors.title + errors_list + ".";
  }
  }
-</script><!-- $Id: copyr.txt 7.1-beta 18/12/2023 HH:MM:SS $ -->
+</script><!-- $Id: copyr.txt 7.1-beta 18/12/2023 22:03:44 $ -->
 <div class="d-flex ml-auto justify-content-end m-2" id="copyr">
 <div class="btn-group dropup align-self-center">
 <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenu1"
@@ -270,7 +270,7 @@ target="_blank" rel="noreferrer, noopener" title="GeneWeb on Github"><i class="f
 </div>
 </div>
 </div>
-<!-- $Id: js.txt v7.1 02/12/2023 HH:MM:SS $ -->
+<!-- $Id: js.txt v7.1 02/12/2023 12:35:50 $ -->
 <script src="js/jquery.min.js?version=3.7.1"></script>
 <script src="js/bootstrap.bundle.min.js?version=4.6.1"></script>
 <script>
