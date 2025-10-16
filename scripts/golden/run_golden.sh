@@ -86,6 +86,7 @@ home_fr::?lang=fr
 person_charles::?p=Charles&n=Windsor
 family_charles::?m=F&p=charles&n=windsor
 calendar::?m=CAL
+firstnames::?m=P
 "
 # Note: Relationship page (?m=C or ?m=REL) requires Sosa reference configuration
 # See docs/Issues/ISSUE_85_SKIPPED.md for details

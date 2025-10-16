@@ -9,6 +9,7 @@ Overview
   - HTML person page (Charles Windsor) with key fields (name, person, id)
   - HTML family page (Charles Windsor's family) with parents, marriage info, children
   - HTML calendar page (birthdays/anniversaries) with normalized timestamps
+  - HTML first name list page (alphabetical listing with counts)
 
 Directories
 - goldens/v1/            # stored references (versioned)
@@ -51,6 +52,7 @@ Outputs
 - goldens/v1/expected_person_charles.html.norm    # person page (Charles Windsor)
 - goldens/v1/expected_family_charles.html.norm    # family page (Charles Windsor's family)
 - goldens/v1/expected_calendar.html.norm          # calendar page (birthdays/anniversaries)
+- goldens/v1/expected_firstnames.html.norm        # first name list page (alphabetical with counts)
 - reports/diff.txt (only on validate when differences exist)
 - reports/import_diff.txt (only on GEDCOM import test failures)
 
