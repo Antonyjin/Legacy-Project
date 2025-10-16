@@ -89,6 +89,7 @@ calendar::?m=CAL
 firstnames::?m=P
 surnames::?m=N
 statistics::?m=STAT
+descendants_elizabeth::?m=D&p=Elizabeth&n=Windsor
 "
 # Note: Relationship page (?m=C or ?m=REL) requires Sosa reference configuration
 # See docs/Issues/ISSUE_85_SKIPPED.md for details
