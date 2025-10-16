@@ -28,7 +28,7 @@
 <img src="images/gwlogo.png" alt="GeneWeb" title="GeneWeb">
 <h1 class="font-weight-bolder">Family Tree test</h1>
 <div class="d-flex justify-content-center">
-<span class="h2 font-weight-light">188 individuals</span>
+<span class="h2 font-weight-light">188 individuals</span>
 <a class="align-self-center" href="test?i=RANDOM"
 title="Display a random individual"><i class="fa-solid fa-dice ml-1 mb-2"></i></a>
 </div>
@@ -165,7 +165,7 @@ title="Update book of sources (wizard)"><i class="fa fa-box-archive fa-fw mr-1">
  var home_time = document.getElementById('q_time');
  var home_errors = document.getElementById('nb_errors');
  if (home_time != null) {
- home_time.title = "Query treated in " + q_time + " s";
+ home_time.title = "Query treated in " + q_time + " s";
  if (q_time < 3) {
  home_time.classList.add("text-success");
  } else if (q_time < 8) {
@@ -176,7 +176,7 @@ title="Update book of sources (wizard)"><i class="fa fa-box-archive fa-fw mr-1">
  }
  if (home_errors != null) {
  if (nb_errors > 0) {
- home_errors.title = nb_errors +" error(s)!";
+ home_errors.title = nb_errors +" error(s)!";
  home_errors.classList.remove("d-none");
  }
  if (errors_list != "") {
@@ -230,10 +230,10 @@ title=""><span class="sr-only">lang</span><span class="text-uppercase" title="Vi
 href="test?templ=templm"
 title="templm"><i class="fab fa-markdown" aria-hidden="true"></i><span class="sr-only">switch to templm</span></a>
 <a href="https://github.com//tree/2ab85d8"
-title="Line HEAD compiled on 2024-04-18 from commit 2ab85d8 (2024-04-18)">GeneWeb v. 7.1-beta</a>
+title="Line HEAD compiled on 2024-04-18 from commit 2ab85d8 (2024-04-18)">GeneWeb v. 7.1-beta</a>
 </div>
 <div class="btn-group">
-<span>&copy; <a href="https://www.inria.fr" target="_blank" rel="noreferrer, noopener">INRIA</a> 1998-2007</span>
+<span>&copy; <a href="https://www.inria.fr" target="_blank" rel="noreferrer, noopener">INRIA</a> 1998-2007</span>
 <a href="https://geneweb.tuxfamily.org/wiki/GeneWeb" class="ml-1"
 target="_blank" rel="noreferrer, noopener" title="Documentation GeneWeb"><i class="fab fa-wikipedia-w"></i></a><a href="https://github.com/geneweb/geneweb" class="ml-1"
 target="_blank" rel="noreferrer, noopener" title="GeneWeb on Github"><i class="fab fa-github"></i></a>

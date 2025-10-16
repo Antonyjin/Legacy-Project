@@ -54,7 +54,7 @@ data-html="true" data-content="<img class='w-100' src='images/modules/zz_1.jpg'>
 href="test?m=F&p=charles&n=windsor&wide=on"
 title="Full width display"><i class="fa fa-desktop fa-fw" aria-hidden="true"></i><span class="sr-only">Full width display</span></a>
 </div>
-<div class="mx-2 mt-2">Select each module by clicking on the corresponding button (max 15).</div>
+<div class="mx-2 mt-2">Select each module by clicking on the corresponding button (max 15).</div>
 <div class="alert alert-warning alert-dismissible fade show mt-1 mb-2 d-none" role="alert">
 <div class="d-none alert-opt">Invalid option <strong id="alert-option"></strong> for module <strong id="alert-module"></strong>. Please enter a valid option number.</div>
 <div class="d-none alert-mod">Invalid module <strong id="alert-module-2"></strong>. Please enter a valid module initial.</div>
@@ -114,7 +114,7 @@ title="Copy the link wizard to the clipboard
 <button class="dropdown-item simple-copy" type="button" title="Copy the link wiki to the clipboard"
 data-wikilink="[[Charles/Windsor]]"><i class="far fa-clipboard fa-fw mr-2"></i>[[Charles/Windsor]]</button>
 <button class="dropdown-item full-copy" type="button" title="Copy the link wikitext to the clipboard"
-data-wikilink="[[Charles/Windsor/0/Charles Windsor]]"><i class="far fa-clipboard fa-fw mr-2"></i>[[Charles/Windsor/0/Charles Windsor]]</button>
+data-wikilink="[[Charles/Windsor/0/Charles Windsor]]"><i class="far fa-clipboard fa-fw mr-2"></i>[[Charles/Windsor/0/Charles Windsor]]</button>
 <div class="dropdown-divider"></div>
 <a class="dropdown-item" role="button" title="Search Charles III Philip Arthur George Windsor on Geneanet
 "
@@ -147,7 +147,7 @@ title="Tools families"><span class="fa fa-user-plus" aria-hidden="true"></span><
 <a class="dropdown-item" href="test?m=DEL_FAM&i=RANDOM&ip=0"><span class="fa fa-trash fa-fw text-danger mr-2"></span>Delete family</a>
 <div class="dropdown-divider"></div>
 <a class="dropdown-item" href="test?m=INV_FAM&i=RANDOM&f=2"
-title="Reverse families 1 and 2"><span class="fa fa-right-left fa-rotate-90 fa-fw mr-1"></span> Reverse families<span class="sr-only"> 1 and 2</span>
+title="Reverse families 1 and 2"><span class="fa fa-right-left fa-rotate-90 fa-fw mr-1"></span> Reverse families<span class="sr-only"> 1 and 2</span>
 </a>
 <div class="dropdown-divider"></div>
 <span class="dropdown-header">Marriage with Camilla Rosemary Shand</span>
@@ -172,7 +172,7 @@ title="Reverse families 1 and 2"><span class="fa fa-right-left fa-rotate-90 fa-f
 <a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=FC&v=5"><span class="fa fa-chart-pie fa-fw mr-2"></span>Fanchart</a>
 <div class="dropdown-divider"></div>
 <a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=T&t1=CT&hi=H&v=5&scale=100&fs=17&sosa=on" title="Compact tree with Charles III Philip Arthur George Windsor"><span class="fa fa-table-cells fa-fw mr-2"></span>Compact tree</a>
-<a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=T&t1=h6&sosa=1" title="H-tree 6 generation with CSS (127 ind.)"><span class="fa fa-border-none fa-fw mr-2"></span>6 generations</a>
+<a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=T&t1=h6&sosa=1" title="H-tree 6 generation with CSS (127 ind.)"><span class="fa fa-border-none fa-fw mr-2"></span>6 generations</a>
 <a class="dropdown-item" href="test?p=charles&n=windsor&m=A&t=T&t1=m" title="8 generations H tree"><span class="fa fa-chess-board fa-fw mr-2"></span>8 generations</a>
 </div>
 </li>
@@ -277,36 +277,36 @@ title="Hide spouses">
 <div class="list-group mr-1">
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-primary ">
 <a href="test?i=RANDOM&m=F"
-class="big_anchor list-group-item-action" title="Navigation Prince Andrew of Greece ? (a grandfather)&#010; ° 02/02/1882 Athens, Greece&#010; † 12/03/1944 Monte Carlo, Monaco&#010; 62 years">
+class="big_anchor list-group-item-action" title="Navigation Prince Andrew of Greece ? (a grandfather)&#010; ° 02/02/1882 Athens, Greece&#010; † 12/03/1944 Monte Carlo, Monaco&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?i=RANDOM"
-title="Individual of Prince Andrew of Greece ? (a grandfather)&#010; ° 02/02/1882 Athens, Greece&#010; † 12/03/1944 Monte Carlo, Monaco&#010; 62 years">Prince Andrew of Greece ?</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Prince Andrew of Greece ? (a grandfather)&#010; ° 02/02/1882 Athens, Greece&#010; † 12/03/1944 Monte Carlo, Monaco&#010; 62 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1882-1944</bdo></span></a></span>
+title="Individual of Prince Andrew of Greece ? (a grandfather)&#010; ° 02/02/1882 Athens, Greece&#010; † 12/03/1944 Monte Carlo, Monaco&#010; AGE_YEARS years">Prince Andrew of Greece ?</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Prince Andrew of Greece ? (a grandfather)&#010; ° 02/02/1882 Athens, Greece&#010; † 12/03/1944 Monte Carlo, Monaco&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1882-1944</bdo></span></a></span>
 </div>
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-danger ">
 <a href="test?p=alice+of+battenberg&n=x&oc=84&m=F"
-class="big_anchor list-group-item-action" title="Navigation Alice of Battenberg x (a grandmother)&#010; ° 01/01/1885&#010; † 01/01/1969&#010; 84 years">
+class="big_anchor list-group-item-action" title="Navigation Alice of Battenberg x (a grandmother)&#010; ° 01/01/1885&#010; † 01/01/1969&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=alice+of+battenberg&n=x&oc=84"
-title="Individual of Alice of Battenberg x (a grandmother)&#010; ° 01/01/1885&#010; † 01/01/1969&#010; 84 years">Alice of Battenberg x</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Alice of Battenberg.84 x (a grandmother)&#010; ° 01/01/1885&#010; † 01/01/1969&#010; 84 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1885-1969</bdo></span></a></span>
+title="Individual of Alice of Battenberg x (a grandmother)&#010; ° 01/01/1885&#010; † 01/01/1969&#010; AGE_YEARS years">Alice of Battenberg x</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Alice of Battenberg.84 x (a grandmother)&#010; ° 01/01/1885&#010; † 01/01/1969&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1885-1969</bdo></span></a></span>
 </div>
 </div>
 <div class="w-50 border border-dark border-left-0 border-top-0 border-bottom-0">&#8203;</div>
 <div class="list-group">
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-primary ">
 <a href="test?p=philip&n=mountbatten&m=F"
-class="big_anchor list-group-item-action" title="Navigation Philip Mountbatten (the father)&#010; ° 06/10/1921 Isle of Kerkira, Mon Repos, Corfu, Greece&#010; † 04/09/2021 Windsor Castle&#010; 99 years">
+class="big_anchor list-group-item-action" title="Navigation Philip Mountbatten (the father)&#010; ° 06/10/1921 Isle of Kerkira, Mon Repos, Corfu, Greece&#010; † 04/09/2021 Windsor Castle&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=philip&n=mountbatten"
-title="Individual of Philip Mountbatten (the father)&#010; ° 06/10/1921 Isle of Kerkira, Mon Repos, Corfu, Greece&#010; † 04/09/2021 Windsor Castle&#010; 99 years">Philip Mountbatten</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Philip Mountbatten (the father)&#010; ° 06/10/1921 Isle of Kerkira, Mon Repos, Corfu, Greece&#010; † 04/09/2021 Windsor Castle&#010; 99 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1921-2021</bdo></span></a></span>
+title="Individual of Philip Mountbatten (the father)&#010; ° 06/10/1921 Isle of Kerkira, Mon Repos, Corfu, Greece&#010; † 04/09/2021 Windsor Castle&#010; AGE_YEARS years">Philip Mountbatten</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Philip Mountbatten (the father)&#010; ° 06/10/1921 Isle of Kerkira, Mon Repos, Corfu, Greece&#010; † 04/09/2021 Windsor Castle&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1921-2021</bdo></span></a></span>
 </div>
 </div>
 </div>
@@ -318,36 +318,36 @@ title="Individual of Philip Mountbatten (the father)&#010; ° 06/10/1921 Isle o
 <div class="list-group ml-1">
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-primary ">
 <a href="test?p=george+vi&n=windsor&m=F"
-class="big_anchor list-group-item-action" title="Navigation George VI Windsor (a grandfather)&#010; ° 12/14/1895 York Cottage, Sandringham, Norfolk, England&#010; † 02/06/1952 Sandringham, Norfolk, England&#010; 56 years">
+class="big_anchor list-group-item-action" title="Navigation George VI Windsor (a grandfather)&#010; ° 12/14/1895 York Cottage, Sandringham, Norfolk, England&#010; † 02/06/1952 Sandringham, Norfolk, England&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=george+vi&n=windsor"
-title="Individual of George VI Windsor (a grandfather)&#010; ° 12/14/1895 York Cottage, Sandringham, Norfolk, England&#010; † 02/06/1952 Sandringham, Norfolk, England&#010; 56 years">George VI Windsor</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update George VI Windsor (a grandfather)&#010; ° 12/14/1895 York Cottage, Sandringham, Norfolk, England&#010; † 02/06/1952 Sandringham, Norfolk, England&#010; 56 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1895-1952</bdo></span></a></span>
+title="Individual of George VI Windsor (a grandfather)&#010; ° 12/14/1895 York Cottage, Sandringham, Norfolk, England&#010; † 02/06/1952 Sandringham, Norfolk, England&#010; AGE_YEARS years">George VI Windsor</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update George VI Windsor (a grandfather)&#010; ° 12/14/1895 York Cottage, Sandringham, Norfolk, England&#010; † 02/06/1952 Sandringham, Norfolk, England&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1895-1952</bdo></span></a></span>
 </div>
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-danger ">
 <a href="test?p=elizabeth+angela+marguerite&n=bowes+lyon&m=F"
-class="big_anchor list-group-item-action" title="Navigation Elizabeth Angela Marguerite Bowes-Lyon (a grandmother)&#010; ° 08/04/1900 London, England&#010; † 03/30/2002&#010; 101 years">
+class="big_anchor list-group-item-action" title="Navigation Elizabeth Angela Marguerite Bowes-Lyon (a grandmother)&#010; ° 08/04/1900 London, England&#010; † 03/30/2002&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=elizabeth+angela+marguerite&n=bowes+lyon"
-title="Individual of Elizabeth Angela Marguerite Bowes-Lyon (a grandmother)&#010; ° 08/04/1900 London, England&#010; † 03/30/2002&#010; 101 years">Elizabeth Angela Marguerite Bowes-Lyon</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Elizabeth Angela Marguerite Bowes-Lyon (a grandmother)&#010; ° 08/04/1900 London, England&#010; † 03/30/2002&#010; 101 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1900-2002</bdo></span></a></span>
+title="Individual of Elizabeth Angela Marguerite Bowes-Lyon (a grandmother)&#010; ° 08/04/1900 London, England&#010; † 03/30/2002&#010; AGE_YEARS years">Elizabeth Angela Marguerite Bowes-Lyon</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Elizabeth Angela Marguerite Bowes-Lyon (a grandmother)&#010; ° 08/04/1900 London, England&#010; † 03/30/2002&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1900-2002</bdo></span></a></span>
 </div>
 </div>
 <div class="w-50 border border-dark border-left-0 border-top-0 border-bottom-0">&#8203;</div>
 <div class="list-group">
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-danger ">
 <a href="test?p=elizabeth&n=windsor&m=F"
-class="big_anchor list-group-item-action" title="Navigation Elizabeth II Alexandra Mary Windsor (the mother)&#010; ° 04/21/1926 17 Bruton St., London&#010; † 09/08/2022 Balmoral Castle&#010; 96 years">
+class="big_anchor list-group-item-action" title="Navigation Elizabeth II Alexandra Mary Windsor (the mother)&#010; ° 04/21/1926 17 Bruton St., London&#010; † 09/08/2022 Balmoral Castle&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=elizabeth&n=windsor"
-title="Individual of Elizabeth II Alexandra Mary Windsor (the mother)&#010; ° 04/21/1926 17 Bruton St., London&#010; † 09/08/2022 Balmoral Castle&#010; 96 years">Elizabeth II Alexandra Mary Windsor</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Elizabeth Windsor (the mother)&#010; ° 04/21/1926 17 Bruton St., London&#010; † 09/08/2022 Balmoral Castle&#010; 96 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1926-2022</bdo></span></a></span>
+title="Individual of Elizabeth II Alexandra Mary Windsor (the mother)&#010; ° 04/21/1926 17 Bruton St., London&#010; † 09/08/2022 Balmoral Castle&#010; AGE_YEARS years">Elizabeth II Alexandra Mary Windsor</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Elizabeth Windsor (the mother)&#010; ° 04/21/1926 17 Bruton St., London&#010; † 09/08/2022 Balmoral Castle&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1926-2022</bdo></span></a></span>
 </div>
 </div>
 </div>
@@ -372,13 +372,13 @@ title="Add parents unknown of Diana Frances Spencer">
 <div class="ml-3">
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-primary ">
 <a href="test?p=charles&n=windsor&m=F"
-class="big_anchor list-group-item-action" title="Navigation Charles III Philip Arthur George Windsor(him)&#010; ° 11/14/1948 Buckingham Palace, London, England&#010; 76 years">
+class="big_anchor list-group-item-action" title="Navigation Charles III Philip Arthur George Windsor(him)&#010; ° 11/14/1948 Buckingham Palace, London, England&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=charles&n=windsor"
-title="Individual of Charles III Philip Arthur George Windsor(him)&#010; ° 11/14/1948 Buckingham Palace, London, England&#010; 76 years">Charles III Philip Arthur George Windsor</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Charles Windsor(him)&#010; ° 11/14/1948 Buckingham Palace, London, England&#010; 76 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1948</bdo></span></a></span>
+title="Individual of Charles III Philip Arthur George Windsor(him)&#010; ° 11/14/1948 Buckingham Palace, London, England&#010; AGE_YEARS years">Charles III Philip Arthur George Windsor</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Charles Windsor(him)&#010; ° 11/14/1948 Buckingham Palace, London, England&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1948</bdo></span></a></span>
 </div>
 </div>
 <div class="row px-0 ml-1">
@@ -388,89 +388,89 @@ title="Individual of Charles III Philip Arthur George Windsor(him)&#010; ° 11/
 </div>
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-danger ">
 <a href="test?p=anne+elizabeth+alice&n=windsor&m=F"
-class="big_anchor list-group-item-action" title="Navigation Anne Elizabeth Alice Windsor (a sister)&#010; ° 08/15/1950 Clarence House, St. James, England&#010; 75 years">
+class="big_anchor list-group-item-action" title="Navigation Anne Elizabeth Alice Windsor (a sister)&#010; ° 08/15/1950 Clarence House, St. James, England&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=anne+elizabeth+alice&n=windsor"
-title="Individual of Anne Elizabeth Alice Windsor (a sister)&#010; ° 08/15/1950 Clarence House, St. James, England&#010; 75 years">Anne Elizabeth Alice Windsor</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Anne Elizabeth Alice Windsor (a sister)&#010; ° 08/15/1950 Clarence House, St. James, England&#010; 75 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1950</bdo></span></a></span>
+title="Individual of Anne Elizabeth Alice Windsor (a sister)&#010; ° 08/15/1950 Clarence House, St. James, England&#010; AGE_YEARS years">Anne Elizabeth Alice Windsor</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Anne Elizabeth Alice Windsor (a sister)&#010; ° 08/15/1950 Clarence House, St. James, England&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1950</bdo></span></a></span>
 </div>
 <div class="d-flex flex-row">
 <div class="d-flex flex-column">
 <div class="w-50 border border-dark border-left-0 border-top-0 border-bottom-0">&#8203;</div>
 <span class="align-self-center ml-1 mr-2 text-nowrap">&<a title="& 11/14/1973 Westminster Abbey">1973</a></span>
 <div class="text-center">
-<a title="• Peter Mark Andrew&#010; ° 11/15/1977 St. Mary&#39;s Hosp., Paddington, London, England&#010; 47 years&#010;• Zara Anne Elizabeth&#010; ° 05/15/1981 St. Mary&#39;s Hosp., Paddington, London, England&#010; 44 years">2<i class="fa fa-child fa-fw"></i>
+<a title="• Peter Mark Andrew&#010; ° 11/15/1977 St. Mary&#39;s Hosp., Paddington, London, England&#010; AGE_YEARS years&#010;• Zara Anne Elizabeth&#010; ° 05/15/1981 St. Mary&#39;s Hosp., Paddington, London, England&#010; AGE_YEARS years">2<i class="fa fa-child fa-fw"></i>
 </a></div>
 </div>
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-primary ">
 <a href="test?p=mark+anthony+peter&n=phillips&m=F"
-class="big_anchor list-group-item-action" title="Navigation Mark Anthony Peter Phillips (a brother-in-law)&#010; ° 09/22/1948&#010; 77 years">
+class="big_anchor list-group-item-action" title="Navigation Mark Anthony Peter Phillips (a brother-in-law)&#010; ° 09/22/1948&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=mark+anthony+peter&n=phillips"
-title="Individual of Mark Anthony Peter Phillips (a brother-in-law)&#010; ° 09/22/1948&#010; 77 years">Mark Anthony Peter Phillips</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Mark Anthony Peter Phillips (a brother-in-law)&#010; ° 09/22/1948&#010; 77 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1948</bdo></span></a></span>
+title="Individual of Mark Anthony Peter Phillips (a brother-in-law)&#010; ° 09/22/1948&#010; AGE_YEARS years">Mark Anthony Peter Phillips</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Mark Anthony Peter Phillips (a brother-in-law)&#010; ° 09/22/1948&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1948</bdo></span></a></span>
 </div>
 </div>
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-primary ">
 <a href="test?p=andrew+albert+christian&n=windsor&m=F"
-class="big_anchor list-group-item-action" title="Navigation Andrew Albert Christian Windsor (a brother)&#010; ° 02/19/1960 Buckingham Palace, London, England&#010; 65 years">
+class="big_anchor list-group-item-action" title="Navigation Andrew Albert Christian Windsor (a brother)&#010; ° 02/19/1960 Buckingham Palace, London, England&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=andrew+albert+christian&n=windsor"
-title="Individual of Andrew Albert Christian Windsor (a brother)&#010; ° 02/19/1960 Buckingham Palace, London, England&#010; 65 years">Andrew Albert Christian Windsor</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Andrew Albert Christian Windsor (a brother)&#010; ° 02/19/1960 Buckingham Palace, London, England&#010; 65 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1960</bdo></span></a></span>
+title="Individual of Andrew Albert Christian Windsor (a brother)&#010; ° 02/19/1960 Buckingham Palace, London, England&#010; AGE_YEARS years">Andrew Albert Christian Windsor</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Andrew Albert Christian Windsor (a brother)&#010; ° 02/19/1960 Buckingham Palace, London, England&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1960</bdo></span></a></span>
 </div>
 <div class="d-flex flex-row">
 <div class="d-flex flex-column">
 <div class="w-50 border border-dark border-left-0 border-top-0 border-bottom-0">&#8203;</div>
 <span class="align-self-center ml-1 mr-2 text-nowrap">&<a title="& 07/23/1986 Westminster Abbey">1986</a></span>
 <div class="text-center">
-<a title="• Beatrice Elizabeth Mary&#010; ° 08/08/1988 Portland Hospital, England&#010; 37 years&#010;• Eugenie Victoria Helena&#010; ° 03/23/1990 London, England&#010; 35 years">2<i class="fa fa-child fa-fw"></i>
+<a title="• Beatrice Elizabeth Mary&#010; ° 08/08/1988 Portland Hospital, England&#010; AGE_YEARS years&#010;• Eugenie Victoria Helena&#010; ° 03/23/1990 London, England&#010; AGE_YEARS years">2<i class="fa fa-child fa-fw"></i>
 </a></div>
 </div>
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-danger ">
 <a href="test?p=sarah+margaret&n=ferguson&m=F"
-class="big_anchor list-group-item-action" title="Navigation Sarah Margaret Ferguson (a sister-in-law)&#010; ° 10/15/1959 27 Welbech St., Marylebone, London, England&#010; 66 years">
+class="big_anchor list-group-item-action" title="Navigation Sarah Margaret Ferguson (a sister-in-law)&#010; ° 10/15/1959 27 Welbech St., Marylebone, London, England&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=sarah+margaret&n=ferguson"
-title="Individual of Sarah Margaret Ferguson (a sister-in-law)&#010; ° 10/15/1959 27 Welbech St., Marylebone, London, England&#010; 66 years">Sarah Margaret Ferguson</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Sarah Margaret Ferguson (a sister-in-law)&#010; ° 10/15/1959 27 Welbech St., Marylebone, London, England&#010; 66 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1959</bdo></span></a></span>
+title="Individual of Sarah Margaret Ferguson (a sister-in-law)&#010; ° 10/15/1959 27 Welbech St., Marylebone, London, England&#010; AGE_YEARS years">Sarah Margaret Ferguson</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Sarah Margaret Ferguson (a sister-in-law)&#010; ° 10/15/1959 27 Welbech St., Marylebone, London, England&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1959</bdo></span></a></span>
 </div>
 </div>
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-primary ">
 <a href="test?p=edward+anthony+richard&n=windsor&m=F"
-class="big_anchor list-group-item-action" title="Navigation Edward Anthony Richard Windsor (a brother)&#010; ° 03/10/1964 Buckingham Palace, London, England&#010; 61 years">
+class="big_anchor list-group-item-action" title="Navigation Edward Anthony Richard Windsor (a brother)&#010; ° 03/10/1964 Buckingham Palace, London, England&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=edward+anthony+richard&n=windsor"
-title="Individual of Edward Anthony Richard Windsor (a brother)&#010; ° 03/10/1964 Buckingham Palace, London, England&#010; 61 years">Edward Anthony Richard Windsor</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Edward Anthony Richard Windsor (a brother)&#010; ° 03/10/1964 Buckingham Palace, London, England&#010; 61 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1964</bdo></span></a></span>
+title="Individual of Edward Anthony Richard Windsor (a brother)&#010; ° 03/10/1964 Buckingham Palace, London, England&#010; AGE_YEARS years">Edward Anthony Richard Windsor</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Edward Anthony Richard Windsor (a brother)&#010; ° 03/10/1964 Buckingham Palace, London, England&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1964</bdo></span></a></span>
 </div>
 <div class="d-flex flex-row">
 <div class="d-flex flex-column">
 <div class="w-50 border border-dark border-left-0 border-top-0 border-bottom-0">&#8203;</div>
 <span class="align-self-center ml-1 mr-2 text-nowrap">&<a title="& 06/19/1999 St. George&#39;s Chapel, Windsor Castle">1999</a></span>
 <div class="text-center">
-<a title="• Louise Alice Elizabeth Mary Mountbatten-Windsor&#010; ° 11/08/2003 Frimley Park Hospital, Surrey, England&#010; 21 years&#010;• James Alexander Philip Theo Mountbatten-Windsor&#010; ° 12/17/2007 Frimley Park Hospital, Surrey, England&#010; 17 years">2<i class="fa fa-child fa-fw"></i>
+<a title="• Louise Alice Elizabeth Mary Mountbatten-Windsor&#010; ° 11/08/2003 Frimley Park Hospital, Surrey, England&#010; AGE_YEARS years&#010;• James Alexander Philip Theo Mountbatten-Windsor&#010; ° 12/17/2007 Frimley Park Hospital, Surrey, England&#010; AGE_YEARS years">2<i class="fa fa-child fa-fw"></i>
 </a></div>
 </div>
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-danger ">
 <a href="test?p=sophie+helen&n=rhys+jones&m=F"
-class="big_anchor list-group-item-action" title="Navigation Sophie Helen Rhys-Jones (a sister-in-law)&#010; ° 01/20/1965 Radcliffe Infirmary, Oxford&#010; 60 years">
+class="big_anchor list-group-item-action" title="Navigation Sophie Helen Rhys-Jones (a sister-in-law)&#010; ° 01/20/1965 Radcliffe Infirmary, Oxford&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=sophie+helen&n=rhys+jones"
-title="Individual of Sophie Helen Rhys-Jones (a sister-in-law)&#010; ° 01/20/1965 Radcliffe Infirmary, Oxford&#010; 60 years">Sophie Helen Rhys-Jones</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Sophie Helen Rhys-Jones (a sister-in-law)&#010; ° 01/20/1965 Radcliffe Infirmary, Oxford&#010; 60 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1965</bdo></span></a></span>
+title="Individual of Sophie Helen Rhys-Jones (a sister-in-law)&#010; ° 01/20/1965 Radcliffe Infirmary, Oxford&#010; AGE_YEARS years">Sophie Helen Rhys-Jones</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Sophie Helen Rhys-Jones (a sister-in-law)&#010; ° 01/20/1965 Radcliffe Infirmary, Oxford&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1965</bdo></span></a></span>
 </div>
 </div>
 </div>
@@ -485,67 +485,67 @@ Two brothers
 <div class="col px-0">
 <div class="d-flex flex-column">
 <div class="mt-3 px-0">
-<div class="border border-dark border-top-0 border-left-0 border-right-0 text-center"><a title="& 07/29/1981 ">&1981</a>  2<i class="fa fa-child fa-fw"></i></div>
+<div class="border border-dark border-top-0 border-left-0 border-right-0 text-center"><a title="& 07/29/1981 ">&1981</a> 2<i class="fa fa-child fa-fw"></i></div>
 <div class="border border-dark border-bottom-0 border-top-0 border-left-0 w-50">&#8203;<br>&#8203;</div>
 </div>
 <div class="px-2">
 <div class="list-group mb-2">
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-primary ">
 <a href="test?p=william+arthur+philip+louis&n=windsor&m=F"
-class="big_anchor list-group-item-action" title="Navigation William Arthur Philip Louis Windsor (a son, 1st child)&#010; ° 06/21/1982 St. Mary&#39;s Hosp., Paddington, London, England&#010; 43 years">
+class="big_anchor list-group-item-action" title="Navigation William Arthur Philip Louis Windsor (a son, 1st child)&#010; ° 06/21/1982 St. Mary&#39;s Hosp., Paddington, London, England&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=william+arthur+philip+louis&n=windsor"
-title="Individual of William Arthur Philip Louis Windsor (a son, 1st child)&#010; ° 06/21/1982 St. Mary&#39;s Hosp., Paddington, London, England&#010; 43 years">William Arthur Philip Louis Windsor</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update William Arthur Philip Louis Windsor (a son, 1st child)&#010; ° 06/21/1982 St. Mary&#39;s Hosp., Paddington, London, England&#010; 43 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1982</bdo></span></a></span>
+title="Individual of William Arthur Philip Louis Windsor (a son, 1st child)&#010; ° 06/21/1982 St. Mary&#39;s Hosp., Paddington, London, England&#010; AGE_YEARS years">William Arthur Philip Louis Windsor</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update William Arthur Philip Louis Windsor (a son, 1st child)&#010; ° 06/21/1982 St. Mary&#39;s Hosp., Paddington, London, England&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1982</bdo></span></a></span>
 </div>
 <div class="d-flex flex-row">
 <div class="d-flex flex-column">
 <div class="w-50 border border-dark border-left-0 border-top-0 border-bottom-0">&#8203;</div>
 <span class="align-self-center ml-1 mr-2 text-nowrap">&<a title="& 04/29/2011 ">2011</a></span>
 <div class="text-center">
-<a title="• George Alexander Louis&#010; ° 07/22/2013 St. Mary&#39;s Hosp., Paddington, London, England&#010; 12 years&#010;• Charlotte Elizabeth Diana&#010; ° 05/02/2015 St Mary&#39;s Hospital, London, England&#010; 10 years&#010;• Louis Arthur Charles&#010; ° 04/23/2018 St. Mary&#39;s Hosp., Paddington, London, England&#010; 7 years">3<i class="fa fa-child fa-fw"></i>
+<a title="• George Alexander Louis&#010; ° 07/22/2013 St. Mary&#39;s Hosp., Paddington, London, England&#010; AGE_YEARS years&#010;• Charlotte Elizabeth Diana&#010; ° 05/02/2015 St Mary&#39;s Hospital, London, England&#010; AGE_YEARS years&#010;• Louis Arthur Charles&#010; ° 04/23/2018 St. Mary&#39;s Hosp., Paddington, London, England&#010; AGE_YEARS years">3<i class="fa fa-child fa-fw"></i>
 </a></div>
 </div>
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-danger ">
 <a href="test?p=kate&n=middleton&m=F"
-class="big_anchor list-group-item-action" title="Navigation Kate Middleton (a daughter-in-law)&#010; ° 01/09/1982 Royal Berkshire Hospital, Reading, Berkshire, England&#010; 43 years">
+class="big_anchor list-group-item-action" title="Navigation Kate Middleton (a daughter-in-law)&#010; ° 01/09/1982 Royal Berkshire Hospital, Reading, Berkshire, England&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=kate&n=middleton"
-title="Individual of Kate Middleton (a daughter-in-law)&#010; ° 01/09/1982 Royal Berkshire Hospital, Reading, Berkshire, England&#010; 43 years">Kate Middleton</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Kate Middleton (a daughter-in-law)&#010; ° 01/09/1982 Royal Berkshire Hospital, Reading, Berkshire, England&#010; 43 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1982</bdo></span></a></span>
+title="Individual of Kate Middleton (a daughter-in-law)&#010; ° 01/09/1982 Royal Berkshire Hospital, Reading, Berkshire, England&#010; AGE_YEARS years">Kate Middleton</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Kate Middleton (a daughter-in-law)&#010; ° 01/09/1982 Royal Berkshire Hospital, Reading, Berkshire, England&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1982</bdo></span></a></span>
 </div>
 </div>
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-primary ">
 <a href="test?p=harry&n=windsor&m=F"
-class="big_anchor list-group-item-action" title="Navigation Harry <em>Harry</em> Windsor (a son, 2nd child)&#010; ° 09/15/1984 St. Mary&#39;s Hosp., Paddington, London, England&#010; 41 years">
+class="big_anchor list-group-item-action" title="Navigation Harry <em>Harry</em> Windsor (a son, 2nd child)&#010; ° 09/15/1984 St. Mary&#39;s Hosp., Paddington, London, England&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=harry&n=windsor"
-title="Individual of Harry <em>Harry</em> Windsor (a son, 2nd child)&#010; ° 09/15/1984 St. Mary&#39;s Hosp., Paddington, London, England&#010; 41 years">Harry <em>Harry</em> Windsor</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Harry Windsor (a son, 2nd child)&#010; ° 09/15/1984 St. Mary&#39;s Hosp., Paddington, London, England&#010; 41 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1984</bdo></span></a></span>
+title="Individual of Harry <em>Harry</em> Windsor (a son, 2nd child)&#010; ° 09/15/1984 St. Mary&#39;s Hosp., Paddington, London, England&#010; AGE_YEARS years">Harry <em>Harry</em> Windsor</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Harry Windsor (a son, 2nd child)&#010; ° 09/15/1984 St. Mary&#39;s Hosp., Paddington, London, England&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1984</bdo></span></a></span>
 </div>
 <div class="d-flex flex-row">
 <div class="d-flex flex-column">
 <div class="w-50 border border-dark border-left-0 border-top-0 border-bottom-0">&#8203;</div>
 <span class="align-self-center ml-1 mr-2 text-nowrap">&<a title="& 05/19/2018 St George&#39;s Chapel, Windsor Castle">2018</a></span>
 <div class="text-center">
-<a title="• Archie Harrison Mountbatten-Windsor&#010; ° 05/06/2019&#010; 6 years&#010;• Lilibet Diana Mountbatten-Windsor&#010; ° 06/04/2021 Santa Barbara Cottage Hospital, Santa Barbara, California, U.S.&#010; 4 years">2<i class="fa fa-child fa-fw"></i>
+<a title="• Archie Harrison Mountbatten-Windsor&#010; ° 05/06/2019&#010; AGE_YEARS years&#010;• Lilibet Diana Mountbatten-Windsor&#010; ° 06/04/2021 Santa Barbara Cottage Hospital, Santa Barbara, California, U.S.&#010; AGE_YEARS years">2<i class="fa fa-child fa-fw"></i>
 </a></div>
 </div>
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-danger ">
 <a href="test?p=meghan&n=markle&m=F"
-class="big_anchor list-group-item-action" title="Navigation Meghan <em>Meghan</em> Markle (a daughter-in-law)&#010; ° 08/04/1981 Los Angeles, California, United States&#010; 44 years">
+class="big_anchor list-group-item-action" title="Navigation Meghan <em>Meghan</em> Markle (a daughter-in-law)&#010; ° 08/04/1981 Los Angeles, California, United States&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=meghan&n=markle"
-title="Individual of Meghan <em>Meghan</em> Markle (a daughter-in-law)&#010; ° 08/04/1981 Los Angeles, California, United States&#010; 44 years">Meghan <em>Meghan</em> Markle</a>
-<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Meghan Markle (a daughter-in-law)&#010; ° 08/04/1981 Los Angeles, California, United States&#010; 44 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1981</bdo></span></a></span>
+title="Individual of Meghan <em>Meghan</em> Markle (a daughter-in-law)&#010; ° 08/04/1981 Los Angeles, California, United States&#010; AGE_YEARS years">Meghan <em>Meghan</em> Markle</a>
+<a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Meghan Markle (a daughter-in-law)&#010; ° 08/04/1981 Los Angeles, California, United States&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1981</bdo></span></a></span>
 </div>
 </div>
 </div>
@@ -557,15 +557,15 @@ title="Individual of Meghan <em>Meghan</em> Markle (a daughter-in-law)&#010; °�
 <div class="d-flex pl-0 pr-0 py-0 w-100 justify-content-start list-group-item list-group-item-danger ">
 <a href="test?p=diana+frances&n=spencer&m=F"
 class="big_anchor list-group-item-action" title="Navigation Diana Frances Spencer (1st spouse)
-&#010; ° 07/01/1961 Sandringham, Norfolk, England&#010; † 08/31/1997 Paris, France&#010; 36 years">
+&#010; ° 07/01/1961 Sandringham, Norfolk, England&#010; † 08/31/1997 Paris, France&#010; AGE_YEARS years">
 </a>
 <span class="small_image noimage align-self-center rounded display-3 text-center text-muted ml-0 pb-2">?</span>
 <span class="align-self-center ml-2">
 <a class="normal_anchor" href="test?p=diana+frances&n=spencer"
 title="Individual of Diana Frances Spencer (1st spouse)
-&#010; ° 07/01/1961 Sandringham, Norfolk, England&#010; † 08/31/1997 Paris, France&#010; 36 years">Diana Frances Spencer</a>
+&#010; ° 07/01/1961 Sandringham, Norfolk, England&#010; † 08/31/1997 Paris, France&#010; AGE_YEARS years">Diana Frances Spencer</a>
 <a class="normal_anchor" href="test?m=MOD_IND&i=RANDOM" title="Update Diana Frances Spencer (1st spouse)
-&#010; ° 07/01/1961 Sandringham, Norfolk, England&#010; † 08/31/1997 Paris, France&#010; 36 years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1961-1997</bdo></span></a></span>
+&#010; ° 07/01/1961 Sandringham, Norfolk, England&#010; † 08/31/1997 Paris, France&#010; AGE_YEARS years"><span class="text-nowrap font-italic"> <bdo dir=ltr>1961-1997</bdo></span></a></span>
 </div>
 <a class="d-flex list-group-item list-group-item-dark ml-2 pl-0 pr-2 py-0"
 href="test?m=F&p=charles&n=windsor&fam=2"
@@ -585,7 +585,7 @@ title="Display Camilla Rosemary Shand (2nd spouse)
  var home_time = document.getElementById('q_time');
  var home_errors = document.getElementById('nb_errors');
  if (home_time != null) {
- home_time.title = "Query treated in " + q_time + " s";
+ home_time.title = "Query treated in " + q_time + " s";
  if (q_time < 3) {
  home_time.classList.add("text-success");
  } else if (q_time < 8) {
@@ -596,7 +596,7 @@ title="Display Camilla Rosemary Shand (2nd spouse)
  }
  if (home_errors != null) {
  if (nb_errors > 0) {
- home_errors.title = nb_errors +" error(s)!";
+ home_errors.title = nb_errors +" error(s)!";
  home_errors.classList.remove("d-none");
  }
  if (errors_list != "") {
@@ -650,10 +650,10 @@ title=""><span class="sr-only">lang</span><span class="text-uppercase" title="Vi
 href="test?templ=templm&m=F&p=charles&n=windsor"
 title="templm"><i class="fab fa-markdown" aria-hidden="true"></i><span class="sr-only">switch to templm</span></a>
 <a href="https://github.com//tree/2ab85d8"
-title="Line HEAD compiled on 2024-04-18 from commit 2ab85d8 (2024-04-18)">GeneWeb v. 7.1-beta</a>
+title="Line HEAD compiled on 2024-04-18 from commit 2ab85d8 (2024-04-18)">GeneWeb v. 7.1-beta</a>
 </div>
 <div class="btn-group">
-<span>&copy; <a href="https://www.inria.fr" target="_blank" rel="noreferrer, noopener">INRIA</a> 1998-2007</span>
+<span>&copy; <a href="https://www.inria.fr" target="_blank" rel="noreferrer, noopener">INRIA</a> 1998-2007</span>
 <a href="https://geneweb.tuxfamily.org/wiki/GeneWeb" class="ml-1"
 target="_blank" rel="noreferrer, noopener" title="Documentation GeneWeb"><i class="fab fa-wikipedia-w"></i></a><a href="https://github.com/geneweb/geneweb" class="ml-1"
 target="_blank" rel="noreferrer, noopener" title="GeneWeb on Github"><i class="fab fa-github"></i></a>
