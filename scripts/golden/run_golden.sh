@@ -131,7 +131,11 @@ echo "$ROUTES" | while IFS= read -r item; do
     sed -E 's/fa-dice-[a-z]+/fa-dice-RANDOM/g' | \
     # Mask age computations that vary day-to-day
     sed -E 's/=[[:space:]]*[0-9,]+ days old/= AGE_DAYS old/g' | \
-    sed -E 's/[0-9]+ years, [0-9]+ months, [0-9]+ days old/AGE_YMD old/g' > "$NORM"
+    sed -E 's/[0-9]+ years, [0-9]+ months, [0-9]+ days old/AGE_YMD old/g' | \
+    # Mask ages in tooltips (&#010; is newline in HTML entities)
+    sed -E 's/&#010;[[:space:]]+([0-9,]+) years/\&#010; AGE_YEARS years/g' | \
+    sed -E 's/&#010;[[:space:]]*°/\&#010; °/g' | \
+    sed -E 's/&#010;[[:space:]]*†/\&#010; †/g' > "$NORM"
   
   if [ "$MODE" = "create" ]; then
     cp "$NORM" "$GOLD_DIR/expected_${name}.html.norm"
