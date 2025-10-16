@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- $Id: desmenu.txt v7.1 18/08/2023 14:55:20 $ -->
+<!-- Copyright (c) 1998-2007 INRIA -->
+<title>Descendants of Elizabeth II Alexandra Mary Windsor</title>
+<meta name="robots" content="none">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="shortcut icon" href="images/favicon_gwd.png">
+<link rel="shortcut icon" href="images/favicon_gwd.png"><!-- $Id: css.txt v7.1 04/11/2023 04:28:54 $ -->
+<link rel="stylesheet" href="css/bootstrap.min.css?version=4.6.2">
+<link rel="stylesheet" href="css/all.min.css?version=6.5.1">
+<link rel="stylesheet" href="css/css.css">
+</head>
+<body>
+<meta name="format-detection" content="telephone=no" />
+<div class="container">
+<!-- $Id: perso_utils v7.1 13/08/2023 16:55:48 $ -->
+<!-- $Id: menubar.txt v7.1 17/04/2024 19:21:12 $ -->
+<nav class="navbar sticky-top navbar-light bg-white justify-content-center navbar-expand-md pt-0">
+<div class="btn-toolbar bg-white" role="toolbar">
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+<ul class="nav nav-tabs">
+<li class="nav-item dropdown">
+<a id="load_once_p_mod" class="nav-link dropdown-toggle text-secondary dropdown-toggle-split" data-toggle="dropdown"
+href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Modules"><span class="fas fa-address-card fa-fw mr-1" aria-hidden="true"></span><span class="sr-only">Modules</span></a>
+<div class="dropdown-menu dropdown-menu-transl-pmod">
+<div class="d-inline-flex justify-content-around mx-1">
+<form class="form-group mx-1" name="upd_url" method="get" action="test">
+<div class="d-flex justify-content-between mx-2 mt-2 img-prfx" data-prfx="images/modules">
+<div class="d-inline-flex">
+<div class="input-group">
+<input type="text" pattern="^((?:([a-z][0-9]){1,15})|zz)" name="p_mod" id="p_mod" class="form-control"
+value=""
+placeholder="Select personalized modules" maxlength="40">
+<div class="input-group-append">
+<button type="submit" class="btn btn-outline-success" title="Submit"><i class="fa fa-check fa-lg"></i></button>
+<button type="button" class="btn btn-outline-danger" id="p_mod_clear" title="Delete"><i class="fa fa-xmark fa-lg mx-1"></i></button>
+</div>
+</div>
+<input type="hidden" name="p" value="elizabeth">
+<input type="hidden" name="n" value="windsor">
+<button type="button" class="btn btn-outline-danger ml-2" id="p_mod_rm" title="Remove the last added module" value=""><i class="fa fa-backward"></i></button>
+<button type="submit" class="btn btn-outline-secondary ml-2 mr-1" id='zz'
+title="Default template" data-toggle="popover" data-trigger="hover"
+data-html="true" data-content="<img class='w-100' src='images/modules/zz_1.jpg'>"><i class="fa fa-arrow-rotate-left"></i></button>
+</div>
+<a role="button" class="btn btn-outline-primary"
+href="test?m=D&p=Elizabeth&n=Windsor&wide=on"
+title="Full width display"><i class="fa fa-desktop fa-fw" aria-hidden="true"></i><span class="sr-only">Full width display</span></a>
+</div>
+<div class="mx-2 mt-2">Select each module by clicking on the corresponding button (max 15).</div>
+<div class="alert alert-warning alert-dismissible fade show mt-1 mb-2 d-none" role="alert">
+<div class="d-none alert-opt">Invalid option <strong id="alert-option"></strong> for module <strong id="alert-module"></strong>. Please enter a valid option number.</div>
+<div class="d-none alert-mod">Invalid module <strong id="alert-module-2"></strong>. Please enter a valid module initial.</div>
+</div>
+<div id="p_mod_table"></div>
+</form>
+<div class="form-group d-none d-md-block mx-1">
+<img src="images/modules/menubar_1.jpg" alt="menubar for p_mod_builder" aria-hidden="true">
+<div id="p_mod_builder"></div>
+</div>
+</div>
+</div>
+</li>
+<li class="nav-item">
+<a class="nav-link " id="self"
+href="test?p=elizabeth&n=windsor" title="Elizabeth Windsor">
+<span class="fa fa-user-large fa-fw female" aria-hidden="true"></span>
+<span class="sr-only">Elizabeth Windsor</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link " id="mod_ind" href="test?m=MOD_IND&i=RANDOM" title="Update individual Elizabeth Windsor (P)" accesskey="P"><span class="fa fa-user-pen fa-fw female" aria-hidden="true"></span><span class="sr-only">Update individual (P)</span></a>
+</li>
+<li class="nav-item dropdown">
+<a id="load_once_copylink" class="nav-link dropdown-toggle text-secondary "
+data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true" title="Tools individual"><span class="fa fa-user-gear" aria-hidden="true"></span><span class="sr-only">Tools individual</span></a>
+<div class="dropdown-menu dropdown-menu-transl">
+<a class="dropdown-item"
+href="test?pz=elizabeth&nz=windsor&m=D&p=Elizabeth&n=Windsor"
+title="Browse using Elizabeth II Alexandra Mary Windsor as Sosa reference" accesskey="S"><i class="far fa-circle-dot fa-fw female mr-1"></i> Update Sosa 1: Elizabeth II Alexandra Mary Windsor</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?m=D&p=Elizabeth&n=Windsor&cgl=on" target="_blank"><i class="fa fa-link-slash fa-fw mr-2" title="Without GeneWeb links"></i>Without GeneWeb links</a><div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?m=CHG_EVT_IND_ORD&i=RANDOM" title="Change order of individual events"><span class="fa fa-sort fa-fw mr-2"></span>Reverse events</a>
+<a class="dropdown-item" href="test?m=SND_IMAGE&i=RANDOM">
+<i class="far fa-file-image fa-fw mr-2"></i>Add picture</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?m=MRG&i=RANDOM" title="Merge Elizabeth.0 Windsor with…"><span class="fa fa-compress fa-fw text-danger mr-2"></span>Merge individuals</a>
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=DEL_IND&i=RANDOM" title="Delete Elizabeth II Alexandra Mary Windsor"><span class="fa fa-trash-can fa-fw text-danger mr-2"></span>Delete individual</a>
+<a href="test?p=margaret+rose&n=windsor" id="next_sibling" class="d-none"></a>
+<div class="dropdown-divider"></div>
+<div class="btn-group pr-4" role="group">
+<button class="dropdown-item permalink-copy mr-1 pr-0" type="button"
+title="Copy the link exterior to the clipboard
+"
+data-bname="test"
+data-query="p=elizabeth&n=windsor&m=D"><i class="fas fa-link fa-fw mr-2"></i>Copy the permalink exterior</button>
+<button class="disabled dropdown-item mx-0 px-0">/</button>
+<button class="mx-1 px-0 dropdown-item permalink-friend-copy" type="button"
+title="Copy the link friend to the clipboard
+">friend</button>
+<button class="disabled dropdown-item mx-0 px-0">/</button>
+<button class="ml-1 px-0 dropdown-item permalink-wizard-copy" type="button"
+title="Copy the link wizard to the clipboard
+">wizard</button>
+</div>
+<div class="dropdown-divider"></div>
+<button class="dropdown-item simple-copy" type="button" title="Copy the link wiki to the clipboard"
+data-wikilink="[[Elizabeth/Windsor]]"><i class="far fa-clipboard fa-fw mr-2"></i>[[Elizabeth/Windsor]]</button>
+<button class="dropdown-item full-copy" type="button" title="Copy the link wikitext to the clipboard"
+data-wikilink="[[Elizabeth/Windsor/0/Elizabeth Windsor]]"><i class="far fa-clipboard fa-fw mr-2"></i>[[Elizabeth/Windsor/0/Elizabeth Windsor]]</button>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" role="button" title="Search Elizabeth II Alexandra Mary Windsor on Geneanet
+"
+href="https://www.geneanet.org/fonds/individus/?sourcename=&size=50&sexe=&nom=Windsor&ignore_each_patronyme=&with_variantes_nom=1&prenom=Elizabeth&prenom_operateur=or&ignore_each_prenom=&profession=&ignore_each_profession=&nom_conjoint=&ignore_each_patronyme_conjoint=&prenom_conjoint=&prenom_conjoint_operateur=or&ignore_each_prenom_conjoint=&place__0__=17%20Bruton%20St.,%20London&zonegeo__0__=&country__0__=&region__0__=&subregion__0__=&place__1__=&zonegeo__1__=&country__1__=&region__1__=&subregion__1__=&place__2__=&zonegeo__2__=&country__2__=&region__2__=&subregion__2__=&place__3__=&zonegeo__3__=&country__3__=&region__3__=&subregion__3__=&place__4__=&zonegeo__4__=&country__4__=&region__4__=&subregion__4__=&type_periode=between&from=1911&to=2037&exact_day=&exact_month=&exact_year=&nom_pere=&ignore_each_patronyme_pere=&prenom_pere=&prenom_pere_operateur=or&ignore_each_prenom_pere=&nom_mere=Bowes-Lyon&ignore_each_patronyme_mere=&with_variantes_nom_mere=1&prenom_mere=&prenom_mere_operateur=or&ignore_each_prenom_mere=&with_parents=0&go=1" target="_blank" rel="noreferrer, noopener"><i class="fa fa-magnifying-glass fa-fw mr-2"></i>Search Elizabeth II Alexandra Mary Windsor on Geneanet
+</a>
+</div>
+</li>
+<li class="nav-item">
+<a class="nav-link " id="mod_fam_1" href="test?m=MOD_FAM&i=RANDOM&ip=1"
+title="Update family with Philip Mountbatten (F)"
+accesskey="F"><span class="fa fa-user-pen female" aria-hidden="true"></span><span class="fa fa-user male" aria-hidden="true"></span><span class="sr-only"> Update family with Philip Mountbatten (F)</span>
+</a>
+</li>
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle text-secondary
+"
+data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="false"
+title="Tools family"><span class="fa fa-user-plus" aria-hidden="true"></span><span class="fa fa-user-gear" aria-hidden="true"></span><span class="sr-only">Tools family</span></a>
+<div class="dropdown-menu dropdown-menu-transl">
+<a class="dropdown-item" id="add_fam" href="test?m=ADD_FAM&ip=1" title="Add family (A)" accesskey="A"><span class="fa fa-plus fa-fw mr-2"></span>Add family</a>
+<div class="dropdown-divider"></div>
+<span class="dropdown-header">Marriage with Philip Mountbatten</span>
+<a class="dropdown-item" href="test?m=CHG_EVT_FAM_ORD&i=RANDOM&ip=1" title="Change order of family events"><span class="fa fa-sort fa-fw mr-2"></span>Reverse events</a>
+<a class="dropdown-item" href="test?m=DEL_FAM&i=RANDOM&ip=1"><span class="fa fa-trash fa-fw text-danger mr-2"></span>Delete family</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?m=CHG_CHN&ip=1"><span class="fa fa-child fa-fw mr-1"></span> Update surname of children</a>
+</div>
+</li>
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle text-secondary" data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="false"><span class="fa fa-code-fork fa-fw" title="Ancestors"></span></a>
+<div class="dropdown-menu dropdown-menu-transl">
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=A"><span class="fa fa-gear fa-fw mr-2"></span>Ancestors</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" id="anc_tree" href="test?p=elizabeth&n=windsor&m=A&t=T&v=5" title="Tree (Y)" accesskey="Y"><span class="fa fa-code-fork fa-fw mr-2"></span>Ascending tree</a>
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=A&t=H&v=5" title="Horizontal tree"><span class="fa fa-timeline fa-rotate-90 fa-fw mr-2"></span>Horizontal tree</a>
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=A&t=Z&v=6&maxv=8&num=on&birth=on&birth_place=on&marr=on&marr_date=on&marr_place=on&child=on&death=on&death_place=on&age=on&occu=on&repeat=on&gen=1&ns=1&hl=1"><span class="fa fa-table fa-fw mr-2"></span>Table ancestors</a>
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=A&t=G&v=3&maxv=8&siblings=on&alias=on&parents=on&rel=on&witn=on&notes=on&src=on&hide=on"><span class="fa fa-newspaper fa-fw mr-2"></span>Full display</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?i=RANDOM&m=A&t=F&tf1=sb&v=8&maxv=8"><span class="fa fa-align-justify fa-fw mr-2"></span>Lines by name</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=A&t=FC&v=5"><span class="fa fa-chart-pie fa-fw mr-2"></span>Fanchart</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=A&t=T&t1=CT&hi=H&v=5&scale=100&fs=17&sosa=on" title="Compact tree with Elizabeth II Alexandra Mary Windsor"><span class="fa fa-table-cells fa-fw mr-2"></span>Compact tree</a>
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=A&t=T&t1=h6&sosa=1" title="H-tree 6 generation with CSS (127 ind.)"><span class="fa fa-border-none fa-fw mr-2"></span>6 generations</a>
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=A&t=T&t1=m" title="8 generations H tree"><span class="fa fa-chess-board fa-fw mr-2"></span>8 generations</a>
+</div>
+</li>
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle text-secondary active" data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="false"><span class="fa fa-sitemap fa-fw" title="Descendants"></span></a>
+<div class="dropdown-menu dropdown-menu-transl">
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=D"><span class="fa fa-gear fa-fw mr-2"></span>Descendants</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=D&t=V&v=3"><span class="fa fa-sitemap fa-fw mr-2"></span>Descendants tree</a>
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=D&t=TV&v=3"><span class="fa fa-sitemap fa-fw mr-2"></span>Compact descendants tree</a>
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=D&t=D&v=3"><span class="fa fa-code-branch fa-rotate-90 fa-fw mr-2"></span>Descendant tree view</a>
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=D&t=I&v=3&num=on&birth=on&birth_place=on&marr=on&marr_date=on&marr_place=on&child=on&death=on&death_place=on&age=on&occu=on&gen=1&ns=1&hl=1"><span class="fa fa-table fa-fw mr-2"></span>Table descendants</a>
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=D&t=L&v=3&maxv=3&siblings=on&alias=on&parents=on&rel=on&witn=on&notes=on&src=on&hide=on"><span class="fa fa-newspaper fa-fw mr-2"></span>Full display</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=D&t=A&num=on&v=3"><span class="fa fa-code-branch fa-flip-vertical fa-fw mr-2"></span>D’Aboville</a>
+</div>
+</li>
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle text-secondary" data-toggle="dropdown" role="button" href="#" aria-haspopup="true" aria-expanded="false" title="Relationship"><span class="fa fa-user-group"></span></a>
+<div class="dropdown-menu dropdown-menu-transl">
+<a class="dropdown-item" href="test?p=elizabeth&n=windsor&m=R" title="Relationship computing (R)" accesskey="R"><span class="fa fa-gear fa-fw mr-2"></span>Relationship computing</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?m=C&p=elizabeth&n=windsor&v=3"
+title="Relationship with a parent"><span class="fa fa-elevator fa-fw mr-2"></span>Relationship</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="test?m=F&p=elizabeth&n=windsor" title="Family">
+<span class="fa fa-users fa-fw mr-2"></span>Family
+</a>
+</div>
+</li>
+<li class="nav-item">
+<a class="nav-link text-secondary" href="test?m=SND_IMAGE_C&i=RANDOM" title="Add/delete pictures (I)" accesskey="I">
+<span class="fa fa-image fa-fw" aria-hidden="true"></span><span class="sr-only">Add/delete pictures</span></a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<!-- $Id: home.txt v7.1 07/09/2023 00:49:55 $ -->
+<div class="d-flex flex-column fix_top fix_left">
+<a tabindex="1" role="button" class="btn btn-sm btn-link p-0 border-0" href="test?" title="Home">
+<i class="fa fa-house fa-fw fa-sm" aria-hidden="true"></i><i class="sr-only">Home</i></a>
+<a tabindex="3" role="button" class="btn btn-sm btn-link p-0 border-0" data-toggle="modal" data-target="#searchmodal"
+accesskey="S" title="Search"><i class="fa fa-magnifying-glass fa-fw fa-xs" aria-hidden="true"></i><span class="sr-only">Search</span></a>
+<a role="button" class="btn btn-sm btn-link p-0 border-0"
+href="test?m=D&i=RANDOM"
+title="Display a random individual (while staying on this tool)"><i class="fa fa-dice-RANDOM fa-fw fa-xs" aria-hidden="true"></i><span class="sr-only">Display a random individual</span></a>
+<div class="btn btn-sm p-0 border-0" id="q_time"><i class="fa fa-hourglass-half fa-fw fa-xs p-0"></i></div>
+<div class="btn btn-sm p-0 border-0 d-none" id="nb_errors"><i class="fa fa-bug fa-fw fa-xs p-0"></i></div>
+</div>
+<div class="modal" id="searchmodal" role="dialog" aria-labelledby="searchpopup" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+<div class="modal-content">
+<div class="modal-body" id="ModalSearch">
+<form id="collapse_search" method="get" action="test?">
+<input type="hidden" name="m" value="S">
+<div class="d-flex justify-content-center">
+<h5 class="rounded modal-title my-2 text-center w-50 align-self-center" id="searchpopup">Search individual</h5>
+<div class="col-8">
+<label class="sr-only" for="n">Search public name</label>
+<input type="search" id="n" class="form-control form-control-lg" name="n" placeholder="Surname, public name, alias"
+autofocus>
+<label class="sr-only" for="p">Search firstname</label>
+<input type="search" id="p" class="form-control form-control-lg mt-2" name="p" placeholder="First name">
+</div>
+<button class="btn btn-outline-primary" type="submit" title="Search"><i class="fa fa-magnifying-glass fa-lg mx-2"></i> Search</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+<script><!--
+function no_options () {
+/* On décoche toutes les options, sauf celles de l’affichage long et only/image_off/cgl. */
+$('input[type=checkbox][name!="only"][name!="image"][name!="cgl"]').prop('checked', false);
+}
+function long_display_options () {
+/* On coche celles que l’on veut si aucune de l’affichage long n’est cochée. */
+if ($('input[type=checkbox]:not(:checked)[id^=ld_]').length === $('input[type=checkbox][id^=ld_]').length) {
+$('input[type=checkbox][id=ld_notes]').prop('checked', true);
+$('input[type=checkbox][id=ld_src]').prop('checked', true);
+}
+}
+function table_options () {
+/* On coche celles que l’on veut si aucune du tableau n’est cochée. */
+if ($('input[type=checkbox]:not(:checked)[id^=t_]').length === $('input[type=checkbox][id^=t_]').length) {
+$('input[type=checkbox][id=t_num_table]').prop('checked', true);
+$('input[type=checkbox][id=t_birth_date]').prop('checked', true);
+$('input[type=checkbox][id=t_birth_place]').prop('checked', true);
+$('input[type=checkbox][id=t_marr]').prop('disabled',false);
+$('input[type=checkbox][id=t_marr]').prop('checked', true);
+$('input[type=checkbox][id=t_marr_place]').prop('checked', true);
+$('input[type=checkbox][id=t_marr_date]').prop('checked', true);
+$('input[type=checkbox][id=t_child]').prop('checked', true);
+$('input[type=checkbox][id=t_death_date]').prop('checked', true);
+$('input[type=checkbox][id=t_death_place]').prop('checked', true);
+$('input[type=checkbox][id=t_occu]').prop('checked', true);
+$('input[type=checkbox][id=t_gen]').prop('checked', true);
+}
+}
+function table_spouse_disabled () {
+$('input[type=checkbox][id=t_marr]').prop('disabled', true);
+$('input[id=t_marr2]').prop('disabled', false);
+$('input[type=checkbox][id=t_marr]').prop('checked', true);
+}
+--></script>
+<h1 class="text-center my-3">Descendants of Elizabeth II Alexandra Mary Windsor</h1>
+<form class="needs-validation" novalidate method="get" action="test">
+<div class="d-flex justify-content-start mx-3">
+<input type="hidden" name="p" value="elizabeth">
+<input type="hidden" name="n" value="windsor">
+<input type="hidden" name="m" value="D">
+<div class="col-auto">
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tL" name="t" value="L" onclick="no_options ();long_display_options ()" checked>
+<label class="custom-control-label" for="tL"><i class="fa fa-align-justify fa-fw mr-1"></i>Full display <span class="text-muted">
+</span>
+</label>
+</div>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tM" name="t" value="M" onclick="no_options ();long_display_options ()">
+<label class="custom-control-label" for="tM"><i class="fa fa-person fa-fw mr-1"></i>Male line</label>
+</div>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tF" name="t" value="F" onclick="no_options ();long_display_options ()">
+<label class="custom-control-label" for="tF"><i class="fa fa-person-dress fa-fw mr-1"></i>Female line</label>
+</div>
+<div class="ml-4">
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ld_alwsurn" name="alwsurn" value="yes">
+<label class="custom-control-label" for="ld_alwsurn">With surnames</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ld_rel" name="rel">
+<label class="custom-control-label" for="ld_rel">Relationships</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ld_notes" name="notes" checked>
+<label class="custom-control-label" for="ld_notes">Individual note</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ld_src" name="src" checked>
+<label class="custom-control-label" for="ld_src">Sources</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ld_witn" name="witn">
+<label class="custom-control-label" for="ld_witn">Witnesses <span class="text-muted">(marriages)</span></label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ld_comm" name="comm">
+<label class="custom-control-label" for="ld_comm">Comment <span class="text-muted">(marriages)</span></label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="ld_inline" name="inline">
+<label class="custom-control-label" for="ld_inline">Add notes and sources to content</label>
+</div>
+</div>
+<hr>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tT" name="t" value="T" onclick="no_options ()">
+<label class="custom-control-label" for="tT"><i class="fa fa-sitemap fa-fw mr-1"></i>Descendants tree <span class="text-info">✘</span> <span class="text-muted">
+</span>
+</label>
+</div>
+<hr>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tS" name="t" value="S" onclick="no_options ()">
+<label class="custom-control-label" for="tS"><i class="fa fa-list fa-fw mr-1"></i>List list by name</label>
+</div>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tN" name="t" value="N" onclick="no_options ()">
+<label class="custom-control-label" for="tN"><i class="fa fa-closed-captioning fa-fw mr-1"></i>Families with encoding</label>
+</div>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tG" name="t" value="G" onclick="no_options ()">
+<label class="custom-control-label" for="tG"><i class="fa fa-closed-captioning fa-fw mr-1"></i>Index of descendants</label>
+</div>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tC" name="t" value="C" onclick="no_options ()">
+<label class="custom-control-label" for="tC"><i class="fa fa-arrow-down-a-z fa-fw mr-1"></i>Index of spouses (non descendants)</label>
+</div>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tA" name="t" value="A" onclick="no_options ()">
+<label class="custom-control-label" for="tA"><i class="fa fa-arrow-down-a-z fa-fw mr-1"></i>D'Aboville <span class="text-muted">
+</span>
+</label>
+</div>
+</div>
+<div class="d-flex flex-column">
+<div class="order-2">
+<hr>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tH" name="t" value="H" onclick="no_options ();table_options ()">
+<label class="custom-control-label" for="tH"><i class="fa fa-table fa-fw mr-1"></i>Table <span class="text-primary">✱</span><span class="text-info">✘</span>
+<span class="text-muted">
+</span>
+</label>
+</div>
+<div class="custom-control custom-radio">
+<input type="radio" class="custom-control-input" id="tI" name="t" value="I" onclick="no_options ();table_options ();table_spouse_disabled ()">
+<label class="custom-control-label" for="tI"><i class="fa fa-table fa-fw mr-1"></i>Table with spouses informations <span class="text-primary">✱</span><span class="text-info">✘</span></label>
+</div>
+<div class="ml-4">
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="t_num_table" name="num">
+<label class="custom-control-label" for="t_num_table">Display d’Aboville number</label>
+</div>
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_nowrap" name="nowrap">
+<label class="custom-control-label" for="t_nowrap">No line break in names</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_tt" name="tt" value="1">
+<label class="custom-control-label" for="t_tt">Titles</label>
+</div>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_fn" name="fn" value="1">
+<label class="custom-control-label" for="t_fn">[show first names]</label>
+</div>
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_marr" name="marr">
+<input name="marr" type="hidden" id="t_marr2" value="on" disabled/>
+<label class="custom-control-label" for="t_marr">Spouses</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_child" name="child">
+<label class="custom-control-label" for="t_child">Number of children</label>
+</div>
+</div>
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_birth_date" name="birth">
+<label class="custom-control-label" for="t_birth_date" title="Date of birth">Date</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_birth_place" name="birth_place">
+<label class="custom-control-label" for="t_birth_place">Where born</label>
+</div>
+</div>
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_baptism_date" name="baptism">
+<label class="custom-control-label" for="t_baptism_date" title="Date of baptism">Date</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_baptism_place" name="baptism_place">
+<label class="custom-control-label" for="t_baptism_place">Place of baptism</label>
+</div>
+</div>
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_marr_date" name="marr_date">
+<label class="custom-control-label" for="t_marr_date" title="Date of marriage">Date</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_marr_place" name="marr_place">
+<label class="custom-control-label" for="t_marr_place">Where married</label>
+</div>
+</div>
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_death_date" name="death">
+<label class="custom-control-label" for="t_death_date" title="Date of death">Date</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_death_place" name="death_place">
+<label class="custom-control-label" for="t_death_place">Where dead</label>
+</div>
+</div>
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_burial_date" name="burial">
+<label class="custom-control-label" for="t_burial_date" title="Date of burial">Date</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_burial_place" name="burial_place">
+<label class="custom-control-label" for="t_burial_place">Place of burial</label>
+</div>
+</div>
+<div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_age" name="age">
+<label class="custom-control-label" for="t_age" title="Age or age at death">Age</label>
+</div>
+<div class="custom-control custom-checkbox custom-control-inline">
+<input type="checkbox" class="custom-control-input" id="t_occu" name="occu">
+<label class="custom-control-label" for="t_occu">Occupations</label>
+</div>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="t_ns" name="ns" value="1">
+<label class="custom-control-label" for="t_ns">View notes and sources</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="t_gen" name="gen" value="1">
+<label class="custom-control-label" for="t_gen">Display the generations</label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="t_hl" name="hl" value="1">
+<label class="custom-control-label" for="t_hl">Highlight incomplete data</label>
+</div>
+</div>
+</div>
+<div class="d-flex flex-column order-1">
+<div class="d-flex order-2 justify-content-between mt-2">
+<div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="only" name="only">
+<label class="custom-control-label" for="only">Only the selected generation <span class="text-primary">✱</span></label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="image" name="im" value="0">
+<label class="custom-control-label" for="image">Hide pictures <span class="text-info">✘</span></label>
+</div>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="cgl" name="cgl">
+<label class="custom-control-label" for="cgl">Without GeneWeb links</label>
+</div>
+</div>
+<div class=" align-self-center">
+<button type="submit" class="btn btn-outline-primary">Ok</button>
+</div>
+</div>
+<div class="order-1">
+<label class="sr-only" for="v">Generations:</label>
+<select class="custom-select" id="v" name="v" required>
+<option value="" disabled selected>Select generation…</option>
+<option value="1">Up to the children (4)</option>
+<option value="2">Up to the grandchildren (12)</option>
+<option value="3">Up to the great-grandchildren (24)</option>
+</select>
+<div class="invalid-feedback">
+<i class="fas fa-triangle-exclamation mr-1"></i>Select generations
+</div>
+</div>
+</div>
+</div>
+</div>
+</form>
+<script>
+ var q_time = TIME;
+ var nb_errors = 2;
+ var errors_list = "\u{000A}";
+ var home_time = document.getElementById('q_time');
+ var home_errors = document.getElementById('nb_errors');
+ if (home_time != null) {
+ home_time.title = "Query treated in " + q_time + " s";
+ if (q_time < 3) {
+ home_time.classList.add("text-success");
+ } else if (q_time < 8) {
+ home_time.classList.add("text-warning");
+ } else {
+ home_time.classList.add("text-danger");
+ }
+ }
+ if (home_errors != null) {
+ if (nb_errors > 0) {
+ home_errors.title = nb_errors +" error(s)!";
+ home_errors.classList.remove("d-none");
+ }
+ if (errors_list != "") {
+ home_errors.title = home_errors.title + errors_list + ".";
+ }
+ }
+</script><!-- $Id: copyr.txt 7.1-beta 18/12/2023 22:03:44 $ -->
+<div class="d-flex ml-auto justify-content-end m-2" id="copyr">
+<div class="btn-group dropup align-self-center">
+<button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenu1"
+data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+title=""><span class="sr-only">lang</span><span class="text-uppercase" title="View in: English">en</span><span class="sr-only">, view in</span></button>
+<div class="dropdown-menu scrollable-lang" aria-labelledby="dropdownMenu1">
+<a class="dropdown-item" id="lang_af" href="test?lang=af&m=D&p=Elizabeth&n=Windsor" title="lang af"><code>af&nbsp;&nbsp;&nbsp; </code>Afrikaans</a>
+<a class="dropdown-item" id="lang_ar" href="test?lang=ar&m=D&p=Elizabeth&n=Windsor" title="lang ar"><code>ar&nbsp;&nbsp;&nbsp; </code>Arabic</a>
+<a class="dropdown-item" id="lang_bg" href="test?lang=bg&m=D&p=Elizabeth&n=Windsor" title="lang bg"><code>bg&nbsp;&nbsp;&nbsp; </code>Bulgarian</a>
+<a class="dropdown-item" id="lang_br" href="test?lang=br&m=D&p=Elizabeth&n=Windsor" title="lang br"><code>br&nbsp;&nbsp;&nbsp; </code>Breton</a>
+<a class="dropdown-item" id="lang_ca" href="test?lang=ca&m=D&p=Elizabeth&n=Windsor" title="lang ca"><code>ca&nbsp;&nbsp;&nbsp; </code>Catalan</a>
+<a class="dropdown-item" id="lang_co" href="test?lang=co&m=D&p=Elizabeth&n=Windsor" title="lang co"><code>co&nbsp;&nbsp;&nbsp; </code>Corsican</a>
+<a class="dropdown-item" id="lang_cs" href="test?lang=cs&m=D&p=Elizabeth&n=Windsor" title="lang cs"><code>cs&nbsp;&nbsp;&nbsp; </code>Czech</a>
+<a class="dropdown-item" id="lang_da" href="test?lang=da&m=D&p=Elizabeth&n=Windsor" title="lang da"><code>da&nbsp;&nbsp;&nbsp; </code>Danish</a>
+<a class="dropdown-item" id="lang_de" href="test?lang=de&m=D&p=Elizabeth&n=Windsor" title="lang de"><code>de&nbsp;&nbsp;&nbsp; </code>German</a>
+<a class="dropdown-item" id="lang_eo" href="test?lang=eo&m=D&p=Elizabeth&n=Windsor" title="lang eo"><code>eo&nbsp;&nbsp;&nbsp; </code>Esperanto</a>
+<a class="dropdown-item" id="lang_es" href="test?lang=es&m=D&p=Elizabeth&n=Windsor" title="lang es"><code>es&nbsp;&nbsp;&nbsp; </code>Spanish</a>
+<a class="dropdown-item" id="lang_et" href="test?lang=et&m=D&p=Elizabeth&n=Windsor" title="lang et"><code>et&nbsp;&nbsp;&nbsp; </code>Estonian</a>
+<a class="dropdown-item" id="lang_fi" href="test?lang=fi&m=D&p=Elizabeth&n=Windsor" title="lang fi"><code>fi&nbsp;&nbsp;&nbsp; </code>Finnish</a>
+<a class="dropdown-item" id="lang_fr" href="test?lang=fr&m=D&p=Elizabeth&n=Windsor" title="lang fr"><code>fr&nbsp;&nbsp;&nbsp; </code>French</a>
+<a class="dropdown-item" id="lang_he" href="test?lang=he&m=D&p=Elizabeth&n=Windsor" title="lang he"><code>he&nbsp;&nbsp;&nbsp; </code>Hebrew</a>
+<a class="dropdown-item" id="lang_is" href="test?lang=is&m=D&p=Elizabeth&n=Windsor" title="lang is"><code>is&nbsp;&nbsp;&nbsp; </code>Icelandic</a>
+<a class="dropdown-item" id="lang_it" href="test?lang=it&m=D&p=Elizabeth&n=Windsor" title="lang it"><code>it&nbsp;&nbsp;&nbsp; </code>Italian</a>
+<a class="dropdown-item" id="lang_lt" href="test?lang=lt&m=D&p=Elizabeth&n=Windsor" title="lang lt"><code>lt&nbsp;&nbsp;&nbsp; </code>Lithuanian</a>
+<a class="dropdown-item" id="lang_lv" href="test?lang=lv&m=D&p=Elizabeth&n=Windsor" title="lang lv"><code>lv&nbsp;&nbsp;&nbsp; </code>Latvian</a>
+<a class="dropdown-item" id="lang_nl" href="test?lang=nl&m=D&p=Elizabeth&n=Windsor" title="lang nl"><code>nl&nbsp;&nbsp;&nbsp; </code>Dutch</a>
+<a class="dropdown-item" id="lang_no" href="test?lang=no&m=D&p=Elizabeth&n=Windsor" title="lang no"><code>no&nbsp;&nbsp;&nbsp; </code>Norwegian</a>
+<a class="dropdown-item" id="lang_oc" href="test?lang=oc&m=D&p=Elizabeth&n=Windsor" title="lang oc"><code>oc&nbsp;&nbsp;&nbsp; </code>Occitan</a>
+<a class="dropdown-item" id="lang_pl" href="test?lang=pl&m=D&p=Elizabeth&n=Windsor" title="lang pl"><code>pl&nbsp;&nbsp;&nbsp; </code>Polish</a>
+<a class="dropdown-item" id="lang_pt" href="test?lang=pt&m=D&p=Elizabeth&n=Windsor" title="lang pt"><code>pt&nbsp;&nbsp;&nbsp; </code>Portuguese</a>
+<a class="dropdown-item" id="lang_pt-br" href="test?lang=pt-br&m=D&p=Elizabeth&n=Windsor" title="lang pt-br"><code>pt-br </code>Brazilian-Portuguese</a>
+<a class="dropdown-item" id="lang_ro" href="test?lang=ro&m=D&p=Elizabeth&n=Windsor" title="lang ro"><code>ro&nbsp;&nbsp;&nbsp; </code>Romanian</a>
+<a class="dropdown-item" id="lang_ru" href="test?lang=ru&m=D&p=Elizabeth&n=Windsor" title="lang ru"><code>ru&nbsp;&nbsp;&nbsp; </code>Russian</a>
+<a class="dropdown-item" id="lang_sk" href="test?lang=sk&m=D&p=Elizabeth&n=Windsor" title="lang sk"><code>sk&nbsp;&nbsp;&nbsp; </code>Slovak</a>
+<a class="dropdown-item" id="lang_sl" href="test?lang=sl&m=D&p=Elizabeth&n=Windsor" title="lang sl"><code>sl&nbsp;&nbsp;&nbsp; </code>Slovenian</a>
+<a class="dropdown-item" id="lang_sv" href="test?lang=sv&m=D&p=Elizabeth&n=Windsor" title="lang sv"><code>sv&nbsp;&nbsp;&nbsp; </code>Swedish</a>
+<a class="dropdown-item" id="lang_tr" href="test?lang=tr&m=D&p=Elizabeth&n=Windsor" title="lang tr"><code>tr&nbsp;&nbsp;&nbsp; </code>Turkish</a>
+<a class="dropdown-item" id="lang_zh" href="test?lang=zh&m=D&p=Elizabeth&n=Windsor" title="lang zh"><code>zh&nbsp;&nbsp;&nbsp; </code>Chinese</a>
+</div>
+</div>
+<div class="d-inline-flex flex-column justify-content-end align-self-center ml-3">
+<div class="ml-auto">
+<a role="button" class="mr-1"
+href="test?templ=templm&m=D&p=Elizabeth&n=Windsor"
+title="templm"><i class="fab fa-markdown" aria-hidden="true"></i><span class="sr-only">switch to templm</span></a>
+<a href="https://github.com//tree/2ab85d8"
+title="Line HEAD compiled on 2024-04-18 from commit 2ab85d8 (2024-04-18)">GeneWeb v. 7.1-beta</a>
+</div>
+<div class="btn-group">
+<span>&copy; <a href="https://www.inria.fr" target="_blank" rel="noreferrer, noopener">INRIA</a> 1998-2007</span>
+<a href="https://geneweb.tuxfamily.org/wiki/GeneWeb" class="ml-1"
+target="_blank" rel="noreferrer, noopener" title="Documentation GeneWeb"><i class="fab fa-wikipedia-w"></i></a><a href="https://github.com/geneweb/geneweb" class="ml-1"
+target="_blank" rel="noreferrer, noopener" title="GeneWeb on Github"><i class="fab fa-github"></i></a>
+</div>
+</div>
+</div>
+</div>
+<!-- $Id: js.txt v7.1 02/12/2023 12:35:50 $ -->
+<script src="js/jquery.min.js?version=3.7.1"></script>
+<script src="js/bootstrap.bundle.min.js?version=4.6.1"></script>
+<script>
+$('#load_once_p_mod').one('click', function() {
+$.getScript('js/p_mod.js');
+});
+$('#load_once_copylink').one('click', function() {
+$.getScript('js/copylink.js');
+});
+</script>
+<script><!-- focus on found autofocus input in opening BS modal -->
+$('.modal').on('shown.bs.modal', function() {
+$(this).find('[autofocus]').focus();
+});
+</script>
+<script>
+(function () {
+'use strict';
+// Fetch all the forms we want to apply custom Bootstrap validation styles to
+var forms = document.querySelectorAll('.needs-validation');
+// Loop over them and prevent submission
+Array.prototype.slice.call(forms)
+.forEach(function (form) {
+form.addEventListener('submit', function (event) {
+if (!form.checkValidity()) {
+event.preventDefault();
+event.stopPropagation();
+}
+form.classList.add('was-validated');
+}, false);
+});
+})();
+</script>
+</body>
+</html>
