@@ -80,7 +80,7 @@ export LC_ALL=C.UTF-8 TZ=UTC
 
 **What this tests:**
 - GEDCOM export consistency
-- HTML rendering stability (7 page types)
+- HTML rendering stability (10 page types)
 - Data normalization (whitespace, timestamps, random IDs)
 
 #### Integration Tests (Smoke Checks)
@@ -201,7 +201,7 @@ lsof -ti:2317 | xargs kill -9  # macOS/Linux
 
 ### 📊 Current Test Coverage
 
-- ✅ **Golden Tests**: 7 page types + GEDCOM export + import roundtrip
+- ✅ **Golden Tests**: 10 page types + GEDCOM export + import roundtrip = 12 total
 - ✅ **Integration Tests**: 5 smoke checks (home, person, FR, logging, export)
 - 🔲 **Functional Tests**: To be implemented
 - 🔲 **Unit Tests**: To be implemented
