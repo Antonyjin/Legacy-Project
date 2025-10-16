@@ -8,6 +8,7 @@ Overview
   - HTML home page rendered by `gwd` on that base (English and French)
   - HTML person page (Charles Windsor) with key fields (name, person, id)
   - HTML family page (Charles Windsor's family) with parents, marriage info, children
+  - HTML calendar page (birthdays/anniversaries) with normalized timestamps
 
 Directories
 - goldens/v1/            # stored references (versioned)
@@ -49,13 +50,14 @@ Outputs
 - goldens/v1/expected_home_fr.html.norm           # home page (French)
 - goldens/v1/expected_person_charles.html.norm    # person page (Charles Windsor)
 - goldens/v1/expected_family_charles.html.norm    # family page (Charles Windsor's family)
+- goldens/v1/expected_calendar.html.norm          # calendar page (birthdays/anniversaries)
 - reports/diff.txt (only on validate when differences exist)
 - reports/import_diff.txt (only on GEDCOM import test failures)
 
 Normalization
 The script automatically normalizes volatile data to prevent false failures:
 - **GEDCOM**: Removes timestamps (DATE/TIME fields)
-- **HTML**: Removes random IDs (`?i=123` → `?i=RANDOM`), query times (`q_time = 0.007` → `q_time = TIME`), dice icons (`fa-dice-one` → `fa-dice-RANDOM`), relative ages (`28,092 days old` → `AGE_DAYS days old`)
+- **HTML**: Removes random IDs (`?i=123` → `?i=RANDOM`), query times (`q_time = 0.007` → `q_time = TIME`), dice icons (`fa-dice-one` → `fa-dice-RANDOM`), relative ages (`28,092 days old` → `AGE_DAYS days old`), timestamps (`08:55:59` → `HH:MM:SS`)
 - **Whitespace**: 
   - Converts UTF-8 non-breaking spaces (`\xC2\xA0`) to regular spaces (critical for GeneWeb HTML)
   - Collapses multiple consecutive spaces to single space
