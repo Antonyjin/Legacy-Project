@@ -85,6 +85,7 @@ home::
 home_fr::?lang=fr
 person_charles::?p=Charles&n=Windsor
 family_charles::?m=F&p=charles&n=windsor
+calendar::?m=CAL
 "
 # Note: Relationship page (?m=C or ?m=REL) requires Sosa reference configuration
 # See docs/Issues/ISSUE_85_SKIPPED.md for details
@@ -140,7 +141,9 @@ echo "$ROUTES" | while IFS= read -r item; do
     sed -E 's/=[[:space:]]*[0-9,]+ days old/= AGE_DAYS old/g' | \
     sed -E 's/[0-9]+ years, [0-9]+ months, [0-9]+ days old/AGE_YMD old/g' | \
     # Mask ages in tooltips (after &#010; normalization)
-    sed -E 's/&#010; [0-9,]+ years/\&#010; AGE_YEARS years/g' > "$NORM"
+    sed -E 's/&#010; [0-9,]+ years/\&#010; AGE_YEARS years/g' | \
+    # Mask timestamps in calendar page (HH:MM:SS format)
+    sed -E 's/[0-9]{2}:[0-9]{2}:[0-9]{2}/HH:MM:SS/g' > "$NORM"
   
   if [ "$MODE" = "create" ]; then
     cp "$NORM" "$GOLD_DIR/expected_${name}.html.norm"
