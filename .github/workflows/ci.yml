@@ -127,10 +127,17 @@ jobs:
           chmod +x ./scripts/golden/run_golden.sh || true
           bash ./scripts/golden/run_golden.sh validate
 
+      - name: GEDCOM import roundtrip test
+        run: |
+          chmod +x ./scripts/golden/test_gedcom_import.sh || true
+          bash ./scripts/golden/test_gedcom_import.sh validate
+
       - name: Upload golden diff on failure
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
           name: golden-diff
-          path: tests/golden/reports/diff.txt
+          path: |
+            tests/golden/reports/diff.txt
+            tests/golden/reports/import_diff.txt
           if-no-files-found: ignore
