@@ -13,6 +13,7 @@ Overview
   - HTML surname list page (alphabetical listing with counts)
   - HTML statistics page (base stats: person count, family count, distribution)
   - HTML descendant list page (Elizabeth Windsor's descendants with hierarchical structure)
+  - HTML ancestor list page (Charles Windsor's ancestors with hierarchical structure)
 
 Directories
 - goldens/v1/            # stored references (versioned)
@@ -59,6 +60,7 @@ Outputs
 - goldens/v1/expected_surnames.html.norm          # surname list page (alphabetical with counts)
 - goldens/v1/expected_statistics.html.norm        # statistics page (base stats: counts, distribution)
 - goldens/v1/expected_descendants_elizabeth.html.norm  # descendant list (Elizabeth Windsor's descendants)
+- goldens/v1/expected_ancestors_charles.html.norm # ancestor list (Charles Windsor's ancestors)
 - reports/diff.txt (only on validate when differences exist)
 - reports/import_diff.txt (only on GEDCOM import test failures)
 
