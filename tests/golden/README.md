@@ -10,6 +10,7 @@ Overview
   - HTML family page (Charles Windsor's family) with parents, marriage info, children
   - HTML calendar page (birthdays/anniversaries) with normalized timestamps
   - HTML first name list page (alphabetical listing with counts)
+  - HTML surname list page (alphabetical listing with counts)
 
 Directories
 - goldens/v1/            # stored references (versioned)
@@ -53,6 +54,7 @@ Outputs
 - goldens/v1/expected_family_charles.html.norm    # family page (Charles Windsor's family)
 - goldens/v1/expected_calendar.html.norm          # calendar page (birthdays/anniversaries)
 - goldens/v1/expected_firstnames.html.norm        # first name list page (alphabetical with counts)
+- goldens/v1/expected_surnames.html.norm          # surname list page (alphabetical with counts)
 - reports/diff.txt (only on validate when differences exist)
 - reports/import_diff.txt (only on GEDCOM import test failures)
 
