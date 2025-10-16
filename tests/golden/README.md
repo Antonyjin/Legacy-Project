@@ -55,8 +55,12 @@ Outputs
 Normalization
 The script automatically normalizes volatile data to prevent false failures:
 - **GEDCOM**: Removes timestamps (DATE/TIME fields)
-- **HTML**: Removes random IDs (`?i=123` → `?i=RANDOM`), query times (`q_time = 0.007` → `q_time = TIME`), dice icons (`fa-dice-one` → `fa-dice-RANDOM`)
-- **Whitespace**: Trims trailing spaces and collapses multiple spaces
+- **HTML**: Removes random IDs (`?i=123` → `?i=RANDOM`), query times (`q_time = 0.007` → `q_time = TIME`), dice icons (`fa-dice-one` → `fa-dice-RANDOM`), relative ages (`28,092 days old` → `AGE_DAYS days old`)
+- **Whitespace**: 
+  - Converts UTF-8 non-breaking spaces (`\xC2\xA0`) to regular spaces (critical for GeneWeb HTML)
+  - Collapses multiple consecutive spaces to single space
+  - Trims trailing spaces
+  - Normalizes whitespace after HTML entities (`&#010;`)
 
 Notes
 - If behavior is intentionally changed, re-run in create mode and commit the updated goldens with a short note in your PR.
