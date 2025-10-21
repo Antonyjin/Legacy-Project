@@ -68,6 +68,33 @@ The `test.gwb` database contains British Royal Family data (35 persons).
 
 ### 🧪 Running Tests
 
+#### Python Tests (Unit + Integration + Functional)
+
+We're implementing comprehensive Python tests to validate OCaml behavior and enable safe migration:
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run all Python tests
+pytest tests/python/ -v
+
+# Run with coverage
+pytest tests/python/ --cov=tests --cov-report=html
+
+# Run specific test type
+pytest tests/python/unit/ -v          # Unit tests
+pytest tests/python/integration/ -v   # Integration tests
+pytest tests/python/functional/ -v    # Functional tests
+```
+
+**Test Structure:**
+- **Unit Tests (UT)**: Test individual OCaml functions via HTTP/CLI (10 tests)
+- **Integration Tests (IT)**: Test component integration (10 tests)
+- **Functional Tests (FT)**: End-to-end user workflows (10 tests)
+
+**Status**: See [PROJECT_STATUS.md](docs/PROJECT_STATUS.md) for current implementation status.
+
 #### Golden Tests (Regression Detection)
 
 Golden tests validate that OCaml behavior remains unchanged:
@@ -111,7 +138,6 @@ Automated smoke tests run in CI on every push:
 - **[Test Policy](https://github.com/Antonyjin/Legacy-Project/wiki/03-Quality-Test-Policy)** - QA strategy
 - **[Test Protocols](https://github.com/Antonyjin/Legacy-Project/wiki/03-Quality-Test-Protocols)** - Test types (UT/FT/Golden/IT)
 - **[Architecture](https://github.com/Antonyjin/Legacy-Project/wiki/02-Product-Architecture)** - System design
-- **[Deployment Guide](https://github.com/Antonyjin/Legacy-Project/wiki/05-Deployment-Quick-Deploy)** - Production deployment
 
 ### 🔍 Understanding the Codebase
 
@@ -201,10 +227,11 @@ lsof -ti:2317 | xargs kill -9  # macOS/Linux
 
 ### 📊 Current Test Coverage
 
-- ✅ **Golden Tests**: 10 page types + GEDCOM export + import roundtrip = 12 total
-- ✅ **Integration Tests**: 5 smoke checks (home, person, FR, logging, export)
-- 🔲 **Functional Tests**: To be implemented
-- 🔲 **Unit Tests**: To be implemented
+- ✅ **Golden Tests**: 10 page types + GEDCOM export + import roundtrip (12 total) - **100% complete**
+- ⏳ **Python Unit Tests**: 10 tests planned (0/10 implemented) - **Week 1 sprint**
+- ⏳ **Python Integration Tests**: 10 tests planned (0/10 implemented) - **Week 1-2 sprint**
+- ⏳ **Python Functional Tests**: 10 tests planned (0/10 implemented) - **Week 2-3 sprint**
+- ⏳ **Migration**: 10 functions planned (0/10 migrated) - **Week 2-3 sprint**
 
 ### 🤝 Contributing
 
