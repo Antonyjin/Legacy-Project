@@ -33,6 +33,14 @@ Tests name search case-insensitivity, display formatting, and special character 
 - 10 test methods validating name normalization
 - OCaml functions: `Name.lower`, `Name.crush_lower`, name display formatting
 
+### UT-PY-009: Database Configuration
+
+**File**: test_base_config.py | **PR**: #195 | **Issue**: #167
+
+Tests database metadata, configuration settings, and statistics.
+- 15 test methods across 5 test classes
+- OCaml functions: database info, configuration, statistics retrieval
+
 ---
 
 ### UT-PY-002: HTTP Parameter Parsing
