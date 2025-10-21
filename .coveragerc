@@ -1,0 +1,48 @@
+# Coverage Configuration for GeneWeb Python Tests
+# Issue: UT-PY-001 (Setup pytest infrastructure)
+
+[run]
+source = tests/python
+omit =
+    */tests/*
+    */venv/*
+    */.venv/*
+    */site-packages/*
+    */__pycache__/*
+
+[report]
+# Target: >80% coverage
+precision = 2
+show_missing = true
+skip_covered = false
+skip_empty = true
+
+# Fail if coverage is below threshold (disable for now)
+# fail_under = 80
+
+exclude_lines =
+    # Standard pragma
+    pragma: no cover
+    
+    # Debug code
+    def __repr__
+    def __str__
+    
+    # Abstract methods
+    @abc.abstractmethod
+    @abstractmethod
+    
+    # Not implemented
+    raise NotImplementedError
+    
+    # Type checking
+    if TYPE_CHECKING:
+    if typing.TYPE_CHECKING:
+    
+    # Main guard
+    if __name__ == .__main__.:
+
+[html]
+directory = tests/python/htmlcov
+title = GeneWeb Python Test Coverage Report
+
