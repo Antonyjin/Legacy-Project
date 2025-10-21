@@ -33,6 +33,14 @@ Tests name search case-insensitivity, display formatting, and special character 
 - 10 test methods validating name normalization
 - OCaml functions: `Name.lower`, `Name.crush_lower`, name display formatting
 
+### UT-PY-004: URL Parsing
+
+**File**: test_url_parsing_extended.py | **PR**: #190 | **Issue**: #162
+
+Tests URL encoding/decoding, UTF-8 handling, parameter extraction, and edge cases.
+- 35 test methods across 7 test classes
+- OCaml functions: `gwd.ml::extract_assoc`, `Mutil.ml::decode`, `Mutil.ml::iso_8859_1_of_utf_8`
+
 ### UT-PY-007: GEDCOM Parsing
 
 **File**: test_gedcom_parsing.py | **PR**: #193 | **Issue**: #165
