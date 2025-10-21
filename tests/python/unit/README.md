@@ -33,6 +33,14 @@ Tests name search case-insensitivity, display formatting, and special character 
 - 10 test methods validating name normalization
 - OCaml functions: `Name.lower`, `Name.crush_lower`, name display formatting
 
+### UT-PY-005: Date Formatting
+
+**File**: test_date_formatting.py | **PR**: #191 | **Issue**: #163
+
+Tests date display formats, age calculation, and date localization.
+- 13 test methods across 5 test classes
+- OCaml functions: `Mutil.date_of_string`, date display formatting, age calculation
+
 ---
 
 ### UT-PY-002: HTTP Parameter Parsing
