@@ -33,6 +33,14 @@ Tests name search case-insensitivity, display formatting, and special character 
 - 10 test methods validating name normalization
 - OCaml functions: `Name.lower`, `Name.crush_lower`, name display formatting
 
+### UT-PY-007: GEDCOM Parsing
+
+**File**: test_gedcom_parsing.py | **PR**: #193 | **Issue**: #165
+
+Tests GEDCOM export format, person/family structure, and event handling.
+- 17 test methods across 5 test classes
+- OCaml functions: GEDCOM export, event formatting, relationship linking
+
 ---
 
 ### UT-PY-002: HTTP Parameter Parsing
