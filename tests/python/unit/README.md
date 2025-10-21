@@ -33,6 +33,14 @@ Tests name search case-insensitivity, display formatting, and special character 
 - 10 test methods validating name normalization
 - OCaml functions: `Name.lower`, `Name.crush_lower`, name display formatting
 
+### UT-PY-008: Privacy & Access Control
+
+**File**: test_privacy.py | **PR**: #194 | **Issue**: #166
+
+Tests privacy mechanisms, access restrictions, and record visibility.
+- 15 test methods across 5 test classes
+- OCaml functions: privacy flags, access control, record filtering
+
 ---
 
 ### UT-PY-002: HTTP Parameter Parsing
