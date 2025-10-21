@@ -25,6 +25,16 @@ We chose **HTTP-based black-box testing** instead of OCaml unit tests because:
 
 ## Test Structure
 
+### UT-PY-003: Name Normalization
+
+**File**: test_name_normalization.py | **PR**: #197 | **Issue**: #161
+
+Tests name search case-insensitivity, display formatting, and special character handling.
+- 10 test methods validating name normalization
+- OCaml functions: `Name.lower`, `Name.crush_lower`, name display formatting
+
+---
+
 ### UT-PY-002: HTTP Parameter Parsing
 
 **What we test**: OCaml's HTTP parameter parsing logic (see `source_geneweb/bin/gwd/request.ml`)
