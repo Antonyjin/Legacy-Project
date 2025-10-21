@@ -63,6 +63,12 @@ sed -E 's/^(1 DATE|2 TIME) .*/\1 <normalized>/g' "$EXPORT_RAW" | \
 # 2) Start gwd and fetch HTML pages
 # ============================================================================
 PORT=23179
+
+# Kill any existing gwd on this port
+echo "==> Killing any existing gwd on port $PORT..."
+pkill -f "gwd.*-p $PORT" 2>/dev/null || true
+sleep 1
+
 echo "==> Starting gwd on port $PORT..."
 "$GENEWEB_DIR/gw/gwd" -hd "$GENEWEB_DIR/gw" -bd "$BASE_DIR" -p "$PORT" -lang en \
   > "$TMP_DIR/gwd.out" 2>&1 &

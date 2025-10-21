@@ -130,6 +130,10 @@ build/
 .pytest_cache/
 .coverage
 htmlcov/
+tests/python/htmlcov/
+tests/python/pytest.log
+tests/python/.coverage
+*.pyc
 
 # ============================================================================
 # Node.js (for future frontend work)
@@ -163,6 +167,9 @@ yarn.lock
 # ============================================================================
 # Documentation Build Artifacts
 # ============================================================================
+
+# Wiki (managed separately)
+wiki/
 
 # Sphinx
 docs/_build/

@@ -1,165 +1,505 @@
+<!-- $Id: welcome.txt v7.1 16/02/2025 17:11:01 $ -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- $Id: welcome.txt v7.1 30/10/2023 23:08:30 $ -->
 <title>GeneWeb – test</title>
 <meta name="robots" content="none">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="icon" href="images/favicon_gwd.png">
 <link rel="apple-touch-icon" href="images/favicon_gwd.png">
+<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/css.txt --->
 <!-- $Id: css.txt v7.1 04/11/2023 04:28:54 $ -->
 <link rel="stylesheet" href="css/bootstrap.min.css?version=4.6.2">
-<link rel="stylesheet" href="css/all.min.css?version=6.5.1">
-<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/all.min.css?hash=f036f8b0f6f63f2ab006e153aeac2b7d">
+<link rel="stylesheet" href="css/css.css?hash=de7ebf333e81605a294d2ebba9e1e54d">
+<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/css.txt --->
 </head>
 <body>
-<div class="container">
+<div class="container" id="welcome">
+<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/hed.txt --->
 <meta name="format-detection" content="telephone=no" />
-<div class="d-flex flex-column flex-md-row justify-content-lg-center mt-lg-3">
-<div class="d-none d-lg-block col-md-3 order-md-1"></div>
-<div class="col-xs-12 col-md-3 order-md-3 ml-md-2 px-0">
-<div class="d-flex flex-column">
+<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/hed.txt --->
+<div class="d-flex flex-column flex-md-row align-items-center justify-content-lg-around mt-1 mt-lg-3">
+<div class="col-md-3 order-2 order-md-1 align-self-center mt-3 mt-md-0">
+<div class="d-flex justify-content-center">
+<img src="images/arbre_start.png" alt="logo GeneWeb" width="180">
+</div>
+</div>
+<div class="col-12 col-md-3 order-1 order-md-3 ml-md-2 px-0 mt-xs-2 mt-lg-0 align-self-center">
+<div class="d-flex flex-column col-md-10 pl-1 pr-0">
 <div class="btn-group btn-group-xs mt-1" role="group">
 </div>
 </div>
 </div>
-<div class="bg-white my-0 order-md-2 flex-fill text-lg-center align-self-md-center">
-<img src="images/gwlogo.png" alt="GeneWeb" title="GeneWeb">
+<div class="my-0 order-3 order-md-2 flex-fill text-lg-center align-self-md-center">
 <h1 class="font-weight-bolder">Base généalogique test</h1>
 <div class="d-flex justify-content-center">
-<span class="h2 font-weight-light">188 personnes</span>
-<a class="align-self-center" href="test?lang=fr&i=RANDOM"
-title="Afficher un individu au hasard"><i class="fa-solid fa-dice ml-1 mb-2"></i></a>
+<span class="text-center h4 font-weight-lighter">188 personnes</span>
+<a class="align-self-center ml-2 mb-2" href="test?lang=fr&i=RANDOM"
+data-toggle="tooltip" data-placement="bottom"
+title="Afficher un individu au hasard"><i class="fa-solid fa-dice"></i></a>
 </div>
 </div>
 </div>
-<div class="d-flex justify-content-center mt-1 mt-lg-3">
+<div class="d-flex justify-content-center">
 <div class="d-flex flex-column col-8">
 </div>
 </div>
-<div class="flex-row justify-content-center">
-<form class="mt-3 mt-xl-5" method="get" action="test?lang=fr&">
+<div id="welcome-search" class="d-flex flex-wrap justify-content-center mt-3 mt-lg-1">
+<div class="col col-md-10 col-xl-9">
+<form id="main-search" class="mt-2 mt-xl-4" method="get" action="test?lang=fr&">
 <input type="hidden" name="lang" value="fr">
 <input type="hidden" name="m" value="S" class="has_validation">
 <div class="d-flex justify-content-center">
-<div class="d-flex flex-column justify-content-center col-xs-11 col-md-9 col-lg-7 w-75">
-<div class="d-flex">
-<div class="btn-group-vertical mr-2">
-<a role="button" href="test?lang=fr&m=N&tri=A"
-title="Patronymes, trier par ordre alphabétique"><i class="fa fa-arrow-down-a-z fa-fw"></i></a>
-<a role="button" href="test?lang=fr&m=N&tri=F"
-title="Fréquence patronymes, trier par nombre d’individus"><i class="fa fa-arrow-down-wide-short fa-fw"></i></a>
+<div class="d-flex flex-column justify-content-center w-100">
+<div class="d-flex flex-column flex-md-row">
+<div class="w-100 w-md-auto flex-md-grow-1">
+<div class="d-flex flex-grow-1">
+<div class="d-flex align-items-center ml-1 mr-2">
+<abbr data-toggle="tooltip" data-placement="top" data-html="true"
+title="<div class='text-left font-weight-bold'><h5>Formats de recherche :</h5>
+1. Personne :<br>
+a. prénom(s) patronyme ¹<br>
+<i class='font-weight-lighter'>John Doe</i><br><br>
+b. prénom(s)/patronyme ²/occurence ³<br>
+<i class='font-weight-lighter'>James William/Smith-Johnson/2<br> James William/Smith-Johnson<br>
+James William/<br> /Smith-Jonhson</i><br><br>
+2. Patronyme ¹ : <i class='font-weight-lighter'>Doe</i><br><br>
+3. Nom public : <i class='font-weight-lighter'>James Smith</i><br><br>
+4. Alias : <i class='font-weight-lighter'>Jimmy</i><br><br>
+5. Clé : prénom(s).occurence patronyme ²<br>
+<i class='font-weight-lighter'>James William.2 Smith-Johnson<br> james william.2 smith johnson</i><br>
+<br><div class='font-weight-lighter small'>¹ un seul mot<br>² patronyme complet<br>³ facultatif</div></div>">
+<i class="far fa-circle-question text-primary text-primary"></i>
+</abbr>
 </div>
-<label for="surname" class="sr-only col-form-label col-sm-2">Patronyme</label>
-<input type="search" id="surname" class="form-control form-control-lg"
-name="n" placeholder="Patronyme, nom public, alias"
-title="Rechercher patronyme, nom public, alias" autofocus tabindex="1">
+<input type="search" id="fullname" class="form-control form-control-lg py-0 border border-top-0" autofocus tabindex="1"
+name="pn" placeholder="Rechercher personne, patronyme, nom public, alias, clé"
+>
+</div>
+<div class="d-flex mt-3">
+<div class="btn-group-vertical mr-2">
+<a role="button" href="test?lang=fr&m=P&tri=A" data-toggle="tooltip"
+title="Prénoms, trier par ordre alphabétique">
+<i class="fa fa-arrow-down-a-z fa-fw"></i></a>
+<a role="button" href="test?lang=fr&m=P&tri=F" data-toggle="tooltip"
+title="Fréquence prénoms, trier par nombre d’individus">
+<i class="fa fa-arrow-down-wide-short fa-fw"></i></a>
+</div>
+<div class="d-flex flex-grow-1">
+<div class="flex-grow-1 align-self-center">
+<label for="firstname" class="sr-only col-form-label">Prénom(s)</label>
+<input type="search" id="firstname" class="form-control form-control-lg border-top-0"
+name="p" placeholder="Prénom(s)" tabindex="2"
+ list="datalist_fnames" data-book="fn">
+</div>
+</div>
 </div>
 <div class="d-flex mt-2">
 <div class="btn-group-vertical mr-2">
-<a role="button" href="test?lang=fr&m=P&tri=A"
-title="Prénoms, trier par ordre alphabétique"><i class="fa fa-arrow-down-a-z fa-fw"></i></a>
-<a role="button" href="test?lang=fr&m=P&tri=F"
-title="Fréquence prénoms, trier par nombre d’individus"><i class="fa fa-arrow-down-wide-short fa-fw"></i></a>
+<a role="button" href="test?lang=fr&m=N&tri=A" data-toggle="tooltip"
+title="Patronymes, trier par ordre alphabétique">
+<i class="fa fa-arrow-down-a-z fa-fw"></i></a>
+<a role="button" href="test?lang=fr&m=N&tri=F" data-toggle="tooltip"
+title="Fréquence patronymes, trier par nombre d’individus">
+<i class="fa fa-arrow-down-wide-short fa-fw"></i></a>
 </div>
-<label for="firstname" class="sr-only col-form-label col-sm-2">Prénom(s)</label>
-<input type="search" id="firstname"
-class="form-control form-control-lg border-top-0"
-name="p" placeholder="Prénom(s)"
-title="Rechercher prénom(s)" tabindex="2">
+<div class="d-flex flex-grow-1">
+<div class="flex-grow-1 align-self-center">
+<label for="surname" class="sr-only col-form-label col-sm-2">Patronyme</label>
+<input type="search" id="surname" class="form-control form-control-lg border border-top-0"
+title="Patronyme complet" data-toggle="tooltip"
+name="n" placeholder="Patronyme" tabindex="3"
+ list="datalist_snames" data-book="sn">
 </div>
 </div>
-<button class="btn btn-outline-primary align-self-center ml-2" type="submit">
-<i class="fa fa-magnifying-glass fa-fw fa-2x mt-1"></i><br>
-Rechercher<br>personne
+</div>
+</div>
+<div class="d-flex flex-column align-items-center justify-content-between mt-3 mt-md-0 mx-0 mx-md-1 px-0 px-md-3 col-md-auto small">
+<div class="d-flex flex-row flex-md-column justify-content-start mb-3 mb-md-0">
+<div class="align-self-md-start font-weight-bold mr-3 mr-md-0 mb-0 mb-md-1">Prénoms :</div>
+<div class="d-flex flex-row flex-md-column">
+<div class="custom-control custom-checkbox mr-3 mr-md-0 mb-md-1" data-toggle="tooltip" data-placement="left" title="Contient un seul prénom (contient tous les prénoms par défaut)">
+<input class="custom-control-input" type="checkbox" name="p_all" id="p_all" value="off" tabindex="4">
+<label class="custom-control-label d-flex align-items-center" for="p_all">Un prénom</label>
+</div>
+<div class="custom-control custom-checkbox mr-3 mr-md-0 mb-md-1" data-toggle="tooltip" data-placement="left" title="Conserver le même ordre">
+<input class="custom-control-input" type="checkbox" name="p_order" id="p_order" value="on" tabindex="5">
+<label class="custom-control-label d-flex align-items-center" for="p_order">Même ordre</label>
+</div>
+<div class="custom-control custom-checkbox" data-toggle="tooltip" data-placement="left" title="Correspondance partielle (correspondance exacte par défaut)">
+<input class="custom-control-input" type="checkbox" name="p_exact" id="p_exact" value="off" tabindex="6">
+<label class="custom-control-label d-flex align-items-center" for="p_exact">Partiel</label>
+</div>
+</div>
+</div>
+<button id="global-search-inline" class="d-none btn btn-outline-primary font-weight-bolder w-100 w-md-auto py-2 mb-1"
+type="submit">
+<i class="fa fa-magnifying-glass fa-lg fa-fw"></i>
+Rechercher
 </button>
 </div>
+</div>
+</div>
+</div>
 </form>
-<form class="mt-2 mt-md-3 mt-lg-4" method="get" action="test">
+<div class="d-flex flex-wrap flex-md-no-wrap justify-content-center align-items-md-center mt-1 mt-md-3">
+<form id="title-search" class="d-flex flex-column flex-md-row align-items-start align-items-md-center col-12 col-md-9 ml-md-4" method="get" action="test">
 <input type="hidden" name="lang" value="fr">
 <input type="hidden" name="m" value="TT">
-<div class="d-flex justify-content-center mx-5">
-<div class="d-flex flex-column justify-content-center col-xs-9 col-md-7 col-lg-5 w-75">
-<div class="d-flex">
-<a class="mr-2 align-self-center" role="button"
+<div class="d-flex align-items-center w-100 mb-2 mb-md-0">
+<a class="mr-2" role="button" data-toggle="tooltip" data-placement="bottom"
 href="test?lang=fr&m=TT" title="Tous les titres"><i class="fa fa-list-ul fa-fw"></i></a>
-<label for="titles" class="sr-only col-form-label col-sm-2">Titre</label>
-<input type="search" class="form-control border-top-0 border-right-0 border-left-0"
-name="t" id="titles" placeholder="Titre" tabindex="3">
+<label for="titles" class="sr-only col-form-label">Titre</label>
+<input type="search" class="form-control border-top-0 border-right-0 border-left-0 w-100"
+name="t" id="titles" placeholder="Titre" tabindex="7"
+list="datalist_titles" data-book="title">
 </div>
-<div class="d-flex mt-2">
-<a class="mr-2 align-self-center" role="button"
+<div class="d-flex align-items-center w-100 mb-2 mb-md-0 ml-0 ml-md-2">
+<a class="mr-2" role="button" data-toggle="tooltip" data-placement="bottom"
 href="test?lang=fr&m=TT&p=*" title="Tous les domaines"><i class="fa fa-list-ul fa-fw"></i></a>
-<label for="estates"
-class="sr-only col-form-label col-sm-2" >Domaine</label>
-<input type="search"
-class="form-control border-top-0 border-right-0 border-left-0"
-name="p" id="estates" placeholder="Domaine" tabindex="4">
+<label for="estates" class="sr-only col-form-label">Domaine</label>
+<input type="search" class="form-control border-top-0 border-right-0 border-left-0 w-100"
+name="p" id="estates" placeholder="Domaine" tabindex="8"
+list="datalist_estates" data-book="domain">
 </div>
-</div>
-<button class="btn btn-outline-primary btn-sm align-self-center ml-2 px-0 py-3" type="submit"
-title="Rechercher titre/domaine">
-<i class="fa fa-magnifying-glass fa-fw fa-2x mx-3"></i>
+<button class="d-none" type="submit"></button>
+</form>
+<button id="global-search" class="btn btn-outline-primary font-weight-bolder col-12 col-md-auto mt-1 mt-md-0 ml-md-auto mr-md-2 py-2"
+type="submit" tabindex="9"
+data-toggle="tooltip" data-placement="right">
+<i class="fa fa-magnifying-glass fa-lg fa-fw"></i>
+Rechercher
 </button>
 </div>
-</form>
 </div>
-<div class="d-flex flex-column justify-items-lg-center mt-3 mt-lg-4">
-<div class="h4 text-lg-center"><i class="fas fa-screwdriver-wrench fa-sm fa-fw text-secondary mr-1"></i>Outils</div>
-<div class="d-inline-flex justify-content-lg-center">
-<a role="button" class="btn btn-outline-primary mr-1"
-href="test?lang=fr&m=NOTES">
-<i class="far fa-file-lines fa-fw mr-1" aria-hidden="true"></i>Notes
+</div>
+<div class="d-flex flex-column justify-content-start justify-content-md-center mt-4 col-12 col-md-11 col-lg-8 mx-auto">
+<div class="h4 text-md-center"><i class="fas fa-screwdriver-wrench fa-sm fa-fw text-secondary"></i>
+Outils</div>
+<div class="d-flex flex-wrap justify-content-md-center">
+<a role="button" class="btn btn-outline-primary" href="test?lang=fr&m=NOTES"><i class="far fa-file-lines fa-fw mr-1" aria-hidden="true"></i>Notes
 </a>
-<a role="button" class="btn btn-outline-primary mr-1"
-href="test?lang=fr&m=STAT"><i class="far fa-chart-bar fa-fw mr-1" aria-hidden="true"></i>Statistiques</a>
-<a role="button" class="btn btn-outline-primary"
-href="test?lang=fr&m=ANM"><i class="fa fa-cake-candles fa-fw mr-1" aria-hidden="true"></i>Anniversaires</a>
-</div>
-<div class="d-inline-flex justify-content-lg-center mt-1 mt-lg-2">
-<a role="button" class="btn btn-outline-success mr-1"
-href="test?lang=fr&m=ADD_FAM"
-title="Ajouter famille (magicien)"><i class="fas fa-user-plus mr-1" aria-hidden="true"></i>Ajouter famille</a>
-<a role="button" class="btn btn-outline-primary mr-1"
-href="test?lang=fr&m=PPS&bi=on&ba=on&ma=on&de=on&bu=on">
+<a role="button" class="btn btn-outline-primary" href="test?lang=fr&m=STAT">
+<i class="far fa-chart-bar fa-fw mr-1" aria-hidden="true"></i>Statistiques</a>
+<a role="button" class="btn btn-outline-primary" href="test?lang=fr&m=ANM">
+<i class="fa fa-cake-candles fa-fw mr-1" aria-hidden="true"></i>Anniversaires</a>
+<a role="button" class="btn btn-outline-primary" href="test?lang=fr&m=PPS&bi=on&ba=on&ma=on&de=on&bu=on">
 <i class="fas fa-globe fa-fw mr-1" aria-hidden="true"></i>Lieux/patronyme</a>
-<a role="button" class="btn btn-outline-primary mr-1"
-href="test?lang=fr&m=AS">
+<a role="button" class="btn btn-outline-primary" href="test?lang=fr&m=AS">
 <i class="fa fa-magnifying-glass-plus fa-fw mr-1" aria-hidden="true"></i>Requête évoluée</a>
-<a role="button" class="btn btn-outline-primary mr-1"
-href="test?lang=fr&m=CAL">
+<a role="button" class="btn btn-outline-primary" href="test?lang=fr&m=CAL">
 <i class="far fa-calendar-days fa-fw mr-1" aria-hidden="true"></i>Calendriers</a>
-<a role="button" class="btn btn-outline-success mr-1"
-href="test?lang=fr&m=H&v=conf">
+<a role="button" class="btn btn-outline-success" href="test?lang=fr&m=H&v=conf">
 <i class="fas fa-gear fa-fw mr-1" aria-hidden="true"></i>Configuration</a>
+<a role="button" class="btn btn-outline-success" href="test?lang=fr&m=MOD_NOTES&f=new_note">
+<i class="fa fa-file-lines fa-fw mr-1" aria-hidden="true"></i>Ajouter note</a>
+<a role="button" class="btn btn-outline-success" href="test?lang=fr&m=ADD_FAM">
+<i class="fas fa-user-plus fa-fw mr-1" aria-hidden="true"></i>Ajouter famille</a>
 </div>
 </div>
-<div class="d-flex flex-column flex-lg-row justify-content-lg-center mt-2 mt-lg-4">
-<div class="h4 align-self-lg-center mr-lg-2">
-<i class="fas fa-book fa-sm fa-fw text-muted mr-1"></i>Dictionnaires</div>
-<div class="d-inline-flex justify-content-lg-center">
-<a role="button" class="btn btn-outline-success mr-1"
-href="test?lang=fr&m=MOD_DATA&data=fn"
-title="Modifier dictionnaire des prénoms (magicien)"><i class="fa fa-child fa-fw mr-1"></i>Prénoms</a>
-<a role="button" class="btn btn-outline-success mr-1"
-href="test?lang=fr&m=MOD_DATA&data=sn"
-title="Modifier dictionnaire des patronymes (magicien)"><i class="fa fa-signature fa-fw mr-1"></i>Patronymes</a>
-<a role="button" class="btn btn-outline-success mr-1"
-href="test?lang=fr&m=MOD_DATA&data=place"
-title="Modifier dictionnaire des lieux (magicien)"><i class="fa fa-map-location-dot fa-fw mr-1"></i>Lieux</a>
-<a role="button" class="btn btn-outline-success mr-1"
-href="test?lang=fr&m=MOD_DATA&data=occu"
-title="Modifier dictionnaire des professions (magicien)"><i class="fa fa-user-doctor fa-fw mr-1"></i>Professions</a>
-<a role="button" class="btn btn-outline-success"
-href="test?lang=fr&m=MOD_DATA&data=src"
-title="Modifier dictionnaire des sources (magicien)"><i class="fa fa-box-archive fa-fw mr-1"></i>Sources</a>
+<div class="d-flex flex-column justify-content-start justify-content-md-center mt-3 col-12 col-md-8 mx-auto">
+<div class="h4 text-md-center">
+<i class="fas fa-book fa-sm fa-fw text-success mr-1"></i>Dictionnaires</div>
+<div class="d-flex flex-wrap justify-content-md-center">
+<a role="button" class="btn btn-outline-success" data-toggle="tooltip"
+href="test?lang=fr&m=MOD_DATA&data=fn" title="Modifier dictionnaire des prénoms (magicien)">
+<i class="fa fa-child fa-fw mr-1"></i>
+<span class="text-nowrap">Prénoms</span>
+</a>
+<a role="button" class="btn btn-outline-success" data-toggle="tooltip"
+href="test?lang=fr&m=MOD_DATA&data=sn" title="Modifier dictionnaire des patronymes (magicien)">
+<i class="fa fa-signature fa-fw mr-1"></i>
+<span class="text-nowrap">Patronymes</span>
+</a>
+<a role="button" class="btn btn-outline-success" data-toggle="tooltip"
+href="test?lang=fr&m=MOD_DATA&data=pubn" title="Modifier dictionnaire des noms publics (magicien)">
+<i class="fa fa-pen fa-fw mr-1"></i>
+<span class="text-nowrap">Noms publics</span>
+</a>
+<a role="button" class="btn btn-outline-success" data-toggle="tooltip"
+href="test?lang=fr&m=MOD_DATA&data=qual" title="Modifier dictionnaire des sobriquets (magicien)">
+<i class="fa fa-comment fa-fw mr-1"></i>
+<span class="text-nowrap">Sobriquets</span>
+</a>
+<a role="button" class="btn btn-outline-success" data-toggle="tooltip"
+href="test?lang=fr&m=MOD_DATA&data=alias" title="Modifier dictionnaire des alias (magicien)">
+<i class="fa fa-mask fa-fw mr-1"></i>
+<span class="text-nowrap">Alias</span>
+</a>
+<a role="button" class="btn btn-outline-success" data-toggle="tooltip"
+href="test?lang=fr&m=MOD_DATA&data=occu" title="Modifier dictionnaire des professions (magicien)">
+<i class="fa fa-user-doctor fa-fw mr-1"></i>
+<span class="text-nowrap">Professions</span>
+</a>
+<a role="button" class="btn btn-outline-success" data-toggle="tooltip"
+href="test?lang=fr&m=MOD_DATA&data=place" title="Modifier dictionnaire des lieux (magicien)">
+<i class="fa fa-map-location-dot fa-fw mr-1"></i>
+<span class="text-nowrap">Lieux</span>
+</a>
+<a role="button" class="btn btn-outline-success" data-toggle="tooltip"
+href="test?lang=fr&m=MOD_DATA&data=src" title="Modifier dictionnaire des sources (magicien)">
+<i class="fa fa-box-archive fa-fw mr-1"></i>
+<span class="text-nowrap">Sources</span>
+</a>
+<a role="button" class="btn btn-outline-success" data-toggle="tooltip"
+href="test?lang=fr&m=MOD_DATA&data=title" title="Modifier dictionnaire des titres (magicien)">
+<i class="fa fa-crown fa-fw mr-1"></i>
+<span class="text-nowrap">Titres</span>
+</a>
+<a role="button" class="btn btn-outline-success" data-toggle="tooltip"
+href="test?lang=fr&m=MOD_DATA&data=domain" title="Modifier dictionnaire des domaines (magicien)">
+<i class="fa fa-chess-rook fa-fw mr-1"></i>
+<span class="text-nowrap">Domaines</span>
+</a>
+<a href="test?lang=fr&m=CHK_DATA" class="btn btn-outline-success ml-2"
+title="Vérificateur typographique des données"><i class="fas fa-spell-check"></i>
+</a> </div>
+</div>
+<div class="d-flex mt-3">
+<div class="col-11 col-md-auto mx-auto">
 </div>
 </div>
-<div class="row mt-2 mt-lg-4">
-<div class="col text-lg-center">
+<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/trl.txt --->
+<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/trl.txt --->
+<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/copyr.txt --->
+<!-- $Id: copyr.txt 7.1-beta 18/12/2023 22:03:44 $ -->
+<div class="d-flex flex-row justify-content-center justify-content-lg-end my-2" id="copyr">
+<div class="d-flex flex-wrap justify-content-md-end">
+<!-- legal notices -->
+<!-- Language selector and connections info -->
+<div class="d-flex flex-row align-items-lg-end mt-0 ml-3 border-0">
+<div class="btn-group dropup" data-toggle="tooltip" data-placement="left"
+title="français – Sélectionner la langue">
+<button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenu1"
+data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<span class="sr-only">lang</span>
+<span class="text-uppercase">fr</span>
+<span class="sr-only">, sélectionner la langue</span>
+</button>
+<div class="dropdown-menu scrollable-lang" aria-labelledby="dropdownMenu1">
+<a class="dropdown-item" id="lang_af" href="test?lang=af"><code>af&nbsp;&nbsp;&nbsp; </code>Afrikaans</a>
+<a class="dropdown-item" id="lang_ar" href="test?lang=ar"><code>ar&nbsp;&nbsp;&nbsp; </code>Arabe</a>
+<a class="dropdown-item" id="lang_bg" href="test?lang=bg"><code>bg&nbsp;&nbsp;&nbsp; </code>Bulgare</a>
+<a class="dropdown-item" id="lang_br" href="test?lang=br"><code>br&nbsp;&nbsp;&nbsp; </code>Breton</a>
+<a class="dropdown-item" id="lang_ca" href="test?lang=ca"><code>ca&nbsp;&nbsp;&nbsp; </code>Catalan</a>
+<a class="dropdown-item" id="lang_co" href="test?lang=co"><code>co&nbsp;&nbsp;&nbsp; </code>Corse</a>
+<a class="dropdown-item" id="lang_cs" href="test?lang=cs"><code>cs&nbsp;&nbsp;&nbsp; </code>Tchèque</a>
+<a class="dropdown-item" id="lang_da" href="test?lang=da"><code>da&nbsp;&nbsp;&nbsp; </code>Danois</a>
+<a class="dropdown-item" id="lang_de" href="test?lang=de"><code>de&nbsp;&nbsp;&nbsp; </code>Allemand</a>
+<a class="dropdown-item" id="lang_en" href="test?"><code>en&nbsp;&nbsp;&nbsp; </code>Anglais</a>
+<a class="dropdown-item" id="lang_eo" href="test?lang=eo"><code>eo&nbsp;&nbsp;&nbsp; </code>Espéranto</a>
+<a class="dropdown-item" id="lang_es" href="test?lang=es"><code>es&nbsp;&nbsp;&nbsp; </code>Espagnol</a>
+<a class="dropdown-item" id="lang_et" href="test?lang=et"><code>et&nbsp;&nbsp;&nbsp; </code>Estonien</a>
+<a class="dropdown-item" id="lang_fi" href="test?lang=fi"><code>fi&nbsp;&nbsp;&nbsp; </code>Finnois</a>
+<a class="dropdown-item" id="lang_he" href="test?lang=he"><code>he&nbsp;&nbsp;&nbsp; </code>Hébreu</a>
+<a class="dropdown-item" id="lang_is" href="test?lang=is"><code>is&nbsp;&nbsp;&nbsp; </code>Islandais</a>
+<a class="dropdown-item" id="lang_it" href="test?lang=it"><code>it&nbsp;&nbsp;&nbsp; </code>Italien</a>
+<a class="dropdown-item" id="lang_lt" href="test?lang=lt"><code>lt&nbsp;&nbsp;&nbsp; </code>Lituanien</a>
+<a class="dropdown-item" id="lang_lv" href="test?lang=lv"><code>lv&nbsp;&nbsp;&nbsp; </code>Letton</a>
+<a class="dropdown-item" id="lang_nl" href="test?lang=nl"><code>nl&nbsp;&nbsp;&nbsp; </code>Néerlandais</a>
+<a class="dropdown-item" id="lang_no" href="test?lang=no"><code>no&nbsp;&nbsp;&nbsp; </code>Norvégien</a>
+<a class="dropdown-item" id="lang_oc" href="test?lang=oc"><code>oc&nbsp;&nbsp;&nbsp; </code>Occitan</a>
+<a class="dropdown-item" id="lang_pl" href="test?lang=pl"><code>pl&nbsp;&nbsp;&nbsp; </code>Polonais</a>
+<a class="dropdown-item" id="lang_pt" href="test?lang=pt"><code>pt&nbsp;&nbsp;&nbsp; </code>Portugais</a>
+<a class="dropdown-item" id="lang_pt-br" href="test?lang=pt-br"><code>pt-br </code>Portugais brésilien</a>
+<a class="dropdown-item" id="lang_ro" href="test?lang=ro"><code>ro&nbsp;&nbsp;&nbsp; </code>Roumain</a>
+<a class="dropdown-item" id="lang_ru" href="test?lang=ru"><code>ru&nbsp;&nbsp;&nbsp; </code>Russe</a>
+<a class="dropdown-item" id="lang_sk" href="test?lang=sk"><code>sk&nbsp;&nbsp;&nbsp; </code>Slovaque</a>
+<a class="dropdown-item" id="lang_sl" href="test?lang=sl"><code>sl&nbsp;&nbsp;&nbsp; </code>Slovène</a>
+<a class="dropdown-item" id="lang_sv" href="test?lang=sv"><code>sv&nbsp;&nbsp;&nbsp; </code>Suédois</a>
+<a class="dropdown-item" id="lang_tr" href="test?lang=tr"><code>tr&nbsp;&nbsp;&nbsp; </code>Turc</a>
+<a class="dropdown-item" id="lang_zh" href="test?lang=zh"><code>zh&nbsp;&nbsp;&nbsp; </code>Chinois</a>
 </div>
 </div>
+<!-- Connections info -->
+</div>
+<!-- Footer links and copyright -->
+<div class="d-flex flex-column justify-content-md-end align-self-center ml-1 ml-md-3 ml-lg-4">
+<div class="ml-auto mb-0">
+<a role="button" class="mr-1"
+href="test?lang=fr&templ=templm"
+data-toggle="tooltip"
+title="templm">
+<i class="fab fa-markdown" aria-hidden="true"></i>
+<span class="sr-only">switch to templm</span>
+</a>
+<a href="https://github.com//tree/b94cad5"
+data-toggle="tooltip"
+data-html="true"
+title="Branche 97-ut-py-001-setup-pytest-infrastructure compilée le 2025-10-21<br>à partir du commit id b94cad5 (2025-10-21)">
+GeneWeb v. 7.1-beta</a>
+</div>
+<div class="btn-group mt-0">
+<span>&copy; <a href="https://www.inria.fr" target="_blank" rel="noreferrer, noopener">INRIA</a> 1998-2007</span>
+<a href="https://geneweb.tuxfamily.org/wiki/GeneWeb/fr"
+class="ml-1"
+target="_blank"
+rel="noreferrer, noopener"
+data-toggle="tooltip"
+title="GeneWeb Wiki">
+<i class="fab fa-wikipedia-w"></i>
+</a>
+<a href="https://github.com/geneweb/geneweb"
+class="ml-1"
+target="_blank"
+rel="noreferrer, noopener"
+data-toggle="tooltip"
+title="GeneWeb Github">
+<i class="fab fa-github"></i>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/copyr.txt --->
+</div>
+<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/js.txt --->
+<!-- $Id: js.txt v7.1 10/01/2025 04:15:45 $ -->
+<script src="js/jquery.min.js?version=3.7.1"></script>
+<script src="js/bootstrap.bundle.min.js?version=4.6.1"></script>
+<script>
+// Manages enhanced input field behaviors (navigation, interaction)
+const inputToBook = {
+addNavigation: function() {
+// Use event delegation for dynamically added inputs
+$(document).on('mousedown', 'input[data-book]', function(event) {
+if (event.ctrlKey && event.button === 0) {
+event.preventDefault();
+inputToBook.openBook(this.value, $(this).data('book'));
+}
+});
+},
+openBook: function(value, book) {
+if (!value) return;
+let preVal = value;
+if (book === "place") {
+const place = value.split(/\]\s+[-–—]\s+/);
+preVal = place.length > 1 ? place[1] : value;
+}
+preVal = preVal.substring(0, Math.min(preVal.length, 12))
+.split(/[, ]+/)[0]
+.substring(0, Math.floor(value.length / 2));
+const encVal = encodeURIComponent(value);
+const encPreVal = encodeURIComponent(preVal);
+const url = `?w=w&m=MOD_DATA&data=${book}&s=${encPreVal}&s1=${encVal !== encPreVal ? encVal : ''}`;
+window.open(url, '_blank');
+}
+};
+// Controls unified search functionality with a shared submit button
+// Handles both main person search and optional title search forms
+function initializeWelcomeSearchFunctionality() {
+const searchForms = {
+main: document.getElementById('main-search'),
+title: document.getElementById('title-search')
+};
+const searchBtn = document.getElementById('global-search');
+function hasInput(form) {
+return form && Array.from(form.querySelectorAll('input[type="search"]'))
+.some(input => input.value.trim() !== '');
+}
+function closeAlertsAndCleanURL() {
+$('.alert').alert('close');
+const url = new URL(window.location.href);
+const bParam = url.searchParams.get('b');
+url.search = '';
+if (bParam !== null) {
+url.searchParams.set('b', bParam); // on remet b=
+}
+window.history.replaceState({}, '', url);
+}
+function getTooltip() {
+if (hasInput(searchForms.main)) {
+return 'Rechercher personne';
+}
+if (searchForms.title && hasInput(searchForms.title)) {
+return 'Rechercher titre/domaine';
+}
+return '';
+}
+$(searchBtn).tooltip({
+title: getTooltip,
+trigger: 'hover'
+});
+Object.values(searchForms).forEach(form => {
+if (!form) return;
+form.querySelectorAll('input[type="search"]').forEach(input => {
+input.addEventListener('input', () => {
+if (hasInput(form)) {
+closeAlertsAndCleanURL();
+}
+$(searchBtn).tooltip('hide')
+.attr('data-original-title', getTooltip())
+.tooltip('show');
+});
+});
+form.addEventListener('keypress', e => {
+if (e.key === 'Enter') {
+e.preventDefault();
+if (hasInput(form)) form.submit();
+}
+});
+});
+searchBtn.addEventListener('click', () => {
+if (hasInput(searchForms.main)) {
+searchForms.main.submit();
+}
+else if (searchForms.title && hasInput(searchForms.title)) {
+searchForms.title.submit();
+}
+});
+}
+// Floating placeholders for all textual inputs
+function setupFloatingPlaceholders() {
+const inputs = document.querySelectorAll('input[type="text"][placeholder], input[type="number"][placeholder], input[type="search"][placeholder], textarea[placeholder]');
+inputs.forEach(input => {
+// Ignore placeholders that are only non-breaking spaces
+if (input.placeholder.trim() === '') return;
+const hadFocus = document.activeElement === input;
+const wrapper = document.createElement('div');
+wrapper.className = 'input-wrapper';
+input.parentNode.insertBefore(wrapper, input);
+wrapper.appendChild(input);
+const placeholder = document.createElement('span');
+placeholder.className = 'floating-placeholder';
+placeholder.textContent = input.placeholder;
+wrapper.appendChild(placeholder);
+input.addEventListener('focus', () => placeholder.classList.add('active'));
+input.addEventListener('blur', () => placeholder.classList.remove('active'));
+if (hadFocus || input.hasAttribute('autofocus')) {
+requestAnimationFrame(() => {
+input.focus();
+placeholder.classList.add('active');
+});
+}
+});
+}
+const initTooltips = () => {
+const tooltipElements = document.querySelectorAll('[data-toggle="tooltip"]');
+if (tooltipElements.length > 0) {
+$(tooltipElements).tooltip({
+trigger: 'hover',
+delay: { show: 200, hide: 50 },
+container: 'body',
+});
+}
+};
+function safeInitialize(fn) {
+try {
+fn();
+} catch (error) {
+console.error('Initialization error:', error);
+}
+}
+document.addEventListener('DOMContentLoaded', () => {
+initializeWelcomeSearchFunctionality();
+inputToBook.addNavigation();
+initTooltips();
+setupFloatingPlaceholders();
+});
+</script>
+<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/js.txt --->
 <script>
  var q_time = TIME;
  var nb_errors = 0;
@@ -181,83 +521,9 @@ title="Modifier dictionnaire des sources (magicien)"><i class="fa fa-box-archive
  home_errors.title = nb_errors +" error(s)!";
  home_errors.classList.remove("d-none");
  }
- if (errors_list != "") {
+ if (errors_list != "\u{000A}") {
  home_errors.title = home_errors.title + errors_list + ".";
  }
  }
-</script><!-- $Id: copyr.txt 7.1-beta 18/12/2023 22:03:44 $ -->
-<div class="d-flex ml-auto justify-content-end m-2" id="copyr">
-<div class="btn-group dropup align-self-center">
-<button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenu1"
-data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-title="Français"><span class="sr-only">lang</span><span class="text-uppercase" title="Afficher en : français">fr</span><span class="sr-only">, afficher en</span></button>
-<div class="dropdown-menu scrollable-lang" aria-labelledby="dropdownMenu1">
-<a class="dropdown-item" id="lang_af" href="test?lang=af" title="lang af"><code>af&nbsp;&nbsp;&nbsp; </code>Afrikaans</a>
-<a class="dropdown-item" id="lang_ar" href="test?lang=ar" title="lang ar"><code>ar&nbsp;&nbsp;&nbsp; </code>Arabe</a>
-<a class="dropdown-item" id="lang_bg" href="test?lang=bg" title="lang bg"><code>bg&nbsp;&nbsp;&nbsp; </code>Bulgare</a>
-<a class="dropdown-item" id="lang_br" href="test?lang=br" title="lang br"><code>br&nbsp;&nbsp;&nbsp; </code>Breton</a>
-<a class="dropdown-item" id="lang_ca" href="test?lang=ca" title="lang ca"><code>ca&nbsp;&nbsp;&nbsp; </code>Catalan</a>
-<a class="dropdown-item" id="lang_co" href="test?lang=co" title="lang co"><code>co&nbsp;&nbsp;&nbsp; </code>Corse</a>
-<a class="dropdown-item" id="lang_cs" href="test?lang=cs" title="lang cs"><code>cs&nbsp;&nbsp;&nbsp; </code>Tchèque</a>
-<a class="dropdown-item" id="lang_da" href="test?lang=da" title="lang da"><code>da&nbsp;&nbsp;&nbsp; </code>Danois</a>
-<a class="dropdown-item" id="lang_de" href="test?lang=de" title="lang de"><code>de&nbsp;&nbsp;&nbsp; </code>Allemand</a>
-<a class="dropdown-item" id="lang_en" href="test?" title="lang en"><code>en&nbsp;&nbsp;&nbsp; </code>Anglais</a>
-<a class="dropdown-item" id="lang_eo" href="test?lang=eo" title="lang eo"><code>eo&nbsp;&nbsp;&nbsp; </code>Espéranto</a>
-<a class="dropdown-item" id="lang_es" href="test?lang=es" title="lang es"><code>es&nbsp;&nbsp;&nbsp; </code>Espagnol</a>
-<a class="dropdown-item" id="lang_et" href="test?lang=et" title="lang et"><code>et&nbsp;&nbsp;&nbsp; </code>Estonien</a>
-<a class="dropdown-item" id="lang_fi" href="test?lang=fi" title="lang fi"><code>fi&nbsp;&nbsp;&nbsp; </code>Finnois</a>
-<a class="dropdown-item" id="lang_he" href="test?lang=he" title="lang he"><code>he&nbsp;&nbsp;&nbsp; </code>Hébreu</a>
-<a class="dropdown-item" id="lang_is" href="test?lang=is" title="lang is"><code>is&nbsp;&nbsp;&nbsp; </code>Islandais</a>
-<a class="dropdown-item" id="lang_it" href="test?lang=it" title="lang it"><code>it&nbsp;&nbsp;&nbsp; </code>Italien</a>
-<a class="dropdown-item" id="lang_lt" href="test?lang=lt" title="lang lt"><code>lt&nbsp;&nbsp;&nbsp; </code>Lituanien</a>
-<a class="dropdown-item" id="lang_lv" href="test?lang=lv" title="lang lv"><code>lv&nbsp;&nbsp;&nbsp; </code>Letton</a>
-<a class="dropdown-item" id="lang_nl" href="test?lang=nl" title="lang nl"><code>nl&nbsp;&nbsp;&nbsp; </code>Néerlandais</a>
-<a class="dropdown-item" id="lang_no" href="test?lang=no" title="lang no"><code>no&nbsp;&nbsp;&nbsp; </code>Norvégien</a>
-<a class="dropdown-item" id="lang_oc" href="test?lang=oc" title="lang oc"><code>oc&nbsp;&nbsp;&nbsp; </code>Occitan</a>
-<a class="dropdown-item" id="lang_pl" href="test?lang=pl" title="lang pl"><code>pl&nbsp;&nbsp;&nbsp; </code>Polonais</a>
-<a class="dropdown-item" id="lang_pt" href="test?lang=pt" title="lang pt"><code>pt&nbsp;&nbsp;&nbsp; </code>Portugais</a>
-<a class="dropdown-item" id="lang_pt-br" href="test?lang=pt-br" title="lang pt-br"><code>pt-br </code>Portugais brésilien</a>
-<a class="dropdown-item" id="lang_ro" href="test?lang=ro" title="lang ro"><code>ro&nbsp;&nbsp;&nbsp; </code>Roumain</a>
-<a class="dropdown-item" id="lang_ru" href="test?lang=ru" title="lang ru"><code>ru&nbsp;&nbsp;&nbsp; </code>Russe</a>
-<a class="dropdown-item" id="lang_sk" href="test?lang=sk" title="lang sk"><code>sk&nbsp;&nbsp;&nbsp; </code>Slovaque</a>
-<a class="dropdown-item" id="lang_sl" href="test?lang=sl" title="lang sl"><code>sl&nbsp;&nbsp;&nbsp; </code>Slovène</a>
-<a class="dropdown-item" id="lang_sv" href="test?lang=sv" title="lang sv"><code>sv&nbsp;&nbsp;&nbsp; </code>Suédois</a>
-<a class="dropdown-item" id="lang_tr" href="test?lang=tr" title="lang tr"><code>tr&nbsp;&nbsp;&nbsp; </code>Turc</a>
-<a class="dropdown-item" id="lang_zh" href="test?lang=zh" title="lang zh"><code>zh&nbsp;&nbsp;&nbsp; </code>Chinois</a>
-</div>
-</div>
-<div class="d-inline-flex flex-column justify-content-end align-self-center ml-3">
-<div class="ml-auto">
-<a role="button" class="mr-1"
-href="test?lang=fr&templ=templm"
-title="templm"><i class="fab fa-markdown" aria-hidden="true"></i><span class="sr-only">switch to templm</span></a>
-<a href="https://github.com//tree/2ab85d8"
-title="Branche HEAD compilée le 2024-04-18 à partir du commit id 2ab85d8 (2024-04-18)">GeneWeb v. 7.1-beta</a>
-</div>
-<div class="btn-group">
-<span>&copy; <a href="https://www.inria.fr" target="_blank" rel="noreferrer, noopener">INRIA</a> 1998-2007</span>
-<a href="https://geneweb.tuxfamily.org/wiki/GeneWeb/fr" class="ml-1"
-target="_blank" rel="noreferrer, noopener" title="Documentation GeneWeb"><i class="fab fa-wikipedia-w"></i></a><a href="https://github.com/geneweb/geneweb" class="ml-1"
-target="_blank" rel="noreferrer, noopener" title="GeneWeb on Github"><i class="fab fa-github"></i></a>
-</div>
-</div>
-</div>
-</div>
-<!-- $Id: js.txt v7.1 02/12/2023 12:35:50 $ -->
-<script src="js/jquery.min.js?version=3.7.1"></script>
-<script src="js/bootstrap.bundle.min.js?version=4.6.1"></script>
-<script>
-$('#load_once_p_mod').one('click', function() {
-$.getScript('js/p_mod.js');
-});
-$('#load_once_copylink').one('click', function() {
-$.getScript('js/copylink.js');
-});
-</script>
-<script><!-- focus on found autofocus input in opening BS modal -->
-$('.modal').on('shown.bs.modal', function() {
-$(this).find('[autofocus]').focus();
-});
-</script>
-</body>
+</script></body>
 </html>

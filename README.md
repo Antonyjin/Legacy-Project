@@ -228,10 +228,17 @@ lsof -ti:2317 | xargs kill -9  # macOS/Linux
 ### 📊 Current Test Coverage
 
 - ✅ **Golden Tests**: 10 page types + GEDCOM export + import roundtrip (12 total) - **100% complete**
-- ⏳ **Python Unit Tests**: 10 tests planned (0/10 implemented) - **Week 1 sprint**
+- ⏳ **Python Unit Tests**: Infrastructure ✅ (1/10 complete), tests 2-10 in progress - **Week 1 sprint**
 - ⏳ **Python Integration Tests**: 10 tests planned (0/10 implemented) - **Week 1-2 sprint**
 - ⏳ **Python Functional Tests**: 10 tests planned (0/10 implemented) - **Week 2-3 sprint**
 - ⏳ **Migration**: 10 functions planned (0/10 migrated) - **Week 2-3 sprint**
+
+**Python Test Infrastructure** (Issue #97): ✅ **COMPLETE**
+- pytest configuration (`pytest.ini`)
+- Coverage setup (`.coveragerc`, target >80%)
+- Shared fixtures (`tests/python/conftest.py`)
+- Test directory structure (`unit/`, `integration/`, `functional/`)
+- First passing test: `test_setup.py` (8/8 tests pass)
 
 ### 🤝 Contributing
 
@@ -262,6 +269,12 @@ cd GeneWeb && ./geneweb.sh
 
 # Run golden tests
 ./scripts/golden/run_golden.sh validate
+
+# Run Python tests
+pytest tests/python/ -v                    # All tests
+pytest tests/python/unit/test_setup.py -v  # Verify infrastructure (8 tests)
+pytest -m unit                             # Unit tests only
+pytest tests/python/ --cov=tests/python --cov-report=html  # With coverage
 
 # Export GEDCOM
 GeneWeb/gw/gwb2ged GeneWeb/bases/test.gwb -o export.ged
