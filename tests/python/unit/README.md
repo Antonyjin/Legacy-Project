@@ -33,6 +33,14 @@ Tests name search case-insensitivity, display formatting, and special character 
 - 10 test methods validating name normalization
 - OCaml functions: `Name.lower`, `Name.crush_lower`, name display formatting
 
+### UT-PY-010: Localization & i18n
+
+**File**: test_localization.py | **PR**: #196 | **Issue**: #168
+
+Tests language switching, translations, and internationalization.
+- 16 test methods across 5 test classes
+- OCaml functions: language selection, message translation, date/UI localization
+
 ---
 
 ### UT-PY-002: HTTP Parameter Parsing
