@@ -33,6 +33,14 @@ Tests name search case-insensitivity, display formatting, and special character 
 - 10 test methods validating name normalization
 - OCaml functions: `Name.lower`, `Name.crush_lower`, name display formatting
 
+### UT-PY-006: String Utils
+
+**File**: test_string_utils.py | **PR**: #192 | **Issue**: #164
+
+Tests string normalization, special character handling, and name transformations.
+- 15 test methods across 5 test classes
+- OCaml functions: `Name.lower`, `Name.strip`, `Mutil.normalize`, string utilities
+
 ---
 
 ### UT-PY-002: HTTP Parameter Parsing
