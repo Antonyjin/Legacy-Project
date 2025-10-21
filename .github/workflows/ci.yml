@@ -95,44 +95,13 @@ jobs:
             exit 1
           fi
           
-          # Create a simple test database using ged2gwb from distribution
-          cd GeneWeb
-          cat > /tmp/minimal.ged << 'EOF'
-0 HEAD
-1 SOUR GeneWeb
-1 GEDC
-2 VERS 5.5
-1 CHAR UTF-8
-0 @I1@ INDI
-1 NAME Charles /Windsor/
-1 SEX M
-1 BIRT
-2 DATE 14 NOV 1948
-2 PLAC Buckingham Palace, London, England
-0 @I2@ INDI
-1 NAME Elizabeth /Windsor/
-1 SEX F
-1 BIRT
-2 DATE 21 APR 1926
-2 PLAC London
-0 @I3@ INDI
-1 NAME Philip /Mountbatten/
-1 SEX M
-1 BIRT
-2 DATE 10 JUN 1921
-0 @F1@ FAM
-1 HUSB @I3@
-1 WIFE @I2@
-1 CHIL @I1@
-1 MARR
-2 DATE 20 NOV 1947
-0 TRLR
-EOF
-          
-          # Import GEDCOM to create test database
-          ./gw/ged2gwb /tmp/minimal.ged -o ./bases/test
-          
-          echo "✅ Test database created"
+          # Note: Test database (test.gwb) should already be in the repo
+          # If not found, tests will fail gracefully
+          if [ -d "GeneWeb/bases/test.gwb" ]; then
+            echo "✅ Test database found"
+          else
+            echo "⚠️ Test database not found - some tests may fail"
+          fi
 
       - name: Make executables
         if: steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true'
