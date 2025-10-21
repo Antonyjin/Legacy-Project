@@ -57,72 +57,82 @@ jobs:
 
       - name: Setup OCaml
         if: steps.check_source.outputs.needs_build == 'true'
-        uses: ocaml/setup-ocaml@v2
+        uses: ocaml/setup-ocaml@v3.4.0
         with:
-          ocaml-compiler: 4.14.x
-          dune-cache: true
-          opam-depext: true
-          opam-depext-flags: --with-test
+          ocaml-compiler: 4.14.2
 
-      - name: Install OCaml dependencies
+      - name: Install GeneWeb dependencies
         if: steps.check_source.outputs.needs_build == 'true'
         working-directory: source_geneweb
         run: |
           opam install . --deps-only --with-test
+        env:
+          OPAMYES: true
 
-      - name: Build GeneWeb from source
+      - name: Configure GeneWeb
         if: steps.check_source.outputs.needs_build == 'true'
         working-directory: source_geneweb
         run: |
-          dune build @install
+          opam exec -- ocaml ./configure.ml --sosa-zarith
+
+      - name: Build GeneWeb
+        if: steps.check_source.outputs.needs_build == 'true'
+        working-directory: source_geneweb
+        run: |
+          opam exec -- make distrib
           echo "✅ Build complete"
 
-      - name: Create GeneWeb runtime directory
+      - name: Setup GeneWeb runtime from distribution
         if: steps.check_source.outputs.needs_build == 'true'
         run: |
-          mkdir -p GeneWeb/gw
-          mkdir -p GeneWeb/bases
+          # The 'make distrib' creates a 'distribution' folder
+          # Move it to GeneWeb/ for tests
+          if [ -d "source_geneweb/distribution" ]; then
+            mv source_geneweb/distribution GeneWeb
+            echo "✅ GeneWeb runtime ready from distribution"
+          else
+            echo "❌ Distribution folder not found"
+            exit 1
+          fi
           
-          # Copy binaries
-          cp source_geneweb/_build/default/bin/gwd/gwd.exe GeneWeb/gw/gwd || true
-          cp source_geneweb/_build/default/bin/gwsetup/gwsetup.exe GeneWeb/gw/gwsetup || true
-          cp source_geneweb/_build/default/bin/ged2gwb/ged2gwb.exe GeneWeb/gw/ged2gwb || true
-          cp source_geneweb/_build/default/bin/gwb2ged/gwb2ged.exe GeneWeb/gw/gwb2ged || true
-          cp source_geneweb/_build/default/bin/gwu/gwu.exe GeneWeb/gw/gwu || true
-          cp source_geneweb/_build/default/bin/consang/consang.exe GeneWeb/gw/consang || true
+          # Create a simple test database using ged2gwb from distribution
+          cd GeneWeb
+          cat > /tmp/minimal.ged << 'EOF'
+0 HEAD
+1 SOUR GeneWeb
+1 GEDC
+2 VERS 5.5
+1 CHAR UTF-8
+0 @I1@ INDI
+1 NAME Charles /Windsor/
+1 SEX M
+1 BIRT
+2 DATE 14 NOV 1948
+2 PLAC Buckingham Palace, London, England
+0 @I2@ INDI
+1 NAME Elizabeth /Windsor/
+1 SEX F
+1 BIRT
+2 DATE 21 APR 1926
+2 PLAC London
+0 @I3@ INDI
+1 NAME Philip /Mountbatten/
+1 SEX M
+1 BIRT
+2 DATE 10 JUN 1921
+0 @F1@ FAM
+1 HUSB @I3@
+1 WIFE @I2@
+1 CHIL @I1@
+1 MARR
+2 DATE 20 NOV 1947
+0 TRLR
+EOF
           
-          # Copy runtime assets (templates, images, etc.)
-          cp -r source_geneweb/hd/etc GeneWeb/gw/ || true
-          cp -r source_geneweb/hd/images GeneWeb/gw/ || true
-          cp -r source_geneweb/hd/lang GeneWeb/gw/ || true
+          # Import GEDCOM to create test database
+          ./gw/ged2gwb /tmp/minimal.ged -o ./bases/test
           
-          # Create a simple test database
-          echo "0 HEAD" > /tmp/minimal.ged
-          echo "1 SOUR GeneWeb" >> /tmp/minimal.ged
-          echo "1 GEDC" >> /tmp/minimal.ged
-          echo "2 VERS 5.5" >> /tmp/minimal.ged
-          echo "1 CHAR UTF-8" >> /tmp/minimal.ged
-          echo "0 @I1@ INDI" >> /tmp/minimal.ged
-          echo "1 NAME Charles /Windsor/" >> /tmp/minimal.ged
-          echo "1 SEX M" >> /tmp/minimal.ged
-          echo "1 BIRT" >> /tmp/minimal.ged
-          echo "2 DATE 14 NOV 1948" >> /tmp/minimal.ged
-          echo "2 PLAC Buckingham Palace, London, England" >> /tmp/minimal.ged
-          echo "0 @I2@ INDI" >> /tmp/minimal.ged
-          echo "1 NAME Elizabeth /Windsor/" >> /tmp/minimal.ged
-          echo "1 SEX F" >> /tmp/minimal.ged
-          echo "1 BIRT" >> /tmp/minimal.ged
-          echo "2 DATE 21 APR 1926" >> /tmp/minimal.ged
-          echo "2 PLAC London" >> /tmp/minimal.ged
-          echo "0 @F1@ FAM" >> /tmp/minimal.ged
-          echo "1 WIFE @I2@" >> /tmp/minimal.ged
-          echo "1 CHIL @I1@" >> /tmp/minimal.ged
-          echo "0 TRLR" >> /tmp/minimal.ged
-          
-          # Import to create test database
-          GeneWeb/gw/ged2gwb /tmp/minimal.ged -o GeneWeb/bases/test || true
-          
-          echo "✅ Runtime directory created"
+          echo "✅ Test database created"
 
       - name: Make executables
         if: steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true'
