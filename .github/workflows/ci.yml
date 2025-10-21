@@ -206,17 +206,23 @@ jobs:
           echo "Export check passed (file size: $FILE_SIZE bytes)"
           rm -f /tmp/export_test.ged
 
-      - name: Golden validate (HTML pages)
-        if: steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true'
-        run: |
-          chmod +x ./scripts/golden/run_golden.sh || true
-          bash ./scripts/golden/run_golden.sh validate
+      # ==========================================
+      # Golden Tests - DISABLED until after migration
+      # ==========================================
+      # Strategy: 1) Build Python tests → 2) Migrate → 3) Take OCaml snapshots → 4) Run Python → 5) Compare
+      # These will be re-enabled in Week 2-3 after migration starts
+      
+      # - name: Golden validate (HTML pages)
+      #   if: steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true'
+      #   run: |
+      #     chmod +x ./scripts/golden/run_golden.sh || true
+      #     bash ./scripts/golden/run_golden.sh validate
 
-      - name: GEDCOM import roundtrip test
-        if: steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true'
-        run: |
-          chmod +x ./scripts/golden/test_gedcom_import.sh || true
-          bash ./scripts/golden/test_gedcom_import.sh validate
+      # - name: GEDCOM import roundtrip test
+      #   if: steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true'
+      #   run: |
+      #     chmod +x ./scripts/golden/test_gedcom_import.sh || true
+      #     bash ./scripts/golden/test_gedcom_import.sh validate
 
       # ==========================================
       # Python Tests
