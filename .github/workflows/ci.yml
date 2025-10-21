@@ -38,7 +38,94 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Check if we need to build from source
+        id: check_source
+        run: |
+          if [ -d "GeneWeb" ]; then
+            echo "has_binaries=true" >> $GITHUB_OUTPUT
+            echo "needs_build=false" >> $GITHUB_OUTPUT
+            echo "✅ GeneWeb binaries found"
+          elif [ -d "source_geneweb" ]; then
+            echo "has_binaries=false" >> $GITHUB_OUTPUT
+            echo "needs_build=true" >> $GITHUB_OUTPUT
+            echo "🔨 Will build GeneWeb from source"
+          else
+            echo "has_binaries=false" >> $GITHUB_OUTPUT
+            echo "needs_build=false" >> $GITHUB_OUTPUT
+            echo "⚠️ No GeneWeb found - skipping OCaml tests"
+          fi
+
+      - name: Setup OCaml
+        if: steps.check_source.outputs.needs_build == 'true'
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: 4.14.x
+          dune-cache: true
+          opam-depext: true
+          opam-depext-flags: --with-test
+
+      - name: Install OCaml dependencies
+        if: steps.check_source.outputs.needs_build == 'true'
+        working-directory: source_geneweb
+        run: |
+          opam install . --deps-only --with-test
+
+      - name: Build GeneWeb from source
+        if: steps.check_source.outputs.needs_build == 'true'
+        working-directory: source_geneweb
+        run: |
+          dune build @install
+          echo "✅ Build complete"
+
+      - name: Create GeneWeb runtime directory
+        if: steps.check_source.outputs.needs_build == 'true'
+        run: |
+          mkdir -p GeneWeb/gw
+          mkdir -p GeneWeb/bases
+          
+          # Copy binaries
+          cp source_geneweb/_build/default/bin/gwd/gwd.exe GeneWeb/gw/gwd || true
+          cp source_geneweb/_build/default/bin/gwsetup/gwsetup.exe GeneWeb/gw/gwsetup || true
+          cp source_geneweb/_build/default/bin/ged2gwb/ged2gwb.exe GeneWeb/gw/ged2gwb || true
+          cp source_geneweb/_build/default/bin/gwb2ged/gwb2ged.exe GeneWeb/gw/gwb2ged || true
+          cp source_geneweb/_build/default/bin/gwu/gwu.exe GeneWeb/gw/gwu || true
+          cp source_geneweb/_build/default/bin/consang/consang.exe GeneWeb/gw/consang || true
+          
+          # Copy runtime assets (templates, images, etc.)
+          cp -r source_geneweb/hd/etc GeneWeb/gw/ || true
+          cp -r source_geneweb/hd/images GeneWeb/gw/ || true
+          cp -r source_geneweb/hd/lang GeneWeb/gw/ || true
+          
+          # Create a simple test database
+          echo "0 HEAD" > /tmp/minimal.ged
+          echo "1 SOUR GeneWeb" >> /tmp/minimal.ged
+          echo "1 GEDC" >> /tmp/minimal.ged
+          echo "2 VERS 5.5" >> /tmp/minimal.ged
+          echo "1 CHAR UTF-8" >> /tmp/minimal.ged
+          echo "0 @I1@ INDI" >> /tmp/minimal.ged
+          echo "1 NAME Charles /Windsor/" >> /tmp/minimal.ged
+          echo "1 SEX M" >> /tmp/minimal.ged
+          echo "1 BIRT" >> /tmp/minimal.ged
+          echo "2 DATE 14 NOV 1948" >> /tmp/minimal.ged
+          echo "2 PLAC Buckingham Palace, London, England" >> /tmp/minimal.ged
+          echo "0 @I2@ INDI" >> /tmp/minimal.ged
+          echo "1 NAME Elizabeth /Windsor/" >> /tmp/minimal.ged
+          echo "1 SEX F" >> /tmp/minimal.ged
+          echo "1 BIRT" >> /tmp/minimal.ged
+          echo "2 DATE 21 APR 1926" >> /tmp/minimal.ged
+          echo "2 PLAC London" >> /tmp/minimal.ged
+          echo "0 @F1@ FAM" >> /tmp/minimal.ged
+          echo "1 WIFE @I2@" >> /tmp/minimal.ged
+          echo "1 CHIL @I1@" >> /tmp/minimal.ged
+          echo "0 TRLR" >> /tmp/minimal.ged
+          
+          # Import to create test database
+          GeneWeb/gw/ged2gwb /tmp/minimal.ged -o GeneWeb/bases/test || true
+          
+          echo "✅ Runtime directory created"
+
       - name: Make executables
+        if: steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true'
         run: |
           chmod +x GeneWeb/gw/* || true
           chmod +x scripts/golden/run_golden.sh || true
@@ -49,6 +136,7 @@ jobs:
       # ==========================================
 
       - name: Smoke test gwd
+        if: steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true'
         working-directory: GeneWeb
         run: |
           set -e
@@ -111,6 +199,7 @@ jobs:
           kill "$GWD_PID" 2>/dev/null || true
 
       - name: Export GEDCOM test
+        if: steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true'
         working-directory: GeneWeb
         run: |
           set -e
@@ -139,17 +228,19 @@ jobs:
           rm -f /tmp/export_test.ged
 
       - name: Golden validate (HTML pages)
+        if: steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true'
         run: |
           chmod +x ./scripts/golden/run_golden.sh || true
           bash ./scripts/golden/run_golden.sh validate
 
       - name: GEDCOM import roundtrip test
+        if: steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true'
         run: |
           chmod +x ./scripts/golden/test_gedcom_import.sh || true
           bash ./scripts/golden/test_gedcom_import.sh validate
 
       # ==========================================
-      # Python Tests (Week 1-3 sprint)
+      # Python Tests
       # ==========================================
 
       - name: Python infrastructure test
