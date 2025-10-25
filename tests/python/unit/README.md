@@ -33,6 +33,30 @@ Tests name search case-insensitivity, display formatting, and special character 
 - 10 test methods validating name normalization
 - OCaml functions: `Name.lower`, `Name.crush_lower`, name display formatting
 
+### UT-PY-004: URL Parsing
+
+**File**: test_url_parsing_extended.py | **PR**: #190 | **Issue**: #162
+
+Tests URL encoding/decoding, UTF-8 handling, parameter extraction, and edge cases.
+- 35 test methods across 7 test classes
+- OCaml functions: `gwd.ml::extract_assoc`, `Mutil.ml::decode`, `Mutil.ml::iso_8859_1_of_utf_8`
+
+### UT-PY-005: Date Formatting
+
+**File**: test_date_formatting.py | **PR**: #191 | **Issue**: #163
+
+Tests date display formats, age calculation, and date localization.
+- 13 test methods across 5 test classes
+- OCaml functions: `Mutil.date_of_string`, date display formatting, age calculation
+
+### UT-PY-006: String Utils
+
+**File**: test_string_utils.py | **PR**: #192 | **Issue**: #164
+
+Tests string normalization, special character handling, and name transformations.
+- 15 test methods across 5 test classes
+- OCaml functions: `Name.lower`, `Name.strip`, `Mutil.normalize`, string utilities
+
 ### UT-PY-007: GEDCOM Parsing
 
 **File**: test_gedcom_parsing.py | **PR**: #193 | **Issue**: #165
@@ -40,6 +64,30 @@ Tests name search case-insensitivity, display formatting, and special character 
 Tests GEDCOM export format, person/family structure, and event handling.
 - 17 test methods across 5 test classes
 - OCaml functions: GEDCOM export, event formatting, relationship linking
+
+### UT-PY-008: Privacy & Access Control
+
+**File**: test_privacy.py | **PR**: #194 | **Issue**: #166
+
+Tests privacy mechanisms, access restrictions, and record visibility.
+- 15 test methods across 5 test classes
+- OCaml functions: privacy flags, access control, record filtering
+
+### UT-PY-009: Database Configuration
+
+**File**: test_base_config.py | **PR**: #195 | **Issue**: #167
+
+Tests database metadata, configuration settings, and statistics.
+- 15 test methods across 5 test classes
+- OCaml functions: database info, configuration, statistics retrieval
+
+### UT-PY-010: Localization & i18n
+
+**File**: test_localization.py | **PR**: #196 | **Issue**: #168
+
+Tests language switching, translations, and internationalization.
+- 16 test methods across 5 test classes
+- OCaml functions: language selection, message translation, date/UI localization
 
 ---
 
