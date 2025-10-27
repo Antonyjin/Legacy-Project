@@ -25,11 +25,11 @@
    - **Golden tests**: Validate 10 HTML pages against frozen snapshots
    - **GEDCOM roundtrip**: Export → Import → Compare
 
-3. **Python Tests** (NEW - added with Issue #97)
-   - **Infrastructure test**: Verify pytest setup (must pass)
-   - **Unit tests**: Test OCaml functions via HTTP (`continue-on-error: true` during Week 1)
-   - **Integration tests**: Test component interactions (`continue-on-error: true` during Week 1-2)
-   - **Functional tests**: Test end-to-end workflows (`continue-on-error: true` during Week 2-3)
+3. **Python Tests** (Issues #97, #117)
+   - **Infrastructure test**: Verify pytest setup (✅ BLOCKS CI)
+   - **Unit tests**: Test OCaml functions via HTTP (✅ BLOCKS CI)
+   - **Integration tests**: Test component interactions (✅ BLOCKS CI)
+   - **Functional tests**: Test end-to-end workflows (`continue-on-error: true` until complete)
    - **Coverage report**: Generate coverage report (target >80%)
 
 4. **Artifacts Upload** (on failure)
@@ -39,23 +39,24 @@
 
 ---
 
-## 🎯 CI Evolution Timeline
+## 🎯 CI Quality Gates (Issue #117)
 
-### Week 1: Current State
-- ✅ OCaml tests must pass (blocks merge)
-- ✅ Python infrastructure test must pass
-- ⏳ Python UT/IT/FT allowed to fail (`continue-on-error: true`)
+### ✅ CURRENTLY BLOCKING CI (Will Fail Merge)
+- ✅ Python infrastructure test (pytest must work)
+- ✅ **Unit Tests (UT)** - All must pass
+- ✅ **Integration Tests (IT)** - All must pass
 - 📊 Coverage tracked but not enforced
 
-### Week 2: Stabilization
-- ✅ Python unit tests enforced (`continue-on-error: false`)
-- ⏳ Python IT/FT allowed to fail
-- 📊 Coverage visible in artifacts
+### ⏳ NOT YET BLOCKING (Warnings Only)
+- ⚠️ **Functional Tests (FT)** - Still in development
+- ⚠️ Coverage threshold - Tracked but not enforced
 
-### Week 3: Full Enforcement
-- ✅ All tests must pass (OCaml + Python UT/IT/FT)
-- ✅ Coverage >80% enforced
-- 🚫 Merges blocked on failures
+### Future Milestones
+
+**Next Steps**:
+- ⏳ Functional Tests (FT) enforcement (when implementation complete)
+- ⏳ Coverage >80% enforcement
+- 🚀 Production deployment automation
 
 ---
 
