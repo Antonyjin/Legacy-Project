@@ -235,13 +235,11 @@ jobs:
 
       - name: Python unit tests
         run: |
-          pytest tests/python/unit/ -v --tb=short -m unit || true
-        continue-on-error: true  # Allow failures during Week 1 implementation
+          pytest tests/python/unit/ -v --tb=short -m unit
 
       - name: Python integration tests
         run: |
-          pytest tests/python/integration/ -v --tb=short -m integration || true
-        continue-on-error: true  # Allow failures during Week 1-2 implementation
+          pytest tests/python/integration/ -v --tb=short -m integration
 
       - name: Python functional tests
         run: |
