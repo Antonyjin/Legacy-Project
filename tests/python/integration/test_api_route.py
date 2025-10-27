@@ -72,6 +72,8 @@ class GeneWebServer:
                 self.proc.kill()
                 self.proc.wait(timeout=3)
         finally:
+            if self.proc.stdout:
+                self.proc.stdout.close()
             self.proc = None
 
 
