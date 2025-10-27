@@ -18,90 +18,154 @@ GeneWeb is an open-source genealogy application written in OCaml that:
 
 ### Prerequisites
 
-- **macOS** (prebuilt binaries included) or **Linux** (download binaries)
+- **macOS** or **Linux** (x86_64)
+- **Python 3.11+** (for running tests)
 - Basic terminal/command-line knowledge
 - A web browser
 
 ### 📦 Getting Started
 
-#### 1. Clone the repository
+There are **two ways** to use GeneWeb depending on your needs:
+
+---
+
+#### Option A: Quick Start for Testing (Recommended)
+
+**This is what CI uses and what you need for running Python tests:**
 
 ```bash
+# 1. Clone the repository
 git clone https://github.com/Antonyjin/Legacy-Project.git
 cd Legacy-Project
+
+# 2. Start gwd on test port (23179)
+cd GeneWeb
+./gw/gwd -hd ./gw -bd ./bases -p 23179 -lang en &
+cd ..
+
+# 3. Verify it's running
+curl http://localhost:23179/test
+# Should return HTML with "GeneWeb"
+
+# 4. Run Python tests
+pip install -r requirements.txt
+pytest tests/python/ -v
+
+# 5. Stop gwd when done
+pkill -f gwd
 ```
 
-#### 2. Launch GeneWeb
+**Access test database:**
+- 🌐 **Main app**: http://localhost:23179/test
+- 👤 **Person page**: http://localhost:23179/test?p=Charles&n=Windsor
+- 📊 **Statistics**: http://localhost:23179/test?m=STAT
 
-**macOS:**
+**Database**: `test.gwb` contains British Royal Family data (188 persons)
+
+---
+
+#### Option B: Manual Launch for Exploration
+
+**If you want to explore GeneWeb manually (not for testing):**
+
+**macOS/Linux - Manual Start (Recommended):**
+```bash
+cd Legacy-Project/GeneWeb
+
+# Start gwd (web server) on port 2317
+./gw/gwd -hd ./gw -bd ./bases -p 2317 -lang en &
+
+# Start gwsetup (admin interface) on port 2316 - optional
+./gw/gwsetup -gd ./gw -lang en &
+
+# Access application
+echo "Main app: http://localhost:2317/test"
+echo "Admin: http://localhost:2316"
+```
+
+**macOS - Using geneweb.sh (Alternative):**
 ```bash
 cd GeneWeb
 ./geneweb.sh
+# Note: This legacy script may have path issues. Use manual start above if it fails.
 ```
 
-**Linux:**
+**Access application:**
+- 🌐 **Main app**: http://localhost:2317/test  
+- ⚙️ **Admin panel**: http://localhost:2316
+- 📄 **Landing page**: Open `GeneWeb/START.htm` in browser
+
+**Stop servers:**
 ```bash
-# Download Linux binaries first
-wget https://github.com/geneweb/geneweb/releases/download/v7.1-beta/geneweb-7.1-beta-linux-x86_64.tar.gz
-tar -xzf geneweb-7.1-beta-linux-x86_64.tar.gz -C gw-linux
-cd GeneWeb
-gw-linux/gw/gwd -hd ./gw -bd ./bases -p 2317 -lang en
+pkill -f gwd
+pkill -f gwsetup
 ```
 
-#### 3. Access the application
+---
 
-The script will automatically open your browser to:
-- **GeneWeb home**: http://localhost:2317/test
-- **Admin interface (gwsetup)**: http://localhost:2316
+#### Exploring the Database
 
-#### 4. Explore the test database
+**Try these pages** (adjust port as needed: 23179 for testing, 2317 for manual):
 
-The `test.gwb` database contains British Royal Family data (35 persons).
-
-**Try these pages:**
-- Home: http://localhost:2317/test
-- Person page: http://localhost:2317/test?p=Charles&n=Windsor
-- Family page: http://localhost:2317/test?m=F&p=charles&n=windsor
-- Calendar: http://localhost:2317/test?m=CAL
-- First names: http://localhost:2317/test?m=P
-- Surnames: http://localhost:2317/test?m=N
+- 🏠 Home: `http://localhost:23179/test`
+- 👤 Person: `http://localhost:23179/test?p=Charles&n=Windsor`
+- 👨‍👩‍👧‍👦 Family: `http://localhost:23179/test?m=F&p=charles&n=windsor`
+- 📅 Calendar: `http://localhost:23179/test?m=CAL`
+- 📝 First names: `http://localhost:23179/test?m=P`
+- 📋 Surnames: `http://localhost:23179/test?m=N`
+- 📊 Statistics: `http://localhost:23179/test?m=STAT`
 
 ### 🧪 Running Tests
 
-#### Python Tests (Unit + Integration + Functional)
-
-We're implementing comprehensive Python tests to validate OCaml behavior and enable safe migration:
+#### Prerequisites for Testing
 
 ```bash
-# Install dependencies
+# Install Python dependencies
 pip install -r requirements.txt
 
-# Run all Python tests
+# Or manually install:
+pip install pytest pytest-cov requests
+```
+
+#### Python Tests (Unit + Integration + Functional)
+
+We have comprehensive Python tests that validate OCaml behavior:
+
+```bash
+# From project root (Legacy-Project/)
+
+# Run all Python tests (156 tests)
 pytest tests/python/ -v
 
 # Run with coverage
-pytest tests/python/ --cov=tests --cov-report=html
+pytest tests/python/ --cov=tests/python --cov-report=html
 
 # Run specific test type
-pytest tests/python/unit/ -v          # Unit tests
-pytest tests/python/integration/ -v   # Integration tests
-pytest tests/python/functional/ -v    # Functional tests
+pytest tests/python/unit/ -v          # Unit tests (135 tests) - ✅ CI BLOCKING
+pytest tests/python/integration/ -v   # Integration tests (21 tests) - ✅ CI BLOCKING
+pytest tests/python/functional/ -v    # Functional tests - ⚠️ In development
+
+# Run by marker
+pytest -m unit        # Unit tests only
+pytest -m integration # Integration tests only
+pytest -m functional  # Functional tests only
 ```
 
-**Test Structure:**
-- **Unit Tests (UT)**: Test individual OCaml functions via HTTP/CLI (10 tests)
-- **Integration Tests (IT)**: Test component integration (10 tests)
-- **Functional Tests (FT)**: End-to-end user workflows (10 tests)
+**Test Status:**
+- ✅ **Unit Tests (135)**: Test OCaml functions via HTTP black-box testing - **CI BLOCKS ON FAILURE**
+- ✅ **Integration Tests (21)**: Test gwd lifecycle, port conflicts, concurrency - **CI BLOCKS ON FAILURE**
+- ⚠️ **Functional Tests**: End-to-end user workflows - **In development, failures allowed**
 
-**Status**: See [PROJECT_STATUS.md](docs/PROJECT_STATUS.md) for current implementation status.
+**Current Coverage:** 156 tests passing
 
-#### Golden Tests (Regression Detection)
+#### Golden Tests (Currently Disabled)
 
-Golden tests validate that OCaml behavior remains unchanged:
+Golden tests validate that OCaml output remains unchanged. They are temporarily disabled during migration and will be re-enabled in Week 2-3.
 
 ```bash
 # From project root
 export LC_ALL=C.UTF-8 TZ=UTC
+chmod +x ./scripts/golden/run_golden.sh
 ./scripts/golden/run_golden.sh validate
 ```
 
@@ -110,21 +174,7 @@ export LC_ALL=C.UTF-8 TZ=UTC
 - HTML rendering stability (10 page types)
 - Data normalization (whitespace, timestamps, random IDs)
 
-#### Integration Tests (Smoke Checks)
-
-Automated smoke tests run in CI on every push:
-
-```bash
-# Runs automatically in CI
-# See: .github/workflows/ci.yml
-```
-
-**What CI tests:**
-- Home page HTTP 200 + marker
-- Person page fields validation
-- FR localization
-- Logging validation
-- GEDCOM export
+**Note:** Golden tests are currently disabled in CI (see `.github/workflows/ci.yml`) and will be re-enabled after Python migration starts.
 
 ### 📚 Documentation
 
@@ -133,11 +183,16 @@ Automated smoke tests run in CI on every push:
 2. **[Wiki Home](https://github.com/Antonyjin/Legacy-Project/wiki)** - Full documentation
 3. **[Product Runbook](https://github.com/Antonyjin/Legacy-Project/wiki/02-Product-Runbook)** - How to run GeneWeb
 4. **[OCaml Overview](https://github.com/Antonyjin/Legacy-Project/wiki/02-Product-OCaml-Overview)** - Understanding the codebase
+5. **[CI Workflow Guide](docs/CI_WORKFLOW_GUIDE.md)** - Understanding CI setup
 
 #### For Deep Dives
 - **[Test Policy](https://github.com/Antonyjin/Legacy-Project/wiki/03-Quality-Test-Policy)** - QA strategy
-- **[Test Protocols](https://github.com/Antonyjin/Legacy-Project/wiki/03-Quality-Test-Protocols)** - Test types (UT/FT/Golden/IT)
+- **[Test Protocols](https://github.com/Antonyjin/Legacy-Project/wiki/03-Quality-Test-Protocols)** - Test types (UT/IT/FT)
 - **[Architecture](https://github.com/Antonyjin/Legacy-Project/wiki/02-Product-Architecture)** - System design
+
+#### Test-Specific Documentation
+- **[Unit Test README](tests/python/unit/README.md)** - Python unit testing strategy
+- **[Integration Test README](tests/python/integration/README.md)** - Integration testing guide
 
 ### 🔍 Understanding the Codebase
 
@@ -145,29 +200,36 @@ Automated smoke tests run in CI on every push:
 
 ```
 Legacy-Project/
-├── GeneWeb/                    # Main OCaml application
+├── GeneWeb/                    # Main OCaml application (prebuilt binaries)
 │   ├── gw/                     # Binaries (gwd, gwsetup, ged2gwb, gwb2ged)
-│   ├── bases/                  # Databases (test.gwb, base.gwb)
-│   ├── geneweb.sh             # Launcher script
+│   ├── bases/                  # Databases (test.gwb with 188 persons)
+│   ├── geneweb.sh             # Launcher script (macOS)
 │   └── START.htm              # Landing page
 ├── scripts/                    # Test and utility scripts
-│   └── golden/                # Golden test harness
+│   └── golden/                # Golden test harness (currently disabled)
 │       ├── run_golden.sh      # Main golden test script
 │       └── test_gedcom_import.sh  # GEDCOM roundtrip test
-├── tests/                      # Test artifacts
-│   └── golden/                # Golden references
+├── tests/                      # Python tests
+│   ├── python/
+│   │   ├── unit/              # 135 unit tests ✅
+│   │   ├── integration/       # 21 integration tests ✅
+│   │   └── functional/        # Functional tests (in dev) ⚠️
+│   └── golden/                # Golden references (disabled)
 │       └── goldens/v1/        # Versioned golden snapshots
-├── wiki/                       # Documentation (separate repo)
-├── docs/                       # Additional documentation
-│   └── Issues/                # Issue-specific docs
-└── .github/workflows/         # CI/CD pipelines
+├── docs/                       # Project documentation
+│   └── CI_WORKFLOW_GUIDE.md   # CI setup guide
+├── .github/workflows/         # CI/CD pipelines
+│   └── ci.yml                 # Main CI workflow
+├── pytest.ini                 # Pytest configuration
+├── .coveragerc                # Coverage configuration
+└── requirements.txt           # Python dependencies
 ```
 
 #### Key OCaml Binaries
 
 | Binary | Purpose | Example Usage |
 |--------|---------|---------------|
-| `gwd` | Web daemon (serves pages) | `gwd -hd ./gw -bd ./bases -p 2317` |
+| `gwd` | Web daemon (serves pages) | `gwd -hd ./gw -bd ./bases -p 2317 -lang en` |
 | `gwsetup` | Admin interface | `gwsetup -gd ./gw -lang en` |
 | `ged2gwb` | GEDCOM → GeneWeb import | `ged2gwb input.ged -o bases/mybase` |
 | `gwb2ged` | GeneWeb → GEDCOM export | `gwb2ged bases/mybase.gwb -o output.ged` |
@@ -175,85 +237,136 @@ Legacy-Project/
 
 ### 🧪 Test Types
 
-We have **4 distinct test categories**:
+We have **3 test categories** (4th coming soon):
 
-1. **Unit Tests (UT)** - Isolated code units (to be implemented)
-2. **Functional Tests (FT)** - End-to-end user workflows (to be implemented)
-3. **Golden Tests** - Regression detection via output snapshots (✅ implemented)
-4. **Integration Tests (IT)** - Runtime smoke checks (✅ implemented)
+1. ✅ **Unit Tests (135)** - Test OCaml functions via HTTP black-box testing - **Blocks CI**
+2. ✅ **Integration Tests (21)** - Test gwd lifecycle, ports, concurrency - **Blocks CI**
+3. ⚠️ **Functional Tests** - End-to-end user workflows - **In development**
+4. 🔜 **Golden Tests** - Regression detection - **Temporarily disabled, will be re-enabled**
 
-See [Test Protocols](https://github.com/Antonyjin/Legacy-Project/wiki/03-Quality-Test-Protocols) for details.
+See [Test Protocols](https://github.com/Antonyjin/Legacy-Project/wiki/03-Quality-Test-Protocols) and [CI Workflow Guide](docs/CI_WORKFLOW_GUIDE.md) for details.
 
 ### 🐛 Troubleshooting
 
 #### Port already in use
 ```bash
-# Change ports in geneweb.sh or kill existing processes
-lsof -ti:2317 | xargs kill -9  # macOS/Linux
+# macOS/Linux - Find and kill processes
+lsof -ti:2317 | xargs kill -9
+lsof -ti:2316 | xargs kill -9
+
+# Or use pkill
+pkill -f gwd
+pkill -f gwsetup
+```
+
+#### Python tests failing
+```bash
+# Make sure gwd is running on the correct port
+ps aux | grep gwd
+
+# Check if test database exists
+ls -la GeneWeb/bases/test.gwb/
+
+# Verify Python dependencies
+pip list | grep pytest
 ```
 
 #### "cannot execute binary file" on Linux
-- The bundled binaries are for macOS
+- The bundled binaries in `GeneWeb/` are for macOS only
 - Download Linux binaries from [GeneWeb releases](https://github.com/geneweb/geneweb/releases)
+- Follow the Linux setup instructions above
 
 #### "Failed - unbound var sosa_ref.key"
 - Tree and search pages require Sosa reference configuration
 - Use gwsetup to configure a Sosa root person
+- Access gwsetup at http://localhost:2316
 - See [ISSUE_50_SKIPPED.md](docs/Issues/ISSUE_50_SKIPPED.md) for details
 
 #### Golden tests failing with whitespace differences
 ```bash
 # Regenerate goldens if changes are intentional
+export LC_ALL=C.UTF-8 TZ=UTC
 ./scripts/golden/run_golden.sh create
+
+# Note: Golden tests are currently disabled in CI
+# They will be re-enabled during Week 2-3 migration phase
+```
+
+#### Python import errors
+```bash
+# Make sure you're in the project root
+cd Legacy-Project
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Verify pytest works
+pytest --version
 ```
 
 ### 🎓 Learning Path
 
 **Day 1: Understand the basics**
 1. Read this README
-2. Launch GeneWeb with `geneweb.sh`
+2. Launch GeneWeb with `./GeneWeb/geneweb.sh` (macOS) or follow Linux instructions
 3. Explore the test database pages
 4. Read [OCaml Overview](https://github.com/Antonyjin/Legacy-Project/wiki/02-Product-OCaml-Overview)
 
 **Day 2: Understand the tests**
-1. Run golden tests: `./scripts/golden/run_golden.sh validate`
-2. Review [Test Protocols](https://github.com/Antonyjin/Legacy-Project/wiki/03-Quality-Test-Protocols)
-3. Check CI results on GitHub Actions
+1. Install Python dependencies: `pip install -r requirements.txt`
+2. Run Python tests: `pytest tests/python/ -v`
+3. Review [Test Protocols](https://github.com/Antonyjin/Legacy-Project/wiki/03-Quality-Test-Protocols)
+4. Check [CI Workflow Guide](docs/CI_WORKFLOW_GUIDE.md)
+5. Check CI results on GitHub Actions
 
 **Day 3: Understand the architecture**
 1. Read [Architecture](https://github.com/Antonyjin/Legacy-Project/wiki/02-Product-Architecture)
 2. Read [Runbook](https://github.com/Antonyjin/Legacy-Project/wiki/02-Product-Runbook)
-3. Import your own GEDCOM file
+3. Try importing your own GEDCOM file
 
 ### 📊 Current Test Coverage
 
-- ✅ **Golden Tests**: 10 page types + GEDCOM export + import roundtrip (12 total) - **100% complete**
-- ⏳ **Python Unit Tests**: Infrastructure ✅ (1/10 complete), tests 2-10 in progress - **Week 1 sprint**
-- ⏳ **Python Integration Tests**: 10 tests planned (0/10 implemented) - **Week 1-2 sprint**
-- ⏳ **Python Functional Tests**: 10 tests planned (0/10 implemented) - **Week 2-3 sprint**
-- ⏳ **Migration**: 10 functions planned (0/10 migrated) - **Week 2-3 sprint**
+| Test Type | Status | Count | CI Blocking |
+|-----------|--------|-------|-------------|
+| **Python Unit Tests** | ✅ Complete | 135 tests | ✅ Yes |
+| **Python Integration Tests** | ✅ Complete | 21 tests | ✅ Yes |
+| **Python Functional Tests** | ⚠️ In Development | 0 tests | ⏳ Not yet |
+| **Golden Tests** | 🔄 Disabled | 12 tests | 🚫 Disabled until migration |
+| **TOTAL** | | **156 tests passing** | |
 
 **Python Test Infrastructure** (Issue #97): ✅ **COMPLETE**
 - pytest configuration (`pytest.ini`)
 - Coverage setup (`.coveragerc`, target >80%)
 - Shared fixtures (`tests/python/conftest.py`)
-- Test directory structure (`unit/`, `integration/`, `functional/`)
-- First passing test: `test_setup.py` (8/8 tests pass)
+- Test directory structure with READMEs
+- 156 passing tests with full CI integration
+
+**CI Quality Gates** (Issue #117): ✅ **ACTIVE**
+- ✅ Unit Tests (UT) block CI on failure
+- ✅ Integration Tests (IT) block CI on failure
+- ⚠️ Functional Tests (FT) allow failures during development
+- 📊 Coverage tracked but not yet enforcing threshold
 
 ### 🤝 Contributing
 
 1. Create a feature branch: `git checkout -b feature-name`
 2. Make changes and test locally
-3. Run golden tests: `./scripts/golden/run_golden.sh validate`
+3. Run all tests: `pytest tests/python/ -v`
 4. Commit with conventional commits: `feat:`, `fix:`, `docs:`, etc.
 5. Push and create a PR
+6. CI will automatically run all tests
+
+**Branch Protection Rules:**
+- ✅ Unit tests must pass
+- ✅ Integration tests must pass
+- ⚠️ Functional tests may fail (in development)
 
 ### 📞 Support
 
 - **Wiki**: https://github.com/Antonyjin/Legacy-Project/wiki
 - **Issues**: https://github.com/Antonyjin/Legacy-Project/issues
 - **Upstream GeneWeb**: https://geneweb.tuxfamily.org/
-
+- **CI Status**: https://github.com/Antonyjin/Legacy-Project/actions
 
 ### 📜 License
 
@@ -261,20 +374,78 @@ GeneWeb is distributed under the GNU General Public License. See [LICENSE.txt](G
 
 ---
 
-**Quick Command Reference:**
+## Quick Command Reference
 
 ```bash
-# Start GeneWeb
-cd GeneWeb && ./geneweb.sh
+# ==========================================
+# Start GeneWeb - FOR TESTING (Port 23179)
+# ==========================================
 
-# Run golden tests
+# Start gwd (what CI uses)
+cd Legacy-Project/GeneWeb
+./gw/gwd -hd ./gw -bd ./bases -p 23179 -lang en &
+cd ..
+
+# Verify it's running
+curl http://localhost:23179/test
+
+# Stop
+pkill -f gwd
+
+# ==========================================
+# Start GeneWeb - FOR MANUAL USE (Port 2317)
+# ==========================================
+
+# Recommended manual start
+cd Legacy-Project/GeneWeb
+./gw/gwd -hd ./gw -bd ./bases -p 2317 -lang en &
+./gw/gwsetup -gd ./gw -lang en &
+
+# Alternative: Use legacy script (may have issues)
+./geneweb.sh
+
+# Stop
+pkill -f gwd
+pkill -f gwsetup
+
+# ==========================================
+# Python Tests (from project root)
+# ==========================================
+
+# IMPORTANT: Start gwd on port 23179 first (see above)
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run all tests (156 tests)
+pytest tests/python/ -v
+
+# Run by type
+pytest tests/python/unit/ -v              # Unit tests (135)
+pytest tests/python/integration/ -v       # Integration tests (21)
+pytest -m unit                            # Unit marker
+pytest -m integration                     # Integration marker
+
+# With coverage
+pytest tests/python/ --cov=tests/python --cov-report=html
+
+# Specific test file
+pytest tests/python/unit/test_http_params.py -v
+
+# ==========================================
+# Golden Tests (disabled, for reference)
+# ==========================================
+
+# Validate (when re-enabled)
+export LC_ALL=C.UTF-8 TZ=UTC
 ./scripts/golden/run_golden.sh validate
 
-# Run Python tests
-pytest tests/python/ -v                    # All tests
-pytest tests/python/unit/test_setup.py -v  # Verify infrastructure (8 tests)
-pytest -m unit                             # Unit tests only
-pytest tests/python/ --cov=tests/python --cov-report=html  # With coverage
+# Regenerate goldens
+./scripts/golden/run_golden.sh create
+
+# ==========================================
+# GEDCOM Import/Export
+# ==========================================
 
 # Export GEDCOM
 GeneWeb/gw/gwb2ged GeneWeb/bases/test.gwb -o export.ged
@@ -282,8 +453,23 @@ GeneWeb/gw/gwb2ged GeneWeb/bases/test.gwb -o export.ged
 # Import GEDCOM
 GeneWeb/gw/ged2gwb input.ged -o GeneWeb/bases/newbase
 
+# ==========================================
+# Check Status
+# ==========================================
+
+# Check if gwd is running
+ps aux | grep gwd
+
 # Check CI status
 # Visit: https://github.com/Antonyjin/Legacy-Project/actions
+
+# Check test database
+ls -la GeneWeb/bases/test.gwb/
+
+# Check Python installation
+python --version  # Should be 3.11+
+pytest --version
 ```
 
-**Need help?** Start with the [Wiki Home](https://github.com/Antonyjin/Legacy-Project/wiki) or ask in Issues! 🚀
+**Need help?** Start with the [Wiki Home](https://github.com/Antonyjin/Legacy-Project/wiki), check [CI Workflow Guide](docs/CI_WORKFLOW_GUIDE.md), or ask in Issues! 🚀
+
