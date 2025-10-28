@@ -128,17 +128,37 @@ export TZ=UTC           # Consistent timezone
 - **Test data dependency**: Tests rely on specific test data (Charles Windsor, Elizabeth, Philip)
   - **Solution**: Use known test persons from the test database
 
+### ✅ FT-PY-002: Person Search
+
+**File**: `test_person_search.py` (6 tests)
+
+**User Story**: As a user, I want to search for a person by name and view results.
+
+**Test Scenario**:
+1. Enter search query in search form
+2. Submit search
+3. View search results page
+4. Verify results are relevant
+5. Click on a result to view person page
+
+**Tests**:
+1. `test_search_form_loads_successfully` - Search form displays correctly
+2. `test_search_returns_results` - Search query returns matching results
+3. `test_search_filters_correctly` - Search filters by name properly
+4. `test_search_result_click_navigates` - Clicking result loads person page
+5. `test_search_handles_no_results` - Empty/no results handled gracefully
+6. `test_search_with_special_characters` - Special chars in search work
+
 ### 🔄 Planned Tests
 
-- **FT-PY-002**: Person search workflow
-- **FT-PY-003**: GEDCOM import/export workflow
-- **FT-PY-004**: Data modification workflow
-- **FT-PY-005**: Privacy settings workflow
-- **FT-PY-006**: Multi-language workflow
-- **FT-PY-007**: Calendar navigation workflow
-- **FT-PY-008**: Statistics exploration workflow
-- **FT-PY-009**: Error recovery workflow
-- **FT-PY-010**: Performance under load workflow
+- **FT-PY-003**: Person page display workflow
+- **FT-PY-004**: Relationship calculation workflow
+- **FT-PY-005**: Birthday calendar workflow
+- **FT-PY-006**: Statistics page workflow
+- **FT-PY-007**: GEDCOM import/export workflow
+- **FT-PY-008**: Data modification workflow
+- **FT-PY-009**: Privacy settings workflow
+- **FT-PY-010**: Multi-language workflow
 
 ## Known Issues & Limitations
 
