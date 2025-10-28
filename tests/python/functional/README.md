@@ -149,9 +149,28 @@ export TZ=UTC           # Consistent timezone
 5. `test_search_handles_no_results` - Empty/no results handled gracefully
 6. `test_search_with_special_characters` - Special chars in search work
 
+### ✅ FT-PY-003: Person Page Display
+
+**File**: `test_person_page.py` (5 tests)
+
+**User Story**: As a user, I want to view a person's profile with all their information.
+
+**Test Scenario**:
+1. Navigate to person page
+2. View person's name and dates
+3. View family relationships
+4. View life events
+5. Verify all fields display correctly
+
+**Tests**:
+1. `test_person_page_loads_successfully` - Person page displays correctly
+2. `test_person_name_displayed` - Name and surname shown properly
+3. `test_person_dates_displayed` - Birth/death dates shown
+4. `test_person_family_relationships_shown` - Parents, spouse, children displayed
+5. `test_person_missing_data_handled` - Missing data handled gracefully
+
 ### 🔄 Planned Tests
 
-- **FT-PY-003**: Person page display workflow
 - **FT-PY-004**: Relationship calculation workflow
 - **FT-PY-005**: Birthday calendar workflow
 - **FT-PY-006**: Statistics page workflow
