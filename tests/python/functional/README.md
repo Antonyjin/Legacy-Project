@@ -182,9 +182,26 @@ export TZ=UTC           # Consistent timezone
 4. `test_no_relationship_handled` - Unrelated persons handled
 5. `test_relationship_display_formatted` - Relationship displayed clearly
 
+### ✅ FT-PY-005: Calendar
+
+**File**: `test_calendar.py` (4 tests)
+
+**User Story**: As a user, I want to view birthdays in a calendar format.
+
+**Test Scenario**:
+1. Navigate to calendar page
+2. View birthdays by month/year
+3. Filter birthdays by month
+4. Navigate through calendar months
+
+**Tests**:
+1. `test_calendar_page_loads` - Calendar page displays correctly
+2. `test_calendar_displays_birthdays` - Birthdays shown in calendar
+3. `test_calendar_filters_by_month` - Month filtering works
+4. `test_calendar_navigation_works` - Month navigation works
+
 ### 🔄 Planned Tests
 
-- **FT-PY-005**: Birthday calendar workflow
 - **FT-PY-006**: Statistics page workflow
 - **FT-PY-007**: GEDCOM import/export workflow
 - **FT-PY-008**: Data modification workflow
