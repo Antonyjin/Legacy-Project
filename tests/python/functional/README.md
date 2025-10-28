@@ -128,14 +128,32 @@ export TZ=UTC           # Consistent timezone
 - **Test data dependency**: Tests rely on specific test data (Charles Windsor, Elizabeth, Philip)
   - **Solution**: Use known test persons from the test database
 
+### ✅ FT-PY-007: GEDCOM
+
+**File**: `test_gedcom.py` (5 tests)
+
+**User Story**: As a user, I want to import and export GEDCOM files.
+
+**Test Scenario**:
+1. Export database to GEDCOM format
+2. Import GEDCOM file
+3. Verify data preservation in roundtrip
+4. Test special character handling
+5. Validate GEDCOM format
+
+**Tests**:
+1. `test_gedcom_export_works` - GEDCOM export succeeds
+2. `test_gedcom_import_works` - GEDCOM import succeeds
+3. `test_gedcom_roundtrip_data_preserved` - Data preserved in roundtrip
+4. `test_gedcom_handles_special_chars` - Special characters handled
+5. `test_gedcom_validates_format` - Format validation works
+
 ### 🔄 Planned Tests
 
 - **FT-PY-002**: Person search workflow
-- **FT-PY-003**: GEDCOM import/export workflow
 - **FT-PY-004**: Data modification workflow
 - **FT-PY-005**: Privacy settings workflow
 - **FT-PY-006**: Multi-language workflow
-- **FT-PY-007**: Calendar navigation workflow
 - **FT-PY-008**: Statistics exploration workflow
 - **FT-PY-009**: Error recovery workflow
 - **FT-PY-010**: Performance under load workflow
