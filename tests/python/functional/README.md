@@ -145,13 +145,168 @@ export TZ=UTC           # Consistent timezone
 2. `test_i18n_translations_displayed` - Translations shown correctly
 3. `test_i18n_date_format_changes` - Date format adapts to language
 4. `test_i18n_multiple_languages_supported` - Multiple languages work
+### ✅ FT-PY-009: Privacy
+
+**File**: `test_privacy.py` (4 tests)
+
+**User Story**: As a user, I want privacy rules to protect sensitive data.
+
+**Test Scenario**:
+1. Test privacy rules hide private data
+2. Verify public mode restrictions
+3. Check access control works
+4. Verify living person rules
+
+**Tests**:
+1. `test_privacy_rules_hide_private_data` - Private data is hidden
+2. `test_privacy_public_mode_restrictions` - Public mode restricts access
+3. `test_privacy_access_control_works` - Access control functions
+4. `test_privacy_living_person_rules` - Living person rules applied
+### ✅ FT-PY-008: Wizard
+
+**File**: `test_wizard.py` (4 tests)
+
+**User Story**: As a user, I want to add, edit, and delete persons in wizard mode.
+
+**Test Scenario**:
+1. Access wizard mode
+2. Add a new person
+3. Edit existing person
+4. Verify changes persist
+
+**Tests**:
+1. `test_wizard_mode_accessible` - Wizard mode loads correctly
+2. `test_wizard_add_person_works` - Adding person works
+3. `test_wizard_edit_person_works` - Editing person works
+4. `test_wizard_changes_persist` - Changes are saved
+### ✅ FT-PY-007: GEDCOM
+
+**File**: `test_gedcom.py` (5 tests)
+
+**User Story**: As a user, I want to import and export GEDCOM files.
+
+**Test Scenario**:
+1. Export database to GEDCOM format
+2. Import GEDCOM file
+3. Verify data preservation in roundtrip
+4. Test special character handling
+5. Validate GEDCOM format
+
+**Tests**:
+1. `test_gedcom_export_works` - GEDCOM export succeeds
+2. `test_gedcom_import_works` - GEDCOM import succeeds
+3. `test_gedcom_roundtrip_data_preserved` - Data preserved in roundtrip
+4. `test_gedcom_handles_special_chars` - Special characters handled
+5. `test_gedcom_validates_format` - Format validation works
+### ✅ FT-PY-006: Statistics
+
+**File**: `test_statistics.py` (4 tests)
+
+**User Story**: As a user, I want to view database statistics.
+
+**Test Scenario**:
+1. Navigate to statistics page
+2. View individual/family counts
+3. Verify statistics are accurate
+4. Check data formatting
+
+**Tests**:
+1. `test_statistics_page_loads` - Statistics page displays correctly
+2. `test_statistics_count_display` - Counts are displayed
+3. `test_statistics_data_correct` - Statistics are accurate
+4. `test_statistics_formats_properly` - Data formatted correctly
 
 ### 🔄 Planned Tests
 
 - **FT-PY-002**: Person search workflow
 - **FT-PY-003**: GEDCOM import/export workflow
 - **FT-PY-004**: Data modification workflow
+- **FT-PY-005**: Calendar navigation workflow
+- **FT-PY-006**: Multi-language workflow
+- **FT-PY-007**: Calendar navigation workflow
+- **FT-PY-008**: Data modification workflow
+- **FT-PY-009**: Error recovery workflow
+- **FT-PY-010**: Performance under load workflow
 - **FT-PY-011**: Additional feature workflows
+### ✅ FT-PY-002: Person Search
+
+**File**: `test_person_search.py` (6 tests)
+
+**User Story**: As a user, I want to search for a person by name and view results.
+
+**Test Scenario**:
+1. Enter search query in search form
+2. Submit search
+3. View search results page
+4. Verify results are relevant
+5. Click on a result to view person page
+
+**Tests**:
+1. `test_search_form_loads_successfully` - Search form displays correctly
+2. `test_search_returns_results` - Search query returns matching results
+3. `test_search_filters_correctly` - Search filters by name properly
+4. `test_search_result_click_navigates` - Clicking result loads person page
+5. `test_search_handles_no_results` - Empty/no results handled gracefully
+6. `test_search_with_special_characters` - Special chars in search work
+
+### ✅ FT-PY-003: Person Page Display
+
+**File**: `test_person_page.py` (5 tests)
+
+**User Story**: As a user, I want to view a person's profile with all their information.
+
+**Test Scenario**:
+1. Navigate to person page
+2. View person's name and dates
+3. View family relationships
+4. View life events
+5. Verify all fields display correctly
+
+**Tests**:
+1. `test_person_page_loads_successfully` - Person page displays correctly
+2. `test_person_name_displayed` - Name and surname shown properly
+3. `test_person_dates_displayed` - Birth/death dates shown
+4. `test_person_family_relationships_shown` - Parents, spouse, children displayed
+5. `test_person_missing_data_handled` - Missing data handled gracefully
+
+### ✅ FT-PY-004: Relationship Calculation
+
+**File**: `test_relationship.py` (5 tests)
+
+**User Story**: As a user, I want to find the relationship between two people.
+
+**Tests**:
+1. `test_relationship_page_loads` - Relationship calculation page loads
+2. `test_direct_relationship_calculated` - Parent-child relationship found
+3. `test_indirect_relationship_calculated` - Cousin relationships found
+4. `test_no_relationship_handled` - Unrelated persons handled
+5. `test_relationship_display_formatted` - Relationship displayed clearly
+
+### ✅ FT-PY-005: Calendar
+
+**File**: `test_calendar.py` (4 tests)
+
+**User Story**: As a user, I want to view birthdays in a calendar format.
+
+**Test Scenario**:
+1. Navigate to calendar page
+2. View birthdays by month/year
+3. Filter birthdays by month
+4. Navigate through calendar months
+
+**Tests**:
+1. `test_calendar_page_loads` - Calendar page displays correctly
+2. `test_calendar_displays_birthdays` - Birthdays shown in calendar
+3. `test_calendar_filters_by_month` - Month filtering works
+4. `test_calendar_navigation_works` - Month navigation works
+
+### 🔄 Planned Tests
+
+- **FT-PY-006**: Statistics page workflow
+- **FT-PY-007**: GEDCOM import/export workflow
+- **FT-PY-008**: Data modification workflow
+- **FT-PY-009**: Privacy settings workflow
+- **FT-PY-010**: Multi-language workflow
 
 ## Known Issues & Limitations
 
