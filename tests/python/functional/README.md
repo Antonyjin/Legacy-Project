@@ -169,9 +169,21 @@ export TZ=UTC           # Consistent timezone
 4. `test_person_family_relationships_shown` - Parents, spouse, children displayed
 5. `test_person_missing_data_handled` - Missing data handled gracefully
 
+### ✅ FT-PY-004: Relationship Calculation
+
+**File**: `test_relationship.py` (5 tests)
+
+**User Story**: As a user, I want to find the relationship between two people.
+
+**Tests**:
+1. `test_relationship_page_loads` - Relationship calculation page loads
+2. `test_direct_relationship_calculated` - Parent-child relationship found
+3. `test_indirect_relationship_calculated` - Cousin relationships found
+4. `test_no_relationship_handled` - Unrelated persons handled
+5. `test_relationship_display_formatted` - Relationship displayed clearly
+
 ### 🔄 Planned Tests
 
-- **FT-PY-004**: Relationship calculation workflow
 - **FT-PY-005**: Birthday calendar workflow
 - **FT-PY-006**: Statistics page workflow
 - **FT-PY-007**: GEDCOM import/export workflow
