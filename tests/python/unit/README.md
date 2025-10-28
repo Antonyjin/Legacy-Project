@@ -138,6 +138,16 @@ Tests name normalization and lowercase conversion with Unicode transliteration.
 - Transliteration: `unidecode` library for UTF-8 → ASCII conversion
 - Tests: accent removal, non-Latin scripts (Cyrillic, Greek, Arabic), special characters, space normalization, real-world names
 
+### UT-PY-013: Name Strip
+
+**File**: test_name_strip.py | **Status**: ✅ Complete | **Issue**: MIG-002
+
+Tests space removal from names.
+
+- 40 test methods across 11 test classes
+- OCaml functions: `Name.strip`, `Name.strip_c` (name.ml:138)
+- Tests: basic space removal, Unicode preservation, edge cases (empty, only spaces), whitespace types (tabs/newlines preserved), case preservation, composition with other functions
+
 ---
 
 ## How Unit Tests Map to OCaml Functions
@@ -188,6 +198,13 @@ Tests name normalization and lowercase conversion with Unicode transliteration.
 - **Risk**: Search breaks, duplicate person detection fails, name matching incorrect
 - **Coverage**: French accents, German umlauts, Cyrillic, Greek, Arabic, special chars (hyphens, apostrophes)
 
+#### 8. **Name Space Removal** (`Jean François` → `JeanFrançois`)
+
+- **OCaml Function**: `Name.strip`, `Name.strip_c` (name.ml:138)
+- **Migration Impact**: Python must remove spaces consistently for name processing pipeline
+- **Risk**: Name comparison breaks, inconsistent whitespace handling
+- **Coverage**: Multiple spaces, leading/trailing spaces, Unicode preservation, case preservation
+
 ## OCaml Code Reference
 
 The tests validate behaviors implemented in:
@@ -223,6 +240,7 @@ source_geneweb/
 | `test_french_space_separator`         | `format_with_thousand_sep` | `lib/allnDisplay.ml:21-22`  |
 | `test_french_accents`                 | `Name.lower`               | `lib/util/name.ml:36-51`    |
 | `test_strip_lower_with_special_chars` | `Name.strip_lower`         | `lib/util/name.mli`         |
+| `test_simple_space`                   | `Name.strip`               | `lib/util/name.ml:138`      |
 
 ## Running the Tests
 
