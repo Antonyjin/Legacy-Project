@@ -95,7 +95,11 @@ export TZ=UTC           # Consistent timezone
 
 ## Test Coverage
 
-### ✅ Implemented (IT-PY-001)
+### ✅ Implemented Tests
+
+#### IT-PY-001: HTTP Server Lifecycle
+
+**File**: `test_server_lifecycle.py`
 
 | Test | What It Validates | Acceptance Criteria |
 |------|-------------------|---------------------|
@@ -106,17 +110,123 @@ export TZ=UTC           # Consistent timezone
 | **Concurrent Requests** | Handles multiple simultaneous requests | ≥80% success rate (OCaml limitation) |
 | **Rapid Requests** | Handles fast sequential requests | All requests succeed |
 
-### 🔄 Planned (IT-PY-002 to IT-PY-010)
+#### IT-PY-002: API Routes
 
-- **IT-PY-002**: API Routes (all major endpoints return 200)
-- **IT-PY-003**: Database Access (read persons, families)
-- **IT-PY-004**: HTML Generation (verify template rendering)
-- **IT-PY-005**: Localization (i18n, lang=fr/en)
-- **IT-PY-006**: GEDCOM Export (file creation, content validation)
-- **IT-PY-007**: GEDCOM Import (roundtrip integrity)
-- **IT-PY-008**: Logging System (verify log entries)
-- **IT-PY-009**: Authentication (admin access, permissions)
-- **IT-PY-010**: Performance Benchmarks (response times)
+**File**: `test_api_route.py`
+
+Tests all major GeneWeb API routes return expected responses:
+- Home page (/)
+- Person page (?p=X&n=Y)
+- Family page (?m=F)
+- Search (?m=S)
+- Calendar (?m=CAL)
+- Statistics (?m=STAT)
+- Tree pages (?m=A, ?m=D)
+
+#### IT-PY-003: Database Access
+
+**File**: `test_database_access.py`
+
+Tests database read/write operations:
+- Person data retrieval from .gwb database
+- Multiple persons existence
+- Data persistence across requests
+- Family relationships
+- Search queries database access
+- UTF-8 encoding support
+
+#### IT-PY-004: HTML Generation
+
+**File**: `test_html_generation.py`
+
+Tests HTML template rendering:
+- Valid HTML structure
+- Content rendering
+- Person page data binding
+- Date rendering
+- Statistics data
+- Calendar information
+- HTML encoding
+- Search results
+- Family names
+
+#### IT-PY-005: GEDCOM Roundtrip
+
+**File**: `test_gedcom_roundtrip.py`
+
+Tests GEDCOM export/import:
+- GEDCOM file creation via `gwb2ged`
+- Valid GEDCOM format (HEAD, TRLR, INDI records)
+- Person records preservation
+- Date information
+- UTF-8 encoding
+- Family relationships
+
+#### IT-PY-006: Localization
+
+**File**: `test_localization.py`
+
+Tests multi-language support:
+- English pages (lang=en)
+- French pages (lang=fr)
+- French translation content
+- Language parameter effectiveness
+- Person page language support
+- Search language support
+- Statistics language support
+- Calendar language support
+- Unknown language fallback
+
+#### IT-PY-007: Authentication
+
+**File**: `test_authentication.py`
+
+Tests authentication and access control:
+- Public page access
+- Public person page access
+- Search accessibility
+- Statistics accessibility
+- Wizard mode parameter recognition
+- Base access
+- Multiple public requests
+- Session handling
+- Concurrent public access
+
+#### IT-PY-008: Error Handling
+
+**File**: `test_error_handling.py`
+
+Tests graceful error handling:
+- Missing person handling
+- Malformed name parameters
+- Empty parameters
+- Invalid query parameters
+- Very long parameters
+- Unicode characters
+- SQL injection attempts
+- XSS attempts
+- Server stability after errors
+- Rapid invalid requests
+- Missing base name handling
+- Timeout recovery
+- Concurrent error requests
+
+#### IT-PY-009: Performance
+
+**File**: `test_performance.py`
+
+Tests performance characteristics:
+- Home page load time (<2s)
+- Person page load time (<2s)
+- Search page load time (<3s)
+- Statistics page load time (<3s)
+- Calendar page load time (<2s)
+- Repeated request consistency
+- Rapid sequential requests
+- Concurrent request performance
+- Response size validation
+- Large response handling
+- Sustained load handling
 
 ## Known Issues & Limitations
 
