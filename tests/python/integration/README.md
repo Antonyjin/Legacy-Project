@@ -1,5 +1,16 @@
 # Python Integration Tests
 
+## Current Status
+
+**28 tests implemented** ✅ (all passing)
+
+| Test Suite | Tests | Status |
+|------------|-------|--------|
+| IT-PY-001: Server Lifecycle | 12 | ✅ Passing |
+| IT-PY-002: API Routes | 9 | ✅ Passing |
+| IT-PY-003: Database Access | 7 | ✅ Passing |
+| **Total** | **28** | **✅ All Passing** |
+
 ## Overview
 
 Integration tests validate **interactions between GeneWeb components**:
@@ -123,17 +134,45 @@ Tests all major GeneWeb API routes return expected responses:
 - Statistics (?m=STAT)
 - Tree pages (?m=A, ?m=D)
 
-#### IT-PY-003: Database Access
+#### IT-PY-003: Database Access ✅
 
-**File**: `test_database_access.py`
+**File**: `test_database_access.py` (7 tests)
 
-Tests database read/write operations:
-- Person data retrieval from .gwb database
-- Multiple persons existence
-- Data persistence across requests
-- Family relationships
-- Search queries database access
-- UTF-8 encoding support
+**What it tests**: Database operations via HTTP API
+
+**Components tested**:
+```
+┌─────────────┐
+│ Python Test │
+└──────┬──────┘
+       │ HTTP GET
+       ▼
+┌─────────────┐
+│ gwd (HTTP)  │ ◄─ Serves requests
+└──────┬──────┘
+       │ Reads data
+       ▼
+┌─────────────┐
+│ test.gwb    │ ◄─ OCaml database format
+│ (188 people)│
+└─────────────┘
+```
+
+**Tests**:
+1. `test_person_data_retrieval` - Fetch person from database
+2. `test_multiple_persons_exist` - Query different individuals
+3. `test_person_data_persistence` - Data consistency across requests
+4. `test_family_relationships_exist` - Parent/spouse links
+5. `test_search_uses_database` - Search queries access data
+6. `test_database_handles_unknown_person` - 404 for missing persons
+7. `test_database_encoding_support` - UTF-8 characters
+
+**Known Issues**:
+- **OCaml `gwd` daemonizes**: Parent process exits immediately after forking
+  - **Solution**: Check HTTP response, not process status
+  - **Cleanup**: Use `pkill` to kill all child processes on port
+- **HTML volatility**: Don't compare HTML byte-by-byte
+  - **Solution**: Check semantic data (names, dates, places) instead
 
 #### IT-PY-004: HTML Generation
 
