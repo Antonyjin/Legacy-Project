@@ -2,14 +2,20 @@
 
 ## Current Status
 
-**28 tests implemented** ✅ (all passing)
+**87 tests implemented** ⚠️ (32 passing, 54 failing, 1 failed)
 
 | Test Suite | Tests | Status |
 |------------|-------|--------|
 | IT-PY-001: Server Lifecycle | 12 | ✅ Passing |
 | IT-PY-002: API Routes | 9 | ✅ Passing |
 | IT-PY-003: Database Access | 7 | ✅ Passing |
-| **Total** | **28** | **✅ All Passing** |
+| IT-PY-004: HTML Generation | 10 | ❌ **Failing** (process management) |
+| IT-PY-005: GEDCOM Roundtrip | 6 | ✅ Passing |
+| IT-PY-006: Localization | 9 | ❌ **Failing** (process management) |
+| IT-PY-007: Authentication | 9 | ❌ **Failing** (process management) |
+| IT-PY-008: Error Handling | 13 | ❌ **Failing** (process management) |
+| IT-PY-009: Performance | 11 | ❌ **Failing** (process management) |
+| **Total** | **87** | **32 Passing, 54 Failing** |
 
 ## Overview
 
@@ -266,6 +272,40 @@ Tests performance characteristics:
 - Response size validation
 - Large response handling
 - Sustained load handling
+
+## 🚨 Critical Process Management Issues
+
+### **54 Tests Failing Due to OCaml Daemonization**
+
+**Problem**: Most integration tests fail with:
+```
+RuntimeError: gwd exited unexpectedly while starting
+```
+
+**Root Cause**: OCaml `gwd` daemonizes (parent process exits immediately after forking), but tests check `proc.poll()` which returns 0 (successful exit) instead of `None` (still running).
+
+**Solution Applied in IT-PY-003**: 
+- Replace `proc.poll()` checks with HTTP readiness checks
+- Use `pkill` for reliable cleanup of all child processes
+- Check `is_running()` method instead of process status
+
+**Files Needing Fix**:
+- `test_html_generation.py` (10 tests) - **IT-PY-004**
+- `test_authentication.py` (9 tests) - **IT-PY-007** 
+- `test_error_handling.py` (13 tests) - **IT-PY-008**
+- `test_localization.py` (9 tests) - **IT-PY-006**
+- `test_performance.py` (11 tests) - **IT-PY-009**
+
+**Fix Pattern**:
+```python
+# ❌ Wrong (fails with daemonization)
+if self.proc.poll() is not None:
+    raise RuntimeError("gwd exited unexpectedly while starting")
+
+# ✅ Correct (works with daemonization)
+if not self.is_running():
+    raise RuntimeError("gwd not responding to HTTP requests")
+```
 
 ## Known Issues & Limitations
 

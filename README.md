@@ -152,11 +152,32 @@ pytest -m functional  # Functional tests only
 ```
 
 **Test Status:**
-- ✅ **Unit Tests (57)**: Test OCaml functions via HTTP black-box testing - **CI BLOCKS ON FAILURE**
-- ✅ **Integration Tests (28)**: Test gwd lifecycle, port conflicts, concurrency - **CI BLOCKS ON FAILURE**
+- ✅ **Unit Tests (191)**: Test OCaml functions via HTTP black-box testing - **CI BLOCKS ON FAILURE**
+- ⚠️ **Integration Tests (87)**: Test gwd lifecycle, port conflicts, concurrency - **32 PASSING, 54 FAILING** (process management issues)
 - ⚠️ **Functional Tests**: End-to-end user workflows - **In development, failures allowed**
 
-**Current Coverage:** 85 tests passing
+**Current Coverage:** 223 tests passing (191 UT + 32 IT)
+
+#### ⚠️ Integration Test Issues (Process Management)
+
+**Problem**: 54 integration tests are failing due to OCaml `gwd` daemonization behavior.
+
+**Root Cause**: OCaml `gwd` daemonizes (parent process exits immediately after forking), causing tests to fail with:
+```
+RuntimeError: gwd exited unexpectedly while starting
+```
+
+**Solution**: Apply the process management fix from IT-PY-003 to all failing test files:
+- Replace `proc.poll()` checks with HTTP readiness checks
+- Use `pkill` for reliable cleanup
+- Check `is_running()` instead of process status
+
+**Files Needing Fix**:
+- `test_html_generation.py` (10 tests)
+- `test_authentication.py` (9 tests) 
+- `test_error_handling.py` (13 tests)
+- `test_localization.py` (9 tests)
+- `test_performance.py` (11 tests)
 
 #### Golden Tests (Currently Disabled)
 
@@ -211,8 +232,8 @@ Legacy-Project/
 │       └── test_gedcom_import.sh  # GEDCOM roundtrip test
 ├── tests/                      # Python tests
 │   ├── python/
-│   │   ├── unit/              # 57 unit tests ✅
-│   │   ├── integration/       # 28 integration tests ✅
+│   │   ├── unit/              # 191 unit tests ✅
+│   │   ├── integration/       # 87 integration tests ⚠️ (32 passing)
 │   │   └── functional/        # Functional tests (in dev) ⚠️
 │   └── golden/                # Golden references (disabled)
 │       └── goldens/v1/        # Versioned golden snapshots
@@ -239,8 +260,8 @@ Legacy-Project/
 
 We have **3 test categories** (4th coming soon):
 
-1. ✅ **Unit Tests (57)** - Test OCaml functions via HTTP black-box testing - **Blocks CI**
-2. ✅ **Integration Tests (28)** - Test gwd lifecycle, ports, concurrency - **Blocks CI**
+1. ✅ **Unit Tests (191)** - Test OCaml functions via HTTP black-box testing - **Blocks CI**
+2. ⚠️ **Integration Tests (87)** - Test gwd lifecycle, ports, concurrency - **32 passing, 54 failing**
 3. ⚠️ **Functional Tests** - End-to-end user workflows - **In development**
 4. 🔜 **Golden Tests** - Regression detection - **Temporarily disabled, will be re-enabled**
 
@@ -328,18 +349,18 @@ pytest --version
 
 | Test Type | Status | Count | CI Blocking |
 |-----------|--------|-------|-------------|
-| **Python Unit Tests** | ✅ Complete | 57 tests | ✅ Yes |
-| **Python Integration Tests** | ✅ Complete | 28 tests | ✅ Yes |
+| **Python Unit Tests** | ✅ Complete | 191 tests | ✅ Yes |
+| **Python Integration Tests** | ⚠️ Partial | 87 tests (32 passing) | ⚠️ Process issues |
 | **Python Functional Tests** | ⚠️ In Development | 0 tests | ⏳ Not yet |
 | **Golden Tests** | 🔄 Disabled | 12 tests | 🚫 Disabled until migration |
-| **TOTAL** | | **85 tests passing** | |
+| **TOTAL** | | **223 tests passing** | |
 
 **Python Test Infrastructure** (Issue #97): ✅ **COMPLETE**
 - pytest configuration (`pytest.ini`)
 - Coverage setup (`.coveragerc`, target >80%)
 - Shared fixtures (`tests/python/conftest.py`)
 - Test directory structure with READMEs
-- 85 passing tests with full CI integration
+- 223 passing tests with full CI integration
 
 **CI Quality Gates** (Issue #117): ✅ **ACTIVE**
 - ✅ Unit Tests (UT) block CI on failure
@@ -417,12 +438,12 @@ pkill -f gwsetup
 # Install dependencies
 pip install -r requirements.txt
 
-# Run all tests (85 tests)
+# Run all tests (278 tests)
 pytest tests/python/ -v
 
 # Run by type
-pytest tests/python/unit/ -v              # Unit tests (57)
-pytest tests/python/integration/ -v       # Integration tests (28)
+pytest tests/python/unit/ -v              # Unit tests (191)
+pytest tests/python/integration/ -v       # Integration tests (87)
 pytest -m unit                            # Unit marker
 pytest -m integration                     # Integration marker
 
