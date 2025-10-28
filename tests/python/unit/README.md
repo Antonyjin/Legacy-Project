@@ -25,15 +25,32 @@ We chose **HTTP-based black-box testing** instead of OCaml unit tests because:
 
 ## Test Structure
 
+### UT-PY-002: HTTP Parameter Parsing
+
+**File**: test_http_params.py | **Status**: ✅ Complete | **Issue**: #98
+
+Tests HTTP parameter parsing, URL encoding, special characters, and edge cases.
+- 25 test methods validating parameter extraction and decoding
+- OCaml functions: `gwd.ml::extract_assoc`, `Mutil.decode`, `request.ml::person_is_std_key`
+
 ### UT-PY-003: Name Normalization
 
-**File**: test_name_normalization.py | **PR**: #197 | **Issue**: #161
+**File**: test_name_normalization.py | **Status**: ✅ Complete | **Issue**: #99
 
 Tests name search case-insensitivity, display formatting, and special character handling.
-- 10 test methods validating name normalization
+- 6 test methods validating name normalization
 - OCaml functions: `Name.lower`, `Name.crush_lower`, name display formatting
 
-### UT-PY-004: URL Parsing
+### UT-PY-004: Date Validation
+
+**File**: test_date_validation.py | **Status**: ✅ Complete | **Issue**: #100
+
+Tests date validation, calendar types, date boundaries, and compression logic.
+- 26 test methods across 6 test classes
+- OCaml functions: `Date.compress`, `Date.uncompress`, date validation (lib/util/date.ml)
+- Tests: Gregorian/Julian/French/Hebrew calendars, BCE dates, year < 2500 boundary
+
+### UT-PY-005: URL Parsing
 
 **File**: test_url_parsing_extended.py | **PR**: #190 | **Issue**: #162
 
@@ -91,33 +108,7 @@ Tests language switching, translations, and internationalization.
 
 ---
 
-### UT-PY-002: HTTP Parameter Parsing
-
-**What we test**: OCaml's HTTP parameter parsing logic (see `source_geneweb/bin/gwd/request.ml`)
-
-**Why these routes**:
-
-```python
-# Basic person lookup - tests p= and n= parameters
-?p=Charles&n=Windsor
-→ Tests: request.ml::person_is_std_key, gwd.ml::extract_assoc
-
-# URL encoding - tests Mutil.decode
-?p=René&n=Dupont  
-→ Tests: Mutil.decode, UTF-8 handling
-
-# Language selection - tests lang= parameter
-?lang=fr
-→ Tests: Language fallback logic, i18n system
-
-# Search mode - tests m= parameter
-?m=S&s=Windsor
-→ Tests: Mode parsing, Name.lower (case-insensitive search)
-
-# Empty/missing params - tests edge cases
-?p=&n=Windsor
-→ Tests: Graceful handling of malformed input
-```
+## How Unit Tests Map to OCaml Functions
 
 ### Why We Test These Specific Behaviors
 
@@ -167,6 +158,8 @@ source_geneweb/
 | `test_parse_person_params` | `extract_assoc` | `gwd.ml:140-147` |
 | `test_url_encoded_space` | `Mutil.decode` | `util.ml:150` |
 | `test_lowercase_search` | `Name.lower` | `name.ml:80` |
+| `test_compressible_date_works` | `Date.compress` | `lib/util/date.ml:15-32` |
+| `test_year_boundary_2500` | `Date.compress` | `lib/util/date.ml:19` |
 | `test_lang_fr` | `Util.p_getenv` | `util.ml:200` |
 | `test_hyphenated_surname` | `Name.strip` | `name.ml:120` |
 
