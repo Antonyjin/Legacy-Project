@@ -127,6 +127,17 @@ Tests number formatting with thousands separator across 33 locales.
 - Locales: en (,), fr ( ), de (.), ru ('), and 29 others from lexicon.txt
 - Tests: basic formatting, locale-specific separators, negative numbers, large numbers, edge cases
 
+### UT-PY-012: Name Processing
+
+**File**: test_name_processing.py | **Status**: ✅ Complete | **Issue**: MIG-001
+
+Tests name normalization and lowercase conversion with Unicode transliteration.
+
+- 59 test methods across 11 test classes
+- OCaml functions: `Name.lower`, `Name.strip_lower` (name.ml:36-51)
+- Transliteration: `unidecode` library for UTF-8 → ASCII conversion
+- Tests: accent removal, non-Latin scripts (Cyrillic, Greek, Arabic), special characters, space normalization, real-world names
+
 ---
 
 ## How Unit Tests Map to OCaml Functions
@@ -170,6 +181,13 @@ Tests number formatting with thousands separator across 33 locales.
 - **Risk**: Wrong separators = poor UX for international users, inconsistent statistics display
 - **Locales**: 33 languages with different separators (comma, space, dot, apostrophe)
 
+#### 7. **Name Normalization** (`Jean-François` → `jean francois`)
+
+- **OCaml Function**: `Name.lower`, `Name.strip_lower` (name.ml)
+- **Migration Impact**: Python must normalize names identically for search/comparison
+- **Risk**: Search breaks, duplicate person detection fails, name matching incorrect
+- **Coverage**: French accents, German umlauts, Cyrillic, Greek, Arabic, special chars (hyphens, apostrophes)
+
 ## OCaml Code Reference
 
 The tests validate behaviors implemented in:
@@ -183,7 +201,8 @@ source_geneweb/
 │   ├── allnDisplay.ml      # format_with_thousand_sep
 │   └── util/
 │       ├── mutil.ml        # string_of_int_sep, decode, normalize_utf_8
-│       ├── name.mli        # lower, crush_lower, strip
+│       ├── name.ml         # lower, strip_lower, crush_lower, strip
+│       ├── name.mli        # Function signatures
 │       └── date.ml         # compress, uncompress
 └── GeneWeb/gw/lang/
     └── lexicon.txt         # (thousand separator) translations
@@ -191,17 +210,19 @@ source_geneweb/
 
 ### Key OCaml Functions Tested (Indirectly)
 
-| Test                               | OCaml Function             | File                        |
-| ---------------------------------- | -------------------------- | --------------------------- |
-| `test_parse_person_params`         | `extract_assoc`            | `gwd.ml:140-147`            |
-| `test_url_encoded_space`           | `Mutil.decode`             | `util.ml:150`               |
-| `test_lowercase_search`            | `Name.lower`               | `name.ml:80`                |
-| `test_compressible_date_works`     | `Date.compress`            | `lib/util/date.ml:15-32`    |
-| `test_year_boundary_2500`          | `Date.compress`            | `lib/util/date.ml:19`       |
-| `test_lang_fr`                     | `Util.p_getenv`            | `util.ml:200`               |
-| `test_hyphenated_surname`          | `Name.strip`               | `name.ml:120`               |
-| `test_format_one_thousand_english` | `Mutil.string_of_int_sep`  | `lib/util/mutil.ml:576-599` |
-| `test_french_space_separator`      | `format_with_thousand_sep` | `lib/allnDisplay.ml:21-22`  |
+| Test                                  | OCaml Function             | File                        |
+| ------------------------------------- | -------------------------- | --------------------------- |
+| `test_parse_person_params`            | `extract_assoc`            | `gwd.ml:140-147`            |
+| `test_url_encoded_space`              | `Mutil.decode`             | `util.ml:150`               |
+| `test_lowercase_search`               | `Name.lower`               | `name.ml:80`                |
+| `test_compressible_date_works`        | `Date.compress`            | `lib/util/date.ml:15-32`    |
+| `test_year_boundary_2500`             | `Date.compress`            | `lib/util/date.ml:19`       |
+| `test_lang_fr`                        | `Util.p_getenv`            | `util.ml:200`               |
+| `test_hyphenated_surname`             | `Name.strip`               | `name.ml:120`               |
+| `test_format_one_thousand_english`    | `Mutil.string_of_int_sep`  | `lib/util/mutil.ml:576-599` |
+| `test_french_space_separator`         | `format_with_thousand_sep` | `lib/allnDisplay.ml:21-22`  |
+| `test_french_accents`                 | `Name.lower`               | `lib/util/name.ml:36-51`    |
+| `test_strip_lower_with_special_chars` | `Name.strip_lower`         | `lib/util/name.mli`         |
 
 ## Running the Tests
 
