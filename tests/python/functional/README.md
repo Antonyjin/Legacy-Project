@@ -128,6 +128,23 @@ export TZ=UTC           # Consistent timezone
 - **Test data dependency**: Tests rely on specific test data (Charles Windsor, Elizabeth, Philip)
   - **Solution**: Use known test persons from the test database
 
+### ✅ FT-PY-009: Privacy
+
+**File**: `test_privacy.py` (4 tests)
+
+**User Story**: As a user, I want privacy rules to protect sensitive data.
+
+**Test Scenario**:
+1. Test privacy rules hide private data
+2. Verify public mode restrictions
+3. Check access control works
+4. Verify living person rules
+
+**Tests**:
+1. `test_privacy_rules_hide_private_data` - Private data is hidden
+2. `test_privacy_public_mode_restrictions` - Public mode restricts access
+3. `test_privacy_access_control_works` - Access control functions
+4. `test_privacy_living_person_rules` - Living person rules applied
 ### ✅ FT-PY-008: Wizard
 
 **File**: `test_wizard.py` (4 tests)
@@ -185,9 +202,9 @@ export TZ=UTC           # Consistent timezone
 ### 🔄 Planned Tests
 
 - **FT-PY-002**: Person search workflow
-- **FT-PY-003**: Person page display workflow
-- **FT-PY-004**: Relationship calculation workflow
-- **FT-PY-005**: Privacy settings workflow
+- **FT-PY-003**: GEDCOM import/export workflow
+- **FT-PY-004**: Data modification workflow
+- **FT-PY-005**: Calendar navigation workflow
 - **FT-PY-006**: Multi-language workflow
 - **FT-PY-007**: Calendar navigation workflow
 - **FT-PY-008**: Data modification workflow
