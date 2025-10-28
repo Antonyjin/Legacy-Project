@@ -128,15 +128,32 @@ export TZ=UTC           # Consistent timezone
 - **Test data dependency**: Tests rely on specific test data (Charles Windsor, Elizabeth, Philip)
   - **Solution**: Use known test persons from the test database
 
+### ✅ FT-PY-006: Statistics
+
+**File**: `test_statistics.py` (4 tests)
+
+**User Story**: As a user, I want to view database statistics.
+
+**Test Scenario**:
+1. Navigate to statistics page
+2. View individual/family counts
+3. Verify statistics are accurate
+4. Check data formatting
+
+**Tests**:
+1. `test_statistics_page_loads` - Statistics page displays correctly
+2. `test_statistics_count_display` - Counts are displayed
+3. `test_statistics_data_correct` - Statistics are accurate
+4. `test_statistics_formats_properly` - Data formatted correctly
+
 ### 🔄 Planned Tests
 
 - **FT-PY-002**: Person search workflow
 - **FT-PY-003**: GEDCOM import/export workflow
 - **FT-PY-004**: Data modification workflow
 - **FT-PY-005**: Privacy settings workflow
-- **FT-PY-006**: Multi-language workflow
 - **FT-PY-007**: Calendar navigation workflow
-- **FT-PY-008**: Statistics exploration workflow
+- **FT-PY-008**: Data modification workflow
 - **FT-PY-009**: Error recovery workflow
 - **FT-PY-010**: Performance under load workflow
 
