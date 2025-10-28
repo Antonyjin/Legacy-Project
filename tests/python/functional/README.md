@@ -128,6 +128,23 @@ export TZ=UTC           # Consistent timezone
 - **Test data dependency**: Tests rely on specific test data (Charles Windsor, Elizabeth, Philip)
   - **Solution**: Use known test persons from the test database
 
+### ✅ FT-PY-010: i18n
+
+**File**: `test_i18n.py` (4 tests)
+
+**User Story**: As a user, I want to use the application in multiple languages.
+
+**Test Scenario**:
+1. Switch between languages
+2. Verify translations display correctly
+3. Check date format changes
+4. Test multiple language support
+
+**Tests**:
+1. `test_i18n_language_switch_works` - Language switching works
+2. `test_i18n_translations_displayed` - Translations shown correctly
+3. `test_i18n_date_format_changes` - Date format adapts to language
+4. `test_i18n_multiple_languages_supported` - Multiple languages work
 ### ✅ FT-PY-009: Privacy
 
 **File**: `test_privacy.py` (4 tests)
@@ -210,6 +227,7 @@ export TZ=UTC           # Consistent timezone
 - **FT-PY-008**: Data modification workflow
 - **FT-PY-009**: Error recovery workflow
 - **FT-PY-010**: Performance under load workflow
+- **FT-PY-011**: Additional feature workflows
 ### ✅ FT-PY-002: Person Search
 
 **File**: `test_person_search.py` (6 tests)
