@@ -148,6 +148,16 @@ Tests space removal from names.
 - OCaml functions: `Name.strip`, `Name.strip_c` (name.ml:138)
 - Tests: basic space removal, Unicode preservation, edge cases (empty, only spaces), whitespace types (tabs/newlines preserved), case preservation, composition with other functions
 
+### UT-PY-014: Roman Numerals
+
+**File**: test_roman_numerals.py | **Status**: ✅ Complete | **Issue**: MIG-003
+
+Tests conversion between integers and Roman numerals.
+
+- 60 test methods across 12 test classes
+- OCaml functions: `Mutil.roman_of_arabian`, `Mutil.arabian_of_roman` (mutil.ml:328-365)
+- Tests: basic conversions (1-10), subtractive notation (IV, IX, XL, XC, CD, CM), OCaml test cases (39, 246, 421, 160), genealogy years (1000-2024), boundary conditions (1-3999), round-trip conversion
+
 ---
 
 ## How Unit Tests Map to OCaml Functions
@@ -205,6 +215,13 @@ Tests space removal from names.
 - **Risk**: Name comparison breaks, inconsistent whitespace handling
 - **Coverage**: Multiple spaces, leading/trailing spaces, Unicode preservation, case preservation
 
+#### 9. **Roman Numeral Conversion** (`1994` → `MCMXCIV`)
+
+- **OCaml Function**: `Mutil.roman_of_arabian`, `Mutil.arabian_of_roman` (mutil.ml:328-365)
+- **Migration Impact**: Python must convert integers to/from Roman numerals identically for year display
+- **Risk**: Wrong year display in genealogy views, GEDCOM import/export failures
+- **Coverage**: Basic conversions (1-10), subtractive notation, OCaml test cases, genealogy years, boundary (1-3999), round-trip validation
+
 ## OCaml Code Reference
 
 The tests validate behaviors implemented in:
@@ -241,6 +258,8 @@ source_geneweb/
 | `test_french_accents`                 | `Name.lower`               | `lib/util/name.ml:36-51`    |
 | `test_strip_lower_with_special_chars` | `Name.strip_lower`         | `lib/util/name.mli`         |
 | `test_simple_space`                   | `Name.strip`               | `lib/util/name.ml:138`      |
+| `test_39`                             | `Mutil.roman_of_arabian`   | `lib/util/mutil.ml:328-346` |
+| `test_basic_conversions`              | `Mutil.arabian_of_roman`   | `lib/util/mutil.ml:346-365` |
 
 ## Running the Tests
 
