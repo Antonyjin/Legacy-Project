@@ -128,15 +128,30 @@ export TZ=UTC           # Consistent timezone
 - **Test data dependency**: Tests rely on specific test data (Charles Windsor, Elizabeth, Philip)
   - **Solution**: Use known test persons from the test database
 
+### ✅ FT-PY-008: Wizard
+
+**File**: `test_wizard.py` (4 tests)
+
+**User Story**: As a user, I want to add, edit, and delete persons in wizard mode.
+
+**Test Scenario**:
+1. Access wizard mode
+2. Add a new person
+3. Edit existing person
+4. Verify changes persist
+
+**Tests**:
+1. `test_wizard_mode_accessible` - Wizard mode loads correctly
+2. `test_wizard_add_person_works` - Adding person works
+3. `test_wizard_edit_person_works` - Editing person works
+4. `test_wizard_changes_persist` - Changes are saved
+
 ### 🔄 Planned Tests
 
 - **FT-PY-002**: Person search workflow
-- **FT-PY-003**: GEDCOM import/export workflow
-- **FT-PY-004**: Data modification workflow
+- **FT-PY-003**: Person page display workflow
+- **FT-PY-004**: Relationship calculation workflow
 - **FT-PY-005**: Privacy settings workflow
-- **FT-PY-006**: Multi-language workflow
-- **FT-PY-007**: Calendar navigation workflow
-- **FT-PY-008**: Statistics exploration workflow
 - **FT-PY-009**: Error recovery workflow
 - **FT-PY-010**: Performance under load workflow
 
