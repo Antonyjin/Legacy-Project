@@ -530,6 +530,310 @@ w, env = extract_param('w', env)
 lang, env = extract_param('lang', env)
 ```
 
+##### `url_encode(s: str) -> str`
+
+URL-encode a string for safe use in query parameters.
+
+**Issue**: MIG-009 - Migrate URL encoding functions
+
+**OCaml Reference**: `source_geneweb/lib/util/mutil.ml:1041` (`encode`)
+
+**Parameters**:
+- `s`: The string to encode (can contain special characters, spaces, UTF-8)
+
+**Returns**: URL-encoded string (spaces → `+`, special chars → `%XX`)
+
+**Behavior**:
+- Replicates OCaml `Mutil.encode` behavior
+- Uses Python's `urllib.parse.quote_plus` with `safe=''` and `encoding='utf-8'`
+- All special characters are percent-encoded
+- Spaces become `+` (URL query string format)
+
+**Examples**:
+```python
+from utils.http_params import url_encode
+
+# Basic encoding
+url_encode("Jean François")           # 'Jean+Fran%C3%A7ois'
+url_encode("Smith & Johnson")          # 'Smith+%26+Johnson'
+
+# Special characters
+url_encode("test@example.com")        # 'test%40example.com'
+url_encode("price=$100")               # 'price%3D%24100'
+
+# Spaces and UTF-8
+url_encode("O'Brien")                  # "O%27Brien"
+url_encode("José María")               # 'Jos%C3%A9+Mar%C3%ADa'
+
+# Empty and edge cases
+url_encode("")                         # ''
+url_encode("   ")                      # '+++'
+```
+
+**Usage in GeneWeb**:
+- Encoding person names in URLs: `?p=Jean+Fran%C3%A7ois&n=Martin`
+- Encoding place names in query parameters
+- Building safe HTTP query strings
+
+### `string_utils.py`
+
+Implements string manipulation utilities for sanitizing and validating names.
+
+**Issue**: MIG-007 - Migrate string utility functions
+
+**OCaml References**:
+- `source_geneweb/lib/util/name.ml`: `strip_c`, `purge`, `contains_forbidden_char` (lines 138-143)
+
+#### Functions
+
+##### `strip_c(s: str, c: str) -> str`
+
+Remove all occurrences of a specific character from a string.
+
+**OCaml Reference**: `name.ml:138` (`strip_c`)
+
+**Parameters**:
+- `s`: The string to process
+- `c`: Single character to remove (must be a single character)
+
+**Returns**: String with all occurrences of `c` removed
+
+**Raises**: `ValueError` if `c` is not a single character
+
+**Examples**:
+```python
+from utils.string_utils import strip_c
+
+# Remove colons
+strip_c("Jean:François", ":")          # 'JeanFrançois'
+strip_c("test:data:value", ":")        # 'testdatavalue'
+
+# Remove special characters
+strip_c("O'Brien", "'")                # "OBrien"
+strip_c("file.txt", ".")               # "filetxt"
+
+# Edge cases
+strip_c("", ":")                       # ''
+strip_c("no_colons", ":")              # 'no_colons'
+strip_c("multiple:::colons", ":")      # 'multiplecolons'
+```
+
+##### `purge(s: str) -> str`
+
+Remove all forbidden characters from a string (used for name sanitization).
+
+**OCaml Reference**: `name.ml:143` (`purge`)
+
+**Forbidden Characters**: `:`, `@`, `#`, `=`, `$` (defined as `FORBIDDEN_CHAR`)
+
+**Parameters**:
+- `s`: The string to sanitize
+
+**Returns**: String with all forbidden characters removed
+
+**Behavior**:
+- Iterates through `FORBIDDEN_CHAR` list and removes each character
+- Preserves all other characters (including spaces, accents, etc.)
+
+**Examples**:
+```python
+from utils.string_utils import purge, FORBIDDEN_CHAR
+
+# Remove forbidden chars
+purge("Jean:François")                 # 'JeanFrançois'
+purge("test@example.com")              # 'testexample.com'
+purge("price=$100")                    # 'price100'
+purge("file#1=data")                    # 'file1data'
+
+# Multiple forbidden chars
+purge("name@domain.com:port=8080")     # 'namedomain.comport8080'
+
+# No forbidden chars
+purge("normal text")                    # 'normal text'
+purge("O'Brien")                       # "O'Brien"  (apostrophe allowed)
+
+# Edge cases
+purge("")                              # ''
+purge(":::")                           # ''
+```
+
+##### `contains_forbidden_char(s: str) -> bool`
+
+Check if a string contains any forbidden characters.
+
+**OCaml Reference**: `name.ml:141` (`contains_forbidden_char`)
+
+**Parameters**:
+- `s`: The string to check
+
+**Returns**: `True` if any forbidden character (`:`, `@`, `#`, `=`, `$`) is found, `False` otherwise
+
+**Examples**:
+```python
+from utils.string_utils import contains_forbidden_char
+
+# Contains forbidden chars
+contains_forbidden_char("Jean:François")        # True
+contains_forbidden_char("test@example.com")     # True
+contains_forbidden_char("price=$100")           # True
+
+# No forbidden chars
+contains_forbidden_char("normal text")          # False
+contains_forbidden_char("O'Brien")             # False  (apostrophe OK)
+contains_forbidden_char("file.txt")            # False  (dot OK)
+
+# Edge cases
+contains_forbidden_char("")                    # False
+contains_forbidden_char(":::")                 # True
+```
+
+#### Usage in GeneWeb
+
+String utilities are used for:
+- **Name sanitization**: Cleaning person names before database storage (`purge`)
+- **Input validation**: Checking user input for forbidden characters (`contains_forbidden_char`)
+- **Character removal**: Removing specific problematic characters (`strip_c`)
+
+**OCaml Pattern** (from name.ml):
+```ocaml
+let forbidden_char = [ ':'; '@'; '#'; '='; '$' ]
+let strip_c s c = (* remove all c from s *)
+let purge s = List.fold_left strip_c s forbidden_char
+let contains_forbidden_char s = List.exists (String.contains s) forbidden_char
+```
+
+**Python Equivalent**:
+```python
+from utils.string_utils import purge, contains_forbidden_char, FORBIDDEN_CHAR
+
+# Sanitize user input
+name = purge(user_input)  # Remove forbidden chars
+
+# Validate before processing
+if contains_forbidden_char(name):
+    raise ValueError("Name contains forbidden characters")
+
+# Check allowed characters
+assert FORBIDDEN_CHAR == [':', '@', '#', '=', '$']
+```
+
+### `html_utils.py`
+
+Implements HTML entity escaping/unescaping utilities for safe HTML generation.
+
+**Issue**: MIG-010 - Migrate HTML escaping functions
+
+**OCaml Reference**: Used throughout GeneWeb when printing HTML output (scattered usage)
+
+#### Functions
+
+##### `escape_html(text: str, quote: bool = True) -> str`
+
+Escape special characters into HTML-safe sequences.
+
+This function is used throughout GeneWeb to safely render genealogical data in HTML pages. It escapes characters that have special meaning in HTML to prevent rendering issues and XSS attacks.
+
+**Parameters**:
+- `text`: The string to escape (can be person names, places, dates, notes)
+- `quote`: If True (default), also escape quotes (' and ")
+
+**Returns**: HTML-escaped string safe for rendering
+
+**Escaped characters**:
+- `&` → `&amp;`
+- `<` → `&lt;`
+- `>` → `&gt;`
+- `"` → `&quot;` (if `quote=True`)
+- `'` → `&#x27;` (if `quote=True`)
+
+**Examples**:
+```python
+from utils.html_utils import escape_html
+
+# Basic escaping
+escape_html("Smith & Johnson")          # 'Smith &amp; Johnson'
+escape_html("O'Brien")                 # "O&#x27;Brien"
+escape_html('Place: "New York"')        # 'Place: &quot;New York&quot;'
+
+# HTML tags
+escape_html("<script>alert('xss')</script>")  # '&lt;script&gt;alert(&#x27;xss&#x27;)&lt;/script&gt;'
+
+# Unicode preserved
+escape_html("Jean-François")            # 'Jean-François'  # Accents preserved
+
+# With quote=False
+escape_html("O'Brien", quote=False)     # "O'Brien"  # Quotes not escaped
+
+# Edge cases
+escape_html("")                         # ''
+escape_html(None)                       # ''
+```
+
+##### `unescape_html(text: str) -> str`
+
+Decode HTML entities back to original text.
+
+Converts HTML entities (both named and numeric) back to their original characters. Used when processing HTML-encoded data.
+
+**Parameters**:
+- `text`: HTML-encoded string with entities
+
+**Returns**: Decoded string with entities converted to characters
+
+**Examples**:
+```python
+from utils.html_utils import unescape_html
+
+# Named entities
+unescape_html('Smith &amp; Johnson')   # 'Smith & Johnson'
+unescape_html('&lt;tag&gt;')           # '<tag>'
+
+# Numeric entities
+unescape_html('O&#x27;Brien')          # "O'Brien"
+unescape_html('&#60;&#62;')            # '<>'
+
+# Mixed
+unescape_html('&quot;New York&quot;')   # '"New York"'
+
+# Edge cases
+unescape_html('')                      # ''
+```
+
+#### Usage in GeneWeb
+
+HTML escaping is used for:
+
+- **Person names**: Escaping names with special characters (e.g., "Smith & Johnson", "O'Brien")
+- **Place names**: Escaping places with quotes (e.g., 'New York, "Queens"')
+- **Dates and events**: Escaping dates and event descriptions in HTML output
+- **XSS prevention**: Preventing XSS attacks from user input
+- **HTML generation**: All HTML output must escape special characters
+
+**Implementation Notes**:
+- Uses Python's standard library `html.escape` and `html.unescape`
+- Unicode characters are preserved (accents, non-Latin scripts)
+- Essential for XSS prevention
+- Roundtrip compatible: `unescape_html(escape_html(text)) == text`
+
+**Genealogy Examples**:
+```python
+from utils.html_utils import escape_html, unescape_html
+
+# Person names with special chars
+name = "Jean-François & Marie"
+safe = escape_html(name)  # 'Jean-François &amp; Marie'
+
+# Place names with quotes
+place = 'Born in "Buckingham Palace"'
+safe = escape_html(place)  # 'Born in &quot;Buckingham Palace&quot;'
+
+# Roundtrip
+original = 'Résumé & "Genealogical Notes"'
+escaped = escape_html(original)
+restored = unescape_html(escaped)
+assert restored == original  # True
+```
+
 ### `date_validation.py`
 
 Implements date validation utilities from the OCaml Date module.
@@ -682,14 +986,20 @@ pytest tests/python/unit/test_roman_numerals.py -v
 # Test HTTP parameters
 pytest tests/python/unit/test_http_param_utils.py -v
 
+# Test string utilities
+pytest tests/python/unit/test_string_utils.py -v
+
+# Test HTML utilities
+pytest tests/python/unit/test_html_utils.py -v
+
 # Test date validation
 pytest tests/python/unit/test_date_validation_utils.py -v
 
 # Test all utils
-pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py tests/python/unit/test_roman_numerals.py tests/python/unit/test_http_param_utils.py tests/python/unit/test_date_validation_utils.py -v
+pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py tests/python/unit/test_roman_numerals.py tests/python/unit/test_http_param_utils.py tests/python/unit/test_string_utils.py tests/python/unit/test_html_utils.py tests/python/unit/test_date_validation_utils.py -v
 
 # Run with coverage
-pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py tests/python/unit/test_roman_numerals.py tests/python/unit/test_http_param_utils.py tests/python/unit/test_date_validation_utils.py --cov=tests/python/utils --cov-report=html
+pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py tests/python/unit/test_roman_numerals.py tests/python/unit/test_http_param_utils.py tests/python/unit/test_string_utils.py tests/python/unit/test_html_utils.py tests/python/unit/test_date_validation_utils.py --cov=tests/python/utils --cov-report=html
 ```
 
 **Test Coverage**:
@@ -698,9 +1008,11 @@ pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_str
 - 40 unit tests for `name_utils.py` (name_strip)
 - 52 unit tests for `number_formatter.py`
 - 60 unit tests for `roman_numerals.py`
-- 42 unit tests for `http_params.py`
+- 42 unit tests for `http_params.py
+- 36 unit tests for `string_utils.py` (strip_c, purge, contains_forbidden_char)
+- 10 unit tests for `html_utils.py` (escape_html, unescape_html)
 - 23 unit tests for `date_validation.py`
-- **Total: 276 utility tests**
+- **Total: 322 utility tests**
 
 ## Usage in Tests
 
@@ -715,7 +1027,9 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from utils.number_formatter import format_number_with_separator
 from utils.name_utils import name_lower, strip_lower
 from utils.roman_numerals import roman_of_arabian
-from utils.http_params import url_decode, extract_param
+from utils.http_params import url_encode, url_decode, extract_param
+from utils.string_utils import purge, contains_forbidden_char
+from utils.html_utils import escape_html, unescape_html
 from utils.date_validation import leap_year, nb_days_in_month
 
 def test_statistics_count():
@@ -748,6 +1062,22 @@ def test_query_parsing():
     n, params = extract_param('n', params)
     assert p == "Jean François"
     assert n == "MARTIN"
+
+def test_url_encoding():
+    """Test URL encoding for query parameters"""
+    assert url_encode("Smith & Johnson") == "Smith+%26+Johnson"
+    assert url_encode("Jean François") == "Jean+Fran%C3%A7ois"
+
+def test_string_sanitization():
+    """Test name sanitization"""
+    assert purge("Jean:François") == "JeanFrançois"
+    assert contains_forbidden_char("test@example.com") is True
+
+def test_html_escaping():
+    """Test HTML entity escaping"""
+    assert escape_html("Smith & Johnson") == "Smith &amp; Johnson"
+    assert escape_html("O'Brien") == "O&#x27;Brien"
+    assert unescape_html("&amp;") == "&"
 
 def test_date_validation():
     """Test date validation"""
