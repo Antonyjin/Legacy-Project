@@ -4,6 +4,92 @@ This directory contains utility modules used by the Python test suite.
 
 ## Modules
 
+### `name_utils.py`
+
+Implements name processing utilities, replicating the OCaml Name module from GeneWeb.
+
+**Issue**: MIG-001 - Migrate name_lower function
+
+**OCaml References**:
+
+- `source_geneweb/lib/util/name.ml`: `Name.lower` implementation (lines 36-51)
+- `source_geneweb/lib/util/name.mli`: Function signatures and documentation
+
+#### Functions
+
+##### `name_lower(name: str) -> str`
+
+Convert name to lowercase with Unicode transliteration.
+
+Replicates OCaml `Name.lower` behavior:
+
+- Uppercase letters → lowercase
+- Accents removed (Unicode → ASCII via unidecode)
+- Non-alphanumeric characters (except '.') → spaces (stripped)
+
+**Parameters**:
+
+- `name`: The name to process (can contain UTF-8, accents, etc.)
+
+**Returns**: Normalized lowercase name with ASCII characters only
+
+**Examples**:
+
+```python
+from utils.name_utils import name_lower
+
+# Basic lowercase
+name_lower("MARTIN")              # 'martin'
+name_lower("Jean-François")       # 'jean francois'
+
+# Accent removal
+name_lower("René")                # 'rene'
+name_lower("Müller")              # 'muller'
+name_lower("José María")          # 'jose maria'
+
+# Special characters
+name_lower("O'Brien")             # 'o brien'
+name_lower("Smith.Jr")            # 'smith.jr'  (dot preserved)
+
+# Non-Latin scripts
+name_lower("Владимир")            # 'vladimir' (Cyrillic)
+name_lower("Αλέξανδρος")          # 'alexandros' (Greek)
+```
+
+##### `strip_lower(name: str) -> str`
+
+Equivalent to `strip(lower(name))` - removes all spaces after normalization.
+
+Used in GeneWeb for first comparison of names and surnames.
+
+**Examples**:
+
+```python
+from utils.name_utils import strip_lower
+
+strip_lower("Jean-François")     # 'jeanfrancois'
+strip_lower("DE LA CRUZ")        # 'delacruz'
+strip_lower("O'Brien")           # 'obrien'
+```
+
+##### `contains_only_ascii(name: str) -> bool`
+
+Check if name contains only ASCII characters.
+
+##### `is_normalized_name(name: str) -> bool`
+
+Check if a name is already in normalized form (output of name_lower).
+
+#### Supported Scripts
+
+The module handles 33+ languages via `unidecode`:
+
+- **Latin scripts**: French, German, Spanish, Italian, Portuguese, etc.
+- **Cyrillic**: Russian, Ukrainian, Bulgarian
+- **Greek**: Ancient and Modern Greek
+- **Arabic**: Arabic names (transliterated)
+- **Other**: Hebrew, Chinese, Japanese, Korean, etc.
+
 ### `number_formatter.py`
 
 Implements number formatting with thousands separator support, replicating the OCaml behavior from GeneWeb.
@@ -116,26 +202,37 @@ For convenience, common locale codes are aliased:
 All utility modules have comprehensive unit tests:
 
 ```bash
+# Test name utilities
+pytest tests/python/unit/test_name_processing.py -v
+
 # Test number formatter
 pytest tests/python/unit/test_number_formatting.py -v
 
+# Test all utils
+pytest tests/python/unit/test_name_processing.py tests/python/unit/test_number_formatting.py -v
+
 # Run with coverage
-pytest tests/python/unit/test_number_formatting.py --cov=tests/python/utils --cov-report=html
+pytest tests/python/unit/test_name_processing.py tests/python/unit/test_number_formatting.py --cov=tests/python/utils --cov-report=html
 ```
 
-**Test Coverage**: 52 unit tests for `number_formatter.py`
+**Test Coverage**:
+
+- 59 unit tests for `name_utils.py`
+- 52 unit tests for `number_formatter.py`
+- **Total: 111 utility tests**
 
 ## Usage in Tests
 
 Import utilities in your test files:
 
-```python
+````python
 # In tests/python/unit/ or tests/python/integration/
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from utils.number_formatter import format_number_with_separator
+from utils.name_utils import name_lower, strip_lower
 
 def test_statistics_count():
     """Test formatting of statistics counts"""
@@ -145,11 +242,60 @@ def test_statistics_count():
 
     assert formatted_en == '15,234'
     assert formatted_fr == '15 234'
-```
 
-## Implementation Notes
+def test_name_normalization():
+    """Test name normalization for search"""
+    # OCaml-compatible name processing
+    assert name_lower("Jean-François") == "jean francois"
+    assert strip_lower("O'Brien") == "obrien"
+```## Implementation Notes
 
-### OCaml Compatibility
+### Name Processing (name_utils.py)
+
+#### OCaml Compatibility
+
+The Python implementation replicates the OCaml `Name.lower` behavior:
+
+1. **Character processing**:
+   - ASCII alphanumeric and dots: preserved (lowercased)
+   - Other ASCII characters: become spaces
+   - UTF-8 characters: transliterated via `unidecode` library
+
+2. **Space handling**:
+   - Multiple spaces collapsed to single space
+   - Leading/trailing spaces stripped
+   - Special characters between words → single space
+
+3. **Dot preservation**: The dot '.' character is preserved for suffixes (Jr., Sr., etc.)
+
+#### Algorithm
+
+From OCaml `source_geneweb/lib/util/name.ml`:
+
+```ocaml
+let lower s =
+  let rec copy special i len =
+    if i = String.length s then Buff.get len
+    else if Char.code s.[i] < 0x80 then
+      match s.[i] with
+      | ('a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '.') as c ->
+          let len = if special then Buff.store len ' ' else len in
+          let c = Char.lowercase_ascii c in
+          copy false (i + 1) (Buff.store len c)
+      | _ -> copy (len <> 0) (i + 1) len
+    else
+      let len = if special then Buff.store len ' ' else len in
+      let t, j = unaccent_utf_8 true s i in
+      copy false j (Buff.mstore len t)
+  in
+  copy false 0 0
+````
+
+Python equivalent uses `unidecode` for UTF-8 transliteration.
+
+### Number Formatting (number_formatter.py)
+
+#### OCaml Compatibility
 
 The Python implementation replicates the OCaml behavior from `Mutil.string_of_int_sep`:
 
