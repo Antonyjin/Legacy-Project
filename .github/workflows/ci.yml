@@ -233,6 +233,38 @@ jobs:
           pytest tests/python/unit/test_setup.py -v
         continue-on-error: false  # Infrastructure must work
 
+      
+
+      - name: Code quality - Black (format check)
+        run: |
+          black --version
+          black --check python_app
+
+      - name: Code quality - Pylint (project code only)
+        run: |
+          pylint --version
+          pylint -j 2 python_app
+        continue-on-error: false  # Blocking: lint must pass
+
+      - name: Code quality - Mypy (project code only)
+        run: |
+          mypy --version
+          mypy python_app
+        continue-on-error: false  # Blocking: type check must pass
+
+      - name: Python unit tests
+        run: |
+          pytest tests/python/unit/ -v --tb=short -m unit
+
+      - name: Python integration tests
+        run: |
+          pytest tests/python/integration/ -v --tb=short -m integration
+
+      - name: Python functional tests
+        run: |
+          pytest tests/python/functional/ -v --tb=short -m functional
+        continue-on-error: false  # Blocking: FT must pass
+
       - name: Python proxy server smoke test
         run: |
           # Test 1: Verify imports work
@@ -288,37 +320,7 @@ jobs:
             echo "⚠️ Skipping proxy server runtime tests (GeneWeb binaries or test database not available)"
           fi
           echo "✅ Python proxy server smoke test complete"
-        continue-on-error: true  # Non-blocking for now (infrastructure test)
-
-      - name: Python unit tests
-        run: |
-          pytest tests/python/unit/ -v --tb=short -m unit
-
-      - name: Python integration tests
-        run: |
-          pytest tests/python/integration/ -v --tb=short -m integration
-
-      - name: Code quality - Black (format check)
-        run: |
-          black --version
-          black --check .
-
-      - name: Code quality - Pylint
-        run: |
-          pylint --version
-          pylint -j 2 python_app tests/python
-        continue-on-error: false  # Blocking: lint must pass
-
-      - name: Code quality - Mypy
-        run: |
-          mypy --version
-          mypy python_app
-        continue-on-error: false  # Blocking: type check must pass
-
-      - name: Python functional tests
-        run: |
-          pytest tests/python/functional/ -v --tb=short -m functional
-        continue-on-error: false  # Blocking: FT must pass
+        continue-on-error: true  # Non-blocking
 
       - name: Python coverage report
         if: always()
