@@ -311,8 +311,13 @@ jobs:
       - name: Micro-benchmark (performance regression check)
         run: |
           if [ -f "GeneWeb/gw/gwd" ] && [ -d "GeneWeb/bases/test.gwb" ]; then
-            echo "Running micro-benchmarks (reduced iters for CI)..."
-            BENCH_ITERS=5 BENCH_REGRESSION_THRESHOLD=50.0 OCAML_GWD_PORT=23179 FLASK_PORT=23182 \
+            echo "Running micro-benchmarks (short CI config)..."
+            # Shorter run to avoid timeouts on shared runners
+            BENCH_ITERS=3 \
+            BENCH_TIMEOUT=1.5 \
+            BENCH_REGRESSION_THRESHOLD=50.0 \
+            OCAML_GWD_PORT=23179 \
+            FLASK_PORT=23182 \
               python -m python_app.benchmarks.benchmark_runner
             echo "✅ Benchmarks passed (no regression detected)"
           else
