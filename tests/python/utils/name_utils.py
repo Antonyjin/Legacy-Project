@@ -115,6 +115,48 @@ def name_lower(name: str) -> str:
     return output.strip()
 
 
+def name_strip(name: str) -> str:
+    """
+    Remove all spaces from a name.
+    
+    This function replicates the OCaml Name.strip behavior which removes
+    all space characters from the input string.
+    
+    OCaml Reference: source_geneweb/lib/util/name.ml:138
+    
+    Implementation:
+    The OCaml version uses:
+        let strip s = strip_c s ' '
+    where strip_c removes all occurrences of a specific character.
+    
+    Args:
+        name: The name to process
+    
+    Returns:
+        Name with all spaces removed
+    
+    Examples:
+        >>> name_strip("Jean François")
+        'JeanFrançois'
+        >>> name_strip("DE LA CRUZ")
+        'DELACRUZ'
+        >>> name_strip("O'Brien Smith")
+        "O'BrienSmith"
+        >>> name_strip("  Multiple   Spaces  ")
+        'MultipleSpaces'
+        >>> name_strip("")
+        ''
+        >>> name_strip("NoSpaces")
+        'NoSpaces'
+    
+    Notes:
+        - This function only removes spaces, not other whitespace (tabs, newlines)
+        - Unlike name_lower, this preserves case and special characters
+        - Used in GeneWeb name processing pipeline
+    """
+    return name.replace(' ', '')
+
+
 def strip_lower(name: str) -> str:
     """
     Equivalent to strip(lower(name)) - used for first comparison of names.

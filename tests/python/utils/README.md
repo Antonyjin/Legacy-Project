@@ -56,6 +56,50 @@ name_lower("Владимир")            # 'vladimir' (Cyrillic)
 name_lower("Αλέξανδρος")          # 'alexandros' (Greek)
 ```
 
+##### `name_strip(name: str) -> str`
+
+Remove all space characters from a name.
+
+Replicates OCaml `Name.strip` behavior which removes all space characters.
+
+**Issue**: MIG-002 - Migrate name_strip function
+
+**OCaml Reference**: `source_geneweb/lib/util/name.ml:138`
+
+**Parameters**:
+
+- `name`: The name to process
+
+**Returns**: Name with all spaces removed
+
+**Examples**:
+
+```python
+from utils.name_utils import name_strip
+
+# Basic space removal
+name_strip("Jean François")      # 'JeanFrançois'
+name_strip("DE LA CRUZ")         # 'DELACRUZ'
+
+# Compound names
+name_strip("Van Der Berg")       # 'VanDerBerg'
+name_strip("Da Silva")           # 'DaSilva'
+
+# Multiple spaces
+name_strip("  Multiple   Spaces  ")  # 'MultipleSpaces'
+
+# Special cases
+name_strip("")                   # ''
+name_strip("NoSpaces")           # 'NoSpaces'
+name_strip("   ")                # ''
+```
+
+**Notes**:
+
+- Only removes space characters (not tabs, newlines, etc.)
+- Preserves case and all other characters (unlike `name_lower`)
+- Used in GeneWeb name processing pipeline
+
 ##### `strip_lower(name: str) -> str`
 
 Equivalent to `strip(lower(name))` - removes all spaces after normalization.
@@ -203,23 +247,25 @@ All utility modules have comprehensive unit tests:
 
 ```bash
 # Test name utilities
-pytest tests/python/unit/test_name_processing.py -v
+pytest tests/python/unit/test_name_processing.py -v     # name_lower
+pytest tests/python/unit/test_name_strip.py -v          # name_strip
 
 # Test number formatter
 pytest tests/python/unit/test_number_formatting.py -v
 
 # Test all utils
-pytest tests/python/unit/test_name_processing.py tests/python/unit/test_number_formatting.py -v
+pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py -v
 
 # Run with coverage
-pytest tests/python/unit/test_name_processing.py tests/python/unit/test_number_formatting.py --cov=tests/python/utils --cov-report=html
+pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py --cov=tests/python/utils --cov-report=html
 ```
 
 **Test Coverage**:
 
-- 59 unit tests for `name_utils.py`
+- 59 unit tests for `name_utils.py` (name_lower)
+- 40 unit tests for `name_utils.py` (name_strip)
 - 52 unit tests for `number_formatter.py`
-- **Total: 111 utility tests**
+- **Total: 151 utility tests**
 
 ## Usage in Tests
 
