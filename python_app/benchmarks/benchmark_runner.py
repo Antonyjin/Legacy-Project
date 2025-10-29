@@ -67,20 +67,53 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
     env["BACKEND"] = backend
     env["FLASK_PORT"] = str(port)
     env["GENEWEB_DIR"] = str(GENEWEB_DIR)
+    env["OCAML_GWD_PORT"] = str(OCAML_PORT)  # Ensure Python backend knows OCaml port
     cmd = ["python", "-m", "python_app.app"]
-    proc = subprocess.Popen(cmd, cwd=str(PROJECT_ROOT), env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    proc = subprocess.Popen(cmd, cwd=str(PROJECT_ROOT), env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=0)
     # wait
     base_url = f"http://localhost:{port}/health"
-    deadline = time.time() + 6.0
+    deadline = time.time() + 10.0  # Increased timeout for CI
+    last_error = None
     while time.time() < deadline:
+        # Check if process died
+        if proc.poll() is not None:
+            # Process exited, read output
+            output = proc.stdout.read().decode('utf-8', errors='ignore') if proc.stdout else "No output"
+            raise RuntimeError(f"Flask app exited unexpectedly (code {proc.returncode}). Output: {output[:500]}")
         try:
-            r = requests.get(base_url, timeout=0.8)
+            r = requests.get(base_url, timeout=1.0)
             if r.status_code == 200:
                 return proc
-        except requests.RequestException:
-            pass
-        time.sleep(0.2)
-    raise RuntimeError("Flask app did not become ready")
+        except requests.RequestException as e:
+            last_error = str(e)
+        time.sleep(0.3)
+    
+    # Timeout - show error and output
+    output = ""
+    if proc.stdout:
+        try:
+            # Try to read what we can without blocking
+            import select
+            if hasattr(select, 'select') and select.select([proc.stdout], [], [], 0.1)[0]:
+                output = proc.stdout.read(1000).decode('utf-8', errors='ignore')
+        except (ImportError, OSError, AttributeError):
+            # select not available (Windows) or other error - try direct read
+            try:
+                # Non-blocking read attempt
+                import fcntl
+                flags = fcntl.fcntl(proc.stdout, fcntl.F_GETFL)
+                fcntl.fcntl(proc.stdout, fcntl.F_SETFL, flags | os.O_NONBLOCK)
+                output = proc.stdout.read(1000).decode('utf-8', errors='ignore')
+            except (ImportError, OSError):
+                # fcntl not available - try simple read
+                pass
+    
+    error_msg = f"Flask app did not become ready after 10s (endpoint: {base_url})"
+    if last_error:
+        error_msg += f". Last error: {last_error}"
+    if output:
+        error_msg += f". Output: {output}"
+    raise RuntimeError(error_msg)
 
 
 def bench_endpoint(url: str, iterations: int) -> Dict[str, float | List[float]]:
