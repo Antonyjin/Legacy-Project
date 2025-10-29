@@ -45,6 +45,7 @@
 - ✅ Python infrastructure test (pytest must work)
 - ✅ **Unit Tests (UT)** - All must pass
 - ✅ **Integration Tests (IT)** - All must pass
+- ✅ **Micro-benchmarks** - No performance regression >50% (MIG-INF-004)
 - 📊 Coverage tracked but not enforced
 
 ### ⏳ NOT YET BLOCKING (Warnings Only)
