@@ -300,8 +300,8 @@ jobs:
 
       - name: Python functional tests
         run: |
-          pytest tests/python/functional/ -v --tb=short -m functional || true
-        continue-on-error: true  # Allow failures during Week 2-3 implementation
+          pytest tests/python/functional/ -v --tb=short -m functional
+        continue-on-error: false  # Blocking: FT must pass
 
       - name: Python coverage report
         if: always()

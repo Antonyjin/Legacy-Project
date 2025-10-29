@@ -29,7 +29,7 @@
    - **Infrastructure test**: Verify pytest setup (✅ BLOCKS CI)
    - **Unit tests**: Test OCaml functions via HTTP (✅ BLOCKS CI)
    - **Integration tests**: Test component interactions (✅ BLOCKS CI)
-   - **Functional tests**: Test end-to-end workflows (`continue-on-error: true` until complete)
+   - **Functional tests**: Test end-to-end workflows (✅ BLOCKS CI)
    - **Coverage report**: Generate coverage report (target >80%)
 
 4. **Artifacts Upload** (on failure)
@@ -45,17 +45,12 @@
 - ✅ Python infrastructure test (pytest must work)
 - ✅ **Unit Tests (UT)** - All must pass
 - ✅ **Integration Tests (IT)** - All must pass
-- ✅ **Micro-benchmarks** - No performance regression >50% (MIG-INF-004)
+- ✅ **Functional Tests (FT)** - All must pass
 - 📊 Coverage tracked but not enforced
-
-### ⏳ NOT YET BLOCKING (Warnings Only)
-- ⚠️ **Functional Tests (FT)** - Still in development
-- ⚠️ Coverage threshold - Tracked but not enforced
 
 ### Future Milestones
 
 **Next Steps**:
-- ⏳ Functional Tests (FT) enforcement (when implementation complete)
 - ⏳ Coverage >80% enforcement
 - 🚀 Production deployment automation
 
