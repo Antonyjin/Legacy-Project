@@ -28,18 +28,25 @@ tests/python/
 
 ### Prerequisites
 
-1. **Install Python dependencies:**
+1. **Create and activate a virtual environment (recommended):**
+```bash
+python3 -m venv venv
+source venv/bin/activate  # On macOS/Linux
+# On Windows: venv\\Scripts\\activate
+```
+
+2. **Install Python dependencies:**
 ```bash
 pip install -r requirements.txt
 ```
 
-2. **Start GeneWeb daemon:**
+3. **Start GeneWeb daemon:**
 ```bash
 cd GeneWeb
 ./gwd.sh
 ```
 
-3. **Verify test database is accessible:**
+4. **Verify test database is accessible:**
 ```bash
 curl http://localhost:23179/test
 ```
@@ -125,6 +132,11 @@ open tests/python/htmlcov/index.html
 - **Speed:** Slower (<120s total)
 - **Dependencies:** Full system
 - **Coverage:** Navigation, Search, GEDCOM, Privacy, etc.
+
+#### Known Functional Test Behaviors
+- **GEDCOM over HTTP**: Some distributions return `400/404` on `?m=GEDCOM`. Tests will `pytest.skip(...)` and advise using CLI (`gwb2ged`/`ged2gwb`) when HTTP routes are unavailable.
+- **Wizard mode**: Routes like `?m=MOD_IND`/`?m=ADD_IND` require authentication. Tests will skip on `401` to preserve read-only behavior.
+- **Statistics**: Count formatting varies; tests assert presence of numeric data and semantic markers instead of exact strings.
 
 ## 🔧 Determinism
 

@@ -72,6 +72,23 @@ TZ=UTC            # Deterministic timezone
 - OCaml tests: Shell scripts (`run_golden.sh`, `test_gedcom_import.sh`)
 - Python tests: pytest with markers (`-m unit`, `-m integration`, `-m functional`)
 
+### Local vs CI Python Environments
+
+- **Local development**: Always use a virtual environment
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate  # On macOS/Linux
+  # On Windows: venv\\Scripts\\activate
+  pip install -r requirements.txt
+  ```
+- **CI runners**: Already isolated; the workflow installs dependencies into the runner environment directly. No venv creation is required in CI.
+
+### Functional Tests: Known CI Behaviors
+
+- **GEDCOM routes**: Some GeneWeb distributions don't expose GEDCOM export/import via HTTP. Functional tests detect `HTTP 400/404` on `?m=GEDCOM` and `pytest.skip(...)` with a clear message. GEDCOM behavior is validated via CLI in golden/deployment scripts.
+- **Wizard routes**: `?m=MOD_IND` and `?m=ADD_IND` require authentication. Functional tests skip when `HTTP 401` is returned to preserve read-only behavior in CI.
+- **Statistics counts**: The individual count may be formatted differently depending on templates; tests assert presence of numeric data and semantic markers rather than exact strings.
+
 ---
 
 ## 🐛 When CI Fails
