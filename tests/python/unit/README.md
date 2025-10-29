@@ -168,6 +168,16 @@ Tests HTTP parameter parsing, URL decoding, and query string processing.
 - OCaml functions: `Mutil.decode` (mutil.ml:982-1039), `gwd.extract_assoc` (gwd.ml:174-180)
 - Tests: URL decoding (percent encoding, plus-to-space, UTF-8), parameter extraction (sequential, OCaml patterns), query string parsing, real-world patterns (GeneWeb search URLs), special characters, edge cases
 
+### UT-PY-016: Date Validation
+
+**File**: test_date_validation_utils.py | **Status**: ✅ Complete | **Issue**: MIG-005
+
+Tests date validation functions for leap years and days in month.
+
+- 23 test methods across 7 test classes
+- OCaml functions: `Date.leap_year` (date.ml:86), `Date.nb_days_in_month` (date.ml:88-93)
+- Tests: leap years (regular, century, historical), days in month (31/30/28/29 days), February edge cases (leap/non-leap), invalid months (0, 13+, negative), genealogical years (1700-2100), boundary conditions, round-trip validation
+
 ---
 
 ## How Unit Tests Map to OCaml Functions
@@ -239,6 +249,13 @@ Tests HTTP parameter parsing, URL decoding, and query string processing.
 - **Risk**: Person search breaks, name/parameter retrieval fails, UTF-8 encoding errors
 - **Coverage**: URL decoding (percent encoding, plus-to-space conversion), UTF-8 handling, sequential parameter extraction (OCaml extract_assoc pattern), query string parsing, real-world GeneWeb URLs
 
+#### 11. **Date Validation** (leap years, days in month)
+
+- **OCaml Function**: `Date.leap_year` (date.ml:86), `Date.nb_days_in_month` (date.ml:88-93)
+- **Migration Impact**: Python must validate dates identically for compression, input validation, calendar handling
+- **Risk**: Invalid dates accepted, date compression fails, calendar calculations wrong, GEDCOM import errors
+- **Coverage**: Leap year rules (regular, century years), days per month (28/29/30/31), February edge cases (leap/non-leap), invalid months (0 for unknown, 13+), historical dates (1700-2100), boundary conditions
+
 ## OCaml Code Reference
 
 The tests validate behaviors implemented in:
@@ -279,6 +296,8 @@ source_geneweb/
 | `test_basic_conversions`              | `Mutil.arabian_of_roman`   | `lib/util/mutil.ml:346-365`  |
 | `test_basic_decoding`                 | `Mutil.decode`             | `lib/util/mutil.ml:982-1039` |
 | `test_extract_first_param`            | `gwd.extract_assoc`        | `bin/gwd/gwd.ml:174-180`     |
+| `test_regular_leap_year`              | `Date.leap_year`           | `lib/util/date.ml:86`        |
+| `test_31_day_months`                  | `Date.nb_days_in_month`    | `lib/util/date.ml:88-93`     |
 
 ## Running the Tests
 
