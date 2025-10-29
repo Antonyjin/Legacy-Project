@@ -10,6 +10,9 @@ pytest-mock>=3.12.0
 # HTTP testing
 requests>=2.31.0
 
+# Web framework (for Python proxy server)
+flask>=3.0.0
+
 # Coverage reporting
 coverage>=7.0.0
 
