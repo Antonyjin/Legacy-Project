@@ -69,7 +69,15 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
     env["GENEWEB_DIR"] = str(GENEWEB_DIR)
     env["OCAML_GWD_PORT"] = str(OCAML_PORT)  # Ensure Python backend knows OCaml port
     cmd = ["python", "-m", "python_app.app"]
-    proc = subprocess.Popen(cmd, cwd=str(PROJECT_ROOT), env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=0)
+    proc = subprocess.Popen(
+        cmd, 
+        cwd=str(PROJECT_ROOT), 
+        env=env, 
+        stdout=subprocess.PIPE, 
+        stderr=subprocess.STDOUT, 
+        bufsize=0,
+        text=True  # Enable text mode for easier output reading
+    )
     # Wait for Flask to start - give it time to initialize and bind to port
     base_url = f"http://localhost:{port}/health"
     start_time = time.time()
@@ -85,10 +93,24 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
         if proc.poll() is not None:
             # Process exited, read all available output
             try:
-                output = proc.stdout.read().decode('utf-8', errors='ignore') if proc.stdout else "No output"
+                output = proc.stdout.read() if proc.stdout else "No output"
             except Exception:
                 output = "Could not read output"
             raise RuntimeError(f"Flask app exited unexpectedly (code {proc.returncode}). Output: {output[:2000]}")
+        
+        # Try to read any stdout/stderr output (non-blocking) to see what Flask is doing
+        if attempt % 3 == 0:  # Every 3rd attempt, check for output
+            try:
+                import select
+                if hasattr(select, 'select'):
+                    readable, _, _ = select.select([proc.stdout], [], [], 0.1)
+                    if readable:
+                        chunk = proc.stdout.read(500)
+                        if chunk and ("Running on" in chunk or "error" in chunk.lower()):
+                            print(f"   Flask output: {chunk[:200]}")
+            except Exception:
+                pass
+        
         try:
             r = requests.get(base_url, timeout=2.0)  # Increased timeout for each request
             if r.status_code == 200:
