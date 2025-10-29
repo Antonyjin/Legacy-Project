@@ -241,6 +241,133 @@ For convenience, common locale codes are aliased:
 - `pt_BR`, `pt_PT` → `pt`
 - `zh_CN` → `zh`
 
+### `roman_numerals.py`
+
+Implements Roman numeral conversion utilities, replicating the OCaml behavior from GeneWeb.
+
+**Issue**: MIG-003 - Migrate roman_of_arabian function
+
+**OCaml References**:
+
+- `source_geneweb/lib/util/mutil.ml`: `roman_of_arabian` and `arabian_of_roman` (lines 328-365)
+- `source_geneweb/test/util_test.ml`: Roman numeral test cases
+- `source_geneweb/lib/dateDisplay.ml`: Usage in date display (line 129)
+
+#### Functions
+
+##### `roman_of_arabian(n: int) -> str`
+
+Convert an integer to Roman numerals.
+
+**Parameters**:
+
+- `n`: The integer to convert (typically 1-3999 for classical Roman notation)
+
+**Returns**: Roman numeral representation
+
+**Examples**:
+
+```python
+from utils.roman_numerals import roman_of_arabian
+
+# Basic conversions
+roman_of_arabian(1)          # 'I'
+roman_of_arabian(4)          # 'IV'
+roman_of_arabian(9)          # 'IX'
+roman_of_arabian(10)         # 'X'
+
+# OCaml test cases
+roman_of_arabian(39)         # 'XXXIX'
+roman_of_arabian(246)        # 'CCXLVI'
+roman_of_arabian(421)        # 'CDXXI'
+roman_of_arabian(160)        # 'CLX'
+
+# Years (genealogy usage)
+roman_of_arabian(1789)       # 'MDCCLXXXIX'
+roman_of_arabian(1994)       # 'MCMXCIV'
+roman_of_arabian(2024)       # 'MMXXIV'
+
+# Boundary cases
+roman_of_arabian(0)          # ''
+roman_of_arabian(3999)       # 'MMMCMXCIX'
+```
+
+**Algorithm**:
+
+The function uses a "build" helper that converts each digit (0-9) using three symbols:
+
+- 0: ""
+- 1-3: one, one+one, one+one+one
+- 4: one+five (subtractive)
+- 5: five
+- 6-8: five+one, five+one+one, five+one+one+one
+- 9: one+ten (subtractive)
+
+Applied to each position:
+
+- Thousands: M, M, M
+- Hundreds: C, D, M
+- Tens: X, L, C
+- Units: I, V, X
+
+##### `arabian_of_roman(s: str) -> int`
+
+Convert Roman numerals to an integer.
+
+**Parameters**:
+
+- `s`: Roman numeral string (uppercase, e.g., 'XIV', 'MCMXCIV')
+
+**Returns**: Integer value
+
+**Raises**: `ValueError` if the string is not a valid Roman numeral
+
+**Examples**:
+
+```python
+from utils.roman_numerals import arabian_of_roman
+
+# Basic conversions
+arabian_of_roman('I')        # 1
+arabian_of_roman('IV')       # 4
+arabian_of_roman('IX')       # 9
+arabian_of_roman('X')        # 10
+
+# OCaml test cases
+arabian_of_roman('XXXIX')    # 39
+arabian_of_roman('CCXLVI')   # 246
+arabian_of_roman('CDXXI')    # 421
+arabian_of_roman('CLX')      # 160
+
+# Complex numbers
+arabian_of_roman('MCMXCIV')  # 1994
+arabian_of_roman('MMMCMXCIX')  # 3999
+
+# Invalid input
+arabian_of_roman('')         # ValueError
+arabian_of_roman('ABC')      # ValueError
+```
+
+**Notes**:
+
+- Round-trip conversion works perfectly: `arabian_of_roman(roman_of_arabian(n)) == n`
+- Validation ensures the entire string is consumed
+- Used in GeneWeb's GEDCOM import for person IDs
+
+#### Usage in GeneWeb
+
+Roman numerals are used for:
+
+- **Year display**: Years 1-3999 shown in Roman numerals (dateDisplay.ml)
+- **Template rendering**: `{% roman 1994 %}` → `MCMXCIV` (templ.ml)
+- **GEDCOM import**: Person ID parsing (ged2gwb.ml)
+
+**Range check** (from dateDisplay.ml:129):
+
+```ocaml
+if y >= 1 && y < 4000 then Mutil.roman_of_arabian y else string_of_int y
+```
+
 ## Testing
 
 All utility modules have comprehensive unit tests:
@@ -253,11 +380,14 @@ pytest tests/python/unit/test_name_strip.py -v          # name_strip
 # Test number formatter
 pytest tests/python/unit/test_number_formatting.py -v
 
+# Test Roman numerals
+pytest tests/python/unit/test_roman_numerals.py -v
+
 # Test all utils
-pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py -v
+pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py tests/python/unit/test_roman_numerals.py -v
 
 # Run with coverage
-pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py --cov=tests/python/utils --cov-report=html
+pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py tests/python/unit/test_roman_numerals.py --cov=tests/python/utils --cov-report=html
 ```
 
 **Test Coverage**:
@@ -265,7 +395,8 @@ pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_str
 - 59 unit tests for `name_utils.py` (name_lower)
 - 40 unit tests for `name_utils.py` (name_strip)
 - 52 unit tests for `number_formatter.py`
-- **Total: 151 utility tests**
+- 60 unit tests for `roman_numerals.py`
+- **Total: 211 utility tests**
 
 ## Usage in Tests
 
@@ -279,6 +410,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from utils.number_formatter import format_number_with_separator
 from utils.name_utils import name_lower, strip_lower
+from utils.roman_numerals import roman_of_arabian
 
 def test_statistics_count():
     """Test formatting of statistics counts"""
@@ -294,6 +426,13 @@ def test_name_normalization():
     # OCaml-compatible name processing
     assert name_lower("Jean-François") == "jean francois"
     assert strip_lower("O'Brien") == "obrien"
+
+def test_year_display():
+    """Test Roman numeral year display"""
+    # As used in GeneWeb dateDisplay
+    year = 1789
+    if 1 <= year < 4000:
+        assert roman_of_arabian(year) == "MDCCLXXXIX"
 ```## Implementation Notes
 
 ### Name Processing (name_utils.py)
