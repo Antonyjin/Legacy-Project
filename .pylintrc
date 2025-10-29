@@ -1,0 +1,15 @@
+[MASTER]
+ignore=venv,.venv,ENV,env,build,dist
+
+[FORMAT]
+max-line-length=100
+
+[MESSAGES CONTROL]
+disable=C0114,C0115,C0116,R0903,W1203
+
+[REPORTS]
+score=yes
+
+[DESIGN]
+max-args=7
+max-attributes=12

@@ -1,0 +1,5 @@
+[tool.black]
+include = "\.(py)$"exclude = [
+  "/(\.git|\.venv|venv|env|ENV|build|dist|\.mypy_cache|\.pytest_cache)/",
+]line-length = 100
+target-version = ["py311"]

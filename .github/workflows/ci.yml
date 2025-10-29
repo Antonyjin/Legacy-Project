@@ -298,6 +298,23 @@ jobs:
         run: |
           pytest tests/python/integration/ -v --tb=short -m integration
 
+      - name: Code quality - Black (format check)
+        run: |
+          black --version
+          black --check .
+
+      - name: Code quality - Pylint
+        run: |
+          pylint --version
+          pylint -j 2 python_app tests/python
+        continue-on-error: false  # Blocking: lint must pass
+
+      - name: Code quality - Mypy
+        run: |
+          mypy --version
+          mypy python_app
+        continue-on-error: false  # Blocking: type check must pass
+
       - name: Python functional tests
         run: |
           pytest tests/python/functional/ -v --tb=short -m functional
