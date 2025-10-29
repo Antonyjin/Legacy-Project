@@ -530,6 +530,140 @@ w, env = extract_param('w', env)
 lang, env = extract_param('lang', env)
 ```
 
+### `date_validation.py`
+
+Implements date validation utilities from the OCaml Date module.
+
+**Issue**: MIG-005 - Migrate date validation
+
+**OCaml References**:
+
+- `source_geneweb/lib/util/date.ml`: Leap year and days-in-month calculations (lines 86-93)
+- `source_geneweb/lib/util/date.mli`: Function signatures
+
+#### Functions
+
+##### `leap_year(year: int) -> bool`
+
+Check if a year is a leap year (Gregorian calendar).
+
+Implements the standard Gregorian calendar leap year rules:
+
+- Years divisible by 4 are leap years
+- **EXCEPT** years divisible by 100 are NOT leap years
+- **EXCEPT** years divisible by 400 ARE leap years
+
+**Parameters**:
+
+- `year`: The year to check (any integer)
+
+**Returns**: True if the year is a leap year, False otherwise
+
+**Examples**:
+
+```python
+from utils.date_validation import leap_year
+
+# Regular leap years (divisible by 4)
+leap_year(2004)  # True
+leap_year(2020)  # True
+leap_year(2024)  # True
+
+# Non-leap years
+leap_year(2001)  # False
+leap_year(2022)  # False
+leap_year(2023)  # False
+
+# Century years - special rules
+leap_year(1900)  # False (divisible by 100, not 400)
+leap_year(2000)  # True  (divisible by 400)
+leap_year(2100)  # False (divisible by 100, not 400)
+```
+
+**OCaml Reference** (date.ml:86):
+
+```ocaml
+let leap_year a = if a mod 100 = 0 then a / 100 mod 4 = 0 else a mod 4 = 0
+```
+
+##### `nb_days_in_month(month: int, year: int) -> int`
+
+Return the number of days in a given month and year (Gregorian calendar).
+
+Takes leap years into account for February. Returns 0 for invalid months.
+
+**Parameters**:
+
+- `month`: Month number (1-12, where 1 = January)
+- `year`: Year (used for leap year calculation)
+
+**Returns**: Number of days in the month (28-31), or 0 if month is invalid
+
+**Examples**:
+
+```python
+from utils.date_validation import nb_days_in_month
+
+# 31-day months
+nb_days_in_month(1, 2023)   # 31 (January)
+nb_days_in_month(3, 2023)   # 31 (March)
+nb_days_in_month(12, 2023)  # 31 (December)
+
+# 30-day months
+nb_days_in_month(4, 2023)   # 30 (April)
+nb_days_in_month(6, 2023)   # 30 (June)
+
+# February - depends on leap year
+nb_days_in_month(2, 2020)   # 29 (leap year)
+nb_days_in_month(2, 2021)   # 28 (non-leap)
+nb_days_in_month(2, 2000)   # 29 (century leap year)
+nb_days_in_month(2, 1900)   # 28 (century non-leap)
+
+# Invalid months
+nb_days_in_month(0, 2023)   # 0 (month 0 = unknown in GeneWeb)
+nb_days_in_month(13, 2023)  # 0 (invalid month)
+```
+
+**OCaml Reference** (date.ml:88-93):
+
+```ocaml
+let nb_days_in_month m a =
+  if m = 2 && leap_year a then 29
+  else if m >= 1 && m <= 12 then
+    [| 31; 28; 31; 30; 31; 30; 31; 31; 30; 31; 30; 31 |].(m - 1)
+  else 0
+```
+
+#### Usage in GeneWeb
+
+Date validation is used for:
+
+- **Date compression**: Validating dates before compression in `Date.compress` (date.ml:15-32)
+- **Input validation**: Checking user-entered dates in forms
+- **GEDCOM import**: Validating dates during genealogy file imports
+- **Calendar boundaries**: Ensuring dates are within valid ranges
+
+**OCaml Pattern** (date.ml usage):
+
+```ocaml
+(* Check if date is compressible - requires valid day/month/year *)
+let simple =
+  match d.prec with
+  | Sure | About | Maybe | Before | After ->
+      d.day >= 0 && d.month >= 0 && d.year > 0 && d.year < 2500 && d.delta = 0
+  | OrYear _ | YearInt _ -> false
+```
+
+**Python Equivalent**:
+
+```python
+# Validate date before processing
+if is_valid_date(day, month, year) and 0 < year < 2500:
+    # Process valid date
+    max_days = nb_days_in_month(month, year)
+    # ...
+```
+
 ## Testing
 
 All utility modules have comprehensive unit tests:
@@ -548,11 +682,14 @@ pytest tests/python/unit/test_roman_numerals.py -v
 # Test HTTP parameters
 pytest tests/python/unit/test_http_param_utils.py -v
 
+# Test date validation
+pytest tests/python/unit/test_date_validation_utils.py -v
+
 # Test all utils
-pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py tests/python/unit/test_roman_numerals.py tests/python/unit/test_http_param_utils.py -v
+pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py tests/python/unit/test_roman_numerals.py tests/python/unit/test_http_param_utils.py tests/python/unit/test_date_validation_utils.py -v
 
 # Run with coverage
-pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py tests/python/unit/test_roman_numerals.py tests/python/unit/test_http_param_utils.py --cov=tests/python/utils --cov-report=html
+pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py tests/python/unit/test_roman_numerals.py tests/python/unit/test_http_param_utils.py tests/python/unit/test_date_validation_utils.py --cov=tests/python/utils --cov-report=html
 ```
 
 **Test Coverage**:
@@ -562,7 +699,8 @@ pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_str
 - 52 unit tests for `number_formatter.py`
 - 60 unit tests for `roman_numerals.py`
 - 42 unit tests for `http_params.py`
-- **Total: 253 utility tests**
+- 23 unit tests for `date_validation.py`
+- **Total: 276 utility tests**
 
 ## Usage in Tests
 
@@ -578,6 +716,7 @@ from utils.number_formatter import format_number_with_separator
 from utils.name_utils import name_lower, strip_lower
 from utils.roman_numerals import roman_of_arabian
 from utils.http_params import url_decode, extract_param
+from utils.date_validation import leap_year, nb_days_in_month
 
 def test_statistics_count():
     """Test formatting of statistics counts"""
@@ -598,6 +737,26 @@ def test_year_display():
     """Test Roman numeral year display"""
     # As used in GeneWeb dateDisplay
     year = 1789
+    if 1 <= year < 4000:
+        assert roman_of_arabian(year) == "MDCCLXXXIX"
+
+def test_query_parsing():
+    """Test HTTP parameter parsing"""
+    # As used in GeneWeb gwd.ml
+    params = [('p', 'Jean+Fran%C3%A7ois'), ('n', 'MARTIN')]
+    p, params = extract_param('p', params)
+    n, params = extract_param('n', params)
+    assert p == "Jean François"
+    assert n == "MARTIN"
+
+def test_date_validation():
+    """Test date validation"""
+    # As used in GeneWeb date processing
+    assert leap_year(2000) is True  # Century leap year
+    assert leap_year(1900) is False # Century non-leap
+    assert nb_days_in_month(2, 2020) == 29  # Feb in leap year
+    assert nb_days_in_month(2, 2021) == 28  # Feb in non-leap
+```
     if 1 <= year < 4000:
         assert roman_of_arabian(year) == "MDCCLXXXIX"
 
