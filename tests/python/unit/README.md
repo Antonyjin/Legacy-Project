@@ -188,6 +188,17 @@ Tests date comparison functions with precision handling.
 - OCaml functions: `Date.compare_dmy_opt` (date.ml:147), `Date.compare_dmy` (date.ml:199), `Date.compare_date` (date.ml:204)
 - Tests: basic comparisons (year/month/day), unknown values (0 for month/day), precision handling (Sure/About/Maybe/Before/After), strict vs non-strict modes, Dgreg vs Dtext comparisons, NotComparable exception, real OCaml usage patterns (birthDeath.ml, event.ml, checkItem.ml), edge cases (BCE dates, large years, calendar/delta fields), type immutability
 
+### UT-PY-018: Migrated Module Validation
+
+**File**: test_migrated_module.py | **Status**: ✅ Complete | **Issue**: MIG-INF-002 (#226)
+
+Tests that `python_app.migrated` correctly exposes all migrated utility functions from `tests/python/utils/`.
+
+- 24 test methods across 10 test classes
+- Tests: module imports, exports accessibility, function correctness, consistency with original implementations, API stability
+- Coverage: name utilities, string utilities, HTTP utilities, HTML utilities, number formatting, Roman numerals, date validation, date comparison
+- Purpose: Validates that `python_app.migrated` is a reliable interface for accessing migrated functions in the Python proxy server
+
 ---
 
 ## How Unit Tests Map to OCaml Functions
