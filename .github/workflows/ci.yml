@@ -308,6 +308,14 @@ jobs:
         run: |
           pytest tests/python/ --cov=tests/python --cov-report=xml --cov-report=html --cov-report=term || true
 
+      - name: Micro-benchmark (performance regression check)
+        run: |
+          # Temporarily disabled due to Flask startup hangs in CI
+          # Benchmarks can be run manually locally if needed
+          echo "⚠️ Benchmarks temporarily disabled (CI hangs - see Issue #228)"
+          echo "   To run locally: BENCH_ITERS=3 OCAML_GWD_PORT=23179 FLASK_PORT=23182 python -m python_app.benchmarks.benchmark_runner"
+        continue-on-error: true  # Non-blocking
+
       # ==========================================
       # Upload Artifacts
       # ==========================================

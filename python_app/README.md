@@ -6,6 +6,14 @@ GeneWeb Python proxy server with backend toggle (OCaml/Python).
 
 This is the core infrastructure for the migration strategy (MIG-INF-001, Issue #225). It provides a Python Flask server that can toggle between OCaml and Python backend implementations.
 
+## Benchmarks (MIG-INF-004)
+
+Micro-benchmarks comparing OCaml `gwd` vs Python backend are available. See `docs/BENCHMARKS.md` or run:
+
+```bash
+python -m python_app.benchmarks.benchmark_runner
+```
+
 ## Quick Start
 
 ### Installation (Using Virtual Environment)
