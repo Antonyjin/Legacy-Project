@@ -70,9 +70,11 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
     env["OCAML_GWD_PORT"] = str(OCAML_PORT)  # Ensure Python backend knows OCaml port
     cmd = ["python", "-m", "python_app.app"]
     proc = subprocess.Popen(cmd, cwd=str(PROJECT_ROOT), env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=0)
-    # wait
+    # Wait for Flask to start - give it time to initialize and bind to port
     base_url = f"http://localhost:{port}/health"
-    deadline = time.time() + 10.0  # Increased timeout for CI
+    # Initial delay for Flask to start (especially in CI where startup might be slower)
+    time.sleep(2.0)
+    deadline = time.time() + 15.0  # Increased timeout for CI (15s total: 2s initial + 13s retry)
     last_error = None
     while time.time() < deadline:
         # Check if process died
