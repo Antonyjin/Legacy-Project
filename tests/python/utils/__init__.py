@@ -12,6 +12,7 @@ from .date_comparison import (
     Precision, Calendar, Dmy, Dgreg, Dtext, Date,
     compare_dmy, compare_dmy_opt, compare_date, NotComparable
 )
+from .html_utils import escape_html, unescape_html
 
 __all__ = [
     'format_number_with_separator',
@@ -46,4 +47,7 @@ __all__ = [
     'compare_dmy_opt',
     'compare_date',
     'NotComparable',
+    # HTML utilities
+    'escape_html',
+    'unescape_html',
 ]
