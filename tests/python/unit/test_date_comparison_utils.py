@@ -14,8 +14,15 @@ Test Coverage:
 - Real OCaml usage patterns
 """
 
+import sys
+from pathlib import Path
+
+# Add tests directory to path for imports
+test_dir = Path(__file__).parent.parent
+sys.path.insert(0, str(test_dir))
+
 import pytest
-from tests.python.utils.date_comparison import (
+from utils.date_comparison import (
     Dmy, Precision, Calendar, Dgreg, Dtext,
     compare_dmy, compare_dmy_opt, compare_date,
     NotComparable
