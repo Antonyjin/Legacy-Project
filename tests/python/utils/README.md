@@ -368,6 +368,168 @@ Roman numerals are used for:
 if y >= 1 && y < 4000 then Mutil.roman_of_arabian y else string_of_int y
 ```
 
+### `http_params.py`
+
+Implements HTTP query parameter parsing utilities, replicating the OCaml behavior from GeneWeb.
+
+**Issue**: MIG-004 - Migrate HTTP parameter parsing
+
+**OCaml References**:
+
+- `source_geneweb/lib/util/mutil.ml`: `decode` function (lines 982-1039)
+- `source_geneweb/bin/gwd/gwd.ml`: `extract_assoc` function (lines 174-180)
+
+#### Functions
+
+##### `url_decode(s: str, strip_spaces: bool = True) -> str`
+
+Decode URL-encoded string with percent encoding and plus-to-space conversion.
+
+**Parameters**:
+
+- `s`: The URL-encoded string to decode
+- `strip_spaces`: If True, strip leading/trailing spaces (default: True)
+
+**Returns**: Decoded string
+
+**Examples**:
+
+```python
+from utils.http_params import url_decode
+
+# Basic decoding
+url_decode("Hello+World")          # 'Hello World'
+url_decode("hello%20world")        # 'hello world'
+
+# UTF-8 characters
+url_decode("Jean-Fran%C3%A7ois")   # 'Jean-François'
+url_decode("M%C3%BCller")          # 'Müller'
+
+# Special characters
+url_decode("O%27Brien")            # "O'Brien"
+url_decode("100%25")               # "100%"
+
+# Space stripping (default)
+url_decode("%20test%20")           # 'test'
+url_decode("%20test%20", strip_spaces=False)  # ' test '
+```
+
+**Notes**:
+
+- Uses Python's `urllib.parse.unquote_plus` internally
+- Matches OCaml `Mutil.decode` behavior exactly
+- `strip_spaces=True` replicates OCaml's `strip_heading_and_trailing_spaces`
+
+##### `extract_param(key: str, params: List[Tuple[str, str]]) -> Tuple[str, List[Tuple[str, str]]]`
+
+Extract a parameter from a list of key-value pairs.
+
+**Parameters**:
+
+- `key`: The parameter name to search for
+- `params`: List of (key, value) tuples
+
+**Returns**: Tuple of (decoded_value, remaining_params)
+
+**Examples**:
+
+```python
+from utils.http_params import extract_param
+
+# Basic extraction
+params = [('p', 'jean'), ('n', 'martin'), ('oc', '0')]
+value, remaining = extract_param('p', params)
+# value = 'jean'
+# remaining = [('n', 'martin'), ('oc', '0')]
+
+# With URL encoding
+params = [('name', 'Jean+Fran%C3%A7ois')]
+value, remaining = extract_param('name', params)
+# value = 'Jean François'
+
+# Sequential extraction (OCaml pattern)
+params = [('b', 'test'), ('lang', 'fr')]
+b, params = extract_param('b', params)
+lang, params = extract_param('lang', params)
+# b = 'test', lang = 'fr', params = []
+```
+
+**Notes**:
+
+- Replicates OCaml `gwd.extract_assoc` behavior
+- Returns decoded value (calls `url_decode` internally)
+- Only first occurrence extracted (if duplicates exist)
+- Returns ("", original_list) if key not found
+
+##### `parse_query_string(query: str) -> List[Tuple[str, str]]`
+
+Parse a query string into a list of (key, value) tuples.
+
+**Parameters**:
+
+- `query`: Query string (e.g., "p=jean&n=martin&oc=0")
+
+**Returns**: List of (key, value) tuples
+
+**Examples**:
+
+```python
+from utils.http_params import parse_query_string
+
+# Simple query
+parse_query_string("p=jean&n=martin&oc=0")
+# [('p', 'jean'), ('n', 'martin'), ('oc', '0')]
+
+# With encoding (values not decoded yet)
+parse_query_string("name=John+Doe&age=30")
+# [('name', 'John+Doe'), ('age', '30')]
+```
+
+##### `extract_all_params(params: List[Tuple[str, str]]) -> dict`
+
+Extract all parameters into a dictionary with decoded values.
+
+**Parameters**:
+
+- `params`: List of (key, value) tuples
+
+**Returns**: Dictionary mapping keys to decoded values
+
+**Examples**:
+
+```python
+from utils.http_params import extract_all_params
+
+params = [('p', 'jean'), ('n', 'martin'), ('oc', '0')]
+result = extract_all_params(params)
+# {'p': 'jean', 'n': 'martin', 'oc': '0'}
+```
+
+#### Usage in GeneWeb
+
+HTTP parameter parsing is used for:
+
+- **Person lookup**: `?p=firstname&n=surname&oc=occurrence` (gwd.ml)
+- **Base selection**: `let x, env = extract_assoc "b" env in` (gwd.ml:1204)
+- **Language selection**: `let lang, env = extract_assoc "lang" env in` (gwd.ml:1233)
+- **All query parameter handling** throughout the application
+
+**OCaml Pattern** (from gwd.ml):
+
+```ocaml
+let b, env = extract_assoc "b" env in
+let w, env = extract_assoc "w" env in
+let lang, env = extract_assoc "lang" env in
+```
+
+**Python Equivalent**:
+
+```python
+b, env = extract_param('b', env)
+w, env = extract_param('w', env)
+lang, env = extract_param('lang', env)
+```
+
 ## Testing
 
 All utility modules have comprehensive unit tests:
@@ -383,11 +545,14 @@ pytest tests/python/unit/test_number_formatting.py -v
 # Test Roman numerals
 pytest tests/python/unit/test_roman_numerals.py -v
 
+# Test HTTP parameters
+pytest tests/python/unit/test_http_param_utils.py -v
+
 # Test all utils
-pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py tests/python/unit/test_roman_numerals.py -v
+pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py tests/python/unit/test_roman_numerals.py tests/python/unit/test_http_param_utils.py -v
 
 # Run with coverage
-pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py tests/python/unit/test_roman_numerals.py --cov=tests/python/utils --cov-report=html
+pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_strip.py tests/python/unit/test_number_formatting.py tests/python/unit/test_roman_numerals.py tests/python/unit/test_http_param_utils.py --cov=tests/python/utils --cov-report=html
 ```
 
 **Test Coverage**:
@@ -396,7 +561,8 @@ pytest tests/python/unit/test_name_processing.py tests/python/unit/test_name_str
 - 40 unit tests for `name_utils.py` (name_strip)
 - 52 unit tests for `number_formatter.py`
 - 60 unit tests for `roman_numerals.py`
-- **Total: 211 utility tests**
+- 42 unit tests for `http_params.py`
+- **Total: 253 utility tests**
 
 ## Usage in Tests
 
@@ -411,6 +577,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from utils.number_formatter import format_number_with_separator
 from utils.name_utils import name_lower, strip_lower
 from utils.roman_numerals import roman_of_arabian
+from utils.http_params import url_decode, extract_param
 
 def test_statistics_count():
     """Test formatting of statistics counts"""
@@ -433,6 +600,15 @@ def test_year_display():
     year = 1789
     if 1 <= year < 4000:
         assert roman_of_arabian(year) == "MDCCLXXXIX"
+
+def test_query_parsing():
+    """Test HTTP parameter parsing"""
+    # As used in GeneWeb gwd.ml
+    params = [('p', 'Jean+Fran%C3%A7ois'), ('n', 'MARTIN')]
+    p, params = extract_param('p', params)
+    n, params = extract_param('n', params)
+    assert p == "Jean François"
+    assert n == "MARTIN"
 ```## Implementation Notes
 
 ### Name Processing (name_utils.py)

@@ -158,6 +158,16 @@ Tests conversion between integers and Roman numerals.
 - OCaml functions: `Mutil.roman_of_arabian`, `Mutil.arabian_of_roman` (mutil.ml:328-365)
 - Tests: basic conversions (1-10), subtractive notation (IV, IX, XL, XC, CD, CM), OCaml test cases (39, 246, 421, 160), genealogy years (1000-2024), boundary conditions (1-3999), round-trip conversion
 
+### UT-PY-015: HTTP Parameter Parsing
+
+**File**: test_http_param_utils.py | **Status**: ✅ Complete | **Issue**: MIG-004
+
+Tests HTTP parameter parsing, URL decoding, and query string processing.
+
+- 42 test methods across 9 test classes
+- OCaml functions: `Mutil.decode` (mutil.ml:982-1039), `gwd.extract_assoc` (gwd.ml:174-180)
+- Tests: URL decoding (percent encoding, plus-to-space, UTF-8), parameter extraction (sequential, OCaml patterns), query string parsing, real-world patterns (GeneWeb search URLs), special characters, edge cases
+
 ---
 
 ## How Unit Tests Map to OCaml Functions
@@ -222,6 +232,13 @@ Tests conversion between integers and Roman numerals.
 - **Risk**: Wrong year display in genealogy views, GEDCOM import/export failures
 - **Coverage**: Basic conversions (1-10), subtractive notation, OCaml test cases, genealogy years, boundary (1-3999), round-trip validation
 
+#### 10. **HTTP Parameter Parsing** (`p=Jean+Fran%C3%A7ois&n=MARTIN`)
+
+- **OCaml Function**: `Mutil.decode` (mutil.ml:982-1039), `gwd.extract_assoc` (gwd.ml:174-180)
+- **Migration Impact**: Python must parse HTTP query strings and decode URL-encoded parameters identically
+- **Risk**: Person search breaks, name/parameter retrieval fails, UTF-8 encoding errors
+- **Coverage**: URL decoding (percent encoding, plus-to-space conversion), UTF-8 handling, sequential parameter extraction (OCaml extract_assoc pattern), query string parsing, real-world GeneWeb URLs
+
 ## OCaml Code Reference
 
 The tests validate behaviors implemented in:
@@ -244,22 +261,24 @@ source_geneweb/
 
 ### Key OCaml Functions Tested (Indirectly)
 
-| Test                                  | OCaml Function             | File                        |
-| ------------------------------------- | -------------------------- | --------------------------- |
-| `test_parse_person_params`            | `extract_assoc`            | `gwd.ml:140-147`            |
-| `test_url_encoded_space`              | `Mutil.decode`             | `util.ml:150`               |
-| `test_lowercase_search`               | `Name.lower`               | `name.ml:80`                |
-| `test_compressible_date_works`        | `Date.compress`            | `lib/util/date.ml:15-32`    |
-| `test_year_boundary_2500`             | `Date.compress`            | `lib/util/date.ml:19`       |
-| `test_lang_fr`                        | `Util.p_getenv`            | `util.ml:200`               |
-| `test_hyphenated_surname`             | `Name.strip`               | `name.ml:120`               |
-| `test_format_one_thousand_english`    | `Mutil.string_of_int_sep`  | `lib/util/mutil.ml:576-599` |
-| `test_french_space_separator`         | `format_with_thousand_sep` | `lib/allnDisplay.ml:21-22`  |
-| `test_french_accents`                 | `Name.lower`               | `lib/util/name.ml:36-51`    |
-| `test_strip_lower_with_special_chars` | `Name.strip_lower`         | `lib/util/name.mli`         |
-| `test_simple_space`                   | `Name.strip`               | `lib/util/name.ml:138`      |
-| `test_39`                             | `Mutil.roman_of_arabian`   | `lib/util/mutil.ml:328-346` |
-| `test_basic_conversions`              | `Mutil.arabian_of_roman`   | `lib/util/mutil.ml:346-365` |
+| Test                                  | OCaml Function             | File                         |
+| ------------------------------------- | -------------------------- | ---------------------------- |
+| `test_parse_person_params`            | `extract_assoc`            | `gwd.ml:140-147`             |
+| `test_url_encoded_space`              | `Mutil.decode`             | `util.ml:150`                |
+| `test_lowercase_search`               | `Name.lower`               | `name.ml:80`                 |
+| `test_compressible_date_works`        | `Date.compress`            | `lib/util/date.ml:15-32`     |
+| `test_year_boundary_2500`             | `Date.compress`            | `lib/util/date.ml:19`        |
+| `test_lang_fr`                        | `Util.p_getenv`            | `util.ml:200`                |
+| `test_hyphenated_surname`             | `Name.strip`               | `name.ml:120`                |
+| `test_format_one_thousand_english`    | `Mutil.string_of_int_sep`  | `lib/util/mutil.ml:576-599`  |
+| `test_french_space_separator`         | `format_with_thousand_sep` | `lib/allnDisplay.ml:21-22`   |
+| `test_french_accents`                 | `Name.lower`               | `lib/util/name.ml:36-51`     |
+| `test_strip_lower_with_special_chars` | `Name.strip_lower`         | `lib/util/name.mli`          |
+| `test_simple_space`                   | `Name.strip`               | `lib/util/name.ml:138`       |
+| `test_39`                             | `Mutil.roman_of_arabian`   | `lib/util/mutil.ml:328-346`  |
+| `test_basic_conversions`              | `Mutil.arabian_of_roman`   | `lib/util/mutil.ml:346-365`  |
+| `test_basic_decoding`                 | `Mutil.decode`             | `lib/util/mutil.ml:982-1039` |
+| `test_extract_first_param`            | `gwd.extract_assoc`        | `bin/gwd/gwd.ml:174-180`     |
 
 ## Running the Tests
 
