@@ -178,6 +178,16 @@ Tests date validation functions for leap years and days in month.
 - OCaml functions: `Date.leap_year` (date.ml:86), `Date.nb_days_in_month` (date.ml:88-93)
 - Tests: leap years (regular, century, historical), days in month (31/30/28/29 days), February edge cases (leap/non-leap), invalid months (0, 13+, negative), genealogical years (1700-2100), boundary conditions, round-trip validation
 
+### UT-PY-017: Date Comparison
+
+**File**: test_date_comparison_utils.py | **Status**: ✅ Complete | **Issue**: MIG-006
+
+Tests date comparison functions with precision handling.
+
+- 36 test methods across 10 test classes
+- OCaml functions: `Date.compare_dmy_opt` (date.ml:147), `Date.compare_dmy` (date.ml:199), `Date.compare_date` (date.ml:204)
+- Tests: basic comparisons (year/month/day), unknown values (0 for month/day), precision handling (Sure/About/Maybe/Before/After), strict vs non-strict modes, Dgreg vs Dtext comparisons, NotComparable exception, real OCaml usage patterns (birthDeath.ml, event.ml, checkItem.ml), edge cases (BCE dates, large years, calendar/delta fields), type immutability
+
 ---
 
 ## How Unit Tests Map to OCaml Functions
@@ -298,6 +308,11 @@ source_geneweb/
 | `test_extract_first_param`            | `gwd.extract_assoc`        | `bin/gwd/gwd.ml:174-180`     |
 | `test_regular_leap_year`              | `Date.leap_year`           | `lib/util/date.ml:86`        |
 | `test_31_day_months`                  | `Date.nb_days_in_month`    | `lib/util/date.ml:88-93`     |
+| `test_equal_dates`                    | `Date.compare_dmy`         | `lib/util/date.ml:199`       |
+| `test_unknown_month_one_side_after`   | `compare_month_or_day`     | `lib/util/date.ml:152`       |
+| `test_sure_about_maybe_equal`         | `compare_prec`             | `lib/util/date.ml:178`       |
+| `test_strict_mode_after_invalidates`  | `eval_strict`              | `lib/util/date.ml:191`       |
+| `test_dgreg_vs_dtext_strict_raises`   | `Date.compare_date`        | `lib/util/date.ml:204`       |
 
 ## Running the Tests
 

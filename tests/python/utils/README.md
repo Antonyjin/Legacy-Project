@@ -768,7 +768,204 @@ def test_query_parsing():
     n, params = extract_param('n', params)
     assert p == "Jean François"
     assert n == "MARTIN"
-```## Implementation Notes
+```
+
+### `date_comparison.py`
+
+Implements date comparison functions with precision handling, replicating the OCaml Date module from GeneWeb.
+
+**Issue**: MIG-006 - Migrate date comparison functions
+
+**OCaml References**:
+- `source_geneweb/lib/util/date.ml`: `compare_dmy_opt`, `compare_dmy`, `compare_date` (lines 147-210)
+- `source_geneweb/lib/util/date.mli`: Public API signatures
+- `source_geneweb/lib/def/adef.ml`: Type definitions (dmy, date, precision, calendar)
+
+#### Types
+
+##### `Precision` (Enum)
+
+Date precision levels:
+- `SURE`: Exact date known
+- `ABOUT`: Approximate date (~)
+- `MAYBE`: Uncertain date (?)
+- `BEFORE`: Date is before the value (<)
+- `AFTER`: Date is after the value (>)
+
+**Note**: `OrYear` and `YearInt` (complex year ranges) are **not migrated** (rarely used, high complexity).
+
+##### `Calendar` (Enum)
+
+Calendar types:
+- `GREGORIAN`: Gregorian calendar (default)
+- `JULIAN`: Julian calendar
+- `FRENCH`: French Republican calendar
+- `HEBREW`: Hebrew calendar
+
+##### `Dmy` (frozen dataclass)
+
+Date structure with day, month, year components.
+
+**Fields**:
+- `day: int` - Day of month (0 = unknown)
+- `month: int` - Month (0 = unknown, 1-12)
+- `year: int` - Year (negative for BCE)
+- `prec: Precision` - Precision level
+- `delta: int` - Delta value (for year ranges)
+
+**Example**:
+```python
+from utils.date_comparison import Dmy, Precision
+
+# June 15, 1990 (exact)
+d1 = Dmy(day=15, month=6, year=1990, prec=Precision.SURE, delta=0)
+
+# Unknown day in 1990 (before)
+d2 = Dmy(day=0, month=0, year=1990, prec=Precision.BEFORE, delta=0)
+```
+
+##### `Dgreg` (frozen dataclass)
+
+Gregorian date with calendar type.
+
+**Fields**:
+- `dmy: Dmy` - Date structure
+- `calendar: Calendar` - Calendar type
+
+##### `Dtext` (frozen dataclass)
+
+Text-based date (unparsed string).
+
+**Fields**:
+- `text: str` - Date as text (e.g., "circa 1990")
+
+##### `Date` (Union)
+
+Union type: `Date = Union[Dgreg, Dtext]`
+
+#### Functions
+
+##### `compare_dmy_opt(dmy1: Dmy, dmy2: Dmy, strict: bool = False) -> Optional[int]`
+
+Compare two dmy structures, return None if not comparable.
+
+**OCaml**: `date.ml:147` (`compare_dmy_opt`)
+
+**Parameters**:
+- `dmy1`: First date structure
+- `dmy2`: Second date structure
+- `strict`: If True, consider precision (may return None). If False, compare as points on timeline.
+
+**Returns**:
+- `-1` if dmy1 < dmy2
+- `0` if dmy1 == dmy2
+- `1` if dmy1 > dmy2
+- `None` if not comparable (strict mode only)
+
+**Behavior**:
+1. Compare years first
+2. If years equal, compare months (0 = unknown)
+3. If months equal, compare days (0 = unknown)
+4. If all equal, compare precisions
+5. Unknown values (0) handled with precision rules (BEFORE, AFTER)
+6. Strict mode invalidates comparisons when precisions conflict
+
+**Examples**:
+```python
+from utils.date_comparison import Dmy, Precision, compare_dmy_opt
+
+# Basic comparison
+d1 = Dmy(day=15, month=6, year=1990, prec=Precision.SURE, delta=0)
+d2 = Dmy(day=15, month=6, year=2000, prec=Precision.SURE, delta=0)
+compare_dmy_opt(d1, d2)  # -1 (1990 < 2000)
+
+# Unknown month with precision
+d1 = Dmy(day=1, month=0, year=1990, prec=Precision.AFTER, delta=0)
+d2 = Dmy(day=1, month=6, year=1990, prec=Precision.SURE, delta=0)
+compare_dmy_opt(d1, d2)  # 1 (AFTER means later)
+
+# Strict mode invalidates comparison
+d1 = Dmy(day=15, month=6, year=1990, prec=Precision.AFTER, delta=0)
+d2 = Dmy(day=15, month=6, year=2000, prec=Precision.SURE, delta=0)
+compare_dmy_opt(d1, d2, strict=True)  # None (AFTER invalidates <)
+```
+
+##### `compare_dmy(dmy1: Dmy, dmy2: Dmy, strict: bool = False) -> int`
+
+Compare two dmy structures, raise NotComparable if not comparable.
+
+**OCaml**: `date.ml:199` (`compare_dmy`)
+
+**Parameters**: Same as `compare_dmy_opt`
+
+**Returns**: Same as `compare_dmy_opt` (but never None)
+
+**Raises**: `NotComparable` if dates cannot be compared in strict mode
+
+**Example**:
+```python
+from utils.date_comparison import Dmy, Precision, compare_dmy, NotComparable
+
+d1 = Dmy(day=0, month=6, year=1990, prec=Precision.SURE, delta=0)
+d2 = Dmy(day=15, month=6, year=1990, prec=Precision.SURE, delta=0)
+
+try:
+    result = compare_dmy(d1, d2, strict=True)
+except NotComparable as e:
+    print(f"Cannot compare: {e}")
+```
+
+##### `compare_date(d1: Date, d2: Date, strict: bool = False) -> int`
+
+Compare two date structures (Dgreg or Dtext).
+
+**OCaml**: `date.ml:204` (`compare_date`)
+
+**Parameters**:
+- `d1`: First date (Dgreg or Dtext)
+- `d2`: Second date (Dgreg or Dtext)
+- `strict`: If True, Dtext comparisons raise NotComparable
+
+**Returns**: Same as `compare_dmy`
+
+**Raises**: `NotComparable` if strict mode and Dtext involved
+
+**Behavior**:
+- `Dgreg` vs `Dgreg`: Compare using `compare_dmy`
+- `Dgreg` vs `Dtext`: Dgreg > Dtext (non-strict), NotComparable (strict)
+- `Dtext` vs `Dtext`: Equal (non-strict), NotComparable (strict)
+
+**Example**:
+```python
+from utils.date_comparison import Dmy, Dgreg, Dtext, Calendar, Precision, compare_date
+
+dmy = Dmy(day=15, month=6, year=1990, prec=Precision.SURE, delta=0)
+d1 = Dgreg(dmy=dmy, calendar=Calendar.GREGORIAN)
+d2 = Dtext(text="circa 1990")
+
+compare_date(d1, d2, strict=False)  # 1 (Dgreg > Dtext)
+# compare_date(d1, d2, strict=True)  # Raises NotComparable
+```
+
+#### Exception
+
+##### `NotComparable`
+
+Exception raised when dates cannot be compared in strict mode.
+
+**OCaml**: `date.ml:197` (`exception Not_comparable`)
+
+**Example**:
+```python
+from utils.date_comparison import NotComparable, compare_dmy
+
+try:
+    result = compare_dmy(dmy1, dmy2, strict=True)
+except NotComparable as e:
+    print(f"Comparison failed: {e}")
+```
+
+## Implementation Notes
 
 ### Name Processing (name_utils.py)
 
