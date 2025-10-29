@@ -92,6 +92,10 @@ Set via environment variables:
 - `app.py`: Main Flask application
 - `config.py`: Configuration and backend toggle
 - `migrated/`: Imports from `tests/python/utils/` (migrated functions)
+  - **Issue**: MIG-INF-002 (#226)
+  - Exposes all migrated utility functions (name, string, HTTP, HTML, number, roman, date utilities)
+  - Used when `BACKEND=python` to access Python implementations
+  - Validated by `tests/python/unit/test_migrated_module.py` (24 tests)
 - `routes/`: HTTP route handlers
   - `person.py`: Person detail pages
   - `family.py`: Family relationship pages
