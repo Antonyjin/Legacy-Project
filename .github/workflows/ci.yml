@@ -310,20 +310,11 @@ jobs:
 
       - name: Micro-benchmark (performance regression check)
         run: |
-          if [ -f "GeneWeb/gw/gwd" ] && [ -d "GeneWeb/bases/test.gwb" ]; then
-            echo "Running micro-benchmarks (short CI config)..."
-            # Shorter run to avoid timeouts on shared runners
-            BENCH_ITERS=3 \
-            BENCH_TIMEOUT=1.5 \
-            BENCH_REGRESSION_THRESHOLD=50.0 \
-            OCAML_GWD_PORT=23179 \
-            FLASK_PORT=23182 \
-              python -m python_app.benchmarks.benchmark_runner || echo "⚠️ Benchmark check failed (non-blocking)"
-            echo "✅ Benchmarks completed (results logged)"
-          else
-            echo "⚠️ Skipping micro-benchmarks (GeneWeb binaries or test database not available)"
-          fi
-        continue-on-error: true  # Non-blocking: Performance is tracked but not enforced yet
+          # Temporarily disabled due to Flask startup hangs in CI
+          # Benchmarks can be run manually locally if needed
+          echo "⚠️ Benchmarks temporarily disabled (CI hangs - see Issue #228)"
+          echo "   To run locally: BENCH_ITERS=3 OCAML_GWD_PORT=23179 FLASK_PORT=23182 python -m python_app.benchmarks.benchmark_runner"
+        continue-on-error: true  # Non-blocking
 
       # ==========================================
       # Upload Artifacts
