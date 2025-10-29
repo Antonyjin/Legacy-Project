@@ -80,7 +80,16 @@ Integration tests validate **interactions between GeneWeb components**:
    ls GeneWeb/bases/test.gwb/  # Should contain database files
    ```
 
-3. **Python dependencies**:
+3. **Python virtual environment + dependencies** (recommended):
+   ```bash
+   # Create and activate venv
+   python3 -m venv venv
+   source venv/bin/activate  # On macOS/Linux
+   # On Windows: venv\Scripts\activate
+
+   # Install dependencies
+   pip install -r requirements.txt
+   ```
    ```bash
    pip install -r requirements.txt
    ```

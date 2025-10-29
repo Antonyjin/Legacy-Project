@@ -72,6 +72,17 @@ TZ=UTC            # Deterministic timezone
 - OCaml tests: Shell scripts (`run_golden.sh`, `test_gedcom_import.sh`)
 - Python tests: pytest with markers (`-m unit`, `-m integration`, `-m functional`)
 
+### Local vs CI Python Environments
+
+- **Local development**: Always use a virtual environment
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate  # On macOS/Linux
+  # On Windows: venv\\Scripts\\activate
+  pip install -r requirements.txt
+  ```
+- **CI runners**: Already isolated; the workflow installs dependencies into the runner environment directly. No venv creation is required in CI.
+
 ---
 
 ## 🐛 When CI Fails

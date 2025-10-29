@@ -19,7 +19,7 @@ GeneWeb is an open-source genealogy application written in OCaml that:
 ### Prerequisites
 
 - **macOS** or **Linux** (x86_64)
-- **Python 3.11+** (for running tests)
+- **Python 3.11+** (for running tests and Python proxy server)
 - Basic terminal/command-line knowledge
 - A web browser
 
@@ -47,12 +47,19 @@ cd ..
 curl http://localhost:23179/test
 # Should return HTML with "GeneWeb"
 
-# 4. Run Python tests
+# 4. Setup Python virtual environment (recommended)
+python3 -m venv venv
+source venv/bin/activate  # On macOS/Linux
 pip install -r requirements.txt
+
+# 5. Run Python tests
 pytest tests/python/ -v
 
-# 5. Stop gwd when done
+# 6. Stop gwd when done
 pkill -f gwd
+
+# 7. Deactivate venv when done (optional)
+deactivate
 ```
 
 **Access test database:**
@@ -119,13 +126,30 @@ pkill -f gwsetup
 
 #### Prerequisites for Testing
 
+**Create and activate a virtual environment** (recommended):
+
 ```bash
+# Create virtual environment
+python3 -m venv venv
+
+# Activate it
+source venv/bin/activate  # On macOS/Linux
+# On Windows: venv\Scripts\activate
+
 # Install Python dependencies
 pip install -r requirements.txt
 
-# Or manually install:
-pip install pytest pytest-cov requests
+# Verify installation
+pip list | grep -E "(pytest|flask|requests)"
 ```
+
+**Or use the setup script:**
+```bash
+./python_app/setup_venv.sh
+source venv/bin/activate
+```
+
+**Note**: Always activate the virtual environment before running tests or the Python server.
 
 #### Python Tests (Unit + Integration + Functional)
 
@@ -214,6 +238,7 @@ chmod +x ./scripts/golden/run_golden.sh
 #### Test-Specific Documentation
 - **[Unit Test README](tests/python/unit/README.md)** - Python unit testing strategy
 - **[Integration Test README](tests/python/integration/README.md)** - Integration testing guide
+- **[Python Proxy Server](docs/PYTHON_PROXY_SERVER.md)** - Proxy server documentation
 
 ### 🔍 Understanding the Codebase
 
@@ -368,14 +393,41 @@ pytest --version
 - ⚠️ Functional Tests (FT) allow failures during development
 - 📊 Coverage tracked but not yet enforcing threshold
 
+### 🐍 Python Proxy Server (MIG-INF-001)
+
+**New!** Python Flask proxy server with backend toggle (OCaml/Python).
+
+See [python_app/README.md](python_app/README.md) for full documentation.
+
+**Quick start:**
+```bash
+# Setup virtual environment (if not done)
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+# Run server with OCaml backend (default)
+BACKEND=ocaml python -m python_app.app
+
+# Run with Python backend (uses migrated functions)
+BACKEND=python python -m python_app.app
+```
+
+**Access:** http://localhost:2318/test
+
+**Issue:** #225 - [MIG-INF-001] Create Python proxy server with BACKEND toggle
+
+---
+
 ### 🤝 Contributing
 
 1. Create a feature branch: `git checkout -b feature-name`
-2. Make changes and test locally
-3. Run all tests: `pytest tests/python/ -v`
-4. Commit with conventional commits: `feat:`, `fix:`, `docs:`, etc.
-5. Push and create a PR
-6. CI will automatically run all tests
+2. Setup virtual environment: `python3 -m venv venv && source venv/bin/activate`
+3. Install dependencies: `pip install -r requirements.txt`
+4. Make changes and test locally: `pytest tests/python/ -v`
+5. Commit with conventional commits: `feat:`, `fix:`, `docs:`, etc.
+6. Push and create a PR
+7. CI will automatically run all tests
 
 **Branch Protection Rules:**
 - ✅ Unit tests must pass
@@ -435,11 +487,16 @@ pkill -f gwsetup
 
 # IMPORTANT: Start gwd on port 23179 first (see above)
 
-# Install dependencies
+# Setup virtual environment (recommended)
+python3 -m venv venv
+source venv/bin/activate  # On macOS/Linux
 pip install -r requirements.txt
 
 # Run all tests (278 tests)
 pytest tests/python/ -v
+
+# Deactivate venv when done
+# deactivate
 
 # Run by type
 pytest tests/python/unit/ -v              # Unit tests (191)
@@ -490,6 +547,23 @@ ls -la GeneWeb/bases/test.gwb/
 # Check Python installation
 python --version  # Should be 3.11+
 pytest --version
+
+# ==========================================
+# Python Proxy Server (MIG-INF-001)
+# ==========================================
+
+# Setup (one-time)
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+# Run with OCaml backend (default)
+BACKEND=ocaml python -m python_app.app
+
+# Run with Python backend
+BACKEND=python python -m python_app.app
+
+# Access: http://localhost:2318/test
 ```
 
 **Need help?** Start with the [Wiki Home](https://github.com/Antonyjin/Legacy-Project/wiki), check [CI Workflow Guide](docs/CI_WORKFLOW_GUIDE.md), or ask in Issues! 🚀

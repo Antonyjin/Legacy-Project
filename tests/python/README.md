@@ -28,18 +28,25 @@ tests/python/
 
 ### Prerequisites
 
-1. **Install Python dependencies:**
+1. **Create and activate a virtual environment (recommended):**
+```bash
+python3 -m venv venv
+source venv/bin/activate  # On macOS/Linux
+# On Windows: venv\\Scripts\\activate
+```
+
+2. **Install Python dependencies:**
 ```bash
 pip install -r requirements.txt
 ```
 
-2. **Start GeneWeb daemon:**
+3. **Start GeneWeb daemon:**
 ```bash
 cd GeneWeb
 ./gwd.sh
 ```
 
-3. **Verify test database is accessible:**
+4. **Verify test database is accessible:**
 ```bash
 curl http://localhost:23179/test
 ```
