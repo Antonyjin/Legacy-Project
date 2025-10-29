@@ -133,6 +133,11 @@ open tests/python/htmlcov/index.html
 - **Dependencies:** Full system
 - **Coverage:** Navigation, Search, GEDCOM, Privacy, etc.
 
+#### Known Functional Test Behaviors
+- **GEDCOM over HTTP**: Some distributions return `400/404` on `?m=GEDCOM`. Tests will `pytest.skip(...)` and advise using CLI (`gwb2ged`/`ged2gwb`) when HTTP routes are unavailable.
+- **Wizard mode**: Routes like `?m=MOD_IND`/`?m=ADD_IND` require authentication. Tests will skip on `401` to preserve read-only behavior.
+- **Statistics**: Count formatting varies; tests assert presence of numeric data and semantic markers instead of exact strings.
+
 ## 🔧 Determinism
 
 Tests require deterministic environment:
