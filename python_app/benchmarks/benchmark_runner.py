@@ -72,23 +72,36 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
     proc = subprocess.Popen(cmd, cwd=str(PROJECT_ROOT), env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=0)
     # Wait for Flask to start - give it time to initialize and bind to port
     base_url = f"http://localhost:{port}/health"
+    start_time = time.time()
     # Initial delay for Flask to start (especially in CI where startup might be slower)
-    time.sleep(2.0)
-    deadline = time.time() + 15.0  # Increased timeout for CI (15s total: 2s initial + 13s retry)
+    # Flask needs time to: import modules, validate config, create app, bind to port
+    time.sleep(4.0)  # Give Flask more time to complete startup sequence
+    deadline = time.time() + 20.0  # Total timeout: 4s initial + 20s retry = 24s max
     last_error = None
+    attempt = 0
     while time.time() < deadline:
+        attempt += 1
         # Check if process died
         if proc.poll() is not None:
-            # Process exited, read output
-            output = proc.stdout.read().decode('utf-8', errors='ignore') if proc.stdout else "No output"
-            raise RuntimeError(f"Flask app exited unexpectedly (code {proc.returncode}). Output: {output[:500]}")
+            # Process exited, read all available output
+            try:
+                output = proc.stdout.read().decode('utf-8', errors='ignore') if proc.stdout else "No output"
+            except Exception:
+                output = "Could not read output"
+            raise RuntimeError(f"Flask app exited unexpectedly (code {proc.returncode}). Output: {output[:2000]}")
         try:
-            r = requests.get(base_url, timeout=1.0)
+            r = requests.get(base_url, timeout=2.0)  # Increased timeout for each request
             if r.status_code == 200:
+                elapsed = time.time() - start_time
+                print(f"✅ Flask app ready after {elapsed:.1f}s ({attempt} attempts)")
                 return proc
         except requests.RequestException as e:
             last_error = str(e)
-        time.sleep(0.3)
+            # Every 5 attempts, show progress
+            if attempt % 5 == 0:
+                elapsed = time.time() - start_time
+                print(f"⏳ Still waiting for Flask... ({elapsed:.1f}s elapsed, {attempt} attempts)")
+        time.sleep(0.5)  # Increased retry interval
     
     # Timeout - show error and output
     output = ""
@@ -110,11 +123,25 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
                 # fcntl not available - try simple read
                 pass
     
-    error_msg = f"Flask app did not become ready after 10s (endpoint: {base_url})"
+    elapsed = time.time() - start_time  # Calculate actual elapsed time
+    error_msg = f"Flask app did not become ready after {elapsed:.1f}s (endpoint: {base_url}, {attempt} attempts)"
     if last_error:
         error_msg += f". Last error: {last_error}"
+    # Try to read more output for debugging
+    output = ""
+    if proc.stdout:
+        try:
+            # Read what we can without blocking
+            import select
+            if hasattr(select, 'select'):
+                # Check if there's more data available
+                readable, _, _ = select.select([proc.stdout], [], [], 0.5)
+                if readable:
+                    output = proc.stdout.read(3000).decode('utf-8', errors='ignore')
+        except Exception:
+            pass
     if output:
-        error_msg += f". Output: {output}"
+        error_msg += f". Latest output (last 3000 chars): {output}"
     raise RuntimeError(error_msg)
 
 
