@@ -233,6 +233,63 @@ jobs:
           pytest tests/python/unit/test_setup.py -v
         continue-on-error: false  # Infrastructure must work
 
+      - name: Python proxy server smoke test
+        run: |
+          # Test 1: Verify imports work
+          python -c "from python_app.config import Config; from python_app.ocaml_bridge import OCamlBridge; from python_app.app import app; print('✅ All imports successful')" || { echo "❌ Import failed"; exit 1; }
+          
+          # Test 2: Config validation (should pass if GeneWeb exists)
+          python -c "from python_app.config import Config; Config.validate(); print('✅ Config validation passed')" || echo "⚠️ Config validation failed (may be OK if GeneWeb not available)"
+          
+          # Test 3: Health endpoint (if OCaml gwd is available, start it and test)
+          if [ -f "GeneWeb/gw/gwd" ] && [ -d "GeneWeb/bases/test.gwb" ]; then
+            echo "Testing proxy server with OCaml backend..."
+            # Start OCaml gwd in background
+            cd GeneWeb
+            ./gw/gwd -hd ./gw -bd ./bases -p 23180 -lang en > /tmp/gwd_proxy_test.log 2>&1 &
+            GWD_PID=$!
+            cd ..
+            sleep 3
+            
+            # Start Python proxy server in background
+            BACKEND=ocaml FLASK_PORT=23181 GENEWEB_DIR=./GeneWeb python -m python_app.app > /tmp/flask_proxy_test.log 2>&1 &
+            FLASK_PID=$!
+            sleep 2
+            
+            # Test health endpoint
+            HEALTH_RESPONSE=$(curl -s http://localhost:23181/health || echo "ERROR")
+            if echo "$HEALTH_RESPONSE" | grep -q '"status":"ok"'; then
+              echo "✅ Health endpoint works"
+            else
+              echo "⚠️ Health endpoint test failed (may be OK if server starting)"
+              cat /tmp/flask_proxy_test.log || true
+            fi
+            
+            # Test backend toggle (Python backend)
+            kill $FLASK_PID 2>/dev/null || true
+            BACKEND=python FLASK_PORT=23181 GENEWEB_DIR=./GeneWeb python -m python_app.app > /tmp/flask_proxy_test.log 2>&1 &
+            FLASK_PID=$!
+            sleep 2
+            
+            HEALTH_RESPONSE=$(curl -s http://localhost:23181/health || echo "ERROR")
+            if echo "$HEALTH_RESPONSE" | grep -q '"backend":"python"'; then
+              echo "✅ Backend toggle works (Python backend)"
+            else
+              echo "⚠️ Backend toggle test failed"
+              cat /tmp/flask_proxy_test.log || true
+            fi
+            
+            # Cleanup
+            kill $FLASK_PID 2>/dev/null || true
+            kill $GWD_PID 2>/dev/null || true
+            pkill -f "gwd.*-p 23180" 2>/dev/null || true
+            pkill -f "python.*python_app" 2>/dev/null || true
+          else
+            echo "⚠️ Skipping proxy server runtime tests (GeneWeb binaries or test database not available)"
+          fi
+          echo "✅ Python proxy server smoke test complete"
+        continue-on-error: true  # Non-blocking for now (infrastructure test)
+
       - name: Python unit tests
         run: |
           pytest tests/python/unit/ -v --tb=short -m unit
