@@ -2,17 +2,84 @@
 HTTP parameter parsing utilities - Migration from OCaml GeneWeb.
 
 This module replicates the OCaml HTTP parameter handling functions from GeneWeb,
-specifically migrating Mutil.decode and gwd.extract_assoc.
+specifically migrating Mutil.encode, Mutil.decode, and gwd.extract_assoc.
 
 OCaml Reference:
+- source_geneweb/lib/util/mutil.ml: encode function (lines 930-979)
 - source_geneweb/lib/util/mutil.ml: decode function (lines 982-1039)
 - source_geneweb/bin/gwd/gwd.ml: extract_assoc function (lines 174-180)
 
-Issue: MIG-004 - Migrate HTTP parameter parsing
+Issues:
+- MIG-004 - Migrate HTTP parameter parsing (decode, extract_param)
+- MIG-009 - Migrate URL encoding functions (encode)
 """
 
 from typing import List, Tuple
-from urllib.parse import unquote_plus
+from urllib.parse import unquote_plus, quote_plus
+
+
+def url_encode(s: str) -> str:
+    """
+    Encode string for URL/query string (percent encoding + space to plus).
+    
+    This function replicates the OCaml Mutil.encode behavior:
+    - Spaces are converted to '+'
+    - Special characters are percent-encoded (%XX)
+    - Alphanumeric and safe characters remain unchanged
+    
+    OCaml Reference: source_geneweb/lib/util/mutil.ml:930-979
+    
+    Algorithm (from OCaml):
+    1. Check if encoding is needed (contains spaces or special chars)
+    2. If not needed, return original string
+    3. Otherwise:
+       - Space → '+'
+       - Special chars → '%XX' (hex encoding)
+       - Safe chars → unchanged
+    
+    Special characters that get encoded:
+        Control chars (0x00-0x1F, 0x7F-0xFF)
+        < > " # % { } | \\ ^ ~ [ ] ` ; / ? : @ = & +
+    
+    Args:
+        s: The string to encode
+    
+    Returns:
+        URL-encoded string
+    
+    Examples:
+        >>> url_encode("Hello World")
+        'Hello+World'
+        >>> url_encode("Jean-François")
+        'Jean-Fran%C3%A7ois'
+        >>> url_encode("O'Brien")
+        "O%27Brien"
+        >>> url_encode("price = $100")
+        'price+%3D+%24100'
+        >>> url_encode("normal")
+        'normal'
+        >>> url_encode("")
+        ''
+    
+    Notes:
+        - Python's urllib.parse.quote_plus handles both % and + encoding
+        - The OCaml version manually processes each character
+        - Both produce identical results for most cases
+        - Returns original string if no encoding needed
+    
+    Usage in GeneWeb:
+        - Used to encode parameter values in query strings
+        - Used when building URLs with user input
+        - Used in form data encoding
+    """
+    if not s:
+        return ""
+    
+    # Python's quote_plus does the same as OCaml's encode:
+    # - Encodes spaces as '+'
+    # - Percent-encodes special characters
+    # - Leaves alphanumeric and safe characters unchanged
+    return quote_plus(s, safe='', encoding='utf-8')
 
 
 def url_decode(s: str, strip_spaces: bool = True) -> str:

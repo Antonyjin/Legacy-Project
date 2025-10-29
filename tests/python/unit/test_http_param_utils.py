@@ -1,25 +1,30 @@
 #!/usr/bin/env python3
 """
-Unit tests for HTTP parameter parsing (MIG-004)
+Unit tests for HTTP parameter parsing (MIG-004, MIG-009)
 
 Test File: UT-PY-015
-Issue: MIG-004 - Migrate HTTP parameter parsing
+Issues:
+  - MIG-004 - Migrate HTTP parameter parsing
+  - MIG-009 - Migrate URL encoding functions
 OCaml Reference: 
+  - source_geneweb/lib/util/mutil.ml:930-979 (encode function)
   - source_geneweb/lib/util/mutil.ml:982-1039 (decode function)
   - source_geneweb/bin/gwd/gwd.ml:174-180 (extract_assoc function)
 
 Purpose:
     Validate the Python implementation of OCaml HTTP parameter parsing functions:
+    - Mutil.encode: URL encoding with percent encoding and space-to-plus
     - Mutil.decode: URL decoding with percent encoding and plus-to-space
     - gwd.extract_assoc: Parameter extraction from key-value list
 
 Coverage:
-    - URL decoding (percent encoding)
-    - Plus to space conversion
+    - URL encoding (percent encoding, space to plus)
+    - URL decoding (percent encoding, plus to space)
     - Special characters
     - UTF-8 encoding
     - Parameter extraction
     - Edge cases (empty, missing, duplicates)
+    - Roundtrip (encode then decode)
 
 Author: Python Migration Team
 Date: 2025-10-29
@@ -34,7 +39,81 @@ test_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(test_dir))
 
 import pytest
-from utils.http_params import url_decode, extract_param, parse_query_string, extract_all_params
+from utils.http_params import url_encode, url_decode, extract_param, parse_query_string, extract_all_params
+
+
+class TestURLEncoding:
+    """Test URL encoding (percent encoding + space to plus)."""
+
+    def test_no_encoding_needed(self):
+        """Simple alphanumeric strings unchanged."""
+        assert url_encode("hello") == "hello"
+        assert url_encode("HelloWorld") == "HelloWorld"
+        assert url_encode("test123") == "test123"
+
+    def test_space_to_plus(self):
+        """Spaces converted to plus signs."""
+        assert url_encode("Hello World") == "Hello+World"
+        assert url_encode("Jean François") == "Jean+Fran%C3%A7ois"
+        assert url_encode("multiple  spaces") == "multiple++spaces"
+
+    def test_special_characters(self):
+        """Special characters percent-encoded."""
+        assert url_encode("O'Brien") == "O%27Brien"
+        assert url_encode("price = $100") == "price+%3D+%24100"
+        assert url_encode("a&b") == "a%26b"
+        assert url_encode("a#b") == "a%23b"
+        assert url_encode("a@b") == "a%40b"
+        assert url_encode("a:b") == "a%3Ab"
+
+    def test_utf8_encoding(self):
+        """UTF-8 characters percent-encoded."""
+        assert url_encode("Jean-François") == "Jean-Fran%C3%A7ois"
+        assert url_encode("é") == "%C3%A9"
+        assert url_encode("à") == "%C3%A0"
+        assert url_encode("Müller") == "M%C3%BCller"
+        assert url_encode("北京") == "%E5%8C%97%E4%BA%AC"
+
+    def test_control_characters(self):
+        """Control characters encoded."""
+        # Newline
+        assert url_encode("line1\nline2") == "line1%0Aline2"
+        # Tab
+        assert url_encode("tab\there") == "tab%09here"
+        # Carriage return
+        assert url_encode("text\r") == "text%0D"
+
+    def test_reserved_characters(self):
+        """Reserved URL characters encoded."""
+        # Query string reserved chars
+        assert url_encode("a?b") == "a%3Fb"  # ?
+        assert url_encode("a/b") == "a%2Fb"  # /
+        assert url_encode("a=b") == "a%3Db"  # =
+        assert url_encode("a&b") == "a%26b"  # &
+        # Path reserved chars
+        assert url_encode("a;b") == "a%3Bb"  # ;
+        # Fragment reserved chars
+        assert url_encode("a#b") == "a%23b"  # #
+
+    def test_empty_string(self):
+        """Empty string returns empty."""
+        assert url_encode("") == ""
+
+    def test_leading_trailing_spaces(self):
+        """Leading/trailing spaces encoded."""
+        assert url_encode("  hello  ") == "++hello++"
+        assert url_encode(" test ") == "+test+"
+
+    def test_multiple_special_chars(self):
+        """Multiple special characters all encoded."""
+        assert url_encode("file://path?query=value#fragment") == "file%3A%2F%2Fpath%3Fquery%3Dvalue%23fragment"
+        assert url_encode("a<b>c\"d'e") == "a%3Cb%3Ec%22d%27e"
+
+    def test_unicode_combinations(self):
+        """Complex Unicode strings encoded."""
+        assert url_encode("Café №1") == "Caf%C3%A9+%E2%84%961"
+        assert url_encode("日本語") == "%E6%97%A5%E6%9C%AC%E8%AA%9E"
+        assert url_encode("Résumé & CV") == "R%C3%A9sum%C3%A9+%26+CV"
 
 
 class TestURLDecoding:
@@ -341,6 +420,66 @@ class TestIntegrationWithOCamlPatterns:
         assert params == []
 
 
+class TestRoundtripEncoding:
+    """Test roundtrip encoding/decoding (encode then decode)."""
+
+    def test_simple_roundtrip(self):
+        """Encode then decode returns original."""
+        original = "Hello World"
+        encoded = url_encode(original)
+        decoded = url_decode(encoded)
+        assert decoded == original
+
+    def test_special_chars_roundtrip(self):
+        """Special characters roundtrip correctly."""
+        test_cases = [
+            "O'Brien",
+            "price = $100",
+            "file#1: name",
+            "a&b=c",
+            "test?query=value"
+        ]
+        for original in test_cases:
+            encoded = url_encode(original)
+            decoded = url_decode(encoded)
+            assert decoded == original, f"Roundtrip failed for: {original}"
+
+    def test_utf8_roundtrip(self):
+        """UTF-8 characters roundtrip correctly."""
+        test_cases = [
+            "Jean-François",
+            "Müller",
+            "北京",
+            "Café №1",
+            "Résumé & CV"
+        ]
+        for original in test_cases:
+            encoded = url_encode(original)
+            decoded = url_decode(encoded)
+            assert decoded == original, f"Roundtrip failed for: {original}"
+
+    def test_empty_string_roundtrip(self):
+        """Empty string roundtrip."""
+        original = ""
+        encoded = url_encode(original)
+        decoded = url_decode(encoded)
+        assert decoded == original
+
+    def test_spaces_roundtrip(self):
+        """Multiple spaces roundtrip correctly."""
+        test_cases = [
+            "  leading",
+            "trailing  ",
+            "  both  ",
+            "multiple  spaces  here"
+        ]
+        for original in test_cases:
+            encoded = url_encode(original)
+            decoded = url_decode(encoded, strip_spaces=False)
+            # Note: decode strips spaces by default, so test with strip_spaces=False
+            assert decoded == original, f"Roundtrip failed for: {original}"
+
+
 class TestRealWorldQueryStrings:
     """Test with real-world GeneWeb query strings."""
 
@@ -364,6 +503,17 @@ class TestRealWorldQueryStrings:
         params = parse_query_string(query)
         result = extract_all_params(params)
         assert result == {'p': 'François', 'n': 'García'}
+
+    def test_encoded_query_construction(self):
+        """Build query string with url_encode."""
+        # Encode parameter values
+        firstname = url_encode("Jean-François")
+        surname = url_encode("O'Brien")
+        query = f"p={firstname}&n={surname}"
+        # Parse and decode
+        params = parse_query_string(query)
+        result = extract_all_params(params)
+        assert result == {'p': 'Jean-François', 'n': "O'Brien"}
 
     def test_complex_query(self):
         """Complex query with multiple parameters."""
