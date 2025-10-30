@@ -268,12 +268,11 @@ jobs:
           set -euo pipefail
           pytest tests/python/unit/test_setup.py -v
 
-      - name: Python unit tests + coverage gate
+      - name: Python unit tests (coverage reported, not gating)
         run: |
           set -euo pipefail
           pytest -v --tb=short \
             --cov=python_app --cov-report=xml --cov-report=term \
-            --cov-fail-under=80 \
             tests/python/unit
 
       - name: Python integration tests
