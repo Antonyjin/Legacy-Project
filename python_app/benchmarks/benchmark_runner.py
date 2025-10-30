@@ -8,6 +8,17 @@ from pathlib import Path
 from statistics import mean, median
 from typing import Dict, List, Tuple
 
+# Optional platform-specific/non-blocking IO helpers
+try:
+    import select  # type: ignore[import]
+except Exception:  # pragma: no cover
+    select = None  # type: ignore[assignment]
+
+try:
+    import fcntl  # type: ignore[import]
+except Exception:  # pragma: no cover
+    fcntl = None  # type: ignore[assignment]
+
 import requests
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -88,27 +99,26 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
         except requests.RequestException as e:
             last_error = str(e)
         time.sleep(0.3)
-    
+
     # Timeout - show error and output
     output = ""
     if proc.stdout:
         try:
             # Try to read what we can without blocking
-            import select
-            if hasattr(select, 'select') and select.select([proc.stdout], [], [], 0.1)[0]:
+            if select and hasattr(select, 'select') and select.select([proc.stdout], [], [], 0.1)[0]:
                 output = proc.stdout.read(1000).decode('utf-8', errors='ignore')
-        except (ImportError, OSError, AttributeError):
+        except (OSError, AttributeError):
             # select not available (Windows) or other error - try direct read
             try:
                 # Non-blocking read attempt
-                import fcntl
-                flags = fcntl.fcntl(proc.stdout, fcntl.F_GETFL)
-                fcntl.fcntl(proc.stdout, fcntl.F_SETFL, flags | os.O_NONBLOCK)
-                output = proc.stdout.read(1000).decode('utf-8', errors='ignore')
-            except (ImportError, OSError):
+                if fcntl is not None:
+                    flags = fcntl.fcntl(proc.stdout, fcntl.F_GETFL)
+                    fcntl.fcntl(proc.stdout, fcntl.F_SETFL, flags | os.O_NONBLOCK)
+                    output = proc.stdout.read(1000).decode('utf-8', errors='ignore')
+            except OSError:
                 # fcntl not available - try simple read
                 pass
-    
+
     error_msg = f"Flask app did not become ready after 10s (endpoint: {base_url})"
     if last_error:
         error_msg += f". Last error: {last_error}"
@@ -144,7 +154,11 @@ def bench_endpoint(url: str, iterations: int) -> Dict[str, float | List[float]]:
     }
 
 
-def check_regression(ocaml_results: Dict[str, Dict], py_results: Dict[str, Dict], threshold_pct: float = 50.0) -> Tuple[bool, List[str]]:
+def check_regression(
+    ocaml_results: Dict[str, Dict],
+    py_results: Dict[str, Dict],
+    threshold_pct: float = 50.0,
+) -> Tuple[bool, List[str]]:
     """
     Check if Python backend has performance regressions vs OCaml.
     
@@ -158,14 +172,14 @@ def check_regression(ocaml_results: Dict[str, Dict], py_results: Dict[str, Dict]
     """
     errors: List[str] = []
     has_regression = False
-    
+
     for name in ["home", "person", "search"]:
         o = ocaml_results.get(name, {})
         p = py_results.get(name, {})
-        
+
         o_avg = o.get("avg", 0.0)
         p_avg = p.get("avg", 0.0)
-        
+
         if o_avg == 0.0 or p_avg == 0.0:
             errors.append(f"{name}: Missing data (ocaml={o_avg:.4f}s, python={p_avg:.4f}s)")
             has_regression = True
@@ -244,18 +258,18 @@ def main() -> None:
             f"Python: avg={p_avg:.4f}s med={p.get('median', 0.0):.4f}s p95={p.get('p95', 0.0):.4f}s  "
             f"({slowdown_pct:+.1f}%)"
         )
-    
+
     # Check for regressions (blocking in CI)
     threshold_pct = float(os.getenv("BENCH_REGRESSION_THRESHOLD", "50.0"))
     has_regression, errors = check_regression(ocaml_results, py_results, threshold_pct)
-    
+
     if has_regression:
         print("\n❌ PERFORMANCE REGRESSION DETECTED:")
         for err in errors:
             print(f"  - {err}")
         print(f"\nThreshold: {threshold_pct}% maximum slowdown acceptable")
         print("This indicates migrated Python functions are causing significant performance degradation.")
-        exit(1)
+        sys.exit(1)
     else:
         print("\n✅ No performance regression detected (Python backend is within acceptable limits)")
 
