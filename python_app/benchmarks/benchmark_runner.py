@@ -6,20 +6,22 @@ import subprocess  # nosec B404 - used with fixed args, no shell
 import sys
 from pathlib import Path
 from statistics import mean, median
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Tuple
 
 # pylint: disable=too-many-locals
 
 # Optional platform-specific/non-blocking IO helpers
+SELECT_HELPER: Any
 try:
-    import select as SELECT_HELPER  # type: ignore[import]
+    import select as SELECT_HELPER
 except Exception:  # pragma: no cover
-    SELECT_HELPER = None  # type: ignore[assignment]
+    SELECT_HELPER = None
 
+FCNTL_HELPER: Any
 try:
-    import fcntl as FCNTL_HELPER  # type: ignore[import]
+    import fcntl as FCNTL_HELPER
 except Exception:  # pragma: no cover
-    FCNTL_HELPER = None  # type: ignore[assignment]
+    FCNTL_HELPER = None
 
 import requests
 
@@ -254,11 +256,15 @@ def main() -> None:
     stop_proc(gwd_proc)
 
     print("\nSummary (avg, median, p95):")
+    def metric_as_float(d: Dict[str, float | List[float]], key: str) -> float:
+        v = d.get(key, 0.0)
+        return float(v) if isinstance(v, (int, float)) else 0.0
+
     for name in ["home", "person", "search"]:
         o = ocaml_results.get(name, {})
         p = py_results.get(name, {})
-        o_avg = o.get("avg", 0.0)
-        p_avg = p.get("avg", 0.0)
+        o_avg = metric_as_float(o, "avg")
+        p_avg = metric_as_float(p, "avg")
         slowdown_pct = ((p_avg - o_avg) / o_avg * 100.0) if o_avg > 0 else 0.0
         print(
             f"- {name:6}  OCaml: avg={o_avg:.4f}s med={o.get('median', 0.0):.4f}s p95={o.get('p95', 0.0):.4f}s  |  "
