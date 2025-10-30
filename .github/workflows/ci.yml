@@ -230,27 +230,16 @@ jobs:
           set -euo pipefail
           # Ensure parent etc directory exists so gwd can create per-base dirs
           mkdir -p ./bases/etc
-          # Free port just in case from previous jobs
-          pkill -f "gwd.*-p 23179" 2>/dev/null || true
           ./gw/gwd -hd ./gw -bd ./bases -p 23179 -lang en > gwd.out 2>&1 &
           GWD_PID=$!
-          # Helper: wait for HTTP 200 with backoff (max 30s)
-          wait_http() {
-            local url="$1"; local max=60; local i=0
-            until curl -sf "$url" -o /dev/null; do
-              i=$((i+1)); [ $i -ge $max ] && return 1; sleep 0.5;
-            done
-          }
+          # Give gwd extra time to initialize
+          sleep 6
           # Determine actual base name present (test or base)
           BASE_NAME="test"
           if [ ! -d ./bases/test.gwb ] && [ -d ./bases/base.gwb ]; then
             BASE_NAME="base"
           fi
           set +e
-          # Wait until ready
-          if ! wait_http "http://localhost:23179/${BASE_NAME}"; then
-            echo "Smoke check failed (timeout waiting for gwd). Tail of gwd.out:"; tail -n 100 gwd.out || true; kill "$GWD_PID" 2>/dev/null || true; exit 1;
-          fi
           CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:23179/${BASE_NAME}")
           set -e
           if [ "$CODE" = "000" ] || [ "$CODE" -ge 500 ]; then
@@ -327,32 +316,20 @@ jobs:
           python -c "from python_app.config import Config; Config.validate(); print('✅ Config validation passed')" || echo "⚠️ Config validation failed (may be OK if GeneWeb not available)"
           if [ -f "GeneWeb/gw/gwd" ] && [ -d "GeneWeb/bases/test.gwb" ]; then
             echo "Testing proxy server with OCaml backend..."
-            GWD_LOG=/tmp/gwd_proxy_test.log
-            FLASK_LOG=/tmp/flask_proxy_test.log
-            # Free ports
-            pkill -f "gwd.*-p 23180" 2>/dev/null || true
-            pkill -f "python.*python_app" 2>/dev/null || true
-            # Start gwd
-            ( cd GeneWeb && ./gw/gwd -hd ./gw -bd ./bases -p 23180 -lang en > "$GWD_LOG" 2>&1 & echo $! > /tmp/gwd_pid )
-            GWD_PID=$(cat /tmp/gwd_pid)
-            # Helper for readiness
-            wait_http() { local url="$1"; local max=60; local i=0; until curl -sf "$url" -o /dev/null; do i=$((i+1)); [ $i -ge $max ] && return 1; sleep 0.5; done; }
-            # Start proxy (unbuffered)
-            PYTHONUNBUFFERED=1 BACKEND=ocaml FLASK_PORT=23181 GENEWEB_DIR=$(pwd)/GeneWeb python -m python_app.app > "$FLASK_LOG" 2>&1 &
+            cd GeneWeb
+            ./gw/gwd -hd ./gw -bd ./bases -p 23180 -lang en > /tmp/gwd_proxy_test.log 2>&1 &
+            GWD_PID=$!
+            cd ..
+            sleep 3
+            BACKEND=ocaml FLASK_PORT=23181 GENEWEB_DIR=./GeneWeb python -m python_app.app > /tmp/flask_proxy_test.log 2>&1 &
             FLASK_PID=$!
-            if ! wait_http "http://localhost:23181/health"; then
-              echo "Proxy health not ready; tail logs:"; tail -n 80 "$FLASK_LOG" || true
-            else
-              curl -s http://localhost:23181/health | tee /tmp/proxy_health.json
-            fi
+            sleep 2
+            curl -s http://localhost:23181/health | tee /tmp/proxy_health.json
             kill $FLASK_PID 2>/dev/null || true
-            PYTHONUNBUFFERED=1 BACKEND=python FLASK_PORT=23181 GENEWEB_DIR=$(pwd)/GeneWeb python -m python_app.app > "$FLASK_LOG" 2>&1 &
+            BACKEND=python FLASK_PORT=23181 GENEWEB_DIR=./GeneWeb python -m python_app.app > /tmp/flask_proxy_test.log 2>&1 &
             FLASK_PID=$!
-            if ! wait_http "http://localhost:23181/health"; then
-              echo "Proxy (python backend) health not ready; tail logs:"; tail -n 80 "$FLASK_LOG" || true
-            else
-              curl -s http://localhost:23181/health | tee /tmp/proxy_health_python.json
-            fi
+            sleep 2
+            curl -s http://localhost:23181/health | tee /tmp/proxy_health_python.json
             kill $FLASK_PID 2>/dev/null || true
             kill $GWD_PID 2>/dev/null || true
             pkill -f "gwd.*-p 23180" 2>/dev/null || true
