@@ -268,13 +268,23 @@ jobs:
           set -euo pipefail
           pytest tests/python/unit/test_setup.py -v
 
-      - name: Python tests + coverage (all)
+      - name: Python unit tests + coverage gate
         run: |
           set -euo pipefail
           pytest -v --tb=short \
             --cov=python_app --cov-report=xml --cov-report=term \
             --cov-fail-under=80 \
-            tests/python/unit tests/python/integration tests/python/functional
+            tests/python/unit
+
+      - name: Python integration tests
+        run: |
+          set -euo pipefail
+          pytest -v --tb=short tests/python/integration
+
+      - name: Python functional tests
+        run: |
+          set -euo pipefail
+          pytest -v --tb=short tests/python/functional
 
       - name: Python proxy server smoke test (non-blocking)
         continue-on-error: true
