@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 FT-PY-010: Test internationalization (i18n) functionality
 
@@ -18,13 +19,12 @@ Test Scenario:
 4. Test support for multiple languages
 """
 
-import pytest
-import requests
 import subprocess
 import time
-import signal
-import os
 from pathlib import Path
+
+import pytest
+import requests
 
 
 class GeneWebServer:
@@ -60,7 +60,7 @@ class GeneWebServer:
             "-lang", "en"
         ]
 
-        self.log_file = open(f"gwd_ft_{self.port}.log", "w")
+        self.log_file = open(f"gwd_ft_{self.port}.log", "w", encoding='utf-8')
         self.process = subprocess.Popen(
             cmd,
             stdout=self.log_file,
@@ -143,8 +143,7 @@ class TestI18n:
         # Test English language (default)
         en_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"lang": "en"}
-        )
+            params={"lang": "en"}, timeout=5)
 
         assert en_response.status_code == 200, "English language page failed to load"
 
@@ -154,8 +153,7 @@ class TestI18n:
         # Test French language
         fr_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"lang": "fr"}
-        )
+            params={"lang": "fr"}, timeout=5)
 
         assert fr_response.status_code == 200, "French language page failed to load"
 
@@ -173,8 +171,7 @@ class TestI18n:
         for lang in test_languages:
             response = requests.get(
                 f"http://localhost:{server.port}/{server.base_name}",
-                params={"lang": lang}
-            )
+                params={"lang": lang}, timeout=5)
 
             # Not all languages may be available, but should either work or default gracefully
             assert response.status_code == 200, f"Language {lang} page failed to load"
@@ -196,8 +193,7 @@ class TestI18n:
         # Get person page with date information
         en_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor", "lang": "en"}
-        )
+            params={"p": "Charles", "n": "Windsor", "lang": "en"}, timeout=5)
 
         assert en_response.status_code == 200, "English person page failed to load"
 
@@ -210,8 +206,7 @@ class TestI18n:
         # Get same person page in French
         fr_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor", "lang": "fr"}
-        )
+            params={"p": "Charles", "n": "Windsor", "lang": "fr"}, timeout=5)
 
         assert fr_response.status_code == 200, "French person page failed to load"
 
@@ -240,8 +235,7 @@ class TestI18n:
         for params in test_cases:
             response = requests.get(
                 f"http://localhost:{server.port}/{server.base_name}",
-                params=params
-            )
+                params=params, timeout=5)
 
             assert response.status_code == 200, f"Page failed to load with params: {params}"
 

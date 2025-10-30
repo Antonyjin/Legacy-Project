@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """Date validation utilities for GeneWeb genealogy software.
 
 This module provides date validation functions migrated from OCaml's Date module
@@ -12,16 +13,16 @@ OCaml Reference:
 
 def leap_year(year: int) -> bool:
     """Check if a year is a leap year (Gregorian calendar).
-    
+
     A year is a leap year if:
     - It's divisible by 4 AND
     - Either it's NOT divisible by 100, OR it IS divisible by 400
-    
+
     This follows the Gregorian calendar leap year rules:
     - Years divisible by 4 are leap years
     - EXCEPT years divisible by 100 are NOT leap years
     - EXCEPT years divisible by 400 ARE leap years
-    
+
     Examples:
         >>> leap_year(2000)  # Divisible by 400
         True
@@ -31,13 +32,13 @@ def leap_year(year: int) -> bool:
         False
         >>> leap_year(2001)  # Not divisible by 4
         False
-    
+
     Args:
         year: The year to check (any integer)
-        
+
     Returns:
         True if the year is a leap year, False otherwise
-        
+
     OCaml Reference:
         let leap_year a = if a mod 100 = 0 then a / 100 mod 4 = 0 else a mod 4 = 0
         (date.ml:86)
@@ -54,11 +55,11 @@ def leap_year(year: int) -> bool:
 
 def nb_days_in_month(month: int, year: int) -> int:
     """Return the number of days in a given month and year (Gregorian calendar).
-    
+
     Takes leap years into account for February. Returns 0 for invalid month numbers.
-    
+
     Month numbering: 1 = January, 2 = February, ..., 12 = December
-    
+
     Examples:
         >>> nb_days_in_month(2, 2000)  # February in leap year
         29
@@ -72,14 +73,14 @@ def nb_days_in_month(month: int, year: int) -> int:
         0
         >>> nb_days_in_month(0, 2023)  # Invalid month
         0
-    
+
     Args:
         month: Month number (1-12, where 1 = January)
         year: Year (used for leap year calculation)
-        
+
     Returns:
         Number of days in the month (28-31), or 0 if month is invalid
-        
+
     OCaml Reference:
         let nb_days_in_month m a =
           if m = 2 && leap_year a then 29
@@ -91,13 +92,13 @@ def nb_days_in_month(month: int, year: int) -> int:
     # Special case: February in a leap year
     if month == 2 and leap_year(year):
         return 29
-    
+
     # Validate month range
     if month < 1 or month > 12:
         return 0
-    
+
     # Days per month (non-leap year)
     # Index 0 = January (31), Index 1 = February (28), etc.
     days_per_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    
+
     return days_per_month[month - 1]

@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 UT-PY-005: Test date formatting and age calculation
 
@@ -13,7 +14,6 @@ Validates:
 
 import pytest
 import requests
-from urllib.parse import quote
 
 
 @pytest.mark.unit
@@ -23,19 +23,19 @@ class TestDateDisplay:
 
     def test_birth_date_display(self, base_url):
         """Test birth date displays correctly"""
-        response = requests.get(f"{base_url}?p=Elizabeth&n=Windsor")
+        response = requests.get(f"{base_url}?p=Elizabeth&n=Windsor", timeout=5)
         assert response.status_code == 200
         # Should display birth date in response
 
     def test_death_date_display(self, base_url):
         """Test death date displays correctly"""
-        response = requests.get(f"{base_url}?p=Elizabeth&n=Windsor")
+        response = requests.get(f"{base_url}?p=Elizabeth&n=Windsor", timeout=5)
         assert response.status_code == 200
         # Should display death date in response
 
     def test_partial_date_display(self, base_url):
         """Test partial dates (year only) display correctly"""
-        response = requests.get(f"{base_url}?p=Charles&n=Windsor")
+        response = requests.get(f"{base_url}?p=Charles&n=Windsor", timeout=5)
         assert response.status_code == 200
         # Should handle partial dates gracefully
 
@@ -47,19 +47,19 @@ class TestAgeCalculation:
 
     def test_current_age_display(self, base_url):
         """Test current age calculation for living persons"""
-        response = requests.get(f"{base_url}?p=Charles&n=Windsor")
+        response = requests.get(f"{base_url}?p=Charles&n=Windsor", timeout=5)
         assert response.status_code == 200
         # Should display calculated age
 
     def test_death_age_calculation(self, base_url):
         """Test age at death for deceased persons"""
-        response = requests.get(f"{base_url}?p=Elizabeth&n=Windsor")
+        response = requests.get(f"{base_url}?p=Elizabeth&n=Windsor", timeout=5)
         assert response.status_code == 200
         # Should display age at death
 
     def test_age_accuracy(self, base_url):
         """Test age calculation accuracy"""
-        response = requests.get(f"{base_url}?p=Philip&n=Windsor")
+        response = requests.get(f"{base_url}?p=Philip&n=Windsor", timeout=5)
         assert response.status_code == 200
         # Age should match birth and death dates
 
@@ -71,19 +71,19 @@ class TestDateEdgeCases:
 
     def test_missing_birth_date(self, base_url):
         """Test handling of missing birth date"""
-        response = requests.get(f"{base_url}?m=S&s=Unknown")
+        response = requests.get(f"{base_url}?m=S&s=Unknown", timeout=5)
         assert response.status_code == 200
         # Should display gracefully with missing dates
 
     def test_year_only_date(self, base_url):
         """Test year-only dates (no month/day)"""
-        response = requests.get(f"{base_url}?p=Charles&n=Windsor")
+        response = requests.get(f"{base_url}?p=Charles&n=Windsor", timeout=5)
         assert response.status_code == 200
         # Should handle year-only dates
 
     def test_future_date_handling(self, base_url):
         """Test handling of future dates (birth predictions)"""
-        response = requests.get(f"{base_url}?m=S&s=Windsor")
+        response = requests.get(f"{base_url}?m=S&s=Windsor", timeout=5)
         assert response.status_code == 200
         # Should display gracefully
 
@@ -95,19 +95,19 @@ class TestDateLocalization:
 
     def test_date_format_english(self, base_url):
         """Test date format in English"""
-        response = requests.get(f"{base_url}?p=Elizabeth&n=Windsor&lang=en")
+        response = requests.get(f"{base_url}?p=Elizabeth&n=Windsor&lang=en", timeout=5)
         assert response.status_code == 200
         # Should display dates in English format
 
     def test_date_format_french(self, base_url):
         """Test date format in French"""
-        response = requests.get(f"{base_url}?p=Elizabeth&n=Windsor&lang=fr")
+        response = requests.get(f"{base_url}?p=Elizabeth&n=Windsor&lang=fr", timeout=5)
         assert response.status_code == 200
         # Should display dates in French format
 
     def test_month_name_localization(self, base_url):
         """Test month names are localized"""
-        response = requests.get(f"{base_url}?p=Charles&n=Windsor&lang=fr")
+        response = requests.get(f"{base_url}?p=Charles&n=Windsor&lang=fr", timeout=5)
         assert response.status_code == 200
         # Should display localized month names
 
@@ -119,12 +119,12 @@ class TestDateCalculations:
 
     def test_generation_spanning(self, base_url):
         """Test multiple generation date spans"""
-        response = requests.get(f"{base_url}?m=F&p=Windsor&n=House")
+        response = requests.get(f"{base_url}?m=F&p=Windsor&n=House", timeout=5)
         assert response.status_code == 200
         # Should handle multi-generation date ranges
 
     def test_lifespan_comparison(self, base_url):
         """Test lifespan calculations between family members"""
-        response = requests.get(f"{base_url}?m=F&p=Charles&n=Windsor")
+        response = requests.get(f"{base_url}?m=F&p=Charles&n=Windsor", timeout=5)
         assert response.status_code == 200
         # Should display lifespan information

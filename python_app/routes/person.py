@@ -1,18 +1,15 @@
+# pylint: disable=too-many-locals
 """
 Person page routes.
 
 Handles person detail pages: ?p=<firstname>&n=<surname>&oc=<occurrence>
 """
 
-from flask import Blueprint, request, Response
-from ..config import Config
-from ..ocaml_bridge import OCamlBridge
-from ..migrated import (
-    name_lower,
-    escape_html,
-    url_decode,
-    extract_param,
-)
+from flask import Blueprint, Response, request
+
+from python_app.config import Config
+from python_app.migrated import escape_html, extract_param, name_lower, url_decode
+from python_app.ocaml_bridge import OCamlBridge
 
 bp = Blueprint("person", __name__)
 
@@ -63,8 +60,8 @@ def person_page():
     if Config.is_python_backend():
         # Python backend: Use migrated functions for processing
         # Normalize names for future search usage (not used yet)
-        _firstname_normalized = name_lower(firstname) if firstname else ""
-        _surname_normalized = name_lower(surname) if surname else ""
+        name_lower(firstname) if firstname else ""
+        name_lower(surname) if surname else ""
 
         # Proxy to OCaml for actual data retrieval (database access not migrated)
         bridge = OCamlBridge()
@@ -93,4 +90,3 @@ def person_page():
         return Response(html, mimetype="text/html")
     except Exception as exc:  # pylint: disable=broad-except
         return f"Error: {str(exc)}", 500
-

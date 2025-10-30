@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 FT-PY-005: Test calendar functionality
 
@@ -18,13 +19,12 @@ Test Scenario:
 4. Navigate between months
 """
 
-import pytest
-import requests
 import subprocess
 import time
-import signal
-import os
 from pathlib import Path
+
+import pytest
+import requests
 
 
 class GeneWebServer:
@@ -60,7 +60,7 @@ class GeneWebServer:
             "-lang", "en"
         ]
 
-        self.log_file = open(f"gwd_ft_{self.port}.log", "w")
+        self.log_file = open(f"gwd_ft_{self.port}.log", "w", encoding='utf-8')
         self.process = subprocess.Popen(
             cmd,
             stdout=self.log_file,
@@ -142,8 +142,7 @@ class TestCalendar:
         """Test: Calendar page displays correctly"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "CAL"}
-        )
+            params={"m": "CAL"}, timeout=5)
 
         assert response.status_code == 200, f"Calendar page failed to load: {response.status_code}"
 
@@ -160,8 +159,7 @@ class TestCalendar:
         """Test: Birthdays are shown in calendar format"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "CAL"}
-        )
+            params={"m": "CAL"}, timeout=5)
 
         assert response.status_code == 200
 
@@ -191,8 +189,7 @@ class TestCalendar:
         for month_num, month_name in test_months:
             response = requests.get(
                 f"http://localhost:{server.port}/{server.base_name}",
-                params={"m": "CAL", "month": month_num}
-            )
+                params={"m": "CAL", "month": month_num}, timeout=5)
 
             assert response.status_code == 200, f"Calendar filtering by month {month_num} failed"
 
@@ -211,8 +208,7 @@ class TestCalendar:
         for month in months:
             response = requests.get(
                 f"http://localhost:{server.port}/{server.base_name}",
-                params={"m": "CAL", "month": month}
-            )
+                params={"m": "CAL", "month": month}, timeout=5)
 
             assert response.status_code == 200, f"Calendar navigation to month {month} failed"
 

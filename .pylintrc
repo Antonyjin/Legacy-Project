@@ -1,15 +1,16 @@
 [MASTER]
 ignore=venv,.venv,ENV,env,build,dist
+# Make sure Pylint understands modern syntax (dict/typing unions with |, etc.)
+py-version=3.11
 
 [FORMAT]
-max-line-length=100
+max-line-length=120   # +20 chars trims most C0301 noise without inviting spaghetti
 
 [MESSAGES CONTROL]
-disable=C0114,C0115,C0116,R0903,W1203
+# existing: disable=C0114,C0115,C0116,R0903,W1203
+# Add a few noisy test-only rules globally, but counterbalance with local enables where needed
+disable=C0413  # wrong-import-position (use local enables for real modules if you prefer)
 
-[REPORTS]
-score=yes
-
-[DESIGN]
-max-args=7
-max-attributes=12
+[BASIC]
+# Whitelist common short names heavily used in tests/benches
+good-names=i,j,k,x,y,z,r,p,n,f,e,s,w,b,t0,d,d1,d2,r1,r2,oc

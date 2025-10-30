@@ -13,11 +13,11 @@ Issue: MIG-INF-001 (#225)
 
 import sys
 
-from flask import Flask, request, Response, redirect
+from flask import Flask, Response, redirect, request
 
-from .config import Config
-from .ocaml_bridge import OCamlBridge
-from .routes import person, family, search, stats
+from python_app.config import Config
+from python_app.ocaml_bridge import OCamlBridge
+from python_app.routes import family, person, search, stats
 
 # Validate configuration on import
 try:
@@ -134,4 +134,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

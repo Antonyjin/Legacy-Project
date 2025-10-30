@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 FT-PY-009: Test privacy functionality
 
@@ -18,13 +19,12 @@ Test Scenario:
 4. Verify living person privacy rules
 """
 
-import pytest
-import requests
 import subprocess
 import time
-import signal
-import os
 from pathlib import Path
+
+import pytest
+import requests
 
 
 class GeneWebServer:
@@ -60,7 +60,7 @@ class GeneWebServer:
             "-lang", "en"
         ]
 
-        self.log_file = open(f"gwd_ft_{self.port}.log", "w")
+        self.log_file = open(f"gwd_ft_{self.port}.log", "w", encoding='utf-8')
         self.process = subprocess.Popen(
             cmd,
             stdout=self.log_file,
@@ -143,8 +143,7 @@ class TestPrivacy:
         # Access a person page to verify privacy controls
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor"}
-        )
+            params={"p": "Charles", "n": "Windsor"}, timeout=5)
 
         assert response.status_code == 200, f"Person page failed to load: {response.status_code}"
 
@@ -168,8 +167,7 @@ class TestPrivacy:
         """Test: Public mode properly restricts access"""
         # Test home page in normal mode
         normal_response = requests.get(
-            f"http://localhost:{server.port}/{server.base_name}"
-        )
+            f"http://localhost:{server.port}/{server.base_name}", timeout=5)
 
         assert normal_response.status_code == 200, "Home page failed to load"
 
@@ -180,8 +178,7 @@ class TestPrivacy:
         # Test that pages are accessible (privacy restrictions may vary)
         person_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor"}
-        )
+            params={"p": "Charles", "n": "Windsor"}, timeout=5)
 
         assert person_response.status_code == 200, "Person page should be accessible"
 
@@ -201,8 +198,7 @@ class TestPrivacy:
         for params in test_pages:
             response = requests.get(
                 f"http://localhost:{server.port}/{server.base_name}",
-                params=params
-            )
+                params=params, timeout=5)
 
             # All pages should be accessible (access control may vary by configuration)
             assert response.status_code == 200, f"Failed to access person: {params}"
@@ -227,8 +223,7 @@ class TestPrivacy:
         # Access a person page
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor"}
-        )
+            params={"p": "Charles", "n": "Windsor"}, timeout=5)
 
         assert response.status_code == 200, "Person page failed to load"
 
@@ -240,7 +235,7 @@ class TestPrivacy:
 
         # Check for birth/death information
         # Living person rules may hide or show certain dates
-        has_date_info = any(str(year) in content for year in range(1900, 2025))
+        any(str(year) in content for year in range(1900, 2025))
 
         # Note: Actual privacy rules depend on configuration
         # This test verifies the page loads and handles dates appropriately

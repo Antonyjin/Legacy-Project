@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 IT-PY-005: Test GEDCOM export/import roundtrip
 
@@ -12,13 +13,14 @@ Components tested:
 """
 
 import os
-import time
 import signal
-import pytest
-import requests
 import subprocess
 import tempfile
+import time
 from pathlib import Path
+
+import pytest
+import requests
 
 
 class GeneWebServer:

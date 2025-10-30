@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 #!/usr/bin/env python3
 """
 Unit tests for HTTP parameter parsing (MIG-004, MIG-009)
@@ -6,7 +7,7 @@ Test File: UT-PY-015
 Issues:
   - MIG-004 - Migrate HTTP parameter parsing
   - MIG-009 - Migrate URL encoding functions
-OCaml Reference: 
+OCaml Reference:
   - source_geneweb/lib/util/mutil.ml:930-979 (encode function)
   - source_geneweb/lib/util/mutil.ml:982-1039 (decode function)
   - source_geneweb/bin/gwd/gwd.ml:174-180 (extract_assoc function)
@@ -31,7 +32,6 @@ Date: 2025-10-29
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Add tests directory to path for imports
@@ -39,7 +39,7 @@ test_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(test_dir))
 
 import pytest
-from utils.http_params import url_encode, url_decode, extract_param, parse_query_string, extract_all_params
+from utils.http_params import extract_all_params, extract_param, parse_query_string, url_decode, url_encode
 
 
 class TestURLEncoding:
@@ -305,17 +305,17 @@ class TestOCamlBehaviorConsistency:
         let x, env = extract_assoc "b" env in
         """
         env = [('b', 'test'), ('lang', 'fr'), ('w', 'welcome')]
-        
+
         # Extract "b"
         x, env = extract_param('b', env)
         assert x == 'test'
         assert ('b', 'test') not in env
-        
+
         # Extract "lang"
         lang, env = extract_param('lang', env)
         assert lang == 'fr'
         assert ('lang', 'fr') not in env
-        
+
         # Extract "w"
         w, env = extract_param('w', env)
         assert w == 'welcome'
@@ -335,7 +335,7 @@ class TestSpecialCharactersAndEdgeCases:
         """Non-Latin scripts decoded correctly."""
         # Cyrillic
         assert url_decode("%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80") == "Владимир"
-        
+
         # Greek
         assert url_decode("%CE%93%CE%B5%CF%8E%CF%81%CE%B3%CE%B9%CE%BF%CF%82") == "Γεώργιος"
 
@@ -367,11 +367,11 @@ class TestIntegrationWithOCamlPatterns:
         """
         query = "p=Jean+Fran%C3%A7ois&n=MARTIN&oc=0"
         params = parse_query_string(query)
-        
+
         p, params = extract_param('p', params)
         n, params = extract_param('n', params)
         oc, params = extract_param('oc', params)
-        
+
         assert p == "Jean François"
         assert n == "MARTIN"
         assert oc == "0"
@@ -404,14 +404,14 @@ class TestIntegrationWithOCamlPatterns:
             ('opt', 'no_menu'),
             ('threshold', '10')
         ]
-        
+
         # Extract in order (as done in gwd.ml)
         b, params = extract_param('b', params)
         w, params = extract_param('w', params)
         lang, params = extract_param('lang', params)
         opt, params = extract_param('opt', params)
         threshold, params = extract_param('threshold', params)
-        
+
         assert b == 'test'
         assert w == 'welcome'
         assert lang == 'fr'

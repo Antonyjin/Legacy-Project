@@ -5,8 +5,8 @@ Handles backend toggle (OCaml vs Python) and server configuration.
 """
 
 import os
-from pathlib import Path
 from enum import Enum
+from pathlib import Path
 
 
 class Backend(Enum):
@@ -73,4 +73,3 @@ class Config:
                 f"Bases directory not found at {cls.BASES_DIR}. "
                 "Set GENEWEB_DIR to point to GeneWeb directory."
             )
-

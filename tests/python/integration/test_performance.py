@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 IT-PY-009: Test performance benchmarks
 
@@ -12,12 +13,13 @@ Components tested:
 """
 
 import os
-import time
 import signal
+import subprocess
+import time
+from pathlib import Path
+
 import pytest
 import requests
-import subprocess
-from pathlib import Path
 
 
 class GeneWebServer:

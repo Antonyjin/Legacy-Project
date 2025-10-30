@@ -7,4 +7,3 @@ Each route module handles a specific type of page:
 - search: Search functionality
 - stats: Statistics pages
 """
-

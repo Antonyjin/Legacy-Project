@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 FT-PY-003: Test person page display
 
@@ -20,11 +21,12 @@ Test Scenario:
 5. Verify all fields display correctly
 """
 
-import pytest
-import requests
 import subprocess
 import time
 from pathlib import Path
+
+import pytest
+import requests
 
 
 class GeneWebServer:
@@ -60,7 +62,7 @@ class GeneWebServer:
             "-lang", "en"
         ]
 
-        self.log_file = open(f"gwd_ft_{self.port}.log", "w")
+        self.log_file = open(f"gwd_ft_{self.port}.log", "w", encoding='utf-8')
         self.process = subprocess.Popen(
             cmd,
             stdout=self.log_file,
@@ -142,8 +144,7 @@ class TestPersonPageDisplay:
         """Test: Person page loads and displays correctly"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor"}
-        )
+            params={"p": "Charles", "n": "Windsor"}, timeout=5)
 
         assert response.status_code == 200, f"Person page failed to load: {response.status_code}"
 
@@ -158,8 +159,7 @@ class TestPersonPageDisplay:
         """Test: Person's name and surname display correctly"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor"}
-        )
+            params={"p": "Charles", "n": "Windsor"}, timeout=5)
 
         assert response.status_code == 200
 
@@ -173,8 +173,7 @@ class TestPersonPageDisplay:
         """Test: Birth and death dates display correctly"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor"}
-        )
+            params={"p": "Charles", "n": "Windsor"}, timeout=5)
 
         assert response.status_code == 200
 
@@ -193,8 +192,7 @@ class TestPersonPageDisplay:
         """Test: Family relationships (parents, spouse, children) display"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor"}
-        )
+            params={"p": "Charles", "n": "Windsor"}, timeout=5)
 
         assert response.status_code == 200
 
@@ -214,8 +212,7 @@ class TestPersonPageDisplay:
         # Test with Elizabeth II (who has no death date in some records)
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Elizabeth", "n": "Windsor"}
-        )
+            params={"p": "Elizabeth", "n": "Windsor"}, timeout=5)
 
         assert response.status_code == 200
 

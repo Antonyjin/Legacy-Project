@@ -1,8 +1,9 @@
-import os
+# pylint: disable=too-many-locals, too-many-branches, too-many-statements, too-many-nested-blocks, broad-exception-caught, import-outside-toplevel, consider-using-with, consider-using-sys-exit
 import json
-import time
+import os
 import signal
 import subprocess
+import time
 from pathlib import Path
 from statistics import mean, median
 from typing import Dict, List, Tuple
@@ -70,11 +71,11 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
     env["OCAML_GWD_PORT"] = str(OCAML_PORT)  # Ensure Python backend knows OCaml port
     cmd = ["python", "-m", "python_app.app"]
     proc = subprocess.Popen(
-        cmd, 
-        cwd=str(PROJECT_ROOT), 
-        env=env, 
-        stdout=subprocess.PIPE, 
-        stderr=subprocess.STDOUT, 
+        cmd,
+        cwd=str(PROJECT_ROOT),
+        env=env,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
         bufsize=0,
         text=True  # Enable text mode for easier output reading
     )
@@ -97,7 +98,7 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
             except Exception:
                 output = "Could not read output"
             raise RuntimeError(f"Flask app exited unexpectedly (code {proc.returncode}). Output: {output[:2000]}")
-        
+
         # Try to read any stdout/stderr output (non-blocking) to see what Flask is doing
         if attempt % 3 == 0:  # Every 3rd attempt, check for output
             try:
@@ -110,7 +111,7 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
                             print(f"   Flask output: {chunk[:200]}")
             except Exception:
                 pass
-        
+
         try:
             r = requests.get(base_url, timeout=2.0)  # Increased timeout for each request
             if r.status_code == 200:
@@ -124,7 +125,7 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
                 elapsed = time.time() - start_time
                 print(f"⏳ Still waiting for Flask... ({elapsed:.1f}s elapsed, {attempt} attempts)")
         time.sleep(0.5)  # Increased retry interval
-    
+
     # Timeout - show error and output
     output = ""
     if proc.stdout:
@@ -144,7 +145,7 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
             except (ImportError, OSError):
                 # fcntl not available - try simple read
                 pass
-    
+
     elapsed = time.time() - start_time  # Calculate actual elapsed time
     error_msg = f"Flask app did not become ready after {elapsed:.1f}s (endpoint: {base_url}, {attempt} attempts)"
     if last_error:
@@ -197,32 +198,32 @@ def bench_endpoint(url: str, iterations: int) -> Dict[str, float | List[float]]:
 def check_regression(ocaml_results: Dict[str, Dict], py_results: Dict[str, Dict], threshold_pct: float = 50.0) -> Tuple[bool, List[str]]:
     """
     Check if Python backend has performance regressions vs OCaml.
-    
+
     Args:
         ocaml_results: OCaml benchmark results
         py_results: Python benchmark results
         threshold_pct: Maximum acceptable slowdown percentage (default: 50%)
-    
+
     Returns:
         (has_regression, error_messages)
     """
     errors: List[str] = []
     has_regression = False
-    
+
     for name in ["home", "person", "search"]:
         o = ocaml_results.get(name, {})
         p = py_results.get(name, {})
-        
+
         o_avg = o.get("avg", 0.0)
         p_avg = p.get("avg", 0.0)
-        
+
         if o_avg == 0.0 or p_avg == 0.0:
             errors.append(f"{name}: Missing data (ocaml={o_avg:.4f}s, python={p_avg:.4f}s)")
             has_regression = True
             continue
-        
+
         slowdown_pct = ((p_avg - o_avg) / o_avg) * 100.0
-        
+
         if slowdown_pct > threshold_pct:
             errors.append(
                 f"{name}: Python is {slowdown_pct:.1f}% slower than OCaml "
@@ -232,7 +233,7 @@ def check_regression(ocaml_results: Dict[str, Dict], py_results: Dict[str, Dict]
         elif slowdown_pct < -10.0:
             # Python is faster - log as info
             print(f"✅ {name}: Python is {abs(slowdown_pct):.1f}% faster than OCaml!")
-    
+
     return has_regression, errors
 
 
@@ -294,11 +295,11 @@ def main() -> None:
             f"Python: avg={p_avg:.4f}s med={p.get('median', 0.0):.4f}s p95={p.get('p95', 0.0):.4f}s  "
             f"({slowdown_pct:+.1f}%)"
         )
-    
+
     # Check for regressions (blocking in CI)
     threshold_pct = float(os.getenv("BENCH_REGRESSION_THRESHOLD", "50.0"))
     has_regression, errors = check_regression(ocaml_results, py_results, threshold_pct)
-    
+
     if has_regression:
         print("\n❌ PERFORMANCE REGRESSION DETECTED:")
         for err in errors:

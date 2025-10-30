@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 #!/usr/bin/env python3
 """
 Example usage of number_formatter utility
@@ -20,10 +21,10 @@ def demo_basic_formatting():
     print("=" * 60)
     print("BASIC NUMBER FORMATTING")
     print("=" * 60)
-    
+
     numbers = [0, 100, 999, 1000, 10000, 100000, 1000000, -5000]
     locales = ['en', 'fr', 'de']
-    
+
     for num in numbers:
         print(f"\nNumber: {num}")
         for locale in locales:
@@ -37,7 +38,7 @@ def demo_genealogy_statistics():
     print("\n" + "=" * 60)
     print("GENEALOGY DATABASE STATISTICS")
     print("=" * 60)
-    
+
     # Simulated database statistics
     stats = {
         'total_persons': 15234,
@@ -45,7 +46,7 @@ def demo_genealogy_statistics():
         'total_surnames': 1234,
         'total_events': 45678,
     }
-    
+
     for locale in ['en', 'fr', 'de']:
         print(f"\n{locale.upper()} Interface:")
         for key, value in stats.items():
@@ -59,9 +60,9 @@ def demo_multilingual_interface():
     print("\n" + "=" * 60)
     print("MULTILINGUAL INTERFACE - SAME NUMBER, DIFFERENT FORMATS")
     print("=" * 60)
-    
+
     num = 1234567
-    
+
     languages = {
         'en': 'English',
         'fr': 'French',
@@ -72,7 +73,7 @@ def demo_multilingual_interface():
         'he': 'Hebrew',
         'zh': 'Chinese',
     }
-    
+
     print(f"\nFormatting {num:,} in different locales:")
     for locale, lang_name in languages.items():
         formatted = format_number_with_separator(num, locale)
@@ -85,9 +86,9 @@ def demo_locale_aliases():
     print("\n" + "=" * 60)
     print("LOCALE ALIASES")
     print("=" * 60)
-    
+
     num = 50000
-    
+
     aliases = [
         ('en_US', 'en'),
         ('en_GB', 'en'),
@@ -95,7 +96,7 @@ def demo_locale_aliases():
         ('de_DE', 'de'),
         ('es_ES', 'es'),
     ]
-    
+
     print(f"\nFormatting {num} with locale aliases:")
     for alias, base in aliases:
         formatted_alias = format_number_with_separator(num, alias)
@@ -109,17 +110,17 @@ def demo_real_world_geneweb():
     print("\n" + "=" * 60)
     print("REAL-WORLD GENEWEB SCENARIOS")
     print("=" * 60)
-    
+
     # Test database (from README)
     print("\n1. Test Database (test.gwb):")
     print(f"   Persons: {format_number_with_separator(188, 'en')}")
-    
+
     # Small genealogy database
     print("\n2. Small Genealogy Database:")
     persons = 1500
     print(f"   EN: {format_number_with_separator(persons, 'en')} persons")
     print(f"   FR: {format_number_with_separator(persons, 'fr')} personnes")
-    
+
     # Medium database
     print("\n3. Medium Genealogy Database:")
     persons = 10000
@@ -128,7 +129,7 @@ def demo_real_world_geneweb():
           f"{format_number_with_separator(families, 'en')} families")
     print(f"   FR: {format_number_with_separator(persons, 'fr')} personnes, "
           f"{format_number_with_separator(families, 'fr')} familles")
-    
+
     # Large database
     print("\n4. Large Genealogy Database:")
     persons = 500000
@@ -145,13 +146,13 @@ def main():
     print("NUMBER FORMATTING UTILITY - DEMONSTRATION")
     print("Issue: MIG-008 - Migrate number formatting")
     print("=" * 60)
-    
+
     demo_basic_formatting()
     demo_genealogy_statistics()
     demo_multilingual_interface()
     demo_locale_aliases()
     demo_real_world_geneweb()
-    
+
     print("\n" + "=" * 60)
     print("DEMONSTRATION COMPLETE")
     print("=" * 60)

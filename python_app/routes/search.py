@@ -4,13 +4,11 @@ Search page routes.
 Handles search functionality: ?m=S or ?m=NG (name search)
 """
 
-from flask import Blueprint, request, Response
-from ..config import Config
-from ..ocaml_bridge import OCamlBridge
-from ..migrated import (
-    name_lower,
-    escape_html,
-)
+from flask import Blueprint, Response, request
+
+from python_app.config import Config
+from python_app.migrated import escape_html, name_lower
+from python_app.ocaml_bridge import OCamlBridge
 
 bp = Blueprint("search", __name__)
 
@@ -33,7 +31,7 @@ def search_page():
 
     if Config.is_python_backend() and query:
         # Normalize query (for future Python search implementation)
-        _query_normalized = name_lower(query)
+        name_lower(query)
 
     # Proxy to OCaml (search requires database access)
     bridge = OCamlBridge()
@@ -48,4 +46,3 @@ def search_page():
         return Response(html, mimetype="text/html")
     except Exception as exc:  # pylint: disable=broad-except
         return f"Error: {str(exc)}", 500
-

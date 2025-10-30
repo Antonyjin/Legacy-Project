@@ -4,9 +4,10 @@ Statistics page routes.
 Handles statistics pages: ?m=STAT
 """
 
-from flask import Blueprint, request, Response
-from ..config import Config
-from ..ocaml_bridge import OCamlBridge
+from flask import Blueprint, Response, request
+
+from python_app.config import Config
+from python_app.ocaml_bridge import OCamlBridge
 
 bp = Blueprint("stats", __name__)
 
@@ -40,4 +41,3 @@ def stats_page():
         return Response(html, mimetype="text/html")
     except Exception as exc:  # pylint: disable=broad-except
         return f"Error: {str(exc)}", 500
-

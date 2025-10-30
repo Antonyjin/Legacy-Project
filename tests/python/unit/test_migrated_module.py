@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 #!/usr/bin/env python3
 """
 Unit tests for python_app.migrated module (MIG-INF-002)
@@ -19,6 +20,7 @@ Coverage:
 
 import sys
 from pathlib import Path
+
 import pytest
 
 # Add project root to path
@@ -41,13 +43,13 @@ class TestMigratedModuleImports:
         """Test: All functions listed in __all__ are actually accessible"""
         # Get all exported names
         exported = migrated.__all__
-        
+
         # Check each export is accessible
         missing = []
         for name in exported:
             if not hasattr(migrated, name):
                 missing.append(name)
-        
+
         assert len(missing) == 0, f"Missing exports: {missing}"
 
     def test_exports_count(self):
@@ -180,12 +182,12 @@ class TestMigratedDateComparison:
     def test_compare_dmy(self):
         """Test: compare_dmy works via migrated module"""
         from python_app.migrated import Dmy, Precision
-        
+
         # Create date objects (Dmy requires: day, month, year, prec, delta)
         date1 = Dmy(day=1, month=1, year=2024, prec=Precision.SURE, delta=0)
         date2 = Dmy(day=15, month=1, year=2024, prec=Precision.SURE, delta=0)
         date3 = Dmy(day=1, month=2, year=2024, prec=Precision.SURE, delta=0)
-        
+
         # Test comparisons
         assert migrated.compare_dmy(date1, date2) < 0  # Earlier date
         assert migrated.compare_dmy(date2, date1) > 0  # Later date
@@ -202,7 +204,7 @@ class TestMigratedModuleConsistency:
         test_utils_path = Path(__file__).parent.parent.parent.parent / "tests" / "python"
         sys.path.insert(0, str(test_utils_path))
         from utils.name_utils import name_lower as original_name_lower
-        
+
         test_cases = ["Jean", "SMITH", "O'Brien"]
         for case in test_cases:
             assert migrated.name_lower(case) == original_name_lower(case), \
@@ -215,7 +217,7 @@ class TestMigratedModuleConsistency:
         test_utils_path = Path(__file__).parent.parent.parent.parent / "tests" / "python"
         sys.path.insert(0, str(test_utils_path))
         from utils.html_utils import escape_html as original_escape_html
-        
+
         test_cases = ["<tag>", "Smith & Johnson", "O'Brien"]
         for case in test_cases:
             assert migrated.escape_html(case) == original_escape_html(case), \
@@ -228,7 +230,7 @@ class TestMigratedModuleConsistency:
         test_utils_path = Path(__file__).parent.parent.parent.parent / "tests" / "python"
         sys.path.insert(0, str(test_utils_path))
         from utils.http_params import url_encode as original_url_encode
-        
+
         test_cases = ["test value", "Smith & Johnson"]
         for case in test_cases:
             assert migrated.url_encode(case) == original_url_encode(case), \
@@ -259,7 +261,7 @@ class TestMigratedModuleAPI:
             # Date comparison
             "compare_dmy", "compare_dmy_opt", "compare_date",
         ]
-        
+
         for func_name in expected_functions:
             assert hasattr(migrated, func_name), \
                 f"Expected function {func_name} not found in python_app.migrated"

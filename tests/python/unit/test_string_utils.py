@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 #!/usr/bin/env python3
 """
 Unit tests for string utility functions (MIG-007)
@@ -24,7 +25,6 @@ Coverage:
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Add tests directory to path for imports
@@ -32,8 +32,9 @@ test_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(test_dir))
 
 import pytest
+
 # Import directly from string_utils to avoid circular dependencies
-from utils.string_utils import strip_c, purge, contains_forbidden_char, FORBIDDEN_CHAR
+from utils.string_utils import FORBIDDEN_CHAR, contains_forbidden_char, purge, strip_c
 
 
 class TestStripC:
@@ -89,7 +90,7 @@ class TestStripC:
         """Multiple characters should raise ValueError."""
         with pytest.raises(ValueError, match="single character"):
             strip_c("hello", "ab")
-        
+
         with pytest.raises(ValueError, match="single character"):
             strip_c("hello", "")
 
@@ -136,7 +137,7 @@ class TestPurge:
         """Test all forbidden characters."""
         for char in FORBIDDEN_CHAR:
             assert purge(f"test{char}value") == "testvalue"
-    
+
     def test_unicode_preserved(self):
         """Unicode characters are preserved."""
         assert purge("café@example") == "caféexample"
@@ -208,7 +209,7 @@ class TestOCamlCompatibility:
         """strip_c behavior matches OCaml implementation."""
         # OCaml: strip_c "hello world" 'l' = "heo word"
         assert strip_c("hello world", "l") == "heo word"
-        
+
         # OCaml: strip_c "test" 'x' = "test"
         assert strip_c("test", "x") == "test"
 
@@ -248,7 +249,7 @@ class TestEdgeCases:
         """contains_forbidden_char with very long string."""
         long_string = "a" * 10000 + "@" + "b" * 10000
         assert contains_forbidden_char(long_string) is True
-        
+
         long_string_no_forbidden = "a" * 20000
         assert contains_forbidden_char(long_string_no_forbidden) is False
 
@@ -256,7 +257,7 @@ class TestEdgeCases:
         """strip_c with Unicode boundary cases."""
         # Remove emoji
         assert strip_c("hello😀world", "😀") == "helloworld"
-        
+
         # Remove combining characters
         assert strip_c("café", "é") == "caf"
 

@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 #!/usr/bin/env python3
 """
 Unit tests for name_strip function (MIG-002)
@@ -22,7 +23,6 @@ Date: 2025-10-29
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Add tests directory to path for imports
@@ -253,7 +253,7 @@ class TestCompositionWithOtherFunctions:
     def test_strip_then_lower(self):
         """Apply strip then lower (reverse of strip_lower)."""
         from utils.name_utils import name_lower
-        
+
         name = "Jean François"
         stripped = name_strip(name)  # "JeanFrançois"
         result = name_lower(stripped)  # "jeanfrancois"
@@ -262,16 +262,16 @@ class TestCompositionWithOtherFunctions:
     def test_with_compound_operations(self):
         """Multiple operations in sequence."""
         from utils.name_utils import name_lower, strip_lower
-        
+
         # Different orderings
         name = "Jean François MARTIN"
-        
+
         # strip(lower(name))
         result1 = name_strip(name_lower(name))
-        
+
         # strip_lower(name) - built-in composition
         result2 = strip_lower(name)
-        
+
         assert result1 == result2 == "jeanfrancoismartin"
 
 
@@ -305,7 +305,7 @@ class TestPerformance:
         # 1000 words separated by spaces
         long_name = " ".join([f"Word{i}" for i in range(1000)])
         result = name_strip(long_name)
-        
+
         # Should have no spaces
         assert ' ' not in result
         # Should contain all words
