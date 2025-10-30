@@ -8,16 +8,18 @@ from pathlib import Path
 from statistics import mean, median
 from typing import Dict, List, Tuple
 
+# pylint: disable=too-many-locals
+
 # Optional platform-specific/non-blocking IO helpers
 try:
-    import select  # type: ignore[import]
+    import select as SELECT_HELPER  # type: ignore[import]
 except Exception:  # pragma: no cover
-    select = None  # type: ignore[assignment]
+    SELECT_HELPER = None  # type: ignore[assignment]
 
 try:
-    import fcntl  # type: ignore[import]
+    import fcntl as FCNTL_HELPER  # type: ignore[import]
 except Exception:  # pragma: no cover
-    fcntl = None  # type: ignore[assignment]
+    FCNTL_HELPER = None  # type: ignore[assignment]
 
 import requests
 
@@ -105,15 +107,21 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
     if proc.stdout:
         try:
             # Try to read what we can without blocking
-            if select and hasattr(select, 'select') and select.select([proc.stdout], [], [], 0.1)[0]:
+            if (
+                SELECT_HELPER
+                and hasattr(SELECT_HELPER, 'select')
+                and SELECT_HELPER.select([proc.stdout], [], [], 0.1)[0]
+            ):
                 output = proc.stdout.read(1000).decode('utf-8', errors='ignore')
         except (OSError, AttributeError):
             # select not available (Windows) or other error - try direct read
             try:
                 # Non-blocking read attempt
-                if fcntl is not None:
-                    flags = fcntl.fcntl(proc.stdout, fcntl.F_GETFL)
-                    fcntl.fcntl(proc.stdout, fcntl.F_SETFL, flags | os.O_NONBLOCK)
+                if FCNTL_HELPER is not None:
+                    flags = FCNTL_HELPER.fcntl(proc.stdout, FCNTL_HELPER.F_GETFL)
+                    FCNTL_HELPER.fcntl(
+                        proc.stdout, FCNTL_HELPER.F_SETFL, flags | os.O_NONBLOCK
+                    )
                     output = proc.stdout.read(1000).decode('utf-8', errors='ignore')
             except OSError:
                 # fcntl not available - try simple read
@@ -172,7 +180,6 @@ def check_regression(
     """
     errors: List[str] = []
     has_regression = False
-
     for name in ["home", "person", "search"]:
         o = ocaml_results.get(name, {})
         p = py_results.get(name, {})
