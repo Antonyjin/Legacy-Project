@@ -25,9 +25,11 @@ class TestPytestInfrastructure:
 
     def test_imports(self):
         """Verify required packages are installed"""
+        # pytest already imported at module level
         try:
-            import pytest
-        except ImportError as e:
+            # Verify pytest is accessible
+            assert pytest is not None
+        except NameError as e:
             pytest.fail(f"Missing required package: {e}")
 
 

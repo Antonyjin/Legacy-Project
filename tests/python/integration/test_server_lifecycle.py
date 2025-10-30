@@ -321,7 +321,7 @@ class TestConcurrentRequests:
 
         with GeneWebServer(geneweb_dir, port=23180):
 
-            def make_request(i):
+            def make_request(_):
                 try:
                     response = requests.get(
                         "http://localhost:23180/test?p=Charles&n=Windsor",

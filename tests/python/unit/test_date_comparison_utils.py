@@ -231,14 +231,14 @@ class TestNotComparableException:
 class TestOCamlRealUsagePatterns:
     """Test patterns from actual OCaml codebase usage"""
 
-    def test_birthDeathDisplay_pattern(self):
+    def test_birth_death_display_pattern(self):
         """OCaml: birthDeathDisplay.ml:15 - Compare with today's date"""
         # Date.compare_dmy d conf.today = 1
         future_date = Dmy(day=1, month=1, year=2030, prec=Precision.SURE, delta=0)
         today = Dmy(day=29, month=10, year=2025, prec=Precision.SURE, delta=0)
         assert compare_dmy(future_date, today) == 1
 
-    def test_birthDeath_leq_pattern(self):
+    def test_birth_death_leq_pattern(self):
         """OCaml: birthDeath.ml:57 - Less than or equal comparison"""
         # let leq (_, x, _) (_, y, _) = Date.compare_dmy x y <= 0
         d1 = Dmy(day=1, month=1, year=1990, prec=Precision.SURE, delta=0)
@@ -255,7 +255,7 @@ class TestOCamlRealUsagePatterns:
         assert result is not None
         assert result == -1
 
-    def test_checkItem_strict_pattern(self):
+    def test_check_item_strict_pattern(self):
         """OCaml: checkItem.ml:34 - Strict comparison with opt"""
         # match Date.compare_dmy_opt ~strict:true d1 d2
         d1 = Dmy(day=15, month=6, year=1990, prec=Precision.AFTER, delta=0)

@@ -198,8 +198,7 @@ class TestMigratedModuleConsistency:
 
     def test_name_lower_matches_original(self):
         """Test: migrated name_lower matches original implementation"""
-        import sys
-        from pathlib import Path
+        # Import inside method to access test utils - pylint: disable=reimported
         test_utils_path = Path(__file__).parent.parent.parent.parent / "tests" / "python"
         sys.path.insert(0, str(test_utils_path))
         from utils.name_utils import name_lower as original_name_lower
@@ -211,8 +210,7 @@ class TestMigratedModuleConsistency:
 
     def test_escape_html_matches_original(self):
         """Test: migrated escape_html matches original implementation"""
-        import sys
-        from pathlib import Path
+        # Import inside method to access test utils - pylint: disable=reimported
         test_utils_path = Path(__file__).parent.parent.parent.parent / "tests" / "python"
         sys.path.insert(0, str(test_utils_path))
         from utils.html_utils import escape_html as original_escape_html
@@ -224,8 +222,7 @@ class TestMigratedModuleConsistency:
 
     def test_url_encode_matches_original(self):
         """Test: migrated url_encode matches original implementation"""
-        import sys
-        from pathlib import Path
+        # Import inside method to access test utils - pylint: disable=reimported
         test_utils_path = Path(__file__).parent.parent.parent.parent / "tests" / "python"
         sys.path.insert(0, str(test_utils_path))
         from utils.http_params import url_encode as original_url_encode

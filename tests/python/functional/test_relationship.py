@@ -53,7 +53,8 @@ class GeneWebServer:
     def is_running(self) -> bool:
         """Check if server is responding"""
         try:
-            response = requests.get(f"http://localhost:{self.port}/{self.base_name}", timeout=2, headers={"Connection": "close"})
+            url = f"http://localhost:{self.port}/{self.base_name}"
+            response = requests.get(url, timeout=2, headers={"Connection": "close"})
             return response.status_code in [200, 204]
         except requests.RequestException:
             return False

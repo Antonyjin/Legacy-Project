@@ -244,7 +244,7 @@ class TestEdgeCases:
 
     def test_all_supported_locales_work(self):
         """All locales in LOCALE_SEPARATORS should work"""
-        for locale in LOCALE_SEPARATORS.keys():
+        for locale in LOCALE_SEPARATORS:
             result = format_number_with_separator(1000, locale)
             assert isinstance(result, str)
             assert '1' in result

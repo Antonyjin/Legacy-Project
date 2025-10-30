@@ -60,8 +60,9 @@ def person_page():
     if Config.is_python_backend():
         # Python backend: Use migrated functions for processing
         # Normalize names for future search usage (not used yet)
-        name_lower(firstname) if firstname else ""
-        name_lower(surname) if surname else ""
+        # TODO: Use normalized names when implementing Python search
+        _ = name_lower(firstname) if firstname else ""
+        _ = name_lower(surname) if surname else ""
 
         # Proxy to OCaml for actual data retrieval (database access not migrated)
         bridge = OCamlBridge()

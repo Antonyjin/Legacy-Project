@@ -200,7 +200,8 @@ class TestHTMLGeneration:
         # Calendar should have time-related content
         html_lower = r.text.lower()
         # Should have month names or numbers
-        assert any(month in html_lower for month in ["january", "february", "march", "january", "jan", "feb", "01", "02"])
+        months = ["january", "february", "march", "january", "jan", "feb", "01", "02"]
+        assert any(month in html_lower for month in months)
 
     def test_html_encoding_valid(self, server: GeneWebServer):
         """Test HTML is properly encoded"""

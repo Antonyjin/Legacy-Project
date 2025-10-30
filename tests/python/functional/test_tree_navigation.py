@@ -174,7 +174,10 @@ class TestTreeNavigation:
         assert "windsor" in content, "Person page missing surname"
 
         # Verify person page has navigation elements
-        assert "parent" in content or "father" in content or "mother" in content, "Person page missing family references"
+        has_family_refs = (
+            "parent" in content or "father" in content or "mother" in content
+        )
+        assert has_family_refs, "Person page missing family references"
 
     def test_family_relationships_displayed_correctly(self, server):
         """Test: View family relationships (parents, children, spouse)"""

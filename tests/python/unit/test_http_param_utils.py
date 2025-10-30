@@ -39,7 +39,13 @@ test_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(test_dir))
 
 import pytest  # noqa: E402
-from utils.http_params import extract_all_params, extract_param, parse_query_string, url_decode, url_encode  # noqa: E402
+from utils.http_params import (  # noqa: E402
+    extract_all_params,
+    extract_param,
+    parse_query_string,
+    url_decode,
+    url_encode,
+)
 
 
 class TestURLEncoding:

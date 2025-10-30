@@ -195,7 +195,11 @@ def bench_endpoint(url: str, iterations: int) -> Dict[str, float | List[float]]:
     }
 
 
-def check_regression(ocaml_results: Dict[str, Dict], py_results: Dict[str, Dict], threshold_pct: float = 50.0) -> Tuple[bool, List[str]]:
+def check_regression(
+    ocaml_results: Dict[str, Dict],
+    py_results: Dict[str, Dict],
+    threshold_pct: float = 50.0,
+) -> Tuple[bool, List[str]]:
     """
     Check if Python backend has performance regressions vs OCaml.
 
