@@ -152,8 +152,8 @@ echo "$ROUTES" | while IFS= read -r item; do
   # Normalize HTML (trim trailing spaces, collapse multiple spaces, remove volatile data)
   # First: convert non-breaking spaces to regular spaces
   sed 's/\xC2\xA0/ /g' "$RAW" | \
-    # Normalize absolute filesystem paths in HTML comments to a stable marker
-    sed -E 's|<!-- .*GeneWeb/gw/etc/([a-z]+\.txt) --->|<!-- gw/etc/\1 --->|g' | \
+    # Normalize absolute filesystem paths in HTML comments to a stable marker (handles nested modules/*)
+    sed -E 's|<!-- .*GeneWeb/gw/etc/([A-Za-z0-9_./-]+\.txt) --->|<!-- gw/etc/\1 -->|g' | \
     # Then: collapse multiple spaces and trim trailing
     sed -E 's/[[:space:]]+$//g; s/[[:space:]]{2,}/ /g' | \
     # Normalize whitespace after &#010; entities
