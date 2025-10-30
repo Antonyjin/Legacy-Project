@@ -8,18 +8,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="shortcut icon" href="images/favicon_gwd.png">
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/css.txt --->
+<!-- gw/etc/css.txt --->
 <!-- $Id: css.txt v7.1 04/11/2023 04:28:54 $ -->
 <link rel="stylesheet" href="css/bootstrap.min.css?version=4.6.2">
 <link rel="stylesheet" href="css/all.min.css?hash=f036f8b0f6f63f2ab006e153aeac2b7d">
 <link rel="stylesheet" href="css/css.css?hash=de7ebf333e81605a294d2ebba9e1e54d">
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/css.txt --->
+<!-- gw/etc/css.txt --->
 </head>
 <body>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/hed.txt --->
+<!-- gw/etc/hed.txt --->
 <meta name="format-detection" content="telephone=no" />
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/hed.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/home.txt --->
+<!-- gw/etc/hed.txt --->
+<!-- gw/etc/home.txt --->
 <!-- $Id: home.txt v7.1 07/09/2023 00:49:55 $ -->
 <div class="d-flex flex-column fix_top fix_left home-xs">
 <a tabindex="1" role="button" class="btn btn-sm btn-link p-0 border-0" href="test?" title="Home">
@@ -73,7 +73,7 @@ name="p" placeholder="First name" tabindex="6">
 </div>
 </div>
 </div>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/home.txt --->
+<!-- gw/etc/home.txt --->
 <div class="container">
 <div class="row mt-4">
 <div class="mx-auto text-center">
@@ -212,9 +212,9 @@ name="p" placeholder="First name" tabindex="6">
 <br><br>
 Julian day: 2,460,979</div>
 </div>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/trl.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/trl.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/copyr.txt --->
+<!-- gw/etc/trl.txt --->
+<!-- gw/etc/trl.txt --->
+<!-- gw/etc/copyr.txt --->
 <!-- $Id: copyr.txt 7.1-beta 18/12/2023 22:03:44 $ -->
 <div class="d-flex flex-row justify-content-center justify-content-lg-end my-2" id="copyr">
 <div class="d-flex flex-wrap justify-content-md-end">
@@ -304,9 +304,9 @@ title="GeneWeb Github">
 </div>
 </div>
 </div>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/copyr.txt --->
+<!-- gw/etc/copyr.txt --->
 </div>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/js.txt --->
+<!-- gw/etc/js.txt --->
 <!-- $Id: js.txt v7.1 10/01/2025 04:15:45 $ -->
 <script src="js/jquery.min.js?version=3.7.1"></script>
 <script src="js/bootstrap.bundle.min.js?version=4.6.1"></script>
@@ -489,7 +489,7 @@ setupModalAutofocus();
 setupFloatingPlaceholders();
 });
 </script>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/js.txt --->
+<!-- gw/etc/js.txt --->
 <script>
  var q_time = TIME;
  var nb_errors = 0;

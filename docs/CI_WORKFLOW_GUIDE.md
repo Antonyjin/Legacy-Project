@@ -100,6 +100,15 @@ TZ=UTC            # Deterministic timezone
   ```
 - **CI runners**: Already isolated; the workflow installs dependencies into the runner environment directly. No venv creation is required in CI.
 
+### Golden Tests
+
+- Optional; never auto-create references in CI
+- Run when:
+  - Workflow input `run_golden=true`, or
+  - Relevant paths change (GeneWeb/**, scripts/golden/**, tests/golden/**, python_app/routes/**, python_app/migrated/**), or
+  - PR has label `golden`
+- See `docs/GOLDEN_TESTS.md` for details
+
 ### Functional Tests: Known CI Behaviors
 
 - **GEDCOM routes**: Some GeneWeb distributions don't expose GEDCOM export/import via HTTP. Functional tests detect `HTTP 400/404` on `?m=GEDCOM` and `pytest.skip(...)` with a clear message. GEDCOM behavior is validated via CLI in golden/deployment scripts.
