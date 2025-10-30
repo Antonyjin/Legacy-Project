@@ -191,9 +191,9 @@ def check_regression(
             errors.append(f"{name}: Missing data (ocaml={o_avg:.4f}s, python={p_avg:.4f}s)")
             has_regression = True
             continue
-        
+
         slowdown_pct = ((p_avg - o_avg) / o_avg) * 100.0
-        
+
         if slowdown_pct > threshold_pct:
             errors.append(
                 f"{name}: Python is {slowdown_pct:.1f}% slower than OCaml "
@@ -203,7 +203,7 @@ def check_regression(
         elif slowdown_pct < -10.0:
             # Python is faster - log as info
             print(f"✅ {name}: Python is {abs(slowdown_pct):.1f}% faster than OCaml!")
-    
+
     return has_regression, errors
 
 
