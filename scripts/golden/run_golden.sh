@@ -70,12 +70,14 @@ pkill -f "gwd.*-p $PORT" 2>/dev/null || true
 sleep 1
 
 echo "==> Starting gwd on port $PORT..."
+# Ensure parent etc directory exists so gwd can create per-base dirs
+mkdir -p "$BASE_DIR/etc"
 "$GENEWEB_DIR/gw/gwd" -hd "$GENEWEB_DIR/gw" -bd "$BASE_DIR" -p "$PORT" -lang en \
   > "$TMP_DIR/gwd.out" 2>&1 &
 GWD_PID=$!
 
-# Wait for gwd to be ready
-sleep 3
+# Wait for gwd to be ready (allow a little more time on CI/macOS)
+sleep 6
 
 # Verify gwd is running
 if ! kill -0 "$GWD_PID" 2>/dev/null; then
@@ -97,6 +99,11 @@ surnames::?m=N
 statistics::?m=STAT
 descendants_elizabeth::?m=D&p=Elizabeth&n=Windsor
 ancestors_charles::?m=A&p=Charles&n=Windsor
+# Additional high-signal pages
+search_zero::?m=S&v=zzzzzz
+firstnames_c::?m=P&v=c
+surnames_w::?m=N&v=w
+calendar_fixed::?m=CAL&y=1999&m=12
 "
 # Note: Relationship page (?m=C or ?m=REL) requires Sosa reference configuration
 # See docs/Issues/ISSUE_85_SKIPPED.md for details

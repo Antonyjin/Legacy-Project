@@ -17,6 +17,26 @@ permissions:
   contents: read
 
 jobs:
+  filters:
+    name: Detect golden-relevant changes
+    runs-on: ubuntu-latest
+    outputs:
+      golden: ${{ steps.filter.outputs.golden }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Paths filter
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          filters: |
+            golden:
+              - 'GeneWeb/**'
+              - 'scripts/golden/**'
+              - 'tests/golden/**'
+              - 'python_app/routes/**'
+              - 'python_app/migrated/**'
   quality:
     name: Quality Gates (format + lint + types + security)
     runs-on: macos-latest
@@ -101,11 +121,12 @@ jobs:
     name: Tests + Coverage (macOS)
     runs-on: macos-latest
     timeout-minutes: 45
-    needs: quality
+    needs: [quality, filters]
     env:
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
       TZ: UTC
+      RUN_GOLDEN: ${{ (inputs.run_golden == true) || (needs.filters.outputs.golden == 'true') || (github.event_name == 'pull_request' && contains(join(github.event.pull_request.labels.*.name, ' '), 'golden')) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -319,14 +340,14 @@ jobs:
           echo "✅ Python proxy server smoke test complete"
 
       - name: Golden validate (optional)
-        if: (steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true') && inputs.run_golden == 'true'
+        if: (steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true') && env.RUN_GOLDEN == 'true'
         run: |
           set -euo pipefail
           chmod +x ./scripts/golden/run_golden.sh || true
           bash ./scripts/golden/run_golden.sh validate
 
       - name: GEDCOM import roundtrip (optional)
-        if: (steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true') && inputs.run_golden == 'true'
+        if: (steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true') && env.RUN_GOLDEN == 'true'
         run: |
           set -euo pipefail
           chmod +x ./scripts/golden/test_gedcom_import.sh || true
