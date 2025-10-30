@@ -6,7 +6,7 @@ import subprocess
 import time
 from pathlib import Path
 from statistics import mean, median
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Union
 
 import requests
 
@@ -103,7 +103,7 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
         if attempt % 3 == 0:  # Every 3rd attempt, check for output
             try:
                 import select
-                if hasattr(select, 'select'):
+                if proc.stdout is not None and hasattr(select, 'select'):
                     readable, _, _ = select.select([proc.stdout], [], [], 0.1)
                     if readable:
                         chunk = proc.stdout.read(500)
@@ -133,7 +133,7 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
             # Try to read what we can without blocking
             import select
             if hasattr(select, 'select') and select.select([proc.stdout], [], [], 0.1)[0]:
-                output = proc.stdout.read(1000).decode('utf-8', errors='ignore')
+                output = proc.stdout.read(1000)
         except (ImportError, OSError, AttributeError):
             # select not available (Windows) or other error - try direct read
             try:
@@ -141,7 +141,7 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
                 import fcntl
                 flags = fcntl.fcntl(proc.stdout, fcntl.F_GETFL)
                 fcntl.fcntl(proc.stdout, fcntl.F_SETFL, flags | os.O_NONBLOCK)
-                output = proc.stdout.read(1000).decode('utf-8', errors='ignore')
+                output = proc.stdout.read(1000)
             except (ImportError, OSError):
                 # fcntl not available - try simple read
                 pass
@@ -160,7 +160,7 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
                 # Check if there's more data available
                 readable, _, _ = select.select([proc.stdout], [], [], 0.5)
                 if readable:
-                    output = proc.stdout.read(3000).decode('utf-8', errors='ignore')
+                    output = proc.stdout.read(3000)
         except Exception:
             pass
     if output:
@@ -196,8 +196,8 @@ def bench_endpoint(url: str, iterations: int) -> Dict[str, float | List[float]]:
 
 
 def check_regression(
-    ocaml_results: Dict[str, Dict],
-    py_results: Dict[str, Dict],
+    ocaml_results: Dict[str, Dict[str, Union[float, List[float]]]],
+    py_results: Dict[str, Dict[str, Union[float, List[float]]]],
     threshold_pct: float = 50.0,
 ) -> Tuple[bool, List[str]]:
     """
@@ -218,8 +218,12 @@ def check_regression(
         o = ocaml_results.get(name, {})
         p = py_results.get(name, {})
 
-        o_avg = o.get("avg", 0.0)
-        p_avg = p.get("avg", 0.0)
+        def get_metric(d: Dict[str, Union[float, List[float]]], key: str) -> float:
+            v: Union[float, List[float], int] = d.get(key, 0.0)
+            return float(v) if isinstance(v, (int, float)) else 0.0
+
+        o_avg = get_metric(o, "avg")
+        p_avg = get_metric(p, "avg")
 
         if o_avg == 0.0 or p_avg == 0.0:
             errors.append(f"{name}: Missing data (ocaml={o_avg:.4f}s, python={p_avg:.4f}s)")
@@ -291,8 +295,13 @@ def main() -> None:
     for name in ["home", "person", "search"]:
         o = ocaml_results.get(name, {})
         p = py_results.get(name, {})
-        o_avg = o.get("avg", 0.0)
-        p_avg = p.get("avg", 0.0)
+
+        def get_metric2(d: Dict[str, Union[float, List[float]]], key: str) -> float:
+            v: Union[float, List[float], int] = d.get(key, 0.0)
+            return float(v) if isinstance(v, (int, float)) else 0.0
+
+        o_avg = get_metric2(o, "avg")
+        p_avg = get_metric2(p, "avg")
         slowdown_pct = ((p_avg - o_avg) / o_avg * 100.0) if o_avg > 0 else 0.0
         print(
             f"- {name:6}  OCaml: avg={o_avg:.4f}s med={o.get('median', 0.0):.4f}s p95={o.get('p95', 0.0):.4f}s  |  "
