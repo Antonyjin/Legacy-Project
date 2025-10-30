@@ -207,6 +207,8 @@ jobs:
         working-directory: GeneWeb
         run: |
           set -euo pipefail
+          # Ensure parent etc directory exists so gwd can create per-base dirs
+          mkdir -p ./bases/etc
           ./gw/gwd -hd ./gw -bd ./bases -p 23179 -lang en > gwd.out 2>&1 &
           GWD_PID=$!
           # Give gwd extra time to initialize
