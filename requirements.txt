@@ -13,6 +13,9 @@ requests>=2.31.0
 # Web framework (for Python proxy server)
 flask>=3.0.0
 
+# Security: pin setuptools to a non-vulnerable version
+setuptools>=78.1.1
+
 # Coverage reporting
 coverage>=7.0.0
 
