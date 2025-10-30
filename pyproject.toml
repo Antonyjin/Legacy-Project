@@ -5,3 +5,40 @@ include = '\\.(py)$'
 exclude = '''
 /(\.git|\.venv|venv|env|ENV|build|dist|\.mypy_cache|\.pytest_cache)/
 '''
+
+[tool.hatch.project]
+name = "legacy-project"
+version = "0.0.0"
+description = "GeneWeb migration - Python proxy, tests, and tooling"
+
+[tool.hatch.envs.default]
+python = "3.11"
+dependencies = [
+  "ruff",
+  "black",
+  "pylint",
+  "mypy",
+  "bandit",
+  "pip-audit",
+  "pytest",
+  "pytest-cov",
+  "requests",
+  "flask",
+]
+
+[tool.hatch.envs.default.scripts]
+ruff = "ruff check python_app tests/python"
+black = "black --check python_app tests/python"
+pylint = "pylint -j 2 python_app tests/python"
+mypy = "mypy python_app"
+bandit = "bandit -q -r python_app"
+audit = "pip-audit"
+quality = [
+  "ruff",
+  "black",
+  "pylint",
+  "mypy",
+  "bandit",
+  "audit",
+]
+tests = "pytest -q tests/python"

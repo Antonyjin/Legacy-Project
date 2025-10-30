@@ -312,3 +312,57 @@ All quality checks run in CI before tests:
 
 **Current Status**: ✅ All quality tools configured and passing in CI!
 
+
+---
+
+## Justified and Deliberate Suppressions
+
+Some checks are intentionally suppressed with documented rationale. We prefer narrow, localized suppressions with clear comments rather than broad global ignores.
+
+- Pylint: too-many-locals (R0914) in benchmarks
+  - Scope: `python_app/benchmarks/benchmark_runner.py`
+  - Rationale: Micro-benchmark harness is a script-style tool. Splitting variables across helpers would add overhead and reduce readability in a timing-sensitive script. The scope is narrow and contained.
+
+- Pylint: import-outside-toplevel (C0415)
+  - Resolution: We moved optional platform-specific imports (select/fcntl) to guarded top-level imports. Where a dynamic import is still required, it is explicitly justified to avoid runtime costs/re-entrancy.
+
+- Mypy: attr-defined for Flask
+  - Scope: Entire project via `disable_error_code = attr-defined` with `[mypy-flask.*]` ignore
+  - Rationale: Flask exposes dynamic attributes (Blueprint/Response) that mypy cannot see without additional stubs/plugins. We keep strong typing for our production code and revisit enabling strict Flask typing later.
+
+- Pylint: duplicate-code (R0801) in route error handling
+  - Scope: Route modules under `python_app/routes/`
+  - Rationale: Repeated error handling patterns are deliberate for clarity and consistent UX. The duplication is shallow and intentional.
+
+- Bandit: nosec on subprocess calls (B404/B603/B607)
+  - Scope: `python_app/ocaml_bridge.py`, `python_app/benchmarks/benchmark_runner.py`
+  - Rationale: We never use `shell=True`. Commands are fixed/validated, ports are int-derived, and OCaml binary paths are absolute. Each call includes an inline `# nosec` with justification.
+
+- TODO comments (W0511)
+  - Scope: migration hotspots
+  - Rationale: Mark intentional placeholders for the migration phase; they don't affect behavior.
+
+We will remove suppressions when they stop being necessary (e.g., once Flask typing stubs are introduced, or when benchmarks are refactored into helper modules that don’t distort timings).
+
+
+### Using Hatch (optional)
+
+You can run all quality checks in an isolated Hatch env (no manual venv):
+
+```bash
+# Install hatch once
+python3 -m pip install --user hatch
+
+# From repo root
+hatch run quality          # Ruff, Black, Pylint, Mypy, Bandit, pip-audit
+hatch run tests            # Run Python tests
+hatch run ruff             # Individual tools are available too
+hatch run black
+hatch run pylint
+hatch run mypy
+hatch run bandit
+hatch run audit
+```
+
+Hatch uses the configuration in `pyproject.toml` to create an isolated environment with all required tools and dependencies.
+
