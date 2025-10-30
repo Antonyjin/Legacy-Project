@@ -115,6 +115,10 @@ fi
 
 echo "$ROUTES" | while IFS= read -r item; do
   [ -z "$item" ] && continue
+  # Skip comment lines in the ROUTES block
+  case "$item" in 
+    \#*) continue ;;
+  esac
   
   name=$(echo "$item" | cut -d: -f1)
   path=$(echo "$item" | cut -d: -f3-)

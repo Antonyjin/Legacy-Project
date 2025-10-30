@@ -1,25 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- $Id: calendar.txt v7.1 10/01/2023 20:01:49 $ -->
-<!-- Copyright (c) 1998-2007 INRIA -->
-<title>Calendars</title>
+<title>First name not found: "c"</title>
 <meta name="robots" content="none">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="shortcut icon" href="images/favicon_gwd.png">
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/css.txt --->
+<link rel="apple-touch-icon" href="images/favicon_gwd.png">
 <!-- $Id: css.txt v7.1 04/11/2023 04:28:54 $ -->
 <link rel="stylesheet" href="css/bootstrap.min.css?version=4.6.2">
 <link rel="stylesheet" href="css/all.min.css?hash=f036f8b0f6f63f2ab006e153aeac2b7d">
 <link rel="stylesheet" href="css/css.css?hash=de7ebf333e81605a294d2ebba9e1e54d">
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/css.txt --->
 </head>
 <body>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/hed.txt --->
 <meta name="format-detection" content="telephone=no" />
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/hed.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/home.txt --->
 <!-- $Id: home.txt v7.1 07/09/2023 00:49:55 $ -->
 <div class="d-flex flex-column fix_top fix_left home-xs">
 <a tabindex="1" role="button" class="btn btn-sm btn-link p-0 border-0" href="test?" title="Home">
@@ -73,148 +67,7 @@ name="p" placeholder="First name" tabindex="6">
 </div>
 </div>
 </div>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/home.txt --->
-<div class="container">
-<div class="row mt-4">
-<div class="mx-auto text-center">
-<h1>Calendars</h1>
-<h3 class="mt-4">Thursday - HH:MM:SS</h3>
-</div>
-</div>
-<div class="row mt-3">
-<div class="mx-auto text-center">
-<form method="get" action="test">
-<div class="form-inline">
-<input type="hidden" name="m" value="CAL"/>
-<table class="table-sm table-bordered mx-auto">
-<thead>
-<tr>
-<th class="py-2">&nbsp;</th>
-<th class="text-center" colspan="3">Month</th>
-<th class="text-center" colspan="3">Day</th>
-<th class="text-center" colspan="3">Year</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="px-2" class="mx-1" scope="row">Gregorian</th>
-<td><button class="btn btn-outline-secondary" type="submit" name="mg1">&lt;</button></td>
-<td><select class="form-control h-100 w-100" style="text-align-last:center;" name="mg">
-<option value="1">January</option>
-<option value="2">February</option>
-<option value="3">March</option>
-<option value="4">April</option>
-<option value="5">May</option>
-<option value="6">June</option>
-<option value="7">July</option>
-<option value="8">August</option>
-<option value="9">September</option>
-<option value="10" selected="selected">October</option>
-<option value="11">November</option>
-<option value="12">December</option>
-</select></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="mg2">&gt;</button></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="dg1">&lt;</button></td>
-<td><input type="number" class="form-control text-center" name="dg" min="1" max="31" value="30"/></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="dg2">&gt;</button></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="yg1">&lt;</button></td>
-<td><input class="form-control text-center" name="yg" size="6" maxlength="6" value="2025"/></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="yg2">&gt;</button></td>
-<td><button class="btn btn-outline-success" type="submit" name="tg">=</button></td>
-</tr>
-<tr>
-<th class="px-2" scope="row">Julian</th>
-<td><button class="btn btn-outline-secondary" type="submit" name="mj1">&lt;</button></td>
-<td><select class="form-control h-100 w-100" style="text-align-last:center;" name="mj">
-<option value="1">January</option>
-<option value="2">February</option>
-<option value="3">March</option>
-<option value="4">April</option>
-<option value="5">May</option>
-<option value="6">June</option>
-<option value="7">July</option>
-<option value="8">August</option>
-<option value="9">September</option>
-<option value="10" selected="selected">October</option>
-<option value="11">November</option>
-<option value="12">December</option>
-</select></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="mj2">&gt;</button></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="dj1">&lt;</button></td>
-<td><input type="number" class="form-control text-center" name="dj" min="1" max="31" value="17"/></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="dj2">&gt;</button></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="yj1">&lt;</button></td>
-<td><input class="form-control text-center" name="yj" size="6" maxlength="6" value="2025"/></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="yj2">&gt;</button></td>
-<td><button class="btn btn-outline-success" type="submit" name="tj">=</button></td>
-</tr>
-<tr>
-<th class="px-2" scope="row">French republican</th>
-<td><button class="btn btn-outline-secondary" type="submit" name="mf1">&lt;</button></td>
-<td><select class="form-control h-100 w-100" style="text-align-last:center;" name="mf">
-<option value="1">Vendémiaire</option>
-<option value="2" selected="selected">Brumaire</option>
-<option value="3">Frimaire</option>
-<option value="4">Nivôse</option>
-<option value="5">Pluviose</option>
-<option value="6">Ventôse</option>
-<option value="7">Germinal</option>
-<option value="8">Floréal</option>
-<option value="9">Prairial</option>
-<option value="10">Messidor</option>
-<option value="11">Thermidor</option>
-<option value="12">Fructidor</option>
-<option value="13">Extra</option>
-</select></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="mf2">&gt;</button></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="df1">&lt;</button></td>
-<td><input type="number" class="form-control text-center" name="df" min="1" max="31" value="9"/></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="df2">&gt;</button></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="yf1">&lt;</button></td>
-<td><input class="form-control text-center" name="yf" size="6" maxlength="6" value="234"/></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="yf2">&gt;</button></td>
-<td><button class="btn btn-outline-success" type="submit" name="tf">=</button></td>
-</tr>
-<tr>
-<th class="px-2" scope="row">Hebrew</th>
-<td><button class="btn btn-outline-secondary" type="submit" name="mh1">&lt;</button></td>
-<td><select class="form-control h-100 w-100" style="text-align-last:center;" name="mh">
-<option value="1">Tishri</option>
-<option value="2" selected="selected">Heshvan</option>
-<option value="3">Kislev</option>
-<option value="4">Tevet</option>
-<option value="5">Shevat</option>
-<option value="6">Adar I</option>
-<option value="7">Adar II</option>
-<option value="8">Nisan</option>
-<option value="9">Iyyar</option>
-<option value="10">Sivan</option>
-<option value="11">Tammuz</option>
-<option value="12">Av</option>
-<option value="13">Elul</option>
-</select></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="mh2">&gt;</button></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="dh1">&lt;</button></td>
-<td><input type="number" class="form-control text-center" name="dh" min="1" max="31" value="8"/></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="dh2">&gt;</button></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="yh1">&lt;</button></td>
-<td><input class="form-control text-center" name="yh" size="6" maxlength="6" value="5786"/></td>
-<td><button class="btn btn-outline-secondary" type="submit" name="yh2">&gt;</button></td>
-<td><button class="btn btn-outline-success" type="submit" name="th">=</button></td>
-</tr>
-</tbody>
-</table>
-</div>
-</form>
-<br>
-<span>Number of days after new moon: 10</span>
-<br><br>
-Julian day: 2,460,979</div>
-</div>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/trl.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/trl.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/copyr.txt --->
+<div class="container"><h1 class = "error">First name not found: "c"</h1>
 <!-- $Id: copyr.txt 7.1-beta 18/12/2023 22:03:44 $ -->
 <div class="d-flex flex-row justify-content-center justify-content-lg-end my-2" id="copyr">
 <div class="d-flex flex-wrap justify-content-md-end">
@@ -229,39 +82,41 @@ data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <span class="text-uppercase">en</span>
 <span class="sr-only">, select language</span>
 </button>
-<div class="dropdown-menu scrollable-lang" aria-labelledby="dropdownMenu1">
-<a class="dropdown-item" id="lang_af" href="test?lang=af&m=CAL"><code>af&nbsp;&nbsp;&nbsp; </code>Afrikaans</a>
-<a class="dropdown-item" id="lang_ar" href="test?lang=ar&m=CAL"><code>ar&nbsp;&nbsp;&nbsp; </code>Arabic</a>
-<a class="dropdown-item" id="lang_bg" href="test?lang=bg&m=CAL"><code>bg&nbsp;&nbsp;&nbsp; </code>Bulgarian</a>
-<a class="dropdown-item" id="lang_br" href="test?lang=br&m=CAL"><code>br&nbsp;&nbsp;&nbsp; </code>Breton</a>
-<a class="dropdown-item" id="lang_ca" href="test?lang=ca&m=CAL"><code>ca&nbsp;&nbsp;&nbsp; </code>Catalan</a>
-<a class="dropdown-item" id="lang_co" href="test?lang=co&m=CAL"><code>co&nbsp;&nbsp;&nbsp; </code>Corsican</a>
-<a class="dropdown-item" id="lang_cs" href="test?lang=cs&m=CAL"><code>cs&nbsp;&nbsp;&nbsp; </code>Czech</a>
-<a class="dropdown-item" id="lang_da" href="test?lang=da&m=CAL"><code>da&nbsp;&nbsp;&nbsp; </code>Danish</a>
-<a class="dropdown-item" id="lang_de" href="test?lang=de&m=CAL"><code>de&nbsp;&nbsp;&nbsp; </code>German</a>
-<a class="dropdown-item" id="lang_eo" href="test?lang=eo&m=CAL"><code>eo&nbsp;&nbsp;&nbsp; </code>Esperanto</a>
-<a class="dropdown-item" id="lang_es" href="test?lang=es&m=CAL"><code>es&nbsp;&nbsp;&nbsp; </code>Spanish</a>
-<a class="dropdown-item" id="lang_et" href="test?lang=et&m=CAL"><code>et&nbsp;&nbsp;&nbsp; </code>Estonian</a>
-<a class="dropdown-item" id="lang_fi" href="test?lang=fi&m=CAL"><code>fi&nbsp;&nbsp;&nbsp; </code>Finnish</a>
-<a class="dropdown-item" id="lang_fr" href="test?lang=fr&m=CAL"><code>fr&nbsp;&nbsp;&nbsp; </code>French</a>
-<a class="dropdown-item" id="lang_he" href="test?lang=he&m=CAL"><code>he&nbsp;&nbsp;&nbsp; </code>Hebrew</a>
-<a class="dropdown-item" id="lang_is" href="test?lang=is&m=CAL"><code>is&nbsp;&nbsp;&nbsp; </code>Icelandic</a>
-<a class="dropdown-item" id="lang_it" href="test?lang=it&m=CAL"><code>it&nbsp;&nbsp;&nbsp; </code>Italian</a>
-<a class="dropdown-item" id="lang_lt" href="test?lang=lt&m=CAL"><code>lt&nbsp;&nbsp;&nbsp; </code>Lithuanian</a>
-<a class="dropdown-item" id="lang_lv" href="test?lang=lv&m=CAL"><code>lv&nbsp;&nbsp;&nbsp; </code>Latvian</a>
-<a class="dropdown-item" id="lang_nl" href="test?lang=nl&m=CAL"><code>nl&nbsp;&nbsp;&nbsp; </code>Dutch</a>
-<a class="dropdown-item" id="lang_no" href="test?lang=no&m=CAL"><code>no&nbsp;&nbsp;&nbsp; </code>Norwegian</a>
-<a class="dropdown-item" id="lang_oc" href="test?lang=oc&m=CAL"><code>oc&nbsp;&nbsp;&nbsp; </code>Occitan</a>
-<a class="dropdown-item" id="lang_pl" href="test?lang=pl&m=CAL"><code>pl&nbsp;&nbsp;&nbsp; </code>Polish</a>
-<a class="dropdown-item" id="lang_pt" href="test?lang=pt&m=CAL"><code>pt&nbsp;&nbsp;&nbsp; </code>Portuguese</a>
-<a class="dropdown-item" id="lang_pt-br" href="test?lang=pt-br&m=CAL"><code>pt-br </code>Brazilian-Portuguese</a>
-<a class="dropdown-item" id="lang_ro" href="test?lang=ro&m=CAL"><code>ro&nbsp;&nbsp;&nbsp; </code>Romanian</a>
-<a class="dropdown-item" id="lang_ru" href="test?lang=ru&m=CAL"><code>ru&nbsp;&nbsp;&nbsp; </code>Russian</a>
-<a class="dropdown-item" id="lang_sk" href="test?lang=sk&m=CAL"><code>sk&nbsp;&nbsp;&nbsp; </code>Slovak</a>
-<a class="dropdown-item" id="lang_sl" href="test?lang=sl&m=CAL"><code>sl&nbsp;&nbsp;&nbsp; </code>Slovenian</a>
-<a class="dropdown-item" id="lang_sv" href="test?lang=sv&m=CAL"><code>sv&nbsp;&nbsp;&nbsp; </code>Swedish</a>
-<a class="dropdown-item" id="lang_tr" href="test?lang=tr&m=CAL"><code>tr&nbsp;&nbsp;&nbsp; </code>Turkish</a>
-<a class="dropdown-item" id="lang_zh" href="test?lang=zh&m=CAL"><code>zh&nbsp;&nbsp;&nbsp; </code>Chinese</a>
+<div class="dropdown-menu scrollable-lang short" aria-labelledby="dropdownMenu1">
+<!-- Language options remain the same -->
+<a class="dropdown-item" href="test?lang=af&m=P&v=c">af</a>
+<a class="dropdown-item" href="test?lang=ar&m=P&v=c">ar</a>
+<a class="dropdown-item" href="test?lang=bg&m=P&v=c">bg</a>
+<a class="dropdown-item" href="test?lang=br&m=P&v=c">br</a>
+<a class="dropdown-item" href="test?lang=ca&m=P&v=c">ca</a>
+<a class="dropdown-item" href="test?lang=co&m=P&v=c">co</a>
+<a class="dropdown-item" href="test?lang=cs&m=P&v=c">cs</a>
+<a class="dropdown-item" href="test?lang=da&m=P&v=c">da</a>
+<a class="dropdown-item" href="test?lang=de&m=P&v=c">de</a>
+<a class="dropdown-item" href="test?m=P&v=c">en</a>
+<a class="dropdown-item" href="test?lang=eo&m=P&v=c">eo</a>
+<a class="dropdown-item" href="test?lang=es&m=P&v=c">es</a>
+<a class="dropdown-item" href="test?lang=et&m=P&v=c">et</a>
+<a class="dropdown-item" href="test?lang=fi&m=P&v=c">fi</a>
+<a class="dropdown-item" href="test?lang=fr&m=P&v=c">fr</a>
+<a class="dropdown-item" href="test?lang=he&m=P&v=c">he</a>
+<a class="dropdown-item" href="test?lang=is&m=P&v=c">is</a>
+<a class="dropdown-item" href="test?lang=it&m=P&v=c">it</a>
+<a class="dropdown-item" href="test?lang=lt&m=P&v=c">lt</a>
+<a class="dropdown-item" href="test?lang=lv&m=P&v=c">lv</a>
+<a class="dropdown-item" href="test?lang=nl&m=P&v=c">nl</a>
+<a class="dropdown-item" href="test?lang=no&m=P&v=c">no</a>
+<a class="dropdown-item" href="test?lang=oc&m=P&v=c">oc</a>
+<a class="dropdown-item" href="test?lang=pl&m=P&v=c">pl</a>
+<a class="dropdown-item" href="test?lang=pt&m=P&v=c">pt</a>
+<a class="dropdown-item" href="test?lang=pt-br&m=P&v=c">pt-br</a>
+<a class="dropdown-item" href="test?lang=ro&m=P&v=c">ro</a>
+<a class="dropdown-item" href="test?lang=ru&m=P&v=c">ru</a>
+<a class="dropdown-item" href="test?lang=sk&m=P&v=c">sk</a>
+<a class="dropdown-item" href="test?lang=sl&m=P&v=c">sl</a>
+<a class="dropdown-item" href="test?lang=sv&m=P&v=c">sv</a>
+<a class="dropdown-item" href="test?lang=tr&m=P&v=c">tr</a>
+<a class="dropdown-item" href="test?lang=zh&m=P&v=c">zh</a>
 </div>
 </div>
 <!-- Connections info -->
@@ -270,7 +125,7 @@ data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <div class="d-flex flex-column justify-content-md-end align-self-center ml-1 ml-md-3 ml-lg-4">
 <div class="ml-auto mb-0">
 <a role="button" class="mr-1"
-href="test?templ=templm&m=CAL"
+href="test?templ=templm&m=P&v=c"
 data-toggle="tooltip"
 title="templm">
 <i class="fab fa-markdown" aria-hidden="true"></i>
@@ -279,7 +134,7 @@ title="templm">
 <a href="https://github.com//tree/b94cad5"
 data-toggle="tooltip"
 data-html="true"
-title="Line 97-ut-py-001-setup-pytest-infrastructure compiled on 2025-10-21<br>from commit b94cad5 (2025-10-21)">
+title="Line 97-ut-py-001-setup-pytest-infrastructure compiled on 2025-10-21&#010;from commit b94cad5 (2025-10-21)">
 GeneWeb v. 7.1-beta</a>
 </div>
 <div class="btn-group mt-0">
@@ -304,9 +159,6 @@ title="GeneWeb Github">
 </div>
 </div>
 </div>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/copyr.txt --->
-</div>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/js.txt --->
 <!-- $Id: js.txt v7.1 10/01/2025 04:15:45 $ -->
 <script src="js/jquery.min.js?version=3.7.1"></script>
 <script src="js/bootstrap.bundle.min.js?version=4.6.1"></script>
@@ -489,7 +341,6 @@ setupModalAutofocus();
 setupFloatingPlaceholders();
 });
 </script>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/js.txt --->
 <script>
  var q_time = TIME;
  var nb_errors = 0;

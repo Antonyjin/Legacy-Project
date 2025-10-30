@@ -230,38 +230,38 @@ data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <span class="sr-only">, select language</span>
 </button>
 <div class="dropdown-menu scrollable-lang" aria-labelledby="dropdownMenu1">
-<a class="dropdown-item" id="lang_af" href="test?lang=af&m=CAL"><code>af&nbsp;&nbsp;&nbsp; </code>Afrikaans</a>
-<a class="dropdown-item" id="lang_ar" href="test?lang=ar&m=CAL"><code>ar&nbsp;&nbsp;&nbsp; </code>Arabic</a>
-<a class="dropdown-item" id="lang_bg" href="test?lang=bg&m=CAL"><code>bg&nbsp;&nbsp;&nbsp; </code>Bulgarian</a>
-<a class="dropdown-item" id="lang_br" href="test?lang=br&m=CAL"><code>br&nbsp;&nbsp;&nbsp; </code>Breton</a>
-<a class="dropdown-item" id="lang_ca" href="test?lang=ca&m=CAL"><code>ca&nbsp;&nbsp;&nbsp; </code>Catalan</a>
-<a class="dropdown-item" id="lang_co" href="test?lang=co&m=CAL"><code>co&nbsp;&nbsp;&nbsp; </code>Corsican</a>
-<a class="dropdown-item" id="lang_cs" href="test?lang=cs&m=CAL"><code>cs&nbsp;&nbsp;&nbsp; </code>Czech</a>
-<a class="dropdown-item" id="lang_da" href="test?lang=da&m=CAL"><code>da&nbsp;&nbsp;&nbsp; </code>Danish</a>
-<a class="dropdown-item" id="lang_de" href="test?lang=de&m=CAL"><code>de&nbsp;&nbsp;&nbsp; </code>German</a>
-<a class="dropdown-item" id="lang_eo" href="test?lang=eo&m=CAL"><code>eo&nbsp;&nbsp;&nbsp; </code>Esperanto</a>
-<a class="dropdown-item" id="lang_es" href="test?lang=es&m=CAL"><code>es&nbsp;&nbsp;&nbsp; </code>Spanish</a>
-<a class="dropdown-item" id="lang_et" href="test?lang=et&m=CAL"><code>et&nbsp;&nbsp;&nbsp; </code>Estonian</a>
-<a class="dropdown-item" id="lang_fi" href="test?lang=fi&m=CAL"><code>fi&nbsp;&nbsp;&nbsp; </code>Finnish</a>
-<a class="dropdown-item" id="lang_fr" href="test?lang=fr&m=CAL"><code>fr&nbsp;&nbsp;&nbsp; </code>French</a>
-<a class="dropdown-item" id="lang_he" href="test?lang=he&m=CAL"><code>he&nbsp;&nbsp;&nbsp; </code>Hebrew</a>
-<a class="dropdown-item" id="lang_is" href="test?lang=is&m=CAL"><code>is&nbsp;&nbsp;&nbsp; </code>Icelandic</a>
-<a class="dropdown-item" id="lang_it" href="test?lang=it&m=CAL"><code>it&nbsp;&nbsp;&nbsp; </code>Italian</a>
-<a class="dropdown-item" id="lang_lt" href="test?lang=lt&m=CAL"><code>lt&nbsp;&nbsp;&nbsp; </code>Lithuanian</a>
-<a class="dropdown-item" id="lang_lv" href="test?lang=lv&m=CAL"><code>lv&nbsp;&nbsp;&nbsp; </code>Latvian</a>
-<a class="dropdown-item" id="lang_nl" href="test?lang=nl&m=CAL"><code>nl&nbsp;&nbsp;&nbsp; </code>Dutch</a>
-<a class="dropdown-item" id="lang_no" href="test?lang=no&m=CAL"><code>no&nbsp;&nbsp;&nbsp; </code>Norwegian</a>
-<a class="dropdown-item" id="lang_oc" href="test?lang=oc&m=CAL"><code>oc&nbsp;&nbsp;&nbsp; </code>Occitan</a>
-<a class="dropdown-item" id="lang_pl" href="test?lang=pl&m=CAL"><code>pl&nbsp;&nbsp;&nbsp; </code>Polish</a>
-<a class="dropdown-item" id="lang_pt" href="test?lang=pt&m=CAL"><code>pt&nbsp;&nbsp;&nbsp; </code>Portuguese</a>
-<a class="dropdown-item" id="lang_pt-br" href="test?lang=pt-br&m=CAL"><code>pt-br </code>Brazilian-Portuguese</a>
-<a class="dropdown-item" id="lang_ro" href="test?lang=ro&m=CAL"><code>ro&nbsp;&nbsp;&nbsp; </code>Romanian</a>
-<a class="dropdown-item" id="lang_ru" href="test?lang=ru&m=CAL"><code>ru&nbsp;&nbsp;&nbsp; </code>Russian</a>
-<a class="dropdown-item" id="lang_sk" href="test?lang=sk&m=CAL"><code>sk&nbsp;&nbsp;&nbsp; </code>Slovak</a>
-<a class="dropdown-item" id="lang_sl" href="test?lang=sl&m=CAL"><code>sl&nbsp;&nbsp;&nbsp; </code>Slovenian</a>
-<a class="dropdown-item" id="lang_sv" href="test?lang=sv&m=CAL"><code>sv&nbsp;&nbsp;&nbsp; </code>Swedish</a>
-<a class="dropdown-item" id="lang_tr" href="test?lang=tr&m=CAL"><code>tr&nbsp;&nbsp;&nbsp; </code>Turkish</a>
-<a class="dropdown-item" id="lang_zh" href="test?lang=zh&m=CAL"><code>zh&nbsp;&nbsp;&nbsp; </code>Chinese</a>
+<a class="dropdown-item" id="lang_af" href="test?lang=af&m=CAL&y=1999"><code>af&nbsp;&nbsp;&nbsp; </code>Afrikaans</a>
+<a class="dropdown-item" id="lang_ar" href="test?lang=ar&m=CAL&y=1999"><code>ar&nbsp;&nbsp;&nbsp; </code>Arabic</a>
+<a class="dropdown-item" id="lang_bg" href="test?lang=bg&m=CAL&y=1999"><code>bg&nbsp;&nbsp;&nbsp; </code>Bulgarian</a>
+<a class="dropdown-item" id="lang_br" href="test?lang=br&m=CAL&y=1999"><code>br&nbsp;&nbsp;&nbsp; </code>Breton</a>
+<a class="dropdown-item" id="lang_ca" href="test?lang=ca&m=CAL&y=1999"><code>ca&nbsp;&nbsp;&nbsp; </code>Catalan</a>
+<a class="dropdown-item" id="lang_co" href="test?lang=co&m=CAL&y=1999"><code>co&nbsp;&nbsp;&nbsp; </code>Corsican</a>
+<a class="dropdown-item" id="lang_cs" href="test?lang=cs&m=CAL&y=1999"><code>cs&nbsp;&nbsp;&nbsp; </code>Czech</a>
+<a class="dropdown-item" id="lang_da" href="test?lang=da&m=CAL&y=1999"><code>da&nbsp;&nbsp;&nbsp; </code>Danish</a>
+<a class="dropdown-item" id="lang_de" href="test?lang=de&m=CAL&y=1999"><code>de&nbsp;&nbsp;&nbsp; </code>German</a>
+<a class="dropdown-item" id="lang_eo" href="test?lang=eo&m=CAL&y=1999"><code>eo&nbsp;&nbsp;&nbsp; </code>Esperanto</a>
+<a class="dropdown-item" id="lang_es" href="test?lang=es&m=CAL&y=1999"><code>es&nbsp;&nbsp;&nbsp; </code>Spanish</a>
+<a class="dropdown-item" id="lang_et" href="test?lang=et&m=CAL&y=1999"><code>et&nbsp;&nbsp;&nbsp; </code>Estonian</a>
+<a class="dropdown-item" id="lang_fi" href="test?lang=fi&m=CAL&y=1999"><code>fi&nbsp;&nbsp;&nbsp; </code>Finnish</a>
+<a class="dropdown-item" id="lang_fr" href="test?lang=fr&m=CAL&y=1999"><code>fr&nbsp;&nbsp;&nbsp; </code>French</a>
+<a class="dropdown-item" id="lang_he" href="test?lang=he&m=CAL&y=1999"><code>he&nbsp;&nbsp;&nbsp; </code>Hebrew</a>
+<a class="dropdown-item" id="lang_is" href="test?lang=is&m=CAL&y=1999"><code>is&nbsp;&nbsp;&nbsp; </code>Icelandic</a>
+<a class="dropdown-item" id="lang_it" href="test?lang=it&m=CAL&y=1999"><code>it&nbsp;&nbsp;&nbsp; </code>Italian</a>
+<a class="dropdown-item" id="lang_lt" href="test?lang=lt&m=CAL&y=1999"><code>lt&nbsp;&nbsp;&nbsp; </code>Lithuanian</a>
+<a class="dropdown-item" id="lang_lv" href="test?lang=lv&m=CAL&y=1999"><code>lv&nbsp;&nbsp;&nbsp; </code>Latvian</a>
+<a class="dropdown-item" id="lang_nl" href="test?lang=nl&m=CAL&y=1999"><code>nl&nbsp;&nbsp;&nbsp; </code>Dutch</a>
+<a class="dropdown-item" id="lang_no" href="test?lang=no&m=CAL&y=1999"><code>no&nbsp;&nbsp;&nbsp; </code>Norwegian</a>
+<a class="dropdown-item" id="lang_oc" href="test?lang=oc&m=CAL&y=1999"><code>oc&nbsp;&nbsp;&nbsp; </code>Occitan</a>
+<a class="dropdown-item" id="lang_pl" href="test?lang=pl&m=CAL&y=1999"><code>pl&nbsp;&nbsp;&nbsp; </code>Polish</a>
+<a class="dropdown-item" id="lang_pt" href="test?lang=pt&m=CAL&y=1999"><code>pt&nbsp;&nbsp;&nbsp; </code>Portuguese</a>
+<a class="dropdown-item" id="lang_pt-br" href="test?lang=pt-br&m=CAL&y=1999"><code>pt-br </code>Brazilian-Portuguese</a>
+<a class="dropdown-item" id="lang_ro" href="test?lang=ro&m=CAL&y=1999"><code>ro&nbsp;&nbsp;&nbsp; </code>Romanian</a>
+<a class="dropdown-item" id="lang_ru" href="test?lang=ru&m=CAL&y=1999"><code>ru&nbsp;&nbsp;&nbsp; </code>Russian</a>
+<a class="dropdown-item" id="lang_sk" href="test?lang=sk&m=CAL&y=1999"><code>sk&nbsp;&nbsp;&nbsp; </code>Slovak</a>
+<a class="dropdown-item" id="lang_sl" href="test?lang=sl&m=CAL&y=1999"><code>sl&nbsp;&nbsp;&nbsp; </code>Slovenian</a>
+<a class="dropdown-item" id="lang_sv" href="test?lang=sv&m=CAL&y=1999"><code>sv&nbsp;&nbsp;&nbsp; </code>Swedish</a>
+<a class="dropdown-item" id="lang_tr" href="test?lang=tr&m=CAL&y=1999"><code>tr&nbsp;&nbsp;&nbsp; </code>Turkish</a>
+<a class="dropdown-item" id="lang_zh" href="test?lang=zh&m=CAL&y=1999"><code>zh&nbsp;&nbsp;&nbsp; </code>Chinese</a>
 </div>
 </div>
 <!-- Connections info -->
@@ -270,7 +270,7 @@ data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <div class="d-flex flex-column justify-content-md-end align-self-center ml-1 ml-md-3 ml-lg-4">
 <div class="ml-auto mb-0">
 <a role="button" class="mr-1"
-href="test?templ=templm&m=CAL"
+href="test?templ=templm&m=CAL&y=1999"
 data-toggle="tooltip"
 title="templm">
 <i class="fab fa-markdown" aria-hidden="true"></i>
