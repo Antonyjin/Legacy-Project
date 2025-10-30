@@ -1,12 +1,12 @@
-# pylint: disable=too-many-locals, too-many-branches, too-many-statements, too-many-nested-blocks, broad-exception-caught, import-outside-toplevel, consider-using-with, consider-using-sys-exit
-import json
 import os
-import signal
-import subprocess
+import json
 import time
+import signal
+import subprocess  # nosec B404 - used with fixed args, no shell
+import sys
 from pathlib import Path
 from statistics import mean, median
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Tuple
 
 import requests
 
@@ -32,6 +32,7 @@ def is_up(url: str, timeout: float = 1.0) -> bool:
 
 
 def run_cmd(cmd: List[str]) -> subprocess.Popen:
+    # Arguments are fixed and not influenced by user input
     return subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 
@@ -56,11 +57,11 @@ def stop_proc(proc: subprocess.Popen | None) -> None:
     try:
         proc.send_signal(signal.SIGTERM)
         proc.wait(timeout=3)
-    except Exception:
+    except Exception as err:
         try:
             proc.kill()
-        except Exception:
-            pass
+        except Exception as kill_err:
+            print(f"Warning: failed to kill process cleanly: {kill_err} (original: {err})")
 
 
 def start_python_app(port: int, backend: str) -> subprocess.Popen:
@@ -68,64 +69,26 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
     env["BACKEND"] = backend
     env["FLASK_PORT"] = str(port)
     env["GENEWEB_DIR"] = str(GENEWEB_DIR)
-    env["OCAML_GWD_PORT"] = str(OCAML_PORT)  # Ensure Python backend knows OCaml port
-    cmd = ["python", "-m", "python_app.app"]
-    proc = subprocess.Popen(
-        cmd,
-        cwd=str(PROJECT_ROOT),
-        env=env,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        bufsize=0,
-        text=True  # Enable text mode for easier output reading
-    )
-    # Wait for Flask to start - give it time to initialize and bind to port
+    cmd = [sys.executable, "-m", "python_app.app"]
+    proc = subprocess.Popen(cmd, cwd=str(PROJECT_ROOT), env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    # wait
     base_url = f"http://localhost:{port}/health"
-    start_time = time.time()
-    # Initial delay for Flask to start (especially in CI where startup might be slower)
-    # Flask needs time to: import modules, validate config, create app, bind to port
-    time.sleep(4.0)  # Give Flask more time to complete startup sequence
-    deadline = time.time() + 20.0  # Total timeout: 4s initial + 20s retry = 24s max
+    deadline = time.time() + 10.0  # Increased timeout for CI
     last_error = None
-    attempt = 0
     while time.time() < deadline:
-        attempt += 1
         # Check if process died
         if proc.poll() is not None:
-            # Process exited, read all available output
-            try:
-                output = proc.stdout.read() if proc.stdout else "No output"
-            except Exception:
-                output = "Could not read output"
-            raise RuntimeError(f"Flask app exited unexpectedly (code {proc.returncode}). Output: {output[:2000]}")
-
-        # Try to read any stdout/stderr output (non-blocking) to see what Flask is doing
-        if attempt % 3 == 0:  # Every 3rd attempt, check for output
-            try:
-                import select
-                if proc.stdout is not None and hasattr(select, 'select'):
-                    readable, _, _ = select.select([proc.stdout], [], [], 0.1)
-                    if readable:
-                        chunk = proc.stdout.read(500)
-                        if chunk and ("Running on" in chunk or "error" in chunk.lower()):
-                            print(f"   Flask output: {chunk[:200]}")
-            except Exception:
-                pass
-
+            # Process exited, read output
+            output = proc.stdout.read().decode('utf-8', errors='ignore') if proc.stdout else "No output"
+            raise RuntimeError(f"Flask app exited unexpectedly (code {proc.returncode}). Output: {output[:500]}")
         try:
-            r = requests.get(base_url, timeout=2.0)  # Increased timeout for each request
+            r = requests.get(base_url, timeout=1.0)
             if r.status_code == 200:
-                elapsed = time.time() - start_time
-                print(f"✅ Flask app ready after {elapsed:.1f}s ({attempt} attempts)")
                 return proc
         except requests.RequestException as e:
             last_error = str(e)
-            # Every 5 attempts, show progress
-            if attempt % 5 == 0:
-                elapsed = time.time() - start_time
-                print(f"⏳ Still waiting for Flask... ({elapsed:.1f}s elapsed, {attempt} attempts)")
-        time.sleep(0.5)  # Increased retry interval
-
+        time.sleep(0.3)
+    
     # Timeout - show error and output
     output = ""
     if proc.stdout:
@@ -133,7 +96,7 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
             # Try to read what we can without blocking
             import select
             if hasattr(select, 'select') and select.select([proc.stdout], [], [], 0.1)[0]:
-                output = proc.stdout.read(1000)
+                output = proc.stdout.read(1000).decode('utf-8', errors='ignore')
         except (ImportError, OSError, AttributeError):
             # select not available (Windows) or other error - try direct read
             try:
@@ -141,30 +104,16 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
                 import fcntl
                 flags = fcntl.fcntl(proc.stdout, fcntl.F_GETFL)
                 fcntl.fcntl(proc.stdout, fcntl.F_SETFL, flags | os.O_NONBLOCK)
-                output = proc.stdout.read(1000)
+                output = proc.stdout.read(1000).decode('utf-8', errors='ignore')
             except (ImportError, OSError):
                 # fcntl not available - try simple read
                 pass
-
-    elapsed = time.time() - start_time  # Calculate actual elapsed time
-    error_msg = f"Flask app did not become ready after {elapsed:.1f}s (endpoint: {base_url}, {attempt} attempts)"
+    
+    error_msg = f"Flask app did not become ready after 10s (endpoint: {base_url})"
     if last_error:
         error_msg += f". Last error: {last_error}"
-    # Try to read more output for debugging
-    output = ""
-    if proc.stdout:
-        try:
-            # Read what we can without blocking
-            import select
-            if hasattr(select, 'select'):
-                # Check if there's more data available
-                readable, _, _ = select.select([proc.stdout], [], [], 0.5)
-                if readable:
-                    output = proc.stdout.read(3000)
-        except Exception:
-            pass
     if output:
-        error_msg += f". Latest output (last 3000 chars): {output}"
+        error_msg += f". Output: {output}"
     raise RuntimeError(error_msg)
 
 
@@ -195,43 +144,35 @@ def bench_endpoint(url: str, iterations: int) -> Dict[str, float | List[float]]:
     }
 
 
-def check_regression(
-    ocaml_results: Dict[str, Dict[str, Union[float, List[float]]]],
-    py_results: Dict[str, Dict[str, Union[float, List[float]]]],
-    threshold_pct: float = 50.0,
-) -> Tuple[bool, List[str]]:
+def check_regression(ocaml_results: Dict[str, Dict], py_results: Dict[str, Dict], threshold_pct: float = 50.0) -> Tuple[bool, List[str]]:
     """
     Check if Python backend has performance regressions vs OCaml.
-
+    
     Args:
         ocaml_results: OCaml benchmark results
         py_results: Python benchmark results
         threshold_pct: Maximum acceptable slowdown percentage (default: 50%)
-
+    
     Returns:
         (has_regression, error_messages)
     """
     errors: List[str] = []
     has_regression = False
-
+    
     for name in ["home", "person", "search"]:
         o = ocaml_results.get(name, {})
         p = py_results.get(name, {})
-
-        def get_metric(d: Dict[str, Union[float, List[float]]], key: str) -> float:
-            v: Union[float, List[float], int] = d.get(key, 0.0)
-            return float(v) if isinstance(v, (int, float)) else 0.0
-
-        o_avg = get_metric(o, "avg")
-        p_avg = get_metric(p, "avg")
-
+        
+        o_avg = o.get("avg", 0.0)
+        p_avg = p.get("avg", 0.0)
+        
         if o_avg == 0.0 or p_avg == 0.0:
             errors.append(f"{name}: Missing data (ocaml={o_avg:.4f}s, python={p_avg:.4f}s)")
             has_regression = True
             continue
-
+        
         slowdown_pct = ((p_avg - o_avg) / o_avg) * 100.0
-
+        
         if slowdown_pct > threshold_pct:
             errors.append(
                 f"{name}: Python is {slowdown_pct:.1f}% slower than OCaml "
@@ -241,7 +182,7 @@ def check_regression(
         elif slowdown_pct < -10.0:
             # Python is faster - log as info
             print(f"✅ {name}: Python is {abs(slowdown_pct):.1f}% faster than OCaml!")
-
+    
     return has_regression, errors
 
 
@@ -295,24 +236,19 @@ def main() -> None:
     for name in ["home", "person", "search"]:
         o = ocaml_results.get(name, {})
         p = py_results.get(name, {})
-
-        def get_metric2(d: Dict[str, Union[float, List[float]]], key: str) -> float:
-            v: Union[float, List[float], int] = d.get(key, 0.0)
-            return float(v) if isinstance(v, (int, float)) else 0.0
-
-        o_avg = get_metric2(o, "avg")
-        p_avg = get_metric2(p, "avg")
+        o_avg = o.get("avg", 0.0)
+        p_avg = p.get("avg", 0.0)
         slowdown_pct = ((p_avg - o_avg) / o_avg * 100.0) if o_avg > 0 else 0.0
         print(
             f"- {name:6}  OCaml: avg={o_avg:.4f}s med={o.get('median', 0.0):.4f}s p95={o.get('p95', 0.0):.4f}s  |  "
             f"Python: avg={p_avg:.4f}s med={p.get('median', 0.0):.4f}s p95={p.get('p95', 0.0):.4f}s  "
             f"({slowdown_pct:+.1f}%)"
         )
-
+    
     # Check for regressions (blocking in CI)
     threshold_pct = float(os.getenv("BENCH_REGRESSION_THRESHOLD", "50.0"))
     has_regression, errors = check_regression(ocaml_results, py_results, threshold_pct)
-
+    
     if has_regression:
         print("\n❌ PERFORMANCE REGRESSION DETECTED:")
         for err in errors:

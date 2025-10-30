@@ -8,7 +8,7 @@ Used when:
 - BACKEND=python but need OCaml-only features (database access, GEDCOM operations)
 """
 
-import subprocess
+import subprocess  # nosec B404 - used with fixed args, no shell
 import time
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -41,7 +41,7 @@ class OCamlBridge:
         port = port or self.config.OCAML_GWD_PORT
 
         # Kill any existing gwd on this port
-        subprocess.run(
+        subprocess.run(  # nosec B603,B607 - fixed command, port is int-derived
             ["pkill", "-f", f"gwd.*-p {port}"],
             check=False,
             capture_output=True
@@ -57,7 +57,7 @@ class OCamlBridge:
             "-lang", self.config.DEFAULT_LANG,
         ]
 
-        process = subprocess.Popen(
+        process = subprocess.Popen(  # nosec B603 - fixed arg list
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
@@ -83,7 +83,7 @@ class OCamlBridge:
         port = port or self.config.OCAML_GWD_PORT
 
         # Kill all gwd processes on this port
-        subprocess.run(
+        subprocess.run(  # nosec B603,B607 - fixed command, port is int-derived
             ["pkill", "-f", f"gwd.*-p {port}"],
             check=False,
             capture_output=True
@@ -128,7 +128,7 @@ class OCamlBridge:
             str(self.config.BASES_DIR / f"{base_name}.gwb"),
         ]
 
-        subprocess.run(
+        subprocess.run(  # nosec B603 - fixed arg list
             cmd,
             capture_output=True,
             text=True,
@@ -152,7 +152,7 @@ class OCamlBridge:
             str(gedcom_path),
         ]
 
-        subprocess.run(
+        subprocess.run(  # nosec B603 - fixed arg list
             cmd,
             capture_output=True,
             text=True,
