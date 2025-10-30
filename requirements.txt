@@ -24,6 +24,8 @@ unidecode>=1.3.0
 
 # Code quality (optional, for development)
 black>=23.0.0
+# Black runtime dependency; avoid older Click incompatibilities
+click>=8.1.7,<9.0
 flake8>=6.0.0
 pylint>=3.0.0
 mypy>=1.10.0
