@@ -8,23 +8,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="icon" href="images/favicon_gwd.png">
 <link rel="apple-touch-icon" href="images/favicon_gwd.png">
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/css.txt --->
+<!-- gw/etc/css.txt -->
 <!-- $Id: css.txt v7.1 04/11/2023 04:28:54 $ -->
 <link rel="stylesheet" href="css/bootstrap.min.css?version=4.6.2">
 <link rel="stylesheet" href="css/all.min.css?hash=f036f8b0f6f63f2ab006e153aeac2b7d">
 <link rel="stylesheet" href="css/css.css?hash=de7ebf333e81605a294d2ebba9e1e54d">
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/css.txt --->
+<!-- gw/etc/css.txt -->
 </head>
 <body>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/hed.txt --->
+<!-- gw/etc/hed.txt -->
 <meta name="format-detection" content="telephone=no" />
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/hed.txt --->
+<!-- gw/etc/hed.txt -->
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
 <div class="container">
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/perso_utils.txt --->
+<!-- gw/etc/perso_utils.txt -->
 <!-- $Id: perso_utils v7.1 13/08/2023 16:55:48 $ -->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/perso_utils.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/menubar.txt --->
+<!-- gw/etc/perso_utils.txt -->
+<!-- gw/etc/menubar.txt -->
 <!-- $Id: menubar.txt v7.1 02/05/2024 19:03:42 $ -->
 <nav class="navbar navbar-light justify-content-center navbar-expand-md pt-0 px-0 mt-1 mt-md-0">
 <div class="btn-toolbar" role="toolbar">
@@ -252,7 +252,7 @@ title="Relationship with a parent"><span class="fa fa-elevator fa-fw mr-2"></spa
 </div>
 </div>
 </nav>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/home.txt --->
+<!-- gw/etc/home.txt -->
 <!-- $Id: home.txt v7.1 07/09/2023 00:49:55 $ -->
 <div class="d-flex flex-column fix_top fix_left home-xs">
 <a tabindex="1" role="button" class="btn btn-sm btn-link p-0 border-0" href="test?" title="Home">
@@ -306,11 +306,11 @@ name="p" placeholder="First name" tabindex="6">
 </div>
 </div>
 </div>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/home.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/menubar.txt --->
+<!-- gw/etc/home.txt -->
+<!-- gw/etc/menubar.txt -->
 <div id="content" tabindex="-1">
 <div class="row">
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/individu.txt --->
+<!-- gw/etc/modules/individu.txt -->
 <!-- $Id: modules/individu.txt v7.1 19/06/2024 06:41:02 $ -->
 <div class="col-12">
 <h1 class="text-xs-center text-md-left">
@@ -336,8 +336,8 @@ AGE_YMD old</li>
 </ul>
 </div>
 </div>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/individu.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/unions.txt --->
+<!-- gw/etc/modules/individu.txt -->
+<!-- gw/etc/modules/unions.txt -->
 <!-- $Id: modules/unions.txt v7.1 17/11/2023 10:30:00 $ -->
 <h2 class="mt-2 w-100">
 Marriages and children<span class="ml-2"><a href="test?p=charles&n=windsor&m=D&t=T&v=1"><img class="mx-1 mb-1" src="images/gui_create.png" height="18" alt="tree desc."
@@ -365,21 +365,21 @@ Divorced <em><a href="test?m=CAL&yg=1992&mg=12&dg=9&tg=1" class="date">on&nbsp;9
 <li><span class="fa-li"><a href="test?m=MOD_FAM&i=RANDOM&ip=0">
 <i class="fa fa-wrench fa-sm text-success" title="Update family Charles III Philip Arthur George Windsor & Camilla Rosemary Shand (wizard)"></i></a>
 </span><span title="marriage">Married <a href="test?m=CAL&yg=2005&mg=4&dg=9&tg=1" class="date">on&nbsp;9&nbsp;April&nbsp;2005</a> to</span> <a href="test?p=camilla+rosemary&n=shand" class="female-underline">Camilla Rosemary Shand</a><a href="test?m=MOD_IND&i=RANDOM" title="Update Camilla Rosemary Shand (78 years)" class="text-nowrap font-italic"> <bdo dir=ltr>1947</bdo></a></li></ul>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/unions.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/chronologie.txt --->
+<!-- gw/etc/modules/unions.txt -->
+<!-- gw/etc/modules/chronologie.txt -->
 <!-- $Id: modules/chronologie.txt v7.1 04/03/2023 09:51:04 $ -->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/chronologie.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/notes.txt --->
+<!-- gw/etc/modules/chronologie.txt -->
+<!-- gw/etc/modules/notes.txt -->
 <!-- $Id: modules/notes.txt v7.1 15/12/2022 23:41:44 $ -->
 <h2 class="mt-2">Individual notes</h2>
 <div class="ml-3">
 Prince Charles, born in 1948, Prince of Wales and heir apparent to the throne of the United Kingdom of Great Britain and Northern Ireland. He is the son of Queen Elizabeth II and her husband, Philip Mountbatten, duke of Edinburgh. Charles&#39;s full name is Charles Philip Arthur George. His titles, in addition to Prince of Wales, are duke of Cornwall; duke of Rothesay; earl of Carrick; and Baron Renfrew, lord of the Isles and great steward of Scotland.<br> <br> Breaking with the tradition of educating royal children at home, his parents enrolled Prince Charles in private schools in England and Scotland. He attended the Cheam School in Berkshire as a boarder from the age of 9 to 14 and the school his father attended, Gordonstoun, in Scotland from age 14 to 18. He has described his school years as unhappy and seems to have been especially ill-suited for the rugged and spartan conditions at Gordonstoun, the school chosen by the Duke of Edinburgh to toughen up his son. After Gordonstoun, Charles entered Trinity College at the University of Cambridge, where he studied archaeology, anthropology, and history. Charles became the first heir to the British crown to earn a university degree when he graduated with honours from Cambridge University in June 1970. That year he also assumed his seat in the House of Lords, the upper chamber of the British Parliament. At the age of 20, in 1969, he was formally invested as the Prince of Wales, a title he had been given in 1958. Charles served in the Royal Air Force and the Royal Navy from 1971 to 1977.<br> <br> Although he has travelled widely as a representative of the crown, Charles has been viewed as a man with little to do while waiting to succeed to the throne. As one solution he founded the Princes Trust, an organization established to provide opportunities for young people through training, education, and financial support. As its president he has remained closely involved with the trust. Charles is also involved with some 200 other charitable organizations that reflect his wide range of interests, from architecture to alternative medicine and conservation.Y</div>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/notes.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/sources.txt --->
+<!-- gw/etc/modules/notes.txt -->
+<!-- gw/etc/modules/sources.txt -->
 <!-- $Id: modules/sources.txt v7.0 28/10/2018 23:10:24 $ -->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/sources.txt --->
+<!-- gw/etc/modules/sources.txt -->
 </div> <div class="col-lg-4">
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/arbre_3gen_photo.txt --->
+<!-- gw/etc/modules/arbre_3gen_photo.txt -->
 <!-- $Id: modules/arbre_3gen_photo.txt v7.1 22/04/2024 07:27:12 $ -->
 <table class="mt-2 mt-md-0 mx-auto px-0 text-center small" style="line-height:0.9rem">
 <tr><td colspan="4" class="align-bottom"><div>
@@ -497,8 +497,8 @@ title="Update Elizabeth Windsor (96 years)"> <bdo dir=ltr>1926–2022</bdo></div
 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 </tr>
 </table>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/arbre_3gen_photo.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/fratrie.txt --->
+<!-- gw/etc/modules/arbre_3gen_photo.txt -->
+<!-- gw/etc/modules/fratrie.txt -->
 <!-- $Id: modules/fratrie.txt v7.1 13/08/2023 16:47:40 $ -->
  <h2 class="mt-2 mt-lg-0 w-100">Siblings<a href="test?p=philip&n=mountbatten&m=D&t=T&v=1"><img class="ml-2 mb-1" src="images/gui_create.png" height="18" alt="Tree"
 title="Tree siblings (with spouses)"></a><span class="fa fa-caret-left invisible"></span><a href="test?p=anne+elizabeth+alice&n=windsor"
@@ -518,15 +518,15 @@ title="Update Andrew Albert Christian Windsor (65 years)"> <bdo dir=ltr>1960</bd
 <i class="fa fa-mars male fa-xs mr-1"></i></a><a href="test?p=edward+anthony+richard&n=windsor" title="Display Edward Anthony Richard Windsor">Edward Anthony Richard Windsor</a><a href="test?m=MOD_IND&i=RANDOM"><span class="text-nowrap font-italic"
 title="Update Edward Anthony Richard Windsor (61 years)"> <bdo dir=ltr>1964</bdo></span></a></li>
 </ul>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/fratrie.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/relations.txt --->
+<!-- gw/etc/modules/fratrie.txt -->
+<!-- gw/etc/modules/relations.txt -->
 <!-- $Id: modules/relations.txt v7.1 17/11/2023 10:30:00 $ -->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/modules/relations.txt --->
+<!-- gw/etc/modules/relations.txt -->
 </div>
 </div>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/trl.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/trl.txt --->
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/copyr.txt --->
+<!-- gw/etc/trl.txt -->
+<!-- gw/etc/trl.txt -->
+<!-- gw/etc/copyr.txt -->
 <!-- $Id: copyr.txt 7.1-beta 18/12/2023 22:03:44 $ -->
 <div class="d-flex flex-row justify-content-center justify-content-lg-end my-2" id="copyr">
 <div class="d-flex flex-wrap justify-content-md-end">
@@ -616,7 +616,7 @@ title="GeneWeb Github">
 </div>
 </div>
 </div>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/copyr.txt --->
+<!-- gw/etc/copyr.txt -->
 <script>
  var q_time = TIME;
  var nb_errors = 0;
@@ -644,7 +644,7 @@ title="GeneWeb Github">
  }
 </script></div>
 </div>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/js.txt --->
+<!-- gw/etc/js.txt -->
 <!-- $Id: js.txt v7.1 10/01/2025 04:15:45 $ -->
 <script src="js/jquery.min.js?version=3.7.1"></script>
 <script src="js/bootstrap.bundle.min.js?version=4.6.1"></script>
@@ -827,7 +827,7 @@ setupModalAutofocus();
 setupFloatingPlaceholders();
 });
 </script>
-<!-- /Users/antonyjin/EPITECH/YEAR_5/pool/legacy/Legacy-Project/GeneWeb/gw/etc/js.txt --->
+<!-- gw/etc/js.txt -->
 <script>
 $(function () {
 $('[data-toggle="tooltip"]').tooltip()

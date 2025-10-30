@@ -1,6 +1,6 @@
 <!-- $Id: welcome.txt v7.1 16/02/2025 17:11:01 $ -->
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <title>GeneWeb – test</title>
 <meta name="robots" content="none">
@@ -33,12 +33,12 @@
 </div>
 </div>
 <div class="my-0 order-3 order-md-2 flex-fill text-lg-center align-self-md-center">
-<h1 class="font-weight-bolder">Base généalogique test</h1>
+<h1 class="font-weight-bolder">Genealogical database test</h1>
 <div class="d-flex justify-content-center">
-<span class="text-center h4 font-weight-lighter">188 personnes</span>
-<a class="align-self-center ml-2 mb-2" href="test?lang=fr&i=RANDOM"
+<span class="text-center h4 font-weight-lighter">188 individuals</span>
+<a class="align-self-center ml-2 mb-2" href="test?i=RANDOM"
 data-toggle="tooltip" data-placement="bottom"
-title="Afficher un individu au hasard"><i class="fa-solid fa-dice"></i></a>
+title="Display a random individual"><i class="fa-solid fa-dice"></i></a>
 </div>
 </div>
 </div>
@@ -48,8 +48,7 @@ title="Afficher un individu au hasard"><i class="fa-solid fa-dice"></i></a>
 </div>
 <div id="welcome-search" class="d-flex flex-wrap justify-content-center mt-3 mt-lg-1">
 <div class="col col-md-10 col-xl-9">
-<form id="main-search" class="mt-2 mt-xl-4" method="get" action="test?lang=fr&">
-<input type="hidden" name="lang" value="fr">
+<form id="main-search" class="mt-2 mt-xl-4" method="get" action="test?">
 <input type="hidden" name="m" value="S" class="has_validation">
 <div class="d-flex justify-content-center">
 <div class="d-flex flex-column justify-content-center w-100">
@@ -58,59 +57,59 @@ title="Afficher un individu au hasard"><i class="fa-solid fa-dice"></i></a>
 <div class="d-flex flex-grow-1">
 <div class="d-flex align-items-center ml-1 mr-2">
 <abbr data-toggle="tooltip" data-placement="top" data-html="true"
-title="<div class='text-left font-weight-bold'><h5>Formats de recherche :</h5>
-1. Personne :<br>
-a. prénom(s) patronyme ¹<br>
+title="<div class='text-left font-weight-bold'><h5>Search formats:</h5>
+1. Individual:<br>
+a. first name·s surname ¹<br>
 <i class='font-weight-lighter'>John Doe</i><br><br>
-b. prénom(s)/patronyme ²/occurence ³<br>
+b. first name·s/surname ²/occurence ³<br>
 <i class='font-weight-lighter'>James William/Smith-Johnson/2<br> James William/Smith-Johnson<br>
 James William/<br> /Smith-Jonhson</i><br><br>
-2. Patronyme ¹ : <i class='font-weight-lighter'>Doe</i><br><br>
-3. Nom public : <i class='font-weight-lighter'>James Smith</i><br><br>
-4. Alias : <i class='font-weight-lighter'>Jimmy</i><br><br>
-5. Clé : prénom(s).occurence patronyme ²<br>
+2. Surname ¹: <i class='font-weight-lighter'>Doe</i><br><br>
+3. Public name: <i class='font-weight-lighter'>James Smith</i><br><br>
+4. Alias: <i class='font-weight-lighter'>Jimmy</i><br><br>
+5. Key: first name·s.occurence surname ²<br>
 <i class='font-weight-lighter'>James William.2 Smith-Johnson<br> james william.2 smith johnson</i><br>
-<br><div class='font-weight-lighter small'>¹ un seul mot<br>² patronyme complet<br>³ facultatif</div></div>">
+<br><div class='font-weight-lighter small'>¹ only one word<br>² full surname<br>³ optional</div></div>">
 <i class="far fa-circle-question text-primary text-primary"></i>
 </abbr>
 </div>
 <input type="search" id="fullname" class="form-control form-control-lg py-0 border border-top-0" autofocus tabindex="1"
-name="pn" placeholder="Rechercher personne, patronyme, nom public, alias, clé"
+name="pn" placeholder="Search individual, surname, public name, alias, key"
 >
 </div>
 <div class="d-flex mt-3">
 <div class="btn-group-vertical mr-2">
-<a role="button" href="test?lang=fr&m=P&tri=A" data-toggle="tooltip"
-title="Prénoms, trier par ordre alphabétique">
+<a role="button" href="test?m=P&tri=A" data-toggle="tooltip"
+title="First names, sort by alphabetical order">
 <i class="fa fa-arrow-down-a-z fa-fw"></i></a>
-<a role="button" href="test?lang=fr&m=P&tri=F" data-toggle="tooltip"
-title="Fréquence prénoms, trier par nombre d’individus">
+<a role="button" href="test?m=P&tri=F" data-toggle="tooltip"
+title="Frequency first names, sort by number of individuals">
 <i class="fa fa-arrow-down-wide-short fa-fw"></i></a>
 </div>
 <div class="d-flex flex-grow-1">
 <div class="flex-grow-1 align-self-center">
-<label for="firstname" class="sr-only col-form-label">Prénom(s)</label>
+<label for="firstname" class="sr-only col-form-label">First name·s</label>
 <input type="search" id="firstname" class="form-control form-control-lg border-top-0"
-name="p" placeholder="Prénom(s)" tabindex="2"
+name="p" placeholder="First name·s" tabindex="2"
  list="datalist_fnames" data-book="fn">
 </div>
 </div>
 </div>
 <div class="d-flex mt-2">
 <div class="btn-group-vertical mr-2">
-<a role="button" href="test?lang=fr&m=N&tri=A" data-toggle="tooltip"
-title="Patronymes, trier par ordre alphabétique">
+<a role="button" href="test?m=N&tri=A" data-toggle="tooltip"
+title="Surnames, sort by alphabetical order">
 <i class="fa fa-arrow-down-a-z fa-fw"></i></a>
-<a role="button" href="test?lang=fr&m=N&tri=F" data-toggle="tooltip"
-title="Fréquence patronymes, trier par nombre d’individus">
+<a role="button" href="test?m=N&tri=F" data-toggle="tooltip"
+title="Frequency surnames, sort by number of individuals">
 <i class="fa fa-arrow-down-wide-short fa-fw"></i></a>
 </div>
 <div class="d-flex flex-grow-1">
 <div class="flex-grow-1 align-self-center">
-<label for="surname" class="sr-only col-form-label col-sm-2">Patronyme</label>
+<label for="surname" class="sr-only col-form-label col-sm-2">Surname</label>
 <input type="search" id="surname" class="form-control form-control-lg border border-top-0"
-title="Patronyme complet" data-toggle="tooltip"
-name="n" placeholder="Patronyme" tabindex="3"
+title="Full surname" data-toggle="tooltip"
+name="n" placeholder="Surname" tabindex="3"
  list="datalist_snames" data-book="sn">
 </div>
 </div>
@@ -118,26 +117,26 @@ name="n" placeholder="Patronyme" tabindex="3"
 </div>
 <div class="d-flex flex-column align-items-center justify-content-between mt-3 mt-md-0 mx-0 mx-md-1 px-0 px-md-3 col-md-auto small">
 <div class="d-flex flex-row flex-md-column justify-content-start mb-3 mb-md-0">
-<div class="align-self-md-start font-weight-bold mr-3 mr-md-0 mb-0 mb-md-1">Prénoms :</div>
+<div class="align-self-md-start font-weight-bold mr-3 mr-md-0 mb-0 mb-md-1">First names:</div>
 <div class="d-flex flex-row flex-md-column">
-<div class="custom-control custom-checkbox mr-3 mr-md-0 mb-md-1" data-toggle="tooltip" data-placement="left" title="Contient un seul prénom (contient tous les prénoms par défaut)">
+<div class="custom-control custom-checkbox mr-3 mr-md-0 mb-md-1" data-toggle="tooltip" data-placement="left" title="Contains only one first name (contains all first names by default)">
 <input class="custom-control-input" type="checkbox" name="p_all" id="p_all" value="off" tabindex="4">
-<label class="custom-control-label d-flex align-items-center" for="p_all">Un prénom</label>
+<label class="custom-control-label d-flex align-items-center" for="p_all">One first name</label>
 </div>
-<div class="custom-control custom-checkbox mr-3 mr-md-0 mb-md-1" data-toggle="tooltip" data-placement="left" title="Conserver le même ordre">
+<div class="custom-control custom-checkbox mr-3 mr-md-0 mb-md-1" data-toggle="tooltip" data-placement="left" title="Keep the same order">
 <input class="custom-control-input" type="checkbox" name="p_order" id="p_order" value="on" tabindex="5">
-<label class="custom-control-label d-flex align-items-center" for="p_order">Même ordre</label>
+<label class="custom-control-label d-flex align-items-center" for="p_order">Same order</label>
 </div>
-<div class="custom-control custom-checkbox" data-toggle="tooltip" data-placement="left" title="Correspondance partielle (correspondance exacte par défaut)">
+<div class="custom-control custom-checkbox" data-toggle="tooltip" data-placement="left" title="Partial matching (exact matching by default)">
 <input class="custom-control-input" type="checkbox" name="p_exact" id="p_exact" value="off" tabindex="6">
-<label class="custom-control-label d-flex align-items-center" for="p_exact">Partiel</label>
+<label class="custom-control-label d-flex align-items-center" for="p_exact">Partial</label>
 </div>
 </div>
 </div>
 <button id="global-search-inline" class="d-none btn btn-outline-primary font-weight-bolder w-100 w-md-auto py-2 mb-1"
 type="submit">
 <i class="fa fa-magnifying-glass fa-lg fa-fw"></i>
-Rechercher
+Search
 </button>
 </div>
 </div>
@@ -146,22 +145,21 @@ Rechercher
 </form>
 <div class="d-flex flex-wrap flex-md-no-wrap justify-content-center align-items-md-center mt-1 mt-md-3">
 <form id="title-search" class="d-flex flex-column flex-md-row align-items-start align-items-md-center col-12 col-md-9 ml-md-4" method="get" action="test">
-<input type="hidden" name="lang" value="fr">
 <input type="hidden" name="m" value="TT">
 <div class="d-flex align-items-center w-100 mb-2 mb-md-0">
 <a class="mr-2" role="button" data-toggle="tooltip" data-placement="bottom"
-href="test?lang=fr&m=TT" title="Tous les titres"><i class="fa fa-list-ul fa-fw"></i></a>
-<label for="titles" class="sr-only col-form-label">Titre</label>
+href="test?m=TT" title="All the titles"><i class="fa fa-list-ul fa-fw"></i></a>
+<label for="titles" class="sr-only col-form-label">Title</label>
 <input type="search" class="form-control border-top-0 border-right-0 border-left-0 w-100"
-name="t" id="titles" placeholder="Titre" tabindex="7"
+name="t" id="titles" placeholder="Title" tabindex="7"
 list="datalist_titles" data-book="title">
 </div>
 <div class="d-flex align-items-center w-100 mb-2 mb-md-0 ml-0 ml-md-2">
 <a class="mr-2" role="button" data-toggle="tooltip" data-placement="bottom"
-href="test?lang=fr&m=TT&p=*" title="Tous les domaines"><i class="fa fa-list-ul fa-fw"></i></a>
-<label for="estates" class="sr-only col-form-label">Domaine</label>
+href="test?m=TT&p=*" title="All the fiefs"><i class="fa fa-list-ul fa-fw"></i></a>
+<label for="estates" class="sr-only col-form-label">Fief</label>
 <input type="search" class="form-control border-top-0 border-right-0 border-left-0 w-100"
-name="p" id="estates" placeholder="Domaine" tabindex="8"
+name="p" id="estates" placeholder="Fief" tabindex="8"
 list="datalist_estates" data-book="domain">
 </div>
 <button class="d-none" type="submit"></button>
@@ -170,91 +168,91 @@ list="datalist_estates" data-book="domain">
 type="submit" tabindex="9"
 data-toggle="tooltip" data-placement="right">
 <i class="fa fa-magnifying-glass fa-lg fa-fw"></i>
-Rechercher
+Search
 </button>
 </div>
 </div>
 </div>
 <div class="d-flex flex-column justify-content-start justify-content-md-center mt-4 col-12 col-md-11 col-lg-8 mx-auto">
 <div class="h4 text-md-center"><i class="fas fa-screwdriver-wrench fa-sm fa-fw text-secondary"></i>
-Outils</div>
+Tools</div>
 <div class="d-flex flex-wrap justify-content-md-center">
-<a role="button" class="btn btn-outline-primary" href="test?lang=fr&m=NOTES"><i class="far fa-file-lines fa-fw mr-1" aria-hidden="true"></i>Notes
+<a role="button" class="btn btn-outline-primary" href="test?m=NOTES"><i class="far fa-file-lines fa-fw mr-1" aria-hidden="true"></i>Notes
 </a>
-<a role="button" class="btn btn-outline-primary" href="test?lang=fr&m=STAT">
-<i class="far fa-chart-bar fa-fw mr-1" aria-hidden="true"></i>Statistiques</a>
-<a role="button" class="btn btn-outline-primary" href="test?lang=fr&m=ANM">
-<i class="fa fa-cake-candles fa-fw mr-1" aria-hidden="true"></i>Anniversaires</a>
-<a role="button" class="btn btn-outline-primary" href="test?lang=fr&m=PPS&bi=on&ba=on&ma=on&de=on&bu=on">
-<i class="fas fa-globe fa-fw mr-1" aria-hidden="true"></i>Lieux/patronyme</a>
-<a role="button" class="btn btn-outline-primary" href="test?lang=fr&m=AS">
-<i class="fa fa-magnifying-glass-plus fa-fw mr-1" aria-hidden="true"></i>Requête évoluée</a>
-<a role="button" class="btn btn-outline-primary" href="test?lang=fr&m=CAL">
-<i class="far fa-calendar-days fa-fw mr-1" aria-hidden="true"></i>Calendriers</a>
-<a role="button" class="btn btn-outline-success" href="test?lang=fr&m=H&v=conf">
+<a role="button" class="btn btn-outline-primary" href="test?m=STAT">
+<i class="far fa-chart-bar fa-fw mr-1" aria-hidden="true"></i>Statistics</a>
+<a role="button" class="btn btn-outline-primary" href="test?m=ANM">
+<i class="fa fa-cake-candles fa-fw mr-1" aria-hidden="true"></i>Anniversaries</a>
+<a role="button" class="btn btn-outline-primary" href="test?m=PPS&bi=on&ba=on&ma=on&de=on&bu=on">
+<i class="fas fa-globe fa-fw mr-1" aria-hidden="true"></i>Places/surname</a>
+<a role="button" class="btn btn-outline-primary" href="test?m=AS">
+<i class="fa fa-magnifying-glass-plus fa-fw mr-1" aria-hidden="true"></i>Advanced request</a>
+<a role="button" class="btn btn-outline-primary" href="test?m=CAL">
+<i class="far fa-calendar-days fa-fw mr-1" aria-hidden="true"></i>Calendars</a>
+<a role="button" class="btn btn-outline-success" href="test?m=H&v=conf">
 <i class="fas fa-gear fa-fw mr-1" aria-hidden="true"></i>Configuration</a>
-<a role="button" class="btn btn-outline-success" href="test?lang=fr&m=MOD_NOTES&f=new_note">
-<i class="fa fa-file-lines fa-fw mr-1" aria-hidden="true"></i>Ajouter note</a>
-<a role="button" class="btn btn-outline-success" href="test?lang=fr&m=ADD_FAM">
-<i class="fas fa-user-plus fa-fw mr-1" aria-hidden="true"></i>Ajouter famille</a>
+<a role="button" class="btn btn-outline-success" href="test?m=MOD_NOTES&f=new_note">
+<i class="fa fa-file-lines fa-fw mr-1" aria-hidden="true"></i>Add note</a>
+<a role="button" class="btn btn-outline-success" href="test?m=ADD_FAM">
+<i class="fas fa-user-plus fa-fw mr-1" aria-hidden="true"></i>Add family</a>
 </div>
 </div>
 <div class="d-flex flex-column justify-content-start justify-content-md-center mt-3 col-12 col-md-8 mx-auto">
 <div class="h4 text-md-center">
-<i class="fas fa-book fa-sm fa-fw text-success mr-1"></i>Dictionnaires</div>
+<i class="fas fa-book fa-sm fa-fw text-success mr-1"></i>Books</div>
 <div class="d-flex flex-wrap justify-content-md-center">
 <a role="button" class="btn btn-outline-success" data-toggle="tooltip"
-href="test?lang=fr&m=MOD_DATA&data=fn" title="Modifier dictionnaire des prénoms (magicien)">
+href="test?m=MOD_DATA&data=fn" title="Update book of first names (wizard)">
 <i class="fa fa-child fa-fw mr-1"></i>
-<span class="text-nowrap">Prénoms</span>
+<span class="text-nowrap">First names</span>
 </a>
 <a role="button" class="btn btn-outline-success" data-toggle="tooltip"
-href="test?lang=fr&m=MOD_DATA&data=sn" title="Modifier dictionnaire des patronymes (magicien)">
+href="test?m=MOD_DATA&data=sn" title="Update book of surnames (wizard)">
 <i class="fa fa-signature fa-fw mr-1"></i>
-<span class="text-nowrap">Patronymes</span>
+<span class="text-nowrap">Surnames</span>
 </a>
 <a role="button" class="btn btn-outline-success" data-toggle="tooltip"
-href="test?lang=fr&m=MOD_DATA&data=pubn" title="Modifier dictionnaire des noms publics (magicien)">
+href="test?m=MOD_DATA&data=pubn" title="Update book of public names (wizard)">
 <i class="fa fa-pen fa-fw mr-1"></i>
-<span class="text-nowrap">Noms publics</span>
+<span class="text-nowrap">Public names</span>
 </a>
 <a role="button" class="btn btn-outline-success" data-toggle="tooltip"
-href="test?lang=fr&m=MOD_DATA&data=qual" title="Modifier dictionnaire des sobriquets (magicien)">
+href="test?m=MOD_DATA&data=qual" title="Update book of qualifiers (wizard)">
 <i class="fa fa-comment fa-fw mr-1"></i>
-<span class="text-nowrap">Sobriquets</span>
+<span class="text-nowrap">Qualifiers</span>
 </a>
 <a role="button" class="btn btn-outline-success" data-toggle="tooltip"
-href="test?lang=fr&m=MOD_DATA&data=alias" title="Modifier dictionnaire des alias (magicien)">
+href="test?m=MOD_DATA&data=alias" title="Update book of aliases (wizard)">
 <i class="fa fa-mask fa-fw mr-1"></i>
-<span class="text-nowrap">Alias</span>
+<span class="text-nowrap">Aliases</span>
 </a>
 <a role="button" class="btn btn-outline-success" data-toggle="tooltip"
-href="test?lang=fr&m=MOD_DATA&data=occu" title="Modifier dictionnaire des professions (magicien)">
+href="test?m=MOD_DATA&data=occu" title="Update book of occupations (wizard)">
 <i class="fa fa-user-doctor fa-fw mr-1"></i>
-<span class="text-nowrap">Professions</span>
+<span class="text-nowrap">Occupations</span>
 </a>
 <a role="button" class="btn btn-outline-success" data-toggle="tooltip"
-href="test?lang=fr&m=MOD_DATA&data=place" title="Modifier dictionnaire des lieux (magicien)">
+href="test?m=MOD_DATA&data=place" title="Update book of places (wizard)">
 <i class="fa fa-map-location-dot fa-fw mr-1"></i>
-<span class="text-nowrap">Lieux</span>
+<span class="text-nowrap">Places</span>
 </a>
 <a role="button" class="btn btn-outline-success" data-toggle="tooltip"
-href="test?lang=fr&m=MOD_DATA&data=src" title="Modifier dictionnaire des sources (magicien)">
+href="test?m=MOD_DATA&data=src" title="Update book of sources (wizard)">
 <i class="fa fa-box-archive fa-fw mr-1"></i>
 <span class="text-nowrap">Sources</span>
 </a>
 <a role="button" class="btn btn-outline-success" data-toggle="tooltip"
-href="test?lang=fr&m=MOD_DATA&data=title" title="Modifier dictionnaire des titres (magicien)">
+href="test?m=MOD_DATA&data=title" title="Update book of titles (wizard)">
 <i class="fa fa-crown fa-fw mr-1"></i>
-<span class="text-nowrap">Titres</span>
+<span class="text-nowrap">Titles</span>
 </a>
 <a role="button" class="btn btn-outline-success" data-toggle="tooltip"
-href="test?lang=fr&m=MOD_DATA&data=domain" title="Modifier dictionnaire des domaines (magicien)">
+href="test?m=MOD_DATA&data=domain" title="Update book of domains (wizard)">
 <i class="fa fa-chess-rook fa-fw mr-1"></i>
-<span class="text-nowrap">Domaines</span>
+<span class="text-nowrap">Domains</span>
 </a>
-<a href="test?lang=fr&m=CHK_DATA" class="btn btn-outline-success ml-2"
-title="Vérificateur typographique des données"><i class="fas fa-spell-check"></i>
+<a href="test?m=CHK_DATA" class="btn btn-outline-success ml-2"
+title="Data typographic checker"><i class="fas fa-spell-check"></i>
 </a> </div>
 </div>
 <div class="d-flex mt-3">
@@ -271,46 +269,46 @@ title="Vérificateur typographique des données"><i class="fas fa-spell-check"><
 <!-- Language selector and connections info -->
 <div class="d-flex flex-row align-items-lg-end mt-0 ml-3 border-0">
 <div class="btn-group dropup" data-toggle="tooltip" data-placement="left"
-title="français – Sélectionner la langue">
+title="English – Select language">
 <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenu1"
 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <span class="sr-only">lang</span>
-<span class="text-uppercase">fr</span>
-<span class="sr-only">, sélectionner la langue</span>
+<span class="text-uppercase">en</span>
+<span class="sr-only">, select language</span>
 </button>
 <div class="dropdown-menu scrollable-lang" aria-labelledby="dropdownMenu1">
-<a class="dropdown-item" id="lang_af" href="test?lang=af"><code>af&nbsp;&nbsp;&nbsp; </code>Afrikaans</a>
-<a class="dropdown-item" id="lang_ar" href="test?lang=ar"><code>ar&nbsp;&nbsp;&nbsp; </code>Arabe</a>
-<a class="dropdown-item" id="lang_bg" href="test?lang=bg"><code>bg&nbsp;&nbsp;&nbsp; </code>Bulgare</a>
-<a class="dropdown-item" id="lang_br" href="test?lang=br"><code>br&nbsp;&nbsp;&nbsp; </code>Breton</a>
-<a class="dropdown-item" id="lang_ca" href="test?lang=ca"><code>ca&nbsp;&nbsp;&nbsp; </code>Catalan</a>
-<a class="dropdown-item" id="lang_co" href="test?lang=co"><code>co&nbsp;&nbsp;&nbsp; </code>Corse</a>
-<a class="dropdown-item" id="lang_cs" href="test?lang=cs"><code>cs&nbsp;&nbsp;&nbsp; </code>Tchèque</a>
-<a class="dropdown-item" id="lang_da" href="test?lang=da"><code>da&nbsp;&nbsp;&nbsp; </code>Danois</a>
-<a class="dropdown-item" id="lang_de" href="test?lang=de"><code>de&nbsp;&nbsp;&nbsp; </code>Allemand</a>
-<a class="dropdown-item" id="lang_en" href="test?"><code>en&nbsp;&nbsp;&nbsp; </code>Anglais</a>
-<a class="dropdown-item" id="lang_eo" href="test?lang=eo"><code>eo&nbsp;&nbsp;&nbsp; </code>Espéranto</a>
-<a class="dropdown-item" id="lang_es" href="test?lang=es"><code>es&nbsp;&nbsp;&nbsp; </code>Espagnol</a>
-<a class="dropdown-item" id="lang_et" href="test?lang=et"><code>et&nbsp;&nbsp;&nbsp; </code>Estonien</a>
-<a class="dropdown-item" id="lang_fi" href="test?lang=fi"><code>fi&nbsp;&nbsp;&nbsp; </code>Finnois</a>
-<a class="dropdown-item" id="lang_he" href="test?lang=he"><code>he&nbsp;&nbsp;&nbsp; </code>Hébreu</a>
-<a class="dropdown-item" id="lang_is" href="test?lang=is"><code>is&nbsp;&nbsp;&nbsp; </code>Islandais</a>
-<a class="dropdown-item" id="lang_it" href="test?lang=it"><code>it&nbsp;&nbsp;&nbsp; </code>Italien</a>
-<a class="dropdown-item" id="lang_lt" href="test?lang=lt"><code>lt&nbsp;&nbsp;&nbsp; </code>Lituanien</a>
-<a class="dropdown-item" id="lang_lv" href="test?lang=lv"><code>lv&nbsp;&nbsp;&nbsp; </code>Letton</a>
-<a class="dropdown-item" id="lang_nl" href="test?lang=nl"><code>nl&nbsp;&nbsp;&nbsp; </code>Néerlandais</a>
-<a class="dropdown-item" id="lang_no" href="test?lang=no"><code>no&nbsp;&nbsp;&nbsp; </code>Norvégien</a>
-<a class="dropdown-item" id="lang_oc" href="test?lang=oc"><code>oc&nbsp;&nbsp;&nbsp; </code>Occitan</a>
-<a class="dropdown-item" id="lang_pl" href="test?lang=pl"><code>pl&nbsp;&nbsp;&nbsp; </code>Polonais</a>
-<a class="dropdown-item" id="lang_pt" href="test?lang=pt"><code>pt&nbsp;&nbsp;&nbsp; </code>Portugais</a>
-<a class="dropdown-item" id="lang_pt-br" href="test?lang=pt-br"><code>pt-br </code>Portugais brésilien</a>
-<a class="dropdown-item" id="lang_ro" href="test?lang=ro"><code>ro&nbsp;&nbsp;&nbsp; </code>Roumain</a>
-<a class="dropdown-item" id="lang_ru" href="test?lang=ru"><code>ru&nbsp;&nbsp;&nbsp; </code>Russe</a>
-<a class="dropdown-item" id="lang_sk" href="test?lang=sk"><code>sk&nbsp;&nbsp;&nbsp; </code>Slovaque</a>
-<a class="dropdown-item" id="lang_sl" href="test?lang=sl"><code>sl&nbsp;&nbsp;&nbsp; </code>Slovène</a>
-<a class="dropdown-item" id="lang_sv" href="test?lang=sv"><code>sv&nbsp;&nbsp;&nbsp; </code>Suédois</a>
-<a class="dropdown-item" id="lang_tr" href="test?lang=tr"><code>tr&nbsp;&nbsp;&nbsp; </code>Turc</a>
-<a class="dropdown-item" id="lang_zh" href="test?lang=zh"><code>zh&nbsp;&nbsp;&nbsp; </code>Chinois</a>
+<a class="dropdown-item" id="lang_af" href="test?lang=af&m=S&v=zzzzzz"><code>af&nbsp;&nbsp;&nbsp; </code>Afrikaans</a>
+<a class="dropdown-item" id="lang_ar" href="test?lang=ar&m=S&v=zzzzzz"><code>ar&nbsp;&nbsp;&nbsp; </code>Arabic</a>
+<a class="dropdown-item" id="lang_bg" href="test?lang=bg&m=S&v=zzzzzz"><code>bg&nbsp;&nbsp;&nbsp; </code>Bulgarian</a>
+<a class="dropdown-item" id="lang_br" href="test?lang=br&m=S&v=zzzzzz"><code>br&nbsp;&nbsp;&nbsp; </code>Breton</a>
+<a class="dropdown-item" id="lang_ca" href="test?lang=ca&m=S&v=zzzzzz"><code>ca&nbsp;&nbsp;&nbsp; </code>Catalan</a>
+<a class="dropdown-item" id="lang_co" href="test?lang=co&m=S&v=zzzzzz"><code>co&nbsp;&nbsp;&nbsp; </code>Corsican</a>
+<a class="dropdown-item" id="lang_cs" href="test?lang=cs&m=S&v=zzzzzz"><code>cs&nbsp;&nbsp;&nbsp; </code>Czech</a>
+<a class="dropdown-item" id="lang_da" href="test?lang=da&m=S&v=zzzzzz"><code>da&nbsp;&nbsp;&nbsp; </code>Danish</a>
+<a class="dropdown-item" id="lang_de" href="test?lang=de&m=S&v=zzzzzz"><code>de&nbsp;&nbsp;&nbsp; </code>German</a>
+<a class="dropdown-item" id="lang_eo" href="test?lang=eo&m=S&v=zzzzzz"><code>eo&nbsp;&nbsp;&nbsp; </code>Esperanto</a>
+<a class="dropdown-item" id="lang_es" href="test?lang=es&m=S&v=zzzzzz"><code>es&nbsp;&nbsp;&nbsp; </code>Spanish</a>
+<a class="dropdown-item" id="lang_et" href="test?lang=et&m=S&v=zzzzzz"><code>et&nbsp;&nbsp;&nbsp; </code>Estonian</a>
+<a class="dropdown-item" id="lang_fi" href="test?lang=fi&m=S&v=zzzzzz"><code>fi&nbsp;&nbsp;&nbsp; </code>Finnish</a>
+<a class="dropdown-item" id="lang_fr" href="test?lang=fr&m=S&v=zzzzzz"><code>fr&nbsp;&nbsp;&nbsp; </code>French</a>
+<a class="dropdown-item" id="lang_he" href="test?lang=he&m=S&v=zzzzzz"><code>he&nbsp;&nbsp;&nbsp; </code>Hebrew</a>
+<a class="dropdown-item" id="lang_is" href="test?lang=is&m=S&v=zzzzzz"><code>is&nbsp;&nbsp;&nbsp; </code>Icelandic</a>
+<a class="dropdown-item" id="lang_it" href="test?lang=it&m=S&v=zzzzzz"><code>it&nbsp;&nbsp;&nbsp; </code>Italian</a>
+<a class="dropdown-item" id="lang_lt" href="test?lang=lt&m=S&v=zzzzzz"><code>lt&nbsp;&nbsp;&nbsp; </code>Lithuanian</a>
+<a class="dropdown-item" id="lang_lv" href="test?lang=lv&m=S&v=zzzzzz"><code>lv&nbsp;&nbsp;&nbsp; </code>Latvian</a>
+<a class="dropdown-item" id="lang_nl" href="test?lang=nl&m=S&v=zzzzzz"><code>nl&nbsp;&nbsp;&nbsp; </code>Dutch</a>
+<a class="dropdown-item" id="lang_no" href="test?lang=no&m=S&v=zzzzzz"><code>no&nbsp;&nbsp;&nbsp; </code>Norwegian</a>
+<a class="dropdown-item" id="lang_oc" href="test?lang=oc&m=S&v=zzzzzz"><code>oc&nbsp;&nbsp;&nbsp; </code>Occitan</a>
+<a class="dropdown-item" id="lang_pl" href="test?lang=pl&m=S&v=zzzzzz"><code>pl&nbsp;&nbsp;&nbsp; </code>Polish</a>
+<a class="dropdown-item" id="lang_pt" href="test?lang=pt&m=S&v=zzzzzz"><code>pt&nbsp;&nbsp;&nbsp; </code>Portuguese</a>
+<a class="dropdown-item" id="lang_pt-br" href="test?lang=pt-br&m=S&v=zzzzzz"><code>pt-br </code>Brazilian-Portuguese</a>
+<a class="dropdown-item" id="lang_ro" href="test?lang=ro&m=S&v=zzzzzz"><code>ro&nbsp;&nbsp;&nbsp; </code>Romanian</a>
+<a class="dropdown-item" id="lang_ru" href="test?lang=ru&m=S&v=zzzzzz"><code>ru&nbsp;&nbsp;&nbsp; </code>Russian</a>
+<a class="dropdown-item" id="lang_sk" href="test?lang=sk&m=S&v=zzzzzz"><code>sk&nbsp;&nbsp;&nbsp; </code>Slovak</a>
+<a class="dropdown-item" id="lang_sl" href="test?lang=sl&m=S&v=zzzzzz"><code>sl&nbsp;&nbsp;&nbsp; </code>Slovenian</a>
+<a class="dropdown-item" id="lang_sv" href="test?lang=sv&m=S&v=zzzzzz"><code>sv&nbsp;&nbsp;&nbsp; </code>Swedish</a>
+<a class="dropdown-item" id="lang_tr" href="test?lang=tr&m=S&v=zzzzzz"><code>tr&nbsp;&nbsp;&nbsp; </code>Turkish</a>
+<a class="dropdown-item" id="lang_zh" href="test?lang=zh&m=S&v=zzzzzz"><code>zh&nbsp;&nbsp;&nbsp; </code>Chinese</a>
 </div>
 </div>
 <!-- Connections info -->
@@ -319,7 +317,7 @@ data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <div class="d-flex flex-column justify-content-md-end align-self-center ml-1 ml-md-3 ml-lg-4">
 <div class="ml-auto mb-0">
 <a role="button" class="mr-1"
-href="test?lang=fr&templ=templm"
+href="test?templ=templm&m=S&v=zzzzzz"
 data-toggle="tooltip"
 title="templm">
 <i class="fab fa-markdown" aria-hidden="true"></i>
@@ -328,12 +326,12 @@ title="templm">
 <a href="https://github.com//tree/b94cad5"
 data-toggle="tooltip"
 data-html="true"
-title="Branche 97-ut-py-001-setup-pytest-infrastructure compilée le 2025-10-21<br>à partir du commit id b94cad5 (2025-10-21)">
+title="Line 97-ut-py-001-setup-pytest-infrastructure compiled on 2025-10-21<br>from commit b94cad5 (2025-10-21)">
 GeneWeb v. 7.1-beta</a>
 </div>
 <div class="btn-group mt-0">
 <span>&copy; <a href="https://www.inria.fr" target="_blank" rel="noreferrer, noopener">INRIA</a> 1998-2007</span>
-<a href="https://geneweb.tuxfamily.org/wiki/GeneWeb/fr"
+<a href="https://geneweb.tuxfamily.org/wiki/GeneWeb"
 class="ml-1"
 target="_blank"
 rel="noreferrer, noopener"
@@ -411,10 +409,10 @@ window.history.replaceState({}, '', url);
 }
 function getTooltip() {
 if (hasInput(searchForms.main)) {
-return 'Rechercher personne';
+return 'Search individual';
 }
 if (searchForms.title && hasInput(searchForms.title)) {
-return 'Rechercher titre/domaine';
+return 'Search title/fief';
 }
 return '';
 }

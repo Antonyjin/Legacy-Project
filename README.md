@@ -231,6 +231,7 @@ chmod +x ./scripts/golden/run_golden.sh
 5. **[CI Workflow Guide](docs/CI_WORKFLOW_GUIDE.md)** - Understanding CI setup
 6. **[Code Quality Guide](docs/CODE_QUALITY.md)** - Running quality checks locally
 7. **[Branch Protection Setup](docs/BRANCH_PROTECTION.md)** - Protect `main` with CI checks
+8. **[Golden Tests](docs/GOLDEN_TESTS.md)** - Create/validate golden references
 
 #### For Deep Dives
 - **[Test Policy](https://github.com/Antonyjin/Legacy-Project/wiki/03-Quality-Test-Policy)** - QA strategy

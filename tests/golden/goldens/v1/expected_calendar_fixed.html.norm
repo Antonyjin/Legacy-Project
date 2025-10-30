@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- $Id: stats.txt v7.1 27/10/2023 03:33:17 $ -->
+<!-- $Id: calendar.txt v7.1 10/01/2023 20:01:49 $ -->
 <!-- Copyright (c) 1998-2007 INRIA -->
-<title>Statistics</title>
+<title>Calendars</title>
 <meta name="robots" content="none">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,7 +19,6 @@
 <!-- gw/etc/hed.txt -->
 <meta name="format-detection" content="telephone=no" />
 <!-- gw/etc/hed.txt -->
-<div class="container">
 <!-- gw/etc/home.txt -->
 <!-- $Id: home.txt v7.1 07/09/2023 00:49:55 $ -->
 <div class="d-flex flex-column fix_top fix_left home-xs">
@@ -75,18 +74,144 @@ name="p" placeholder="First name" tabindex="6">
 </div>
 </div>
 <!-- gw/etc/home.txt -->
-<h1>Statistics</h1>
-<ul>
-<li><a href="test?m=LB&k=20">latest 20 births</a></li>
-<li><a href="test?m=LD&k=20">latest 20 deaths</a></li>
-<li><a href="test?m=LM&k=20">latest 20 marriages</a></li>
-<li><a href="test?m=OE&k=20">the 20 oldest couples perhaps still alive and engaged</a></li>
-<li><a href="test?m=OA&k=20&lim=0">the 20 oldest perhaps still alive</a></li>
-<li><a href="test?m=LL&k=20">the 20 who lived the longest</a></li>
-</ul>
-<ul>
-<li><a href="test?m=POP_PYR">population pyramid</a></li>
-</ul>
+<div class="container">
+<div class="row mt-4">
+<div class="mx-auto text-center">
+<h1>Calendars</h1>
+<h3 class="mt-4">Thursday - HH:MM:SS</h3>
+</div>
+</div>
+<div class="row mt-3">
+<div class="mx-auto text-center">
+<form method="get" action="test">
+<div class="form-inline">
+<input type="hidden" name="m" value="CAL"/>
+<table class="table-sm table-bordered mx-auto">
+<thead>
+<tr>
+<th class="py-2">&nbsp;</th>
+<th class="text-center" colspan="3">Month</th>
+<th class="text-center" colspan="3">Day</th>
+<th class="text-center" colspan="3">Year</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="px-2" class="mx-1" scope="row">Gregorian</th>
+<td><button class="btn btn-outline-secondary" type="submit" name="mg1">&lt;</button></td>
+<td><select class="form-control h-100 w-100" style="text-align-last:center;" name="mg">
+<option value="1">January</option>
+<option value="2">February</option>
+<option value="3">March</option>
+<option value="4">April</option>
+<option value="5">May</option>
+<option value="6">June</option>
+<option value="7">July</option>
+<option value="8">August</option>
+<option value="9">September</option>
+<option value="10" selected="selected">October</option>
+<option value="11">November</option>
+<option value="12">December</option>
+</select></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="mg2">&gt;</button></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="dg1">&lt;</button></td>
+<td><input type="number" class="form-control text-center" name="dg" min="1" max="31" value="30"/></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="dg2">&gt;</button></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="yg1">&lt;</button></td>
+<td><input class="form-control text-center" name="yg" size="6" maxlength="6" value="2025"/></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="yg2">&gt;</button></td>
+<td><button class="btn btn-outline-success" type="submit" name="tg">=</button></td>
+</tr>
+<tr>
+<th class="px-2" scope="row">Julian</th>
+<td><button class="btn btn-outline-secondary" type="submit" name="mj1">&lt;</button></td>
+<td><select class="form-control h-100 w-100" style="text-align-last:center;" name="mj">
+<option value="1">January</option>
+<option value="2">February</option>
+<option value="3">March</option>
+<option value="4">April</option>
+<option value="5">May</option>
+<option value="6">June</option>
+<option value="7">July</option>
+<option value="8">August</option>
+<option value="9">September</option>
+<option value="10" selected="selected">October</option>
+<option value="11">November</option>
+<option value="12">December</option>
+</select></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="mj2">&gt;</button></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="dj1">&lt;</button></td>
+<td><input type="number" class="form-control text-center" name="dj" min="1" max="31" value="17"/></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="dj2">&gt;</button></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="yj1">&lt;</button></td>
+<td><input class="form-control text-center" name="yj" size="6" maxlength="6" value="2025"/></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="yj2">&gt;</button></td>
+<td><button class="btn btn-outline-success" type="submit" name="tj">=</button></td>
+</tr>
+<tr>
+<th class="px-2" scope="row">French republican</th>
+<td><button class="btn btn-outline-secondary" type="submit" name="mf1">&lt;</button></td>
+<td><select class="form-control h-100 w-100" style="text-align-last:center;" name="mf">
+<option value="1">Vendémiaire</option>
+<option value="2" selected="selected">Brumaire</option>
+<option value="3">Frimaire</option>
+<option value="4">Nivôse</option>
+<option value="5">Pluviose</option>
+<option value="6">Ventôse</option>
+<option value="7">Germinal</option>
+<option value="8">Floréal</option>
+<option value="9">Prairial</option>
+<option value="10">Messidor</option>
+<option value="11">Thermidor</option>
+<option value="12">Fructidor</option>
+<option value="13">Extra</option>
+</select></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="mf2">&gt;</button></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="df1">&lt;</button></td>
+<td><input type="number" class="form-control text-center" name="df" min="1" max="31" value="9"/></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="df2">&gt;</button></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="yf1">&lt;</button></td>
+<td><input class="form-control text-center" name="yf" size="6" maxlength="6" value="234"/></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="yf2">&gt;</button></td>
+<td><button class="btn btn-outline-success" type="submit" name="tf">=</button></td>
+</tr>
+<tr>
+<th class="px-2" scope="row">Hebrew</th>
+<td><button class="btn btn-outline-secondary" type="submit" name="mh1">&lt;</button></td>
+<td><select class="form-control h-100 w-100" style="text-align-last:center;" name="mh">
+<option value="1">Tishri</option>
+<option value="2" selected="selected">Heshvan</option>
+<option value="3">Kislev</option>
+<option value="4">Tevet</option>
+<option value="5">Shevat</option>
+<option value="6">Adar I</option>
+<option value="7">Adar II</option>
+<option value="8">Nisan</option>
+<option value="9">Iyyar</option>
+<option value="10">Sivan</option>
+<option value="11">Tammuz</option>
+<option value="12">Av</option>
+<option value="13">Elul</option>
+</select></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="mh2">&gt;</button></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="dh1">&lt;</button></td>
+<td><input type="number" class="form-control text-center" name="dh" min="1" max="31" value="8"/></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="dh2">&gt;</button></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="yh1">&lt;</button></td>
+<td><input class="form-control text-center" name="yh" size="6" maxlength="6" value="5786"/></td>
+<td><button class="btn btn-outline-secondary" type="submit" name="yh2">&gt;</button></td>
+<td><button class="btn btn-outline-success" type="submit" name="th">=</button></td>
+</tr>
+</tbody>
+</table>
+</div>
+</form>
+<br>
+<span>Number of days after new moon: 10</span>
+<br><br>
+Julian day: 2,460,979</div>
+</div>
 <!-- gw/etc/trl.txt -->
 <!-- gw/etc/trl.txt -->
 <!-- gw/etc/copyr.txt -->
@@ -105,38 +230,38 @@ data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <span class="sr-only">, select language</span>
 </button>
 <div class="dropdown-menu scrollable-lang" aria-labelledby="dropdownMenu1">
-<a class="dropdown-item" id="lang_af" href="test?lang=af&m=STAT"><code>af&nbsp;&nbsp;&nbsp; </code>Afrikaans</a>
-<a class="dropdown-item" id="lang_ar" href="test?lang=ar&m=STAT"><code>ar&nbsp;&nbsp;&nbsp; </code>Arabic</a>
-<a class="dropdown-item" id="lang_bg" href="test?lang=bg&m=STAT"><code>bg&nbsp;&nbsp;&nbsp; </code>Bulgarian</a>
-<a class="dropdown-item" id="lang_br" href="test?lang=br&m=STAT"><code>br&nbsp;&nbsp;&nbsp; </code>Breton</a>
-<a class="dropdown-item" id="lang_ca" href="test?lang=ca&m=STAT"><code>ca&nbsp;&nbsp;&nbsp; </code>Catalan</a>
-<a class="dropdown-item" id="lang_co" href="test?lang=co&m=STAT"><code>co&nbsp;&nbsp;&nbsp; </code>Corsican</a>
-<a class="dropdown-item" id="lang_cs" href="test?lang=cs&m=STAT"><code>cs&nbsp;&nbsp;&nbsp; </code>Czech</a>
-<a class="dropdown-item" id="lang_da" href="test?lang=da&m=STAT"><code>da&nbsp;&nbsp;&nbsp; </code>Danish</a>
-<a class="dropdown-item" id="lang_de" href="test?lang=de&m=STAT"><code>de&nbsp;&nbsp;&nbsp; </code>German</a>
-<a class="dropdown-item" id="lang_eo" href="test?lang=eo&m=STAT"><code>eo&nbsp;&nbsp;&nbsp; </code>Esperanto</a>
-<a class="dropdown-item" id="lang_es" href="test?lang=es&m=STAT"><code>es&nbsp;&nbsp;&nbsp; </code>Spanish</a>
-<a class="dropdown-item" id="lang_et" href="test?lang=et&m=STAT"><code>et&nbsp;&nbsp;&nbsp; </code>Estonian</a>
-<a class="dropdown-item" id="lang_fi" href="test?lang=fi&m=STAT"><code>fi&nbsp;&nbsp;&nbsp; </code>Finnish</a>
-<a class="dropdown-item" id="lang_fr" href="test?lang=fr&m=STAT"><code>fr&nbsp;&nbsp;&nbsp; </code>French</a>
-<a class="dropdown-item" id="lang_he" href="test?lang=he&m=STAT"><code>he&nbsp;&nbsp;&nbsp; </code>Hebrew</a>
-<a class="dropdown-item" id="lang_is" href="test?lang=is&m=STAT"><code>is&nbsp;&nbsp;&nbsp; </code>Icelandic</a>
-<a class="dropdown-item" id="lang_it" href="test?lang=it&m=STAT"><code>it&nbsp;&nbsp;&nbsp; </code>Italian</a>
-<a class="dropdown-item" id="lang_lt" href="test?lang=lt&m=STAT"><code>lt&nbsp;&nbsp;&nbsp; </code>Lithuanian</a>
-<a class="dropdown-item" id="lang_lv" href="test?lang=lv&m=STAT"><code>lv&nbsp;&nbsp;&nbsp; </code>Latvian</a>
-<a class="dropdown-item" id="lang_nl" href="test?lang=nl&m=STAT"><code>nl&nbsp;&nbsp;&nbsp; </code>Dutch</a>
-<a class="dropdown-item" id="lang_no" href="test?lang=no&m=STAT"><code>no&nbsp;&nbsp;&nbsp; </code>Norwegian</a>
-<a class="dropdown-item" id="lang_oc" href="test?lang=oc&m=STAT"><code>oc&nbsp;&nbsp;&nbsp; </code>Occitan</a>
-<a class="dropdown-item" id="lang_pl" href="test?lang=pl&m=STAT"><code>pl&nbsp;&nbsp;&nbsp; </code>Polish</a>
-<a class="dropdown-item" id="lang_pt" href="test?lang=pt&m=STAT"><code>pt&nbsp;&nbsp;&nbsp; </code>Portuguese</a>
-<a class="dropdown-item" id="lang_pt-br" href="test?lang=pt-br&m=STAT"><code>pt-br </code>Brazilian-Portuguese</a>
-<a class="dropdown-item" id="lang_ro" href="test?lang=ro&m=STAT"><code>ro&nbsp;&nbsp;&nbsp; </code>Romanian</a>
-<a class="dropdown-item" id="lang_ru" href="test?lang=ru&m=STAT"><code>ru&nbsp;&nbsp;&nbsp; </code>Russian</a>
-<a class="dropdown-item" id="lang_sk" href="test?lang=sk&m=STAT"><code>sk&nbsp;&nbsp;&nbsp; </code>Slovak</a>
-<a class="dropdown-item" id="lang_sl" href="test?lang=sl&m=STAT"><code>sl&nbsp;&nbsp;&nbsp; </code>Slovenian</a>
-<a class="dropdown-item" id="lang_sv" href="test?lang=sv&m=STAT"><code>sv&nbsp;&nbsp;&nbsp; </code>Swedish</a>
-<a class="dropdown-item" id="lang_tr" href="test?lang=tr&m=STAT"><code>tr&nbsp;&nbsp;&nbsp; </code>Turkish</a>
-<a class="dropdown-item" id="lang_zh" href="test?lang=zh&m=STAT"><code>zh&nbsp;&nbsp;&nbsp; </code>Chinese</a>
+<a class="dropdown-item" id="lang_af" href="test?lang=af&m=CAL&y=1999"><code>af&nbsp;&nbsp;&nbsp; </code>Afrikaans</a>
+<a class="dropdown-item" id="lang_ar" href="test?lang=ar&m=CAL&y=1999"><code>ar&nbsp;&nbsp;&nbsp; </code>Arabic</a>
+<a class="dropdown-item" id="lang_bg" href="test?lang=bg&m=CAL&y=1999"><code>bg&nbsp;&nbsp;&nbsp; </code>Bulgarian</a>
+<a class="dropdown-item" id="lang_br" href="test?lang=br&m=CAL&y=1999"><code>br&nbsp;&nbsp;&nbsp; </code>Breton</a>
+<a class="dropdown-item" id="lang_ca" href="test?lang=ca&m=CAL&y=1999"><code>ca&nbsp;&nbsp;&nbsp; </code>Catalan</a>
+<a class="dropdown-item" id="lang_co" href="test?lang=co&m=CAL&y=1999"><code>co&nbsp;&nbsp;&nbsp; </code>Corsican</a>
+<a class="dropdown-item" id="lang_cs" href="test?lang=cs&m=CAL&y=1999"><code>cs&nbsp;&nbsp;&nbsp; </code>Czech</a>
+<a class="dropdown-item" id="lang_da" href="test?lang=da&m=CAL&y=1999"><code>da&nbsp;&nbsp;&nbsp; </code>Danish</a>
+<a class="dropdown-item" id="lang_de" href="test?lang=de&m=CAL&y=1999"><code>de&nbsp;&nbsp;&nbsp; </code>German</a>
+<a class="dropdown-item" id="lang_eo" href="test?lang=eo&m=CAL&y=1999"><code>eo&nbsp;&nbsp;&nbsp; </code>Esperanto</a>
+<a class="dropdown-item" id="lang_es" href="test?lang=es&m=CAL&y=1999"><code>es&nbsp;&nbsp;&nbsp; </code>Spanish</a>
+<a class="dropdown-item" id="lang_et" href="test?lang=et&m=CAL&y=1999"><code>et&nbsp;&nbsp;&nbsp; </code>Estonian</a>
+<a class="dropdown-item" id="lang_fi" href="test?lang=fi&m=CAL&y=1999"><code>fi&nbsp;&nbsp;&nbsp; </code>Finnish</a>
+<a class="dropdown-item" id="lang_fr" href="test?lang=fr&m=CAL&y=1999"><code>fr&nbsp;&nbsp;&nbsp; </code>French</a>
+<a class="dropdown-item" id="lang_he" href="test?lang=he&m=CAL&y=1999"><code>he&nbsp;&nbsp;&nbsp; </code>Hebrew</a>
+<a class="dropdown-item" id="lang_is" href="test?lang=is&m=CAL&y=1999"><code>is&nbsp;&nbsp;&nbsp; </code>Icelandic</a>
+<a class="dropdown-item" id="lang_it" href="test?lang=it&m=CAL&y=1999"><code>it&nbsp;&nbsp;&nbsp; </code>Italian</a>
+<a class="dropdown-item" id="lang_lt" href="test?lang=lt&m=CAL&y=1999"><code>lt&nbsp;&nbsp;&nbsp; </code>Lithuanian</a>
+<a class="dropdown-item" id="lang_lv" href="test?lang=lv&m=CAL&y=1999"><code>lv&nbsp;&nbsp;&nbsp; </code>Latvian</a>
+<a class="dropdown-item" id="lang_nl" href="test?lang=nl&m=CAL&y=1999"><code>nl&nbsp;&nbsp;&nbsp; </code>Dutch</a>
+<a class="dropdown-item" id="lang_no" href="test?lang=no&m=CAL&y=1999"><code>no&nbsp;&nbsp;&nbsp; </code>Norwegian</a>
+<a class="dropdown-item" id="lang_oc" href="test?lang=oc&m=CAL&y=1999"><code>oc&nbsp;&nbsp;&nbsp; </code>Occitan</a>
+<a class="dropdown-item" id="lang_pl" href="test?lang=pl&m=CAL&y=1999"><code>pl&nbsp;&nbsp;&nbsp; </code>Polish</a>
+<a class="dropdown-item" id="lang_pt" href="test?lang=pt&m=CAL&y=1999"><code>pt&nbsp;&nbsp;&nbsp; </code>Portuguese</a>
+<a class="dropdown-item" id="lang_pt-br" href="test?lang=pt-br&m=CAL&y=1999"><code>pt-br </code>Brazilian-Portuguese</a>
+<a class="dropdown-item" id="lang_ro" href="test?lang=ro&m=CAL&y=1999"><code>ro&nbsp;&nbsp;&nbsp; </code>Romanian</a>
+<a class="dropdown-item" id="lang_ru" href="test?lang=ru&m=CAL&y=1999"><code>ru&nbsp;&nbsp;&nbsp; </code>Russian</a>
+<a class="dropdown-item" id="lang_sk" href="test?lang=sk&m=CAL&y=1999"><code>sk&nbsp;&nbsp;&nbsp; </code>Slovak</a>
+<a class="dropdown-item" id="lang_sl" href="test?lang=sl&m=CAL&y=1999"><code>sl&nbsp;&nbsp;&nbsp; </code>Slovenian</a>
+<a class="dropdown-item" id="lang_sv" href="test?lang=sv&m=CAL&y=1999"><code>sv&nbsp;&nbsp;&nbsp; </code>Swedish</a>
+<a class="dropdown-item" id="lang_tr" href="test?lang=tr&m=CAL&y=1999"><code>tr&nbsp;&nbsp;&nbsp; </code>Turkish</a>
+<a class="dropdown-item" id="lang_zh" href="test?lang=zh&m=CAL&y=1999"><code>zh&nbsp;&nbsp;&nbsp; </code>Chinese</a>
 </div>
 </div>
 <!-- Connections info -->
@@ -145,7 +270,7 @@ data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <div class="d-flex flex-column justify-content-md-end align-self-center ml-1 ml-md-3 ml-lg-4">
 <div class="ml-auto mb-0">
 <a role="button" class="mr-1"
-href="test?templ=templm&m=STAT"
+href="test?templ=templm&m=CAL&y=1999"
 data-toggle="tooltip"
 title="templm">
 <i class="fab fa-markdown" aria-hidden="true"></i>
@@ -180,32 +305,7 @@ title="GeneWeb Github">
 </div>
 </div>
 <!-- gw/etc/copyr.txt -->
-<script>
- var q_time = TIME;
- var nb_errors = 0;
- var errors_list = "\u{000A}";
- var home_time = document.getElementById('q_time');
- var home_errors = document.getElementById('nb_errors');
- if (home_time != null) {
- home_time.title = "Query treated in " + q_time + " s";
- if (q_time < 3) {
- home_time.classList.add("text-success");
- } else if (q_time < 8) {
- home_time.classList.add("text-warning");
- } else {
- home_time.classList.add("text-danger");
- }
- }
- if (home_errors != null) {
- if (nb_errors > 0) {
- home_errors.title = nb_errors +" error(s)!";
- home_errors.classList.remove("d-none");
- }
- if (errors_list != "\u{000A}") {
- home_errors.title = home_errors.title + errors_list + ".";
- }
- }
-</script></div>
+</div>
 <!-- gw/etc/js.txt -->
 <!-- $Id: js.txt v7.1 10/01/2025 04:15:45 $ -->
 <script src="js/jquery.min.js?version=3.7.1"></script>
@@ -390,5 +490,30 @@ setupFloatingPlaceholders();
 });
 </script>
 <!-- gw/etc/js.txt -->
-</body>
+<script>
+ var q_time = TIME;
+ var nb_errors = 0;
+ var errors_list = "\u{000A}";
+ var home_time = document.getElementById('q_time');
+ var home_errors = document.getElementById('nb_errors');
+ if (home_time != null) {
+ home_time.title = "Query treated in " + q_time + " s";
+ if (q_time < 3) {
+ home_time.classList.add("text-success");
+ } else if (q_time < 8) {
+ home_time.classList.add("text-warning");
+ } else {
+ home_time.classList.add("text-danger");
+ }
+ }
+ if (home_errors != null) {
+ if (nb_errors > 0) {
+ home_errors.title = nb_errors +" error(s)!";
+ home_errors.classList.remove("d-none");
+ }
+ if (errors_list != "\u{000A}") {
+ home_errors.title = home_errors.title + errors_list + ".";
+ }
+ }
+</script></body>
 </html>
