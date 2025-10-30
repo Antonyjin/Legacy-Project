@@ -48,7 +48,7 @@ def is_up(url: str, timeout: float = 1.0) -> bool:
 
 def run_cmd(cmd: List[str]) -> subprocess.Popen:
     # Arguments are fixed and not influenced by user input
-    return subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    return subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)  # nosec B603
 
 
 def start_gwd(port: int) -> subprocess.Popen:
@@ -85,7 +85,13 @@ def start_python_app(port: int, backend: str) -> subprocess.Popen:
     env["FLASK_PORT"] = str(port)
     env["GENEWEB_DIR"] = str(GENEWEB_DIR)
     cmd = [sys.executable, "-m", "python_app.app"]
-    proc = subprocess.Popen(cmd, cwd=str(PROJECT_ROOT), env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    proc = subprocess.Popen(  # nosec B603
+        cmd,
+        cwd=str(PROJECT_ROOT),
+        env=env,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
     # wait
     base_url = f"http://localhost:{port}/health"
     deadline = time.time() + 10.0  # Increased timeout for CI

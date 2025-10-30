@@ -41,10 +41,10 @@ class OCamlBridge:
         port = port or self.config.OCAML_GWD_PORT
 
         # Kill any existing gwd on this port
-        subprocess.run(  # nosec B603,B607 - fixed command, port is int-derived
+        subprocess.run(  # nosec B603 B607
             ["pkill", "-f", f"gwd.*-p {port}"],
             check=False,
-            capture_output=True
+            capture_output=True,
         )
         time.sleep(0.5)
 
@@ -57,7 +57,7 @@ class OCamlBridge:
             "-lang", self.config.DEFAULT_LANG,
         ]
 
-        process = subprocess.Popen(  # nosec B603 - fixed arg list
+        process = subprocess.Popen(  # nosec B603
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
@@ -83,10 +83,10 @@ class OCamlBridge:
         port = port or self.config.OCAML_GWD_PORT
 
         # Kill all gwd processes on this port
-        subprocess.run(  # nosec B603,B607 - fixed command, port is int-derived
+        subprocess.run(  # nosec B603 B607
             ["pkill", "-f", f"gwd.*-p {port}"],
             check=False,
-            capture_output=True
+            capture_output=True,
         )
 
         self.gwd_process = None
