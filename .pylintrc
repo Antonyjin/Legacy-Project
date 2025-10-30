@@ -31,6 +31,7 @@ disable=
     W0223,  # abstract-method (can be intentional)
     W1510,  # subprocess-run-check (sometimes check=False is intentional)
     E1130,  # invalid-unary-operand (false positive)
+    R0801,  # duplicate-code (common patterns across routes are intentional)
 
 [BASIC]
 # Whitelist common short names heavily used in tests/benches
