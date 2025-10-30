@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 from statistics import mean, median
 from typing import Any, Dict, List, Tuple
+import requests
 
 # pylint: disable=too-many-locals
 
@@ -23,7 +24,6 @@ try:
 except Exception:  # pragma: no cover
     FCNTL_HELPER = None
 
-import requests
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 GENEWEB_DIR = PROJECT_ROOT / "GeneWeb"
