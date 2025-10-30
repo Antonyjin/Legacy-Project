@@ -83,8 +83,9 @@ echo "   ✓ Exported to: $INPUT_GED"
 echo ""
 echo "[2/5] Normalizing reference GEDCOM..."
 
-# Normalize: remove timestamps, trim whitespace, sort entries for stability
+# Normalize: remove timestamps, canonicalize base name in DATA line, trim whitespace
 sed -E 's/^(1 DATE|2 TIME) .*/\1 <normalized>/g' "$INPUT_GED" | \
+  sed -E 's/^2 DATA .*/2 DATA <base>.gwb/g' | \
   sed -E 's/[[:space:]]+$//g' > "$INPUT_GED_NORM"
 
 echo "   ✓ Normalized: $INPUT_GED_NORM"
@@ -96,10 +97,12 @@ echo "   ✓ Normalized: $INPUT_GED_NORM"
 echo ""
 echo "[3/5] Importing GEDCOM to fresh database..."
 
-IMPORT_DB="$TMP_DIR/test_import"
+# GeneWeb forbids underscores in base names; use hyphen
+IMPORT_DB="$TMP_DIR/test-import"
 rm -rf "$IMPORT_DB" "$IMPORT_DB.gwb" 2>/dev/null || true
 
-"$GENEWEB_DIR/gw/ged2gwb" "$INPUT_GED" -o "$IMPORT_DB"
+# ged2gwb creates the base relative to the current directory; run it from TMP_DIR
+( cd "$TMP_DIR" && "$GENEWEB_DIR/gw/ged2gwb" "$INPUT_GED" -o "test-import" )
 
 if [ ! -d "$IMPORT_DB.gwb" ]; then
   echo "ERROR: Import failed, $IMPORT_DB.gwb not created"
@@ -127,6 +130,7 @@ fi
 
 # Normalize export2
 sed -E 's/^(1 DATE|2 TIME) .*/\1 <normalized>/g' "$EXPORT2_GED" | \
+  sed -E 's/^2 DATA .*/2 DATA <base>.gwb/g' | \
   sed -E 's/[[:space:]]+$//g' > "$EXPORT2_GED_NORM"
 
 echo "   ✓ Exported: $EXPORT2_GED"
