@@ -80,7 +80,7 @@ class GeneWebServer:
         if self.proc:
             try:
                 self.proc.kill()
-            except:
+            except Exception:  # noqa: BLE001
                 pass
             finally:
                 if self.proc.stdout:

@@ -153,12 +153,6 @@ class TestPrivacy:
         assert "charles" in content, "Person page missing person name"
         assert "windsor" in content, "Person page missing surname"
 
-        # Check for privacy-related elements
-        # Privacy rules may hide certain information or display privacy notices
-        has_privacy_elements = any(keyword in content for keyword in [
-            "private", "privacy", "confidential", "hidden", "restricted"
-        ])
-
         # Note: Privacy behavior depends on configuration
         # This test verifies the page loads and handles privacy appropriately
         assert "<html" in content, "Page missing HTML structure"

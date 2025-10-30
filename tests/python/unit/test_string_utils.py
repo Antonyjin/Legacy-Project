@@ -31,10 +31,10 @@ from pathlib import Path
 test_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(test_dir))
 
-import pytest
+import pytest  # noqa: E402
 
 # Import directly from string_utils to avoid circular dependencies
-from utils.string_utils import FORBIDDEN_CHAR, contains_forbidden_char, purge, strip_c
+from utils.string_utils import FORBIDDEN_CHAR, contains_forbidden_char, purge, strip_c  # noqa: E402
 
 
 class TestStripC:

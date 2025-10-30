@@ -211,7 +211,7 @@ class TestAuthentication:
             try:
                 r = requests.get(f"{server.base_url}{path}", timeout=5)
                 return r.status_code == 200
-            except:
+            except Exception:  # noqa: BLE001
                 return False
 
         paths = [

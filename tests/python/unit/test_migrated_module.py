@@ -28,7 +28,7 @@ project_root = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 # Import the migrated module
-from python_app import migrated
+from python_app import migrated  # noqa: E402
 
 
 class TestMigratedModuleImports:
@@ -94,9 +94,9 @@ class TestMigratedStringUtilities:
     def test_contains_forbidden_char(self):
         """Test: contains_forbidden_char works via migrated module"""
         # FORBIDDEN_CHAR includes :, @, #, =, $
-        assert migrated.contains_forbidden_char("test:value") == True
-        assert migrated.contains_forbidden_char("test@example") == True
-        assert migrated.contains_forbidden_char("normal text") == False
+        assert migrated.contains_forbidden_char("test:value")
+        assert migrated.contains_forbidden_char("test@example")
+        assert not migrated.contains_forbidden_char("normal text")
 
 
 class TestMigratedHTTPUtilities:
@@ -164,10 +164,10 @@ class TestMigratedDateValidation:
 
     def test_leap_year(self):
         """Test: leap_year works via migrated module"""
-        assert migrated.leap_year(2024) == True
-        assert migrated.leap_year(2023) == False
-        assert migrated.leap_year(2000) == True  # Century leap year
-        assert migrated.leap_year(1900) == False  # Century non-leap year
+        assert migrated.leap_year(2024)
+        assert not migrated.leap_year(2023)
+        assert migrated.leap_year(2000)  # Century leap year
+        assert not migrated.leap_year(1900)  # Century non-leap year
 
     def test_nb_days_in_month(self):
         """Test: nb_days_in_month works via migrated module"""
@@ -186,7 +186,6 @@ class TestMigratedDateComparison:
         # Create date objects (Dmy requires: day, month, year, prec, delta)
         date1 = Dmy(day=1, month=1, year=2024, prec=Precision.SURE, delta=0)
         date2 = Dmy(day=15, month=1, year=2024, prec=Precision.SURE, delta=0)
-        date3 = Dmy(day=1, month=2, year=2024, prec=Precision.SURE, delta=0)
 
         # Test comparisons
         assert migrated.compare_dmy(date1, date2) < 0  # Earlier date

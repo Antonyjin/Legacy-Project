@@ -128,7 +128,7 @@ class OCamlBridge:
             str(self.config.BASES_DIR / f"{base_name}.gwb"),
         ]
 
-        result = subprocess.run(
+        subprocess.run(
             cmd,
             capture_output=True,
             text=True,
@@ -152,7 +152,7 @@ class OCamlBridge:
             str(gedcom_path),
         ]
 
-        result = subprocess.run(
+        subprocess.run(
             cmd,
             capture_output=True,
             text=True,

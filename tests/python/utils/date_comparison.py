@@ -166,7 +166,9 @@ def compare_dmy_opt(dmy1: Dmy, dmy2: Dmy, strict: bool = False) -> Optional[int]
             next_comparison = compare_prec
         else:
             x, y = dmy1.month, dmy2.month
-            next_comparison = lambda d1, d2: compare_month_or_day(True, d1, d2)
+            def next_comparison_func(d1, d2):
+                return compare_month_or_day(True, d1, d2)
+            next_comparison = next_comparison_func
 
         # Handle unknown values (0)
         if x == 0 and y == 0:

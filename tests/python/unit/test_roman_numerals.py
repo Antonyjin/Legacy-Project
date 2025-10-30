@@ -30,8 +30,8 @@ from pathlib import Path
 test_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(test_dir))
 
-import pytest
-from utils.roman_numerals import arabian_of_roman, roman_of_arabian
+import pytest  # noqa: E402
+from utils.roman_numerals import arabian_of_roman, roman_of_arabian  # noqa: E402
 
 
 class TestBasicRomanConversion:

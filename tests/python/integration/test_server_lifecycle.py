@@ -178,7 +178,7 @@ class TestServerStartup:
 
             # Should NOT respond on different port
             with pytest.raises(requests.exceptions.RequestException):
-                requests.get(f"http://localhost:23182/test", timeout=1)
+                requests.get("http://localhost:23182/test", timeout=1)
         finally:
             server.stop()
 
@@ -190,23 +190,23 @@ class TestServerResponds:
 
     def test_server_responds_http_200(self, geneweb_dir):
         """Test server returns HTTP 200 for valid requests"""
-        with GeneWebServer(geneweb_dir, port=23180) as server:
-            response = requests.get(f"http://localhost:23180/test", timeout=5)
+        with GeneWebServer(geneweb_dir, port=23180):
+            response = requests.get("http://localhost:23180/test", timeout=5)
             assert response.status_code == 200
 
     def test_server_responds_with_content(self, geneweb_dir):
         """Test server returns HTML content"""
-        with GeneWebServer(geneweb_dir, port=23180) as server:
-            response = requests.get(f"http://localhost:23180/test", timeout=5)
+        with GeneWebServer(geneweb_dir, port=23180):
+            response = requests.get("http://localhost:23180/test", timeout=5)
             assert response.status_code == 200
             assert len(response.text) > 0, "Response body is empty"
             assert "html" in response.text.lower(), "Response doesn't contain HTML"
 
     def test_server_responds_to_person_page(self, geneweb_dir):
         """Test server responds to person page requests"""
-        with GeneWebServer(geneweb_dir, port=23180) as server:
+        with GeneWebServer(geneweb_dir, port=23180):
             response = requests.get(
-                f"http://localhost:23180/test?p=Charles&n=Windsor", timeout=5)
+                "http://localhost:23180/test?p=Charles&n=Windsor", timeout=5)
             assert response.status_code == 200
             assert "Charles" in response.text
 
@@ -319,12 +319,12 @@ class TestConcurrentRequests:
         """
         import concurrent.futures
 
-        with GeneWebServer(geneweb_dir, port=23180) as server:
+        with GeneWebServer(geneweb_dir, port=23180):
 
             def make_request(i):
                 try:
                     response = requests.get(
-                        f"http://localhost:23180/test?p=Charles&n=Windsor",
+                        "http://localhost:23180/test?p=Charles&n=Windsor",
                         timeout=5
                     )
                     return response.status_code
@@ -347,7 +347,7 @@ class TestConcurrentRequests:
 
     def test_server_handles_rapid_requests(self, geneweb_dir):
         """Test server handles rapid sequential requests"""
-        with GeneWebServer(geneweb_dir, port=23180) as server:
+        with GeneWebServer(geneweb_dir, port=23180):
             for i in range(20):
-                response = requests.get(f"http://localhost:23180/test", timeout=2)
+                response = requests.get("http://localhost:23180/test", timeout=2)
                 assert response.status_code == 200, f"Request {i} failed"
