@@ -28,10 +28,20 @@ htmlcov/
 venv/
 ENV/
 env/
+.lintvenv/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
 
 # Python proxy server
 python_app/__pycache__/
 python_app/**/__pycache__/
+tests/python/__pycache__/
+tests/python/**/__pycache__/
 
 # GeneWeb runtime
 *.lck
@@ -60,3 +70,22 @@ wiki/
 tests/golden/tmp/
 tests/golden/reports/
 gwd_*.log
+
+# OCaml build artifacts
+_build/
+_opam/
+*.cmx
+*.cmo
+*.cma
+*.cmxa
+*.cmi
+*.annot
+*.native
+*.byte
+
+# Pre-commit hooks
+.pre-commit-config.yaml.local
+
+# Local test scripts (if any)
+test_flask_startup.sh
+fix_pylint.sh
