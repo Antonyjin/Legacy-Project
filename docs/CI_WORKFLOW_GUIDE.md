@@ -39,20 +39,41 @@
 
 ---
 
-## 🎯 CI Quality Gates (Issue #117)
+## 🎯 CI Quality Gates
 
-### ✅ CURRENTLY BLOCKING CI (Will Fail Merge)
+### ✅ Quality Job (Runs First, Blocking)
+Runs on Python 3.11 and 3.12 in parallel:
+
+1. **Ruff** (fast static checks) - `ruff check python_app tests/python`
+2. **Black** (code formatting) - `black --check python_app tests/python`
+3. **Pylint** (strict linting) - `pylint -j 2 python_app tests/python`
+   - Configuration: `.pylintrc`
+   - Acceptable warnings disabled (docs, duplicate-code, etc.)
+4. **Mypy** (type checking) - `mypy python_app`
+   - Only checks production code (tests excluded due to duplicate module names)
+   - Configuration: `mypy.ini`
+5. **Security**:
+   - **pip-audit** - Dependency vulnerability scanning
+   - **Bandit** - Static Application Security Testing (SAST)
+
+### ✅ Tests Job (Runs After Quality, Blocking)
 - ✅ Python infrastructure test (pytest must work)
 - ✅ **Unit Tests (UT)** - All must pass
 - ✅ **Integration Tests (IT)** - All must pass
 - ✅ **Functional Tests (FT)** - All must pass
-- 📊 Coverage tracked but not enforced
+- 📊 **Coverage** - Enforced ≥80% (`--cov-fail-under=80`)
+- ✅ Python proxy server smoke test (non-blocking)
 
-### Future Milestones
+### Quality Tools Configuration
 
-**Next Steps**:
-- ⏳ Coverage >80% enforcement
-- 🚀 Production deployment automation
+**Files**:
+- `.pylintrc` - Pylint configuration (disabled warnings, good names)
+- `mypy.ini` - Mypy configuration (Python version, exclusions, Flask/requests handling)
+- `pyproject.toml` - Black formatter configuration
+- `.github/workflows/ci.yml` - CI workflow definition
+
+**Local Development**:
+See [Code Quality Guide](CODE_QUALITY.md) for running quality checks locally.
 
 ---
 

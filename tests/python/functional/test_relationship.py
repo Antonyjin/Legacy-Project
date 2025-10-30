@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 FT-PY-004: Test relationship calculation
 
@@ -6,11 +7,12 @@ End-to-end test of calculating relationships between two people.
 User Story: As a user, I want to find the relationship between two people.
 """
 
-import pytest
-import requests
 import subprocess
 import time
 from pathlib import Path
+
+import pytest
+import requests
 
 
 class GeneWebServer:
@@ -38,7 +40,7 @@ class GeneWebServer:
 
         cmd = [str(gwd_path), "-hd", str(gw_dir), "-bd", str(bases_dir), "-p", str(self.port), "-lang", "en"]
 
-        self.log_file = open(f"gwd_ft_{self.port}.log", "w")
+        self.log_file = open(f"gwd_ft_{self.port}.log", "w", encoding='utf-8')
         self.process = subprocess.Popen(cmd, stdout=self.log_file, stderr=subprocess.STDOUT, cwd=str(self.geneweb_dir))
 
         start_time = time.time()
@@ -51,7 +53,8 @@ class GeneWebServer:
     def is_running(self) -> bool:
         """Check if server is responding"""
         try:
-            response = requests.get(f"http://localhost:{self.port}/{self.base_name}", timeout=2, headers={"Connection": "close"})
+            url = f"http://localhost:{self.port}/{self.base_name}"
+            response = requests.get(url, timeout=2, headers={"Connection": "close"})
             return response.status_code in [200, 204]
         except requests.RequestException:
             return False
@@ -98,7 +101,7 @@ class TestRelationshipCalculation:
 
     def test_relationship_page_loads(self, server):
         """Test: Relationship calculation page loads"""
-        response = requests.get(f"http://localhost:{server.port}/{server.base_name}")
+        response = requests.get(f"http://localhost:{server.port}/{server.base_name}", timeout=5)
         assert response.status_code == 200
         content = response.text.lower()
         assert "geneweb" in content
@@ -108,8 +111,7 @@ class TestRelationshipCalculation:
         # Navigate to Charles (child) and verify Elizabeth (mother) shown
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor"}
-        )
+            params={"p": "Charles", "n": "Windsor"}, timeout=5)
         assert response.status_code == 200
         content = response.text.lower()
         # Should show parent relationship
@@ -119,8 +121,7 @@ class TestRelationshipCalculation:
         """Test: Indirect relationship (cousins) found"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor"}
-        )
+            params={"p": "Charles", "n": "Windsor"}, timeout=5)
         assert response.status_code == 200
         content = response.text.lower()
         # Page should load with family information
@@ -131,16 +132,14 @@ class TestRelationshipCalculation:
         # Try persons with different surnames
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor"}
-        )
+            params={"p": "Charles", "n": "Windsor"}, timeout=5)
         assert response.status_code in [200, 404]
 
     def test_relationship_display_formatted(self, server):
         """Test: Relationship displayed clearly"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor"}
-        )
+            params={"p": "Charles", "n": "Windsor"}, timeout=5)
         assert response.status_code == 200
         content = response.text.lower()
         # Should have proper HTML structure

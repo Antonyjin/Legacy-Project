@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 IT-PY-009: Test performance benchmarks
 
@@ -12,12 +13,13 @@ Components tested:
 """
 
 import os
-import time
 import signal
+import subprocess
+import time
+from pathlib import Path
+
 import pytest
 import requests
-import subprocess
-from pathlib import Path
 
 
 class GeneWebServer:
@@ -158,7 +160,7 @@ class TestPerformance:
         """Test repeated requests have consistent performance"""
         times = []
 
-        for i in range(5):
+        for _ in range(5):
             start = time.time()
             r = requests.get(server.base_url, timeout=5)
             elapsed = time.time() - start
@@ -176,7 +178,7 @@ class TestPerformance:
         """Test server handles rapid sequential requests efficiently"""
         start = time.time()
 
-        for i in range(20):
+        for _ in range(20):
             r = requests.get(server.base_url, timeout=5)
             assert r.status_code == 200
 
@@ -252,7 +254,7 @@ class TestPerformance:
         start = time.time()
         failed = 0
 
-        for i in range(iterations):
+        for _ in range(iterations):
             try:
                 r = requests.get(server.base_url, timeout=3)
                 if r.status_code != 200:
@@ -263,6 +265,6 @@ class TestPerformance:
         total_time = time.time() - start
 
         # Should complete in reasonable time
-        assert total_time < iterations * 2.0, f"Sustained load test too slow"
+        assert total_time < iterations * 2.0, "Sustained load test too slow"
         # Should not have too many failures
         assert failed < iterations * 0.2, f"Too many failures: {failed}/{iterations}"

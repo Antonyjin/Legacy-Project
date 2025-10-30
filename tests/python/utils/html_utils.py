@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 HTML escaping/unescaping utilities - Migration from GeneWeb.
 
@@ -15,31 +16,32 @@ Usage in GeneWeb:
 - Preventing XSS attacks from user input
 """
 
-from html import escape as _py_escape, unescape as _py_unescape
+from html import escape as _py_escape
+from html import unescape as _py_unescape
 
 
 def escape_html(text: str, quote: bool = True) -> str:
     """
     Escape special characters into HTML-safe sequences.
-    
+
     This function is used throughout GeneWeb to safely render genealogical data
     in HTML pages. It escapes characters that have special meaning in HTML to
     prevent rendering issues and XSS attacks.
-    
+
     Args:
         text: The string to escape (can be person names, places, dates, notes)
         quote: If True (default), also escape quotes (' and ")
-    
+
     Returns:
         HTML-escaped string safe for rendering
-    
+
     Escaped characters:
         & → &amp;
         < → &lt;
         > → &gt;
         " → &quot; (if quote=True)
         ' → &#x27; (if quote=True)
-    
+
     Examples:
         >>> escape_html("Smith & Johnson")
         'Smith &amp; Johnson'
@@ -49,7 +51,7 @@ def escape_html(text: str, quote: bool = True) -> str:
         'Place: &quot;New York&quot;'
         >>> escape_html("Jean-François")
         'Jean-François'  # Unicode preserved
-    
+
     Notes:
         - Unicode characters are preserved (e.g., accents, non-Latin scripts)
         - Used extensively in GeneWeb HTML generation
@@ -64,16 +66,16 @@ def escape_html(text: str, quote: bool = True) -> str:
 def unescape_html(text: str) -> str:
     """
     Decode HTML entities back to original text.
-    
+
     Converts HTML entities (both named and numeric) back to their original
     characters. Used when processing HTML-encoded data.
-    
+
     Args:
         text: HTML-encoded string with entities
-    
+
     Returns:
         Decoded string with entities converted to characters
-    
+
     Examples:
         >>> unescape_html('Smith &amp; Johnson')
         'Smith & Johnson'
@@ -83,7 +85,7 @@ def unescape_html(text: str) -> str:
         '"New York"'
         >>> unescape_html('&lt;tag&gt;')
         '<tag>'
-    
+
     Notes:
         - Handles both named entities (&amp;) and numeric (&#x27;)
         - Essential for roundtrip testing (escape → unescape)

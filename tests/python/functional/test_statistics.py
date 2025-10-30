@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 FT-PY-006: Test statistics functionality
 
@@ -18,13 +19,12 @@ Test Scenario:
 4. Check formatting and presentation
 """
 
-import pytest
-import requests
 import subprocess
 import time
-import signal
-import os
 from pathlib import Path
+
+import pytest
+import requests
 
 
 class GeneWebServer:
@@ -60,7 +60,7 @@ class GeneWebServer:
             "-lang", "en"
         ]
 
-        self.log_file = open(f"gwd_ft_{self.port}.log", "w")
+        self.log_file = open(f"gwd_ft_{self.port}.log", "w", encoding='utf-8')
         self.process = subprocess.Popen(
             cmd,
             stdout=self.log_file,
@@ -142,8 +142,7 @@ class TestStatistics:
         """Test: Statistics page displays correctly"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "STAT"}
-        )
+            params={"m": "STAT"}, timeout=5)
 
         assert response.status_code == 200, f"Statistics page failed to load: {response.status_code}"
 
@@ -160,8 +159,7 @@ class TestStatistics:
         """Test: Statistics counts are displayed"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "STAT"}
-        )
+            params={"m": "STAT"}, timeout=5)
 
         assert response.status_code == 200
 
@@ -181,8 +179,7 @@ class TestStatistics:
         """Test: Statistics data is present and reasonable"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "STAT"}
-        )
+            params={"m": "STAT"}, timeout=5)
 
         assert response.status_code == 200
 
@@ -210,8 +207,7 @@ class TestStatistics:
         """Test: Statistics are formatted correctly"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "STAT"}
-        )
+            params={"m": "STAT"}, timeout=5)
 
         assert response.status_code == 200
 

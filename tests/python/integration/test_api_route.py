@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 IT-PY-002: Test API routes via HTTP
 
@@ -8,13 +9,13 @@ This test suite assumes:
 """
 
 import os
-import time
 import signal
-import pytest
-import requests
 import subprocess
+import time
 from pathlib import Path
 
+import pytest
+import requests
 
 # ---------------------------
 # Helpers (kept local so file is standalone)

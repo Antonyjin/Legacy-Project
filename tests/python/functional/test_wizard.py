@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 FT-PY-008: Test wizard mode functionality
 
@@ -18,13 +19,12 @@ Test Scenario:
 4. Verify changes are saved and persist
 """
 
-import pytest
-import requests
 import subprocess
 import time
-import signal
-import os
 from pathlib import Path
+
+import pytest
+import requests
 
 
 class GeneWebServer:
@@ -61,7 +61,7 @@ class GeneWebServer:
             "-wizard", "wizard"  # Enable wizard mode
         ]
 
-        self.log_file = open(f"gwd_ft_{self.port}.log", "w")
+        self.log_file = open(f"gwd_ft_{self.port}.log", "w", encoding='utf-8')
         self.process = subprocess.Popen(
             cmd,
             stdout=self.log_file,
@@ -144,8 +144,7 @@ class TestWizard:
         # Try to access wizard mode
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "MOD_IND"}
-        )
+            params={"m": "MOD_IND"}, timeout=5)
 
         if response.status_code == 401:
             pytest.skip("Wizard mode requires authentication (401 Unauthorized)")
@@ -168,8 +167,7 @@ class TestWizard:
         # Access the add person form
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "ADD_IND"}
-        )
+            params={"m": "ADD_IND"}, timeout=5)
 
         if response.status_code == 401:
             pytest.skip("Wizard mode requires authentication (401 Unauthorized)")
@@ -195,16 +193,14 @@ class TestWizard:
         # First, get a person to edit
         person_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor"}
-        )
+            params={"p": "Charles", "n": "Windsor"}, timeout=5)
 
         assert person_response.status_code == 200, "Failed to load person to edit"
 
         # Now access edit mode for this person
         edit_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "MOD_IND", "p": "Charles", "n": "Windsor"}
-        )
+            params={"m": "MOD_IND", "p": "Charles", "n": "Windsor"}, timeout=5)
 
         if edit_response.status_code == 401:
             pytest.skip("Wizard mode requires authentication (401 Unauthorized)")
@@ -231,8 +227,7 @@ class TestWizard:
         # Get current person data
         person_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor"}
-        )
+            params={"p": "Charles", "n": "Windsor"}, timeout=5)
 
         assert person_response.status_code == 200, "Failed to load person data"
 
@@ -243,8 +238,7 @@ class TestWizard:
         # Access edit form to verify it loads with current data
         edit_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "MOD_IND", "p": "Charles", "n": "Windsor"}
-        )
+            params={"m": "MOD_IND", "p": "Charles", "n": "Windsor"}, timeout=5)
 
         if edit_response.status_code == 401:
             pytest.skip("Wizard mode requires authentication (401 Unauthorized)")

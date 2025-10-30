@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 Date Comparison Utilities
 
@@ -44,7 +45,7 @@ class Calendar(Enum):
 @dataclass(frozen=True)
 class Dmy:
     """Date structure (from OCaml adef.ml)
-    
+
     Fields:
     - day: Day of month (0 = unknown)
     - month: Month (0 = unknown, 1-12)
@@ -78,27 +79,26 @@ Date = Union[Dgreg, Dtext]
 
 class NotComparable(Exception):
     """Exception raised when dates cannot be compared in strict mode"""
-    pass
 
 
 def compare_dmy_opt(dmy1: Dmy, dmy2: Dmy, strict: bool = False) -> Optional[int]:
     """Compare two dmy structures, return None if not comparable.
-    
+
     OCaml: date.ml:147 (compare_dmy_opt)
-    
+
     Args:
         dmy1: First date structure
         dmy2: Second date structure
         strict: If True, consider precision (may return None)
                 If False, compare as points on timeline
-    
+
     Returns:
         -1 if dmy1 < dmy2
          0 if dmy1 == dmy2
          1 if dmy1 > dmy2
          None if not comparable (strict mode only)
     """
-    
+
     def eval_strict(dmy1: Dmy, dmy2: Dmy, x: int) -> Optional[int]:
         """OCaml: date.ml:191 (eval_strict helper)"""
         if strict:
@@ -110,10 +110,10 @@ def compare_dmy_opt(dmy1: Dmy, dmy2: Dmy, strict: bool = False) -> Optional[int]
             return x
         else:
             return x
-    
+
     def compare_prec(dmy1: Dmy, dmy2: Dmy) -> Optional[int]:
         """OCaml: date.ml:178 (compare_prec helper)
-        
+
         OCaml pattern matching:
         | (Sure | About | Maybe), (Sure | About | Maybe) -> Some 0
         | After, After | Before, Before -> Some 0
@@ -122,31 +122,31 @@ def compare_dmy_opt(dmy1: Dmy, dmy2: Dmy, strict: bool = False) -> Optional[int]
         | _ -> Some 0
         """
         p1, p2 = dmy1.prec, dmy2.prec
-        
+
         # (Sure | About | Maybe), (Sure | About | Maybe) -> 0
         if p1 in (Precision.SURE, Precision.ABOUT, Precision.MAYBE) and \
            p2 in (Precision.SURE, Precision.ABOUT, Precision.MAYBE):
             return 0
-        
+
         # After, After | Before, Before -> 0
         if (p1 == Precision.AFTER and p2 == Precision.AFTER) or \
            (p1 == Precision.BEFORE and p2 == Precision.BEFORE):
             return 0
-        
+
         # _, After | Before, _ -> -1
         if p2 == Precision.AFTER or p1 == Precision.BEFORE:
             return -1
-        
+
         # After, _ | _, Before -> 1
         if p1 == Precision.AFTER or p2 == Precision.BEFORE:
             return 1
-        
+
         # _ -> 0
         return 0
-    
+
     def compare_month_or_day(is_day: bool, dmy1: Dmy, dmy2: Dmy) -> Optional[int]:
         """OCaml: date.ml:152 (compare_month_or_day helper)"""
-        
+
         def compare_with_unknown_value(unknown: Dmy, known: Dmy) -> Optional[int]:
             """OCaml: date.ml:154 (nested helper)"""
             if unknown.prec == Precision.AFTER:
@@ -159,15 +159,17 @@ def compare_dmy_opt(dmy1: Dmy, dmy2: Dmy, strict: bool = False) -> Optional[int]
                     return None
                 else:
                     return compare_prec(unknown, known)
-        
+
         # Select day or month for comparison
         if is_day:
             x, y = dmy1.day, dmy2.day
             next_comparison = compare_prec
         else:
             x, y = dmy1.month, dmy2.month
-            next_comparison = lambda d1, d2: compare_month_or_day(True, d1, d2)
-        
+            def next_comparison_func(d1, d2):
+                return compare_month_or_day(True, d1, d2)
+            next_comparison = next_comparison_func
+
         # Handle unknown values (0)
         if x == 0 and y == 0:
             return compare_prec(dmy1, dmy2)
@@ -185,7 +187,7 @@ def compare_dmy_opt(dmy1: Dmy, dmy2: Dmy, strict: bool = False) -> Optional[int]
                 return eval_strict(dmy1, dmy2, 1)
             else:
                 return next_comparison(dmy1, dmy2)
-    
+
     # Main comparison: start with year
     if dmy1.year < dmy2.year:
         return eval_strict(dmy1, dmy2, -1)
@@ -198,19 +200,19 @@ def compare_dmy_opt(dmy1: Dmy, dmy2: Dmy, strict: bool = False) -> Optional[int]
 
 def compare_dmy(dmy1: Dmy, dmy2: Dmy, strict: bool = False) -> int:
     """Compare two dmy structures, raise NotComparable if not comparable.
-    
+
     OCaml: date.ml:199 (compare_dmy)
-    
+
     Args:
         dmy1: First date structure
         dmy2: Second date structure
         strict: If True, consider precision (may raise NotComparable)
-    
+
     Returns:
         -1 if dmy1 < dmy2
          0 if dmy1 == dmy2
          1 if dmy1 > dmy2
-    
+
     Raises:
         NotComparable: If dates cannot be compared in strict mode
     """
@@ -222,19 +224,19 @@ def compare_dmy(dmy1: Dmy, dmy2: Dmy, strict: bool = False) -> int:
 
 def compare_date(d1: Date, d2: Date, strict: bool = False) -> int:
     """Compare two date structures.
-    
+
     OCaml: date.ml:204 (compare_date)
-    
+
     Args:
         d1: First date
         d2: Second date
         strict: If True, consider precision and Dtext incomparability
-    
+
     Returns:
         -1 if d1 < d2
          0 if d1 == d2
          1 if d1 > d2
-    
+
     Raises:
         NotComparable: If dates cannot be compared in strict mode
     """

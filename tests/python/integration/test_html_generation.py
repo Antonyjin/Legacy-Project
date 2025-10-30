@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 IT-PY-004: Test HTML generation via HTTP API
 
@@ -12,13 +13,14 @@ Components tested:
 """
 
 import os
-import time
 import signal
+import subprocess
+import time
+from html.parser import HTMLParser
+from pathlib import Path
+
 import pytest
 import requests
-import subprocess
-from pathlib import Path
-from html.parser import HTMLParser
 
 
 class GeneWebServer:
@@ -198,7 +200,8 @@ class TestHTMLGeneration:
         # Calendar should have time-related content
         html_lower = r.text.lower()
         # Should have month names or numbers
-        assert any(month in html_lower for month in ["january", "february", "march", "january", "jan", "feb", "01", "02"])
+        months = ["january", "february", "march", "january", "jan", "feb", "01", "02"]
+        assert any(month in html_lower for month in months)
 
     def test_html_encoding_valid(self, server: GeneWebServer):
         """Test HTML is properly encoded"""

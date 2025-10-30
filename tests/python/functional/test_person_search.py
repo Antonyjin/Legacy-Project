@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 FT-PY-002: Test person search
 
@@ -20,13 +21,12 @@ Test Scenario:
 5. Click on a result to view person page
 """
 
-import pytest
-import requests
 import subprocess
 import time
-import signal
-import os
 from pathlib import Path
+
+import pytest
+import requests
 
 
 class GeneWebServer:
@@ -62,7 +62,7 @@ class GeneWebServer:
             "-lang", "en"
         ]
 
-        self.log_file = open(f"gwd_ft_{self.port}.log", "w")
+        self.log_file = open(f"gwd_ft_{self.port}.log", "w", encoding='utf-8')
         self.process = subprocess.Popen(
             cmd,
             stdout=self.log_file,
@@ -142,7 +142,7 @@ class TestPersonSearch:
 
     def test_search_form_loads_successfully(self, server):
         """Test: Search form loads and displays correctly"""
-        response = requests.get(f"http://localhost:{server.port}/{server.base_name}")
+        response = requests.get(f"http://localhost:{server.port}/{server.base_name}", timeout=5)
 
         assert response.status_code == 200, f"Home page failed to load: {response.status_code}"
 
@@ -157,8 +157,7 @@ class TestPersonSearch:
         # Search for Windsor (known surname in test database)
         search_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "S", "s": "Windsor"}
-        )
+            params={"m": "S", "s": "Windsor"}, timeout=5)
 
         assert search_response.status_code == 200, f"Search failed: {search_response.status_code}"
 
@@ -172,8 +171,7 @@ class TestPersonSearch:
         # Search for specific person
         search_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "S", "s": "Charles"}
-        )
+            params={"m": "S", "s": "Charles"}, timeout=5)
 
         assert search_response.status_code == 200
 
@@ -189,15 +187,13 @@ class TestPersonSearch:
         # First, search
         search_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "S", "s": "Windsor"}
-        )
+            params={"m": "S", "s": "Windsor"}, timeout=5)
         assert search_response.status_code == 200
 
         # Then navigate to one of the results
         person_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor"}
-        )
+            params={"p": "Charles", "n": "Windsor"}, timeout=5)
 
         assert person_response.status_code == 200, "Person page failed to load"
 
@@ -211,8 +207,7 @@ class TestPersonSearch:
         # Search for non-existent person
         search_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "S", "s": "NONEXISTENTPERSON123"}
-        )
+            params={"m": "S", "s": "NONEXISTENTPERSON123"}, timeout=5)
 
         assert search_response.status_code in [200, 404], \
             f"Unexpected status for no results: {search_response.status_code}"
@@ -240,8 +235,7 @@ class TestPersonSearch:
         for params in test_cases:
             response = requests.get(
                 f"http://localhost:{server.port}/{server.base_name}",
-                params=params
-            )
+                params=params, timeout=5)
 
             assert response.status_code == 200, f"Search failed with params: {params}"
 

@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 #!/usr/bin/env python3
 """
 Unit tests for python_app.migrated module (MIG-INF-002)
@@ -19,6 +20,7 @@ Coverage:
 
 import sys
 from pathlib import Path
+
 import pytest
 
 # Add project root to path
@@ -26,7 +28,7 @@ project_root = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 # Import the migrated module
-from python_app import migrated
+from python_app import migrated  # noqa: E402
 
 
 class TestMigratedModuleImports:
@@ -41,13 +43,13 @@ class TestMigratedModuleImports:
         """Test: All functions listed in __all__ are actually accessible"""
         # Get all exported names
         exported = migrated.__all__
-        
+
         # Check each export is accessible
         missing = []
         for name in exported:
             if not hasattr(migrated, name):
                 missing.append(name)
-        
+
         assert len(missing) == 0, f"Missing exports: {missing}"
 
     def test_exports_count(self):
@@ -92,9 +94,9 @@ class TestMigratedStringUtilities:
     def test_contains_forbidden_char(self):
         """Test: contains_forbidden_char works via migrated module"""
         # FORBIDDEN_CHAR includes :, @, #, =, $
-        assert migrated.contains_forbidden_char("test:value") == True
-        assert migrated.contains_forbidden_char("test@example") == True
-        assert migrated.contains_forbidden_char("normal text") == False
+        assert migrated.contains_forbidden_char("test:value")
+        assert migrated.contains_forbidden_char("test@example")
+        assert not migrated.contains_forbidden_char("normal text")
 
 
 class TestMigratedHTTPUtilities:
@@ -162,10 +164,10 @@ class TestMigratedDateValidation:
 
     def test_leap_year(self):
         """Test: leap_year works via migrated module"""
-        assert migrated.leap_year(2024) == True
-        assert migrated.leap_year(2023) == False
-        assert migrated.leap_year(2000) == True  # Century leap year
-        assert migrated.leap_year(1900) == False  # Century non-leap year
+        assert migrated.leap_year(2024)
+        assert not migrated.leap_year(2023)
+        assert migrated.leap_year(2000)  # Century leap year
+        assert not migrated.leap_year(1900)  # Century non-leap year
 
     def test_nb_days_in_month(self):
         """Test: nb_days_in_month works via migrated module"""
@@ -180,12 +182,11 @@ class TestMigratedDateComparison:
     def test_compare_dmy(self):
         """Test: compare_dmy works via migrated module"""
         from python_app.migrated import Dmy, Precision
-        
+
         # Create date objects (Dmy requires: day, month, year, prec, delta)
         date1 = Dmy(day=1, month=1, year=2024, prec=Precision.SURE, delta=0)
         date2 = Dmy(day=15, month=1, year=2024, prec=Precision.SURE, delta=0)
-        date3 = Dmy(day=1, month=2, year=2024, prec=Precision.SURE, delta=0)
-        
+
         # Test comparisons
         assert migrated.compare_dmy(date1, date2) < 0  # Earlier date
         assert migrated.compare_dmy(date2, date1) > 0  # Later date
@@ -197,12 +198,11 @@ class TestMigratedModuleConsistency:
 
     def test_name_lower_matches_original(self):
         """Test: migrated name_lower matches original implementation"""
-        import sys
-        from pathlib import Path
+        # Import inside method to access test utils - pylint: disable=reimported
         test_utils_path = Path(__file__).parent.parent.parent.parent / "tests" / "python"
         sys.path.insert(0, str(test_utils_path))
         from utils.name_utils import name_lower as original_name_lower
-        
+
         test_cases = ["Jean", "SMITH", "O'Brien"]
         for case in test_cases:
             assert migrated.name_lower(case) == original_name_lower(case), \
@@ -210,12 +210,11 @@ class TestMigratedModuleConsistency:
 
     def test_escape_html_matches_original(self):
         """Test: migrated escape_html matches original implementation"""
-        import sys
-        from pathlib import Path
+        # Import inside method to access test utils - pylint: disable=reimported
         test_utils_path = Path(__file__).parent.parent.parent.parent / "tests" / "python"
         sys.path.insert(0, str(test_utils_path))
         from utils.html_utils import escape_html as original_escape_html
-        
+
         test_cases = ["<tag>", "Smith & Johnson", "O'Brien"]
         for case in test_cases:
             assert migrated.escape_html(case) == original_escape_html(case), \
@@ -223,12 +222,11 @@ class TestMigratedModuleConsistency:
 
     def test_url_encode_matches_original(self):
         """Test: migrated url_encode matches original implementation"""
-        import sys
-        from pathlib import Path
+        # Import inside method to access test utils - pylint: disable=reimported
         test_utils_path = Path(__file__).parent.parent.parent.parent / "tests" / "python"
         sys.path.insert(0, str(test_utils_path))
         from utils.http_params import url_encode as original_url_encode
-        
+
         test_cases = ["test value", "Smith & Johnson"]
         for case in test_cases:
             assert migrated.url_encode(case) == original_url_encode(case), \
@@ -259,7 +257,7 @@ class TestMigratedModuleAPI:
             # Date comparison
             "compare_dmy", "compare_dmy_opt", "compare_date",
         ]
-        
+
         for func_name in expected_functions:
             assert hasattr(migrated, func_name), \
                 f"Expected function {func_name} not found in python_app.migrated"

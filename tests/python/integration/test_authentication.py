@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 IT-PY-007: Test authentication via HTTP API
 
@@ -12,12 +13,13 @@ Components tested:
 """
 
 import os
-import time
 import signal
+import subprocess
+import time
+from pathlib import Path
+
 import pytest
 import requests
-import subprocess
-from pathlib import Path
 
 
 class GeneWebServer:
@@ -209,7 +211,7 @@ class TestAuthentication:
             try:
                 r = requests.get(f"{server.base_url}{path}", timeout=5)
                 return r.status_code == 200
-            except:
+            except Exception:  # noqa: BLE001
                 return False
 
         paths = [

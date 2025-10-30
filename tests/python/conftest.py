@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 Shared pytest configuration and fixtures for GeneWeb tests.
 
@@ -11,11 +12,10 @@ Issue: UT-PY-001 (Setup pytest infrastructure)
 """
 
 import os
+import time
+
 import pytest
 import requests
-import time
-from typing import Generator
-
 
 # =============================================================================
 # Configuration
@@ -40,11 +40,10 @@ def setup_test_environment():
     # Set deterministic environment
     os.environ["LC_ALL"] = "C.UTF-8"
     os.environ["TZ"] = "UTC"
-    
+
     yield
-    
+
     # Cleanup (if needed)
-    pass
 
 
 @pytest.fixture(scope="session")
@@ -97,7 +96,7 @@ def http_client():
     session.headers.update({
         "User-Agent": "GeneWeb-Python-Tests/1.0"
     })
-    
+
     # Verify gwd is accessible
     try:
         response = session.get(FULL_URL, timeout=TIMEOUT)
@@ -105,9 +104,9 @@ def http_client():
             pytest.skip(f"gwd not accessible at {FULL_URL}")
     except requests.exceptions.RequestException:
         pytest.skip(f"gwd not running at {FULL_URL}")
-    
+
     yield session
-    
+
     session.close()
 
 
@@ -115,7 +114,7 @@ def http_client():
 def get_person(http_client):
     """
     Helper fixture to get a person page.
-    
+
     Usage:
         def test_example(get_person):
             response = get_person("Charles", "Windsor")
@@ -126,7 +125,7 @@ def get_person(http_client):
         if oc is not None:
             params["oc"] = oc
         return http_client.get(FULL_URL, params=params)
-    
+
     return _get_person
 
 
@@ -134,7 +133,7 @@ def get_person(http_client):
 def search(http_client):
     """
     Helper fixture to perform a search.
-    
+
     Usage:
         def test_example(search):
             response = search("Windsor")
@@ -143,7 +142,7 @@ def search(http_client):
     def _search(query: str):
         params = {"m": "S", "s": query}
         return http_client.get(FULL_URL, params=params)
-    
+
     return _search
 
 
@@ -154,11 +153,11 @@ def search(http_client):
 def wait_for_gwd(max_attempts: int = 10, delay: float = 1.0) -> bool:
     """
     Wait for gwd to become available.
-    
+
     Args:
         max_attempts: Maximum number of connection attempts
         delay: Delay between attempts in seconds
-    
+
     Returns:
         True if gwd is available, False otherwise
     """
@@ -169,10 +168,10 @@ def wait_for_gwd(max_attempts: int = 10, delay: float = 1.0) -> bool:
                 return True
         except requests.exceptions.RequestException:
             pass
-        
+
         if attempt < max_attempts - 1:
             time.sleep(delay)
-    
+
     return False
 
 
@@ -220,4 +219,3 @@ def pytest_report_header(config):
         f"Database: {DATABASE}",
         f"Timeout: {TIMEOUT}s",
     ]
-

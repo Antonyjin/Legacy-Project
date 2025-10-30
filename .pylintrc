@@ -1,0 +1,38 @@
+[MASTER]
+ignore=venv,.venv,ENV,env,build,dist
+# Make sure Pylint understands modern syntax (dict/typing unions with |, etc.)
+py-version=3.11
+
+[FORMAT]
+max-line-length=120   # +20 chars trims most C0301 noise without inviting spaghetti
+
+[MESSAGES CONTROL]
+# Disable common test/benchmark warnings that are acceptable
+disable=
+    C0114,  # Missing module docstring
+    C0115,  # Missing class docstring
+    C0116,  # Missing function or method docstring
+    C0305,  # Trailing newlines
+    C0413,  # wrong-import-position
+    R0903,  # Too few public methods (common in test classes)
+    R1710,  # inconsistent-return-statements (acceptable in fixtures)
+    R1732,  # Consider using 'with' (often intentional in tests)
+    W0106,  # Expression not assigned (sometimes intentional)
+    W0511,  # TODO comments are acceptable
+    W0613,  # Unused argument (common in fixtures/overrides)
+    W0404,  # Reimport (sometimes needed in tests)
+    W0718,  # Broad exception caught (already using Exception with noqa)
+    E0601,  # Used before assignment (false positives)
+    R1705,  # no-else-return (style preference, not always better)
+    R0911,  # Too many return statements (acceptable in utilities)
+    R1714,  # consider-using-in (sometimes explicit is clearer)
+    R1715,  # consider-using-get (sometimes explicit is clearer)
+    C1803,  # use-implicit-booleaness (explicit comparisons sometimes clearer)
+    W0223,  # abstract-method (can be intentional)
+    W1510,  # subprocess-run-check (sometimes check=False is intentional)
+    E1130,  # invalid-unary-operand (false positive)
+    R0801,  # duplicate-code (common patterns across routes are intentional)
+
+[BASIC]
+# Whitelist common short names heavily used in tests/benches
+good-names=i,j,k,x,y,z,r,p,n,f,e,s,w,b,t0,d,d1,d2,r1,r2,oc,o,v,c,p1,p2

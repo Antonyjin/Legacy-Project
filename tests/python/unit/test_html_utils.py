@@ -1,12 +1,13 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 #!/usr/bin/env python3
 """
 Unit tests for HTML escaping/unescaping (MIG-010)
 """
 import sys
 from pathlib import Path
+
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-import pytest
 from utils.html_utils import escape_html, unescape_html
 
 
@@ -31,7 +32,7 @@ class TestEscape:
         out = escape_html(s)
         assert '&lt;script&gt;' in out and '&amp;' in out and '&#x27;' in out
         assert 'Jean-François' in out  # Name preserved
-    
+
     def test_genealogy_names(self):
         """Test escaping with genealogy-specific names."""
         # Names with ampersands (e.g., "Smith & Johnson")
@@ -39,7 +40,7 @@ class TestEscape:
         # Names with quotes (e.g., "O'Brien", "d'Albert")
         assert '&#x27;' in escape_html("O'Brien")
         assert '&quot;' in escape_html('Family "Genealogy" Book')
-    
+
     def test_roundtrip_stability(self):
         # Genealogy data example: Date with HTML-like characters
         s = 'Born on <14 Nov 1948> in "London"'

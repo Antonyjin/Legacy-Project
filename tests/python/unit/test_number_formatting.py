@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 UT-PY-011: Test number formatting with thousands separator
 
@@ -15,18 +16,15 @@ OCaml References:
 Issue: MIG-008 - Migrate number formatting with thousands separator
 """
 
-import pytest
 import sys
 from pathlib import Path
+
+import pytest
 
 # Add tests/python to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from utils.number_formatter import (
-    format_number_with_separator,
-    get_locale_separator,
-    LOCALE_SEPARATORS,
-)
+from utils.number_formatter import LOCALE_SEPARATORS, format_number_with_separator, get_locale_separator
 
 
 @pytest.mark.unit
@@ -44,7 +42,7 @@ class TestBasicNumberFormatting:
         assert format_number_with_separator(1, 'en') == '1'
         assert format_number_with_separator(99, 'en') == '99'
         assert format_number_with_separator(999, 'en') == '999'
-        
+
         # Same behavior for all locales
         assert format_number_with_separator(500, 'fr') == '500'
         assert format_number_with_separator(500, 'de') == '500'
@@ -246,7 +244,7 @@ class TestEdgeCases:
 
     def test_all_supported_locales_work(self):
         """All locales in LOCALE_SEPARATORS should work"""
-        for locale in LOCALE_SEPARATORS.keys():
+        for locale in LOCALE_SEPARATORS:
             result = format_number_with_separator(1000, locale)
             assert isinstance(result, str)
             assert '1' in result
@@ -292,13 +290,13 @@ class TestOCamlBehaviorConsistency:
         """Separator should appear every 3 digits from right"""
         # 4 digits: one separator
         assert format_number_with_separator(1234, 'en') == '1,234'
-        
+
         # 5 digits: one separator
         assert format_number_with_separator(12345, 'en') == '12,345'
-        
+
         # 6 digits: one separator
         assert format_number_with_separator(123456, 'en') == '123,456'
-        
+
         # 7 digits: two separators
         assert format_number_with_separator(1234567, 'en') == '1,234,567'
 
@@ -320,7 +318,7 @@ class TestOCamlBehaviorConsistency:
         """All separators should be evenly spaced (every 3 digits)"""
         result = format_number_with_separator(1234567890, 'en')
         assert result == '1,234,567,890'
-        
+
         # Count separators
         assert result.count(',') == 3
 
@@ -342,7 +340,7 @@ class TestRealWorldScenarios:
         # Total persons
         assert format_number_with_separator(15234, 'en') == '15,234'
         assert format_number_with_separator(15234, 'fr') == '15 234'
-        
+
         # Total families
         assert format_number_with_separator(4567, 'en') == '4,567'
         assert format_number_with_separator(4567, 'fr') == '4 567'
@@ -360,15 +358,15 @@ class TestRealWorldScenarios:
     def test_multilingual_interface(self):
         """Same number should format differently per language"""
         num = 50000
-        
+
         english = format_number_with_separator(num, 'en')
         french = format_number_with_separator(num, 'fr')
         german = format_number_with_separator(num, 'de')
-        
+
         assert english == '50,000'
         assert french == '50 000'
         assert german == '50.000'
-        
+
         # All should be different
         assert english != french
         assert french != german

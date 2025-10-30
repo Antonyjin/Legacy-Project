@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 IT-PY-003: Test database access via HTTP API
 
@@ -12,12 +13,12 @@ Components tested:
 """
 
 import os
+import subprocess
 import time
-import signal
+from pathlib import Path
+
 import pytest
 import requests
-import subprocess
-from pathlib import Path
 
 
 class GeneWebServer:
@@ -41,7 +42,7 @@ class GeneWebServer:
             raise FileNotFoundError(f"gwd not found at {gwd}")
 
         # Kill any existing gwd on this port first
-        subprocess.run(['pkill', '-f', f'gwd.*-p {self.port}'], 
+        subprocess.run(['pkill', '-f', f'gwd.*-p {self.port}'],
                       check=False, capture_output=True)
         time.sleep(0.2)  # Give OS time to clean up
 
@@ -58,7 +59,7 @@ class GeneWebServer:
             # The real gwd process is a child that we don't have a handle to
             # Just check if HTTP is responding
             try:
-                r = requests.get(self.base_url, timeout=0.8, 
+                r = requests.get(self.base_url, timeout=0.8,
                                headers={"Connection": "close"})
                 if r.status_code == 200:
                     return  # HTTP is working → gwd is running
@@ -74,12 +75,12 @@ class GeneWebServer:
         subprocess.run(['pkill', f'-{signal_type}', '-f', f'gwd.*-p {self.port}'],
                       check=False, capture_output=True)
         time.sleep(0.3)  # Give processes time to shut down
-        
+
         # Clean up our subprocess handle (even though it's already exited)
         if self.proc:
             try:
                 self.proc.kill()
-            except:
+            except Exception:  # noqa: BLE001
                 pass
             finally:
                 if self.proc.stdout:
@@ -180,12 +181,12 @@ class TestDatabaseAccess:
             "Philip",  # Father's name
             "Buckingham Palace",  # Birth place
         ]
-        
+
         for r in responses:
             text = r.text.lower()
             for data in key_data:
                 assert data.lower() in text, f"Missing data '{data}' in response"
-        
+
         # Verify responses have similar length (within 5%)
         # (Database corruption would cause significant size changes)
         lengths = [len(r.text) for r in responses]

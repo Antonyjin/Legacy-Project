@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 #!/usr/bin/env python3
 """
 Unit tests for Roman numeral conversion (MIG-003)
@@ -23,15 +24,14 @@ Date: 2025-10-29
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Add tests directory to path for imports
 test_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(test_dir))
 
-import pytest
-from utils.roman_numerals import roman_of_arabian, arabian_of_roman
+import pytest  # noqa: E402
+from utils.roman_numerals import arabian_of_roman, roman_of_arabian  # noqa: E402
 
 
 class TestBasicRomanConversion:

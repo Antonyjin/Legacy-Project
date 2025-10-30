@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 IT-PY-008: Test error handling via HTTP API
 
@@ -12,12 +13,13 @@ Components tested:
 """
 
 import os
-import time
 import signal
+import subprocess
+import time
+from pathlib import Path
+
 import pytest
 import requests
-import subprocess
-from pathlib import Path
 
 
 class GeneWebServer:
@@ -223,7 +225,7 @@ class TestErrorHandling:
                 url = f"{server.base_url}?p=bad{i}&n=request{i}"
                 r = requests.get(url, timeout=5)
                 return r.status_code < 500
-            except:
+            except Exception:  # noqa: BLE001
                 return False
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:

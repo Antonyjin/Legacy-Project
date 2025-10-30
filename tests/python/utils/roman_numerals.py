@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 Roman numeral conversion utilities - Migration from OCaml Mutil module.
 
@@ -15,15 +16,15 @@ Issue: MIG-003 - Migrate roman_of_arabian function
 def roman_of_arabian(n: int) -> str:
     """
     Convert an integer to Roman numerals.
-    
+
     This function replicates the OCaml Mutil.roman_of_arabian behavior.
-    
+
     OCaml Reference: source_geneweb/lib/util/mutil.ml:328-346
-    
+
     Algorithm (from OCaml):
     The function uses a "build" helper that converts a single digit (0-9)
     to Roman numerals using three letters (one, five, ten):
-    
+
     - 0: ""
     - 1: one
     - 2: one + one
@@ -34,19 +35,19 @@ def roman_of_arabian(n: int) -> str:
     - 7: five + one + one
     - 8: five + one + one + one
     - 9: one + ten (subtractive notation)
-    
+
     Then applies this to each digit position:
     - Thousands: M, M, M (up to MMM = 3000)
     - Hundreds: C, D, M
     - Tens: X, L, C
     - Units: I, V, X
-    
+
     Args:
         n: The integer to convert (typically 1-3999, but algorithm works for wider range)
-    
+
     Returns:
         Roman numeral representation
-    
+
     Examples:
         >>> roman_of_arabian(1)
         'I'
@@ -66,14 +67,14 @@ def roman_of_arabian(n: int) -> str:
         'MCMXCIV'
         >>> roman_of_arabian(3999)
         'MMMCMXCIX'
-    
+
     Notes:
         - The function handles the full range 1-3999 correctly
         - Uses subtractive notation (IV for 4, IX for 9, etc.)
         - Returns empty string for 0
         - Negative numbers are not typically used in genealogy
         - Numbers > 3999 work but may not follow classical Roman notation
-    
+
     Usage in GeneWeb:
         - Used in dateDisplay.ml for displaying years in Roman numerals
         - Used in templ.ml for template rendering
@@ -82,13 +83,13 @@ def roman_of_arabian(n: int) -> str:
     def build(one: str, five: str, ten: str, digit: int) -> str:
         """
         Helper function to build Roman numeral for a single digit (0-9).
-        
+
         Args:
             one: Symbol for 1 in this position (I, X, C, or M)
             five: Symbol for 5 in this position (V, L, D, or M)
             ten: Symbol for 10 in this position (X, C, M, or M)
             digit: The digit value (0-9)
-        
+
         Returns:
             Roman numeral representation of the digit
         """
@@ -112,50 +113,50 @@ def roman_of_arabian(n: int) -> str:
             return five + one + one + one
         else:  # digit == 9
             return one + ten
-    
+
     # Build Roman numeral from each digit position
     # Thousands (M = 1000)
     thousands = build("M", "M", "M", (n // 1000) % 10)
-    
+
     # Hundreds (C = 100, D = 500, M = 1000)
     hundreds = build("C", "D", "M", (n // 100) % 10)
-    
+
     # Tens (X = 10, L = 50, C = 100)
     tens = build("X", "L", "C", (n // 10) % 10)
-    
+
     # Units (I = 1, V = 5, X = 10)
     units = build("I", "V", "X", n % 10)
-    
+
     return thousands + hundreds + tens + units
 
 
 def arabian_of_roman(s: str) -> int:
     """
     Convert Roman numerals to an integer.
-    
+
     This function replicates the OCaml Mutil.arabian_of_roman behavior.
-    
+
     OCaml Reference: source_geneweb/lib/util/mutil.ml:346-365
-    
+
     Algorithm (from OCaml):
     The function uses a "decode_digit" helper that processes one digit position
     by reading characters and accumulating the value:
-    
+
     - Counts consecutive 'one' characters (e.g., III = 3)
     - If 'five' follows, it's either 5 or subtractive (e.g., IV = 5 - 1 = 4)
     - If 'ten' follows, it's subtractive (e.g., IX = 10 - 1 = 9)
-    
+
     Processes each position: thousands → hundreds → tens → units
-    
+
     Args:
         s: Roman numeral string (uppercase)
-    
+
     Returns:
         Integer value
-    
+
     Raises:
         ValueError: If the string is not a valid Roman numeral
-    
+
     Examples:
         >>> arabian_of_roman("I")
         1
@@ -175,7 +176,7 @@ def arabian_of_roman(s: str) -> int:
         1994
         >>> arabian_of_roman("MMMCMXCIX")
         3999
-    
+
     Notes:
         - The function validates that the entire string is consumed
         - Invalid Roman numerals raise ValueError
@@ -184,14 +185,14 @@ def arabian_of_roman(s: str) -> int:
     def decode_digit(one: str, five: str, ten: str, r: int, i: int) -> tuple[int, int]:
         """
         Decode one digit position from Roman numeral.
-        
+
         Args:
             one: Character for 1 in this position (I, X, C, or M)
             five: Character for 5 in this position (V, L, D, or M)
             ten: Character for 10 in this position (X, C, M, or M)
             r: Accumulated result so far
             i: Current index in string
-        
+
         Returns:
             Tuple of (new_result, new_index)
         """
@@ -216,20 +217,20 @@ def arabian_of_roman(s: str) -> int:
             else:
                 # Different character, return accumulated count
                 return (10 * r + cnt, idx)
-        
+
         return loop(0, i)
-    
+
     if not s:
         raise ValueError("Empty Roman numeral string")
-    
+
     # Decode each position
     r, i = decode_digit('M', 'M', 'M', 0, 0)  # Thousands
     r, i = decode_digit('C', 'D', 'M', r, i)  # Hundreds
     r, i = decode_digit('X', 'L', 'C', r, i)  # Tens
     r, i = decode_digit('I', 'V', 'X', r, i)  # Units
-    
+
     # Validate that entire string was consumed
     if i != len(s):
         raise ValueError(f"Invalid Roman numeral: {s}")
-    
+
     return r

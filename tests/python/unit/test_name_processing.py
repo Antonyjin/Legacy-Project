@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 UT-PY-012: Test name processing utilities (Name.lower migration)
 
@@ -14,19 +15,15 @@ OCaml References:
 Issue: MIG-001 - Migrate name_lower function
 """
 
-import pytest
 import sys
 from pathlib import Path
+
+import pytest
 
 # Add tests/python to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from utils.name_utils import (
-    name_lower,
-    strip_lower,
-    contains_only_ascii,
-    is_normalized_name,
-)
+from utils.name_utils import contains_only_ascii, is_normalized_name, name_lower, strip_lower
 
 
 @pytest.mark.unit

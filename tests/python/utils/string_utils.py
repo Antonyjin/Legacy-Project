@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 String utility functions - Migration from OCaml Name module.
 
@@ -18,25 +19,25 @@ FORBIDDEN_CHAR = [':', '@', '#', '=', '$']
 def strip_c(s: str, c: str) -> str:
     """
     Remove all occurrences of character c from string s.
-    
+
     Replicates OCaml Name.strip_c behavior which removes all occurrences
     of a given character from a string.
-    
+
     OCaml Reference: source_geneweb/lib/util/name.ml:120-126
-    
+
     Algorithm (from OCaml):
     1. Iterate through each character in the string
     2. Skip characters that match c
     3. Keep all other characters
     4. Build result character by character
-    
+
     Args:
         s: The string to process
         c: The character to remove (must be single character)
-    
+
     Returns:
         String with all occurrences of c removed
-    
+
     Examples:
         >>> strip_c("hello world", "l")
         'heo word'
@@ -50,13 +51,13 @@ def strip_c(s: str, c: str) -> str:
         ''
         >>> strip_c("no matches", "z")
         'no matches'
-    
+
     Raises:
         ValueError: If c is not a single character
     """
     if len(c) != 1:
         raise ValueError(f"strip_c requires a single character, got: {c}")
-    
+
     # Python string replace is efficient for this
     return s.replace(c, '')
 
@@ -64,20 +65,20 @@ def strip_c(s: str, c: str) -> str:
 def purge(s: str) -> str:
     """
     Remove all forbidden characters from the string.
-    
+
     Removes all characters defined in FORBIDDEN_CHAR list (:, @, #, =, $)
     from the string. This is equivalent to calling strip_c for each
     forbidden character.
-    
+
     OCaml Reference: source_geneweb/lib/util/name.ml:141
     OCaml Implementation: List.fold_left strip_c s forbidden_char
-    
+
     Args:
         s: The string to purge
-    
+
     Returns:
         String with all forbidden characters removed
-    
+
     Examples:
         >>> purge("user@example.com")
         'userexample.com'
@@ -89,7 +90,7 @@ def purge(s: str) -> str:
         'normal text'
         >>> purge("")
         ''
-    
+
     Notes:
         - Forbidden characters: ':', '@', '#', '=', '$'
         - Multiple forbidden characters are all removed
@@ -104,19 +105,19 @@ def purge(s: str) -> str:
 def contains_forbidden_char(s: str) -> bool:
     """
     Check if string contains any forbidden character.
-    
+
     Returns True if the string contains any character from the
     FORBIDDEN_CHAR list (:, @, #, =, $), False otherwise.
-    
+
     OCaml Reference: source_geneweb/lib/util/name.ml:234
     OCaml Implementation: List.exists (String.contains s) forbidden_char
-    
+
     Args:
         s: The string to check
-    
+
     Returns:
         True if string contains any forbidden character, False otherwise
-    
+
     Examples:
         >>> contains_forbidden_char("user@example.com")
         True
@@ -128,10 +129,9 @@ def contains_forbidden_char(s: str) -> bool:
         False
         >>> contains_forbidden_char("")
         False
-    
+
     Notes:
         - Forbidden characters: ':', '@', '#', '=', '$'
         - Case-sensitive check
     """
     return any(char in s for char in FORBIDDEN_CHAR)
-

@@ -229,6 +229,7 @@ chmod +x ./scripts/golden/run_golden.sh
 3. **[Product Runbook](https://github.com/Antonyjin/Legacy-Project/wiki/02-Product-Runbook)** - How to run GeneWeb
 4. **[OCaml Overview](https://github.com/Antonyjin/Legacy-Project/wiki/02-Product-OCaml-Overview)** - Understanding the codebase
 5. **[CI Workflow Guide](docs/CI_WORKFLOW_GUIDE.md)** - Understanding CI setup
+6. **[Code Quality Guide](docs/CODE_QUALITY.md)** - Running quality checks locally
 
 #### For Deep Dives
 - **[Test Policy](https://github.com/Antonyjin/Legacy-Project/wiki/03-Quality-Test-Policy)** - QA strategy

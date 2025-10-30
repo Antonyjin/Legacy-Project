@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel, duplicate-code, redefined-outer-name
 """
 FT-PY-007: Test GEDCOM import/export functionality
 
@@ -20,13 +21,12 @@ Test Scenario:
 5. Validate GEDCOM format compliance
 """
 
-import pytest
-import requests
 import subprocess
 import time
-import signal
-import os
 from pathlib import Path
+
+import pytest
+import requests
 
 
 class GeneWebServer:
@@ -62,7 +62,7 @@ class GeneWebServer:
             "-lang", "en"
         ]
 
-        self.log_file = open(f"gwd_ft_{self.port}.log", "w")
+        self.log_file = open(f"gwd_ft_{self.port}.log", "w", encoding='utf-8')
         self.process = subprocess.Popen(
             cmd,
             stdout=self.log_file,
@@ -144,8 +144,7 @@ class TestGedcom:
         """Test: GEDCOM export functionality works"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "GEDCOM"}
-        )
+            params={"m": "GEDCOM"}, timeout=5)
 
         # Some distributions expose GEDCOM only via CLI -> HTTP 400/404
         if response.status_code in (400, 404):
@@ -168,8 +167,7 @@ class TestGedcom:
         """Test: GEDCOM import page is accessible"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "GEDCOM"}
-        )
+            params={"m": "GEDCOM"}, timeout=5)
 
         if response.status_code in (400, 404):
             pytest.skip("GEDCOM import not available via HTTP (use CLI ged2gwb)")
@@ -189,8 +187,7 @@ class TestGedcom:
         # First, get original data from a known person
         charles_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"p": "Charles", "n": "Windsor"}
-        )
+            params={"p": "Charles", "n": "Windsor"}, timeout=5)
 
         assert charles_response.status_code == 200, "Failed to load test person data"
 
@@ -203,8 +200,7 @@ class TestGedcom:
         # Now test GEDCOM export
         gedcom_response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "GEDCOM"}
-        )
+            params={"m": "GEDCOM"}, timeout=5)
 
         if gedcom_response.status_code in (400, 404):
             pytest.skip("GEDCOM export not available via HTTP (use CLI gwb2ged)")
@@ -223,8 +219,7 @@ class TestGedcom:
         """Test: GEDCOM correctly handles special characters"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "GEDCOM"}
-        )
+            params={"m": "GEDCOM"}, timeout=5)
 
         if response.status_code in (400, 404):
             pytest.skip("GEDCOM export not available via HTTP (use CLI gwb2ged)")
@@ -253,8 +248,7 @@ class TestGedcom:
         """Test: GEDCOM output follows valid format"""
         response = requests.get(
             f"http://localhost:{server.port}/{server.base_name}",
-            params={"m": "GEDCOM"}
-        )
+            params={"m": "GEDCOM"}, timeout=5)
 
         if response.status_code in (400, 404):
             pytest.skip("GEDCOM export not available via HTTP (use CLI gwb2ged)")
