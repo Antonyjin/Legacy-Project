@@ -19,16 +19,13 @@ WORKDIR /tmp/app
 COPY requirements.txt ./
 RUN . "$VIRTUAL_ENV/bin/activate" && pip install -r requirements.txt
 
-# Runtime: slim image with app and GeneWeb assets
+# Runtime: slim image with only the Python proxy server
 FROM python:3.11-slim AS runtime
 
 ENV VIRTUAL_ENV=/opt/venv \
     PATH="/opt/venv/bin:$PATH" \
-    GW_DIR=/app/GeneWeb/gw \
-    BASES_DIR=/app/GeneWeb/bases \
-    BACKEND=ocaml \
-    FLASK_PORT=23182 \
-    OCAML_GWD_PORT=2317
+    BACKEND=python \
+    FLASK_PORT=23182
 
 RUN set -eux; \
     apt-get update; \
@@ -39,18 +36,16 @@ COPY --from=builder /opt/venv /opt/venv
 
 WORKDIR /app
 COPY python_app/ ./python_app/
-COPY GeneWeb/ ./GeneWeb/
 COPY docker/entrypoint.sh /entrypoint.sh
 
 RUN set -eux; \
     addgroup --system geneweb && adduser --system --ingroup geneweb geneweb; \
-    mkdir -p "$BASES_DIR/etc"; \
     chown -R geneweb:geneweb /app /entrypoint.sh; \
     chmod +x /entrypoint.sh
 
 USER geneweb
 
-EXPOSE 2317 23182
+EXPOSE 23182
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s CMD curl -fsS http://127.0.0.1:${FLASK_PORT}/health || exit 1
 

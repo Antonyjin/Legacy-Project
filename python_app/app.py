@@ -46,10 +46,21 @@ def home(base_name: str):
     - lang: Language (optional)
     - m: Mode (optional, for various pages like CAL, P, N, etc.)
     """
-    mode = request.args.get("m", "").upper()
-    lang = request.args.get("lang", Config.DEFAULT_LANG)
+    # In bridge mode (BACKEND=ocaml): proxy ALL queries (any mode/params) to gwd
+    if Config.is_ocaml_backend():
+        bridge = OCamlBridge()
+        query = request.query_string.decode("utf-8")
+        path = f"/{base_name}"
+        if query:
+            path += f"?{query}"
+        try:
+            html = bridge.proxy_request(path)
+            return Response(html, mimetype="text/html")
+        except Exception as exc:  # pylint: disable=broad-except
+            return f"Error: {str(exc)}", 502
 
-    # Route to specific handlers based on mode and query params
+    # Python-only backend: handle selected modes locally
+    mode = request.args.get("m", "").upper()
     if mode == "F":
         request.view_args = {"base_name": base_name}
         return family.family_page()
@@ -63,18 +74,54 @@ def home(base_name: str):
         request.view_args = {"base_name": base_name}
         return person.person_page()
 
-    # Default: Home page - proxy to OCaml for now
-    # TODO: Implement Python home page when templates are migrated
-    bridge = OCamlBridge()
-    path = f"/{base_name}"
-    if lang:
-        path += f"?lang={lang}"
+    return redirect(f"/{base_name}?m=S")
 
+
+# ---- Static passthrough to gwd for assets (css/js/images/webfonts) ----
+def _proxy_static(path: str) -> Response:
+    bridge = OCamlBridge()
     try:
-        html = bridge.proxy_request(path)
-        return Response(html, mimetype="text/html")
+        body, ctype = bridge.proxy_request_raw(path)
+        return Response(body, mimetype=ctype)
     except Exception as exc:  # pylint: disable=broad-except
-        return f"Error: {str(exc)}", 500
+        return Response(str(exc), status=502)
+
+
+@app.route('/css/<path:subpath>')
+def static_css(subpath: str):
+    return _proxy_static(f"/css/{subpath}")
+
+
+@app.route('/js/<path:subpath>')
+def static_js(subpath: str):
+    return _proxy_static(f"/js/{subpath}")
+
+
+@app.route('/images/<path:subpath>')
+def static_images(subpath: str):
+    return _proxy_static(f"/images/{subpath}")
+
+
+@app.route('/webfonts/<path:subpath>')
+def static_webfonts(subpath: str):
+    return _proxy_static(f"/webfonts/{subpath}")
+
+
+# ---- Admin passthrough (gwsetup) for demo ----
+@app.route('/admin')
+@app.route('/admin/<path:subpath>')
+def admin_passthrough(subpath: str = ""):
+    bridge = OCamlBridge()
+    try:
+        path = "/" + subpath if subpath else "/"
+        # preserve query string
+        qs = request.query_string.decode("utf-8")
+        if qs:
+            path = f"{path}?{qs}"
+        body, ctype = bridge.proxy_admin_raw(path)
+        return Response(body, mimetype=ctype)
+    except Exception as exc:  # pylint: disable=broad-except
+        return Response(str(exc), status=502)
 
 
 @app.route("/health")

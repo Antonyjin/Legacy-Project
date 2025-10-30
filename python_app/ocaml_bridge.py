@@ -178,7 +178,7 @@ class OCamlBridge:
             path = "/" + path
 
         # Build URL
-        url = f"http://localhost:{self.config.OCAML_GWD_PORT}{path}"
+        url = f"http://{self.config.OCAML_GWD_HOST}:{self.config.OCAML_GWD_PORT}{path}"
 
         if params:
             import urllib.parse
@@ -188,3 +188,36 @@ class OCamlBridge:
         response.raise_for_status()
 
         return response.text
+
+    def proxy_request_raw(self, path: str, method: str = "GET", params: Optional[Dict[str, Any]] = None) -> tuple[bytes, str]:
+        """
+        Proxy HTTP request to OCaml gwd and return raw bytes and content type.
+
+        Used for static assets (css/js/images/webfonts) so the proxy can
+        serve styled pages while still routing through Flask.
+        """
+        if not path.startswith("/"):
+            path = "/" + path
+
+        url = f"http://{self.config.OCAML_GWD_HOST}:{self.config.OCAML_GWD_PORT}{path}"
+        if params:
+            import urllib.parse
+            url += "?" + urllib.parse.urlencode(params)
+
+        r = requests.request(method, url, timeout=10.0)
+        r.raise_for_status()
+        content_type = r.headers.get("Content-Type", "application/octet-stream")
+        return r.content, content_type
+
+    def proxy_admin_raw(self, path: str, method: str = "GET", params: Optional[Dict[str, Any]] = None) -> tuple[bytes, str]:
+        """Proxy to gwsetup (admin) for demo use."""
+        if not path.startswith("/"):
+            path = "/" + path
+        url = f"http://{self.config.OCAML_GWD_HOST}:{self.config.OCAML_GWSETUP_PORT}{path}"
+        if params:
+            import urllib.parse
+            url += "?" + urllib.parse.urlencode(params)
+        r = requests.request(method, url, timeout=10.0)
+        r.raise_for_status()
+        content_type = r.headers.get("Content-Type", "text/html; charset=utf-8")
+        return r.content, content_type
