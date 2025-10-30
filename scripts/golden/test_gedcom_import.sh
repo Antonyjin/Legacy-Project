@@ -156,6 +156,10 @@ fi
 DIFF_FILE="$REP_DIR/import_diff.txt"
 rm -f "$DIFF_FILE"
 
+# Canonicalize golden on the fly for fields we normalize (e.g., DATA base name)
+GOLD_CANON="$TMP_DIR/expected_import_export.ged.norm.canon"
+sed -E 's/^2 DATA .*/2 DATA <base>.gwb/g' "$GOLD_DIR/expected_import_export.ged.norm" > "$GOLD_CANON"
+
 if [ ! -f "$GOLD_DIR/expected_import_export.ged.norm" ]; then
   echo ""
   echo "==> ⚠️  No golden reference found. Run with 'create' mode first:"
@@ -165,7 +169,7 @@ if [ ! -f "$GOLD_DIR/expected_import_export.ged.norm" ]; then
 fi
 
 set +e
-diff -u "$GOLD_DIR/expected_import_export.ged.norm" "$EXPORT2_GED_NORM" > "$DIFF_FILE" 2>&1
+diff -u "$GOLD_CANON" "$EXPORT2_GED_NORM" > "$DIFF_FILE" 2>&1
 DIFF_RC=$?
 set -e
 
