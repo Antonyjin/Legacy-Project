@@ -3,7 +3,7 @@
 ## 📋 Overview
 
 **Platform**: GitHub Actions (free unlimited minutes on public repos)  
-**Runner**: macOS-latest (required for prebuilt GeneWeb binaries)  
+**Runner**: ubuntu-latest  
 **Location**: `.github/workflows/ci.yml`  
 **Triggers**: Push to main/master, Pull Requests, Manual dispatch
 
@@ -19,18 +19,17 @@
    - Install dependencies from `requirements.txt`
    - Make executables executable
 
-2. **OCaml/GeneWeb Tests**
-   - **Smoke tests**: Start `gwd`, verify HTTP 200, check home page, person page, French localization, logging
-   - **GEDCOM export test**: Export database, verify file exists and has content
-   - **Golden tests**: Validate 10 HTML pages against frozen snapshots
-   - **GEDCOM roundtrip**: Export → Import → Compare
+2. **OCaml/GeneWeb Smoke**
+   - Start `gwd`, verify HTTP 200, check home page, person page, French localization
+   - GEDCOM export: verify file exists and has content
+   - Golden tests: optional (see Golden Tests section)
 
-3. **Python Tests** (Issues #97, #117)
-   - **Infrastructure test**: Verify pytest setup (✅ BLOCKS CI)
-   - **Unit tests**: Test OCaml functions via HTTP (✅ BLOCKS CI)
-   - **Integration tests**: Test component interactions (✅ BLOCKS CI)
-   - **Functional tests**: Test end-to-end workflows (✅ BLOCKS CI)
-   - **Coverage report**: Generate coverage report (target >80%)
+3. **Python Tests**
+   - Infrastructure: Verify pytest setup (✅ BLOCKS CI)
+   - Unit tests: OCaml behavior via HTTP/Python utils (✅ BLOCKS CI)
+   - Integration tests: Component interactions (✅ BLOCKS CI)
+   - Functional tests: End-to-end workflows (⚠️ allowed to fail during development)
+   - Coverage report: Generated; threshold may not be enforced
 
 4. **Artifacts Upload** (on failure)
    - Golden test diffs
@@ -56,12 +55,12 @@ Runs on Python 3.11 and 3.12 in parallel:
    - **pip-audit** - Dependency vulnerability scanning
    - **Bandit** - Static Application Security Testing (SAST)
 
-### ✅ Tests Job (Runs After Quality, Blocking)
+### ✅ Tests Job (Runs After Quality)
 - ✅ Python infrastructure test (pytest must work)
-- ✅ **Unit Tests (UT)** - All must pass
-- ✅ **Integration Tests (IT)** - All must pass
-- ✅ **Functional Tests (FT)** - All must pass
-- 📊 **Coverage** - Enforced ≥80% (`--cov-fail-under=80`)
+- ✅ Unit tests (must pass)
+- ✅ Integration tests (must pass)
+- ⚠️ Functional tests (allowed to fail)
+- 📊 Coverage report (informational unless otherwise configured)
 - ✅ Python proxy server smoke test (non-blocking)
 
 ### Quality Tools Configuration
@@ -102,12 +101,12 @@ TZ=UTC            # Deterministic timezone
 
 ### Golden Tests
 
-- Optional; never auto-create references in CI
-- Run when:
-  - Workflow input `run_golden=true`, or
-  - Relevant paths change (GeneWeb/**, scripts/golden/**, tests/golden/**, python_app/routes/**, python_app/migrated/**), or
+- Optional; CI never auto-creates references
+- Run when any of the following:
+  - Workflow input `run_golden=true`
+  - Relevant paths change (GeneWeb/**, scripts/golden/**, tests/golden/**, python_app/routes/**, python_app/migrated/**)
   - PR has label `golden`
-- See `docs/GOLDEN_TESTS.md` for details
+- See `docs/GOLDEN_TESTS.md` and ADR‑011 for determinism rules
 
 ### Functional Tests: Known CI Behaviors
 
@@ -132,26 +131,18 @@ TZ=UTC            # Deterministic timezone
 
 ---
 
-## 📊 What CI Tests
+## 📊 What CI Enforces
 
-| Test Type | Count | Status | Enforced |
-|-----------|-------|--------|----------|
-| Smoke tests | 5 | ✅ Passing | Yes |
-| Golden tests | 12 | ✅ Passing | Yes |
-| Python infrastructure | 8 | ✅ Passing | Yes |
-| Python unit tests | 0/9 | ⏳ TODO | No (Week 1) |
-| Python integration tests | 0/10 | ⏳ TODO | No (Week 1-2) |
-| Python functional tests | 0/10 | ⏳ TODO | No (Week 2-3) |
-
-**Total**: 25 tests passing, 29 tests to implement
+- Quality checks: Ruff, Black, Pylint, Mypy, security scans
+- Unit and integration tests must pass
+- Functional tests are non-blocking during development
+- Golden tests are optional and only run when requested or relevant
 
 ---
 
-## 🚀 Next Steps
+## 🚀 Notes
 
-1. **Week 1**: Implement Python unit tests (UT-PY-002 to 010)
-2. **Week 2**: Implement Python integration tests, enforce unit tests in CI
-3. **Week 3**: Complete functional tests, enforce all tests, configure branch protection
+Branch protection should require quality and required test jobs. Golden tests should not be required.
 
 ---
 
@@ -164,4 +155,4 @@ TZ=UTC            # Deterministic timezone
 
 ---
 
-**Current Status**: ✅ CI configured with Python tests, infrastructure passing, ready for test implementation!
+**Current Status**: ✅ CI configured with quality gates and Python tests; golden tests optional.

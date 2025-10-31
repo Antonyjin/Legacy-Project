@@ -1,7 +1,7 @@
 # 🚀 Deployment Guide
 
-**Status**: 📝 DRAFT - Will be completed during Week 2 sprint  
-**Last Updated**: October 21, 2024
+**Status**: 📝 DRAFT — Manual OCaml binary deployment is supported; Dockerization planned
+**Last Updated**: October 31, 2025
 
 ---
 
@@ -10,7 +10,7 @@
 This guide covers deployment of the GeneWeb application in various environments.
 
 **Current State**: OCaml binaries + manual deployment  
-**Planned**: Docker containerization + automated deployment (Week 2-3)
+**Planned**: Docker containerization + automated deployment
 
 ---
 
@@ -51,7 +51,7 @@ export GW_LANG=en          # Default language (en, fr, etc.)
 
 ---
 
-## 🐳 Docker Deployment (Planned - Week 2)
+## 🐳 Docker Deployment (Planned)
 
 **Issues**: #120 (Dockerfile), #121 (docker-compose)  
 **Status**: To be implemented
@@ -113,7 +113,7 @@ open http://localhost:2317/test
 
 ---
 
-## ☁️ Production Deployment (Planned - Week 3)
+## ☁️ Production Deployment (Planned)
 
 **Issues**: #142 (Deploy to prod), #143 (Test deployment)  
 **Status**: To be implemented
@@ -182,7 +182,7 @@ tail -f GeneWeb/gwsetup.out
 
 ---
 
-## 🔄 CI/CD Pipeline (Week 2)
+## 🔄 CI/CD Pipeline (Planned)
 
 **Issue**: #117 (GitHub Actions workflow)
 
@@ -325,21 +325,13 @@ docker-compose run --entrypoint /bin/bash geneweb
 
 ---
 
-## 🗓️ Implementation Timeline
+## 🗓️ Notes
 
-| Week | Tasks | Issues |
-|------|-------|--------|
-| **Week 1** (Oct 8-15) | Tests foundation | #97-111 |
-| **Week 2** (Oct 16-22) | Docker + CI/CD | #117-121 |
-| **Week 3** (Oct 23-29) | Production deploy | #142-143 |
-
-**Status**: Week 2-3 tasks are planned but not yet implemented. This guide will be updated as implementation progresses.
+Planned items do not yet have a committed timeline. This guide will be updated as implementation progresses.
 
 ---
 
-**Last Updated**: October 21, 2024  
-**Next Update**: October 22, 2024 (after Docker implementation)  
-**Defense Date**: October 29, 2024
+**Last Updated**: October 31, 2025
 
 
 ## GeneWeb + Proxy deployment notes
