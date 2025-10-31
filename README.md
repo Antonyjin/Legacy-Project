@@ -158,16 +158,16 @@ We have comprehensive Python tests that validate OCaml behavior:
 ```bash
 # From project root (Legacy-Project/)
 
-# Run all Python tests (85 tests)
+# Run all Python tests
 pytest tests/python/ -v
 
 # Run with coverage
 pytest tests/python/ --cov=tests/python --cov-report=html
 
 # Run specific test type
-pytest tests/python/unit/ -v          # Unit tests (57 tests) - ✅ CI BLOCKING
-pytest tests/python/integration/ -v   # Integration tests (28 tests) - ✅ CI BLOCKING
-pytest tests/python/functional/ -v    # Functional tests - ⚠️ In development
+pytest tests/python/unit/ -v          # Unit tests- ✅ CI BLOCKING
+pytest tests/python/integration/ -v   # Integration tests ✅ CI BLOCKING
+pytest tests/python/functional/ -v    # Functional tests
 
 # Run by marker
 pytest -m unit        # Unit tests only
@@ -176,22 +176,20 @@ pytest -m functional  # Functional tests only
 ```
 
 **Test Status:**
-- ✅ **Unit Tests (191)**: Test OCaml functions via HTTP black-box testing - **CI BLOCKS ON FAILURE**
-- ⚠️ **Integration Tests (87)**: Test gwd lifecycle, port conflicts, concurrency - **32 PASSING, 54 FAILING** (process management issues)
-- ⚠️ **Functional Tests**: End-to-end user workflows - **In development, failures allowed**
-
-**Current Coverage:** 223 tests passing (191 UT + 32 IT)
+- ✅ **Unit Tests**: Test OCaml behavior via HTTP/Python utilities — **CI blocks on failure**
+- ⚠️ **Integration Tests**: gwd lifecycle, port conflicts, concurrency — **CI blocks**
+- ⚠️ **Functional Tests**: End-to-end user workflows — **non‑blocking during development**
 
 #### ⚠️ Integration Test Issues (Process Management)
 
-**Problem**: 54 integration tests are failing due to OCaml `gwd` daemonization behavior.
+**Problem**: Some integration tests fail due to OCaml `gwd` daemonization behavior.
 
 **Root Cause**: OCaml `gwd` daemonizes (parent process exits immediately after forking), causing tests to fail with:
 ```
 RuntimeError: gwd exited unexpectedly while starting
 ```
 
-**Solution**: Apply the process management fix from IT-PY-003 to all failing test files:
+**Solution**: Apply the process management fix from IT-PY-003 to affected test files:
 - Replace `proc.poll()` checks with HTTP readiness checks
 - Use `pkill` for reliable cleanup
 - Check `is_running()` instead of process status
@@ -203,9 +201,9 @@ RuntimeError: gwd exited unexpectedly while starting
 - `test_localization.py` (9 tests)
 - `test_performance.py` (11 tests)
 
-#### Golden Tests (Currently Disabled)
+#### Golden Tests (Optional)
 
-Golden tests validate that OCaml output remains unchanged. They are temporarily disabled during migration and will be re-enabled in Week 2-3.
+Golden tests validate that OCaml output remains unchanged. They are optional and disabled by default in CI; run them locally or on-demand in CI.
 
 ```bash
 # From project root
@@ -219,7 +217,7 @@ chmod +x ./scripts/golden/run_golden.sh
 - HTML rendering stability (10 page types)
 - Data normalization (whitespace, timestamps, random IDs)
 
-**Note:** Golden tests are currently disabled in CI (see `.github/workflows/ci.yml`) and will be re-enabled after Python migration starts.
+**Note:** Golden tests are disabled by default in CI and can be triggered on demand (see `.github/workflows/ci.yml`).
 
 ### 📚 Documentation
 
@@ -260,9 +258,9 @@ Legacy-Project/
 │       └── test_gedcom_import.sh  # GEDCOM roundtrip test
 ├── tests/                      # Python tests
 │   ├── python/
-│   │   ├── unit/              # 191 unit tests ✅
-│   │   ├── integration/       # 87 integration tests ⚠️ (32 passing)
-│   │   └── functional/        # Functional tests (in dev) ⚠️
+│   │   ├── unit/              # Unit tests ✅
+│   │   ├── integration/       # Integration tests ⚠️
+│   │   └── functional/        # Functional tests ⚠️
 │   └── golden/                # Golden references (disabled)
 │       └── goldens/v1/        # Versioned golden snapshots
 ├── docs/                       # Project documentation
@@ -288,10 +286,10 @@ Legacy-Project/
 
 We have **3 test categories** (4th coming soon):
 
-1. ✅ **Unit Tests (191)** - Test OCaml functions via HTTP black-box testing - **Blocks CI**
-2. ⚠️ **Integration Tests (87)** - Test gwd lifecycle, ports, concurrency - **32 passing, 54 failing**
-3. ⚠️ **Functional Tests** - End-to-end user workflows - **In development**
-4. 🔜 **Golden Tests** - Regression detection - **Temporarily disabled, will be re-enabled**
+1. ✅ **Unit Tests** - Test OCaml functions via HTTP/Python — **Blocks CI**
+2. ⚠️ **Integration Tests** - gwd lifecycle, ports, concurrency — **Blocks CI**
+3. ⚠️ **Functional Tests** - End-to-end user workflows — **In development (non‑blocking)**
+4. 🔄 **Golden Tests** - Regression detection — **Optional/on‑demand**
 
 See [Test Protocols](https://github.com/Antonyjin/Legacy-Project/wiki/03-Quality-Test-Protocols) and [CI Workflow Guide](docs/CI_WORKFLOW_GUIDE.md) for details.
 
@@ -373,28 +371,11 @@ pytest --version
 2. Read [Runbook](https://github.com/Antonyjin/Legacy-Project/wiki/02-Product-Runbook)
 3. Try importing your own GEDCOM file
 
-### 📊 Current Test Coverage
+### 📊 Test and CI Notes
 
-| Test Type | Status | Count | CI Blocking |
-|-----------|--------|-------|-------------|
-| **Python Unit Tests** | ✅ Complete | 191 tests | ✅ Yes |
-| **Python Integration Tests** | ⚠️ Partial | 87 tests (32 passing) | ⚠️ Process issues |
-| **Python Functional Tests** | ⚠️ In Development | 0 tests | ⏳ Not yet |
-| **Golden Tests** | 🔄 Disabled | 12 tests | 🚫 Disabled until migration |
-| **TOTAL** | | **223 tests passing** | |
-
-**Python Test Infrastructure** (Issue #97): ✅ **COMPLETE**
-- pytest configuration (`pytest.ini`)
-- Coverage setup (`.coveragerc`, target >80%)
-- Shared fixtures (`tests/python/conftest.py`)
-- Test directory structure with READMEs
-- 223 passing tests with full CI integration
-
-**CI Quality Gates** (Issue #117): ✅ **ACTIVE**
-- ✅ Unit Tests (UT) block CI on failure
-- ✅ Integration Tests (IT) block CI on failure
-- ⚠️ Functional Tests (FT) allow failures during development
-- 📊 Coverage tracked but not yet enforcing threshold
+- Unit and integration tests are enforced in CI; functional tests are allowed to fail during development.
+- Coverage is reported; thresholds may not be enforced yet.
+- See `docs/CI_WORKFLOW_GUIDE.md` for current details.
 
 ### 🐍 Python Proxy Server (MIG-INF-001)
 
@@ -495,15 +476,15 @@ python3 -m venv venv
 source venv/bin/activate  # On macOS/Linux
 pip install -r requirements.txt
 
-# Run all tests (278 tests)
+# Run all tests
 pytest tests/python/ -v
 
 # Deactivate venv when done
 # deactivate
 
 # Run by type
-pytest tests/python/unit/ -v              # Unit tests (191)
-pytest tests/python/integration/ -v       # Integration tests (87)
+pytest tests/python/unit/ -v              # Unit tests
+pytest tests/python/integration/ -v       # Integration tests
 pytest -m unit                            # Unit marker
 pytest -m integration                     # Integration marker
 
