@@ -78,7 +78,7 @@ name="p" placeholder="First name" tabindex="6">
 <div class="row mt-4">
 <div class="mx-auto text-center">
 <h1>Calendars</h1>
-<h3 class="mt-4">Thursday - HH:MM:SS</h3>
+<h3 class="mt-4">Friday - HH:MM:SS</h3>
 </div>
 </div>
 <div class="row mt-3">
@@ -116,7 +116,7 @@ name="p" placeholder="First name" tabindex="6">
 </select></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="mg2">&gt;</button></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="dg1">&lt;</button></td>
-<td><input type="number" class="form-control text-center" name="dg" min="1" max="31" value="30"/></td>
+<td><input type="number" class="form-control text-center" name="dg" min="1" max="31" value="31"/></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="dg2">&gt;</button></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="yg1">&lt;</button></td>
 <td><input class="form-control text-center" name="yg" size="6" maxlength="6" value="2025"/></td>
@@ -142,7 +142,7 @@ name="p" placeholder="First name" tabindex="6">
 </select></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="mj2">&gt;</button></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="dj1">&lt;</button></td>
-<td><input type="number" class="form-control text-center" name="dj" min="1" max="31" value="17"/></td>
+<td><input type="number" class="form-control text-center" name="dj" min="1" max="31" value="18"/></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="dj2">&gt;</button></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="yj1">&lt;</button></td>
 <td><input class="form-control text-center" name="yj" size="6" maxlength="6" value="2025"/></td>
@@ -169,7 +169,7 @@ name="p" placeholder="First name" tabindex="6">
 </select></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="mf2">&gt;</button></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="df1">&lt;</button></td>
-<td><input type="number" class="form-control text-center" name="df" min="1" max="31" value="9"/></td>
+<td><input type="number" class="form-control text-center" name="df" min="1" max="31" value="10"/></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="df2">&gt;</button></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="yf1">&lt;</button></td>
 <td><input class="form-control text-center" name="yf" size="6" maxlength="6" value="234"/></td>
@@ -196,7 +196,7 @@ name="p" placeholder="First name" tabindex="6">
 </select></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="mh2">&gt;</button></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="dh1">&lt;</button></td>
-<td><input type="number" class="form-control text-center" name="dh" min="1" max="31" value="8"/></td>
+<td><input type="number" class="form-control text-center" name="dh" min="1" max="31" value="9"/></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="dh2">&gt;</button></td>
 <td><button class="btn btn-outline-secondary" type="submit" name="yh1">&lt;</button></td>
 <td><input class="form-control text-center" name="yh" size="6" maxlength="6" value="5786"/></td>
@@ -208,9 +208,9 @@ name="p" placeholder="First name" tabindex="6">
 </div>
 </form>
 <br>
-<span>Number of days after new moon: 10</span>
+<span>Number of days after new moon: 11</span>
 <br><br>
-Julian day: 2,460,979</div>
+Julian day: 2,460,980</div>
 </div>
 <!-- gw/etc/trl.txt -->
 <!-- gw/etc/trl.txt -->
@@ -230,38 +230,38 @@ data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <span class="sr-only">, select language</span>
 </button>
 <div class="dropdown-menu scrollable-lang" aria-labelledby="dropdownMenu1">
-<a class="dropdown-item" id="lang_af" href="test?lang=af&m=CAL"><code>af&nbsp;&nbsp;&nbsp; </code>Afrikaans</a>
-<a class="dropdown-item" id="lang_ar" href="test?lang=ar&m=CAL"><code>ar&nbsp;&nbsp;&nbsp; </code>Arabic</a>
-<a class="dropdown-item" id="lang_bg" href="test?lang=bg&m=CAL"><code>bg&nbsp;&nbsp;&nbsp; </code>Bulgarian</a>
-<a class="dropdown-item" id="lang_br" href="test?lang=br&m=CAL"><code>br&nbsp;&nbsp;&nbsp; </code>Breton</a>
-<a class="dropdown-item" id="lang_ca" href="test?lang=ca&m=CAL"><code>ca&nbsp;&nbsp;&nbsp; </code>Catalan</a>
-<a class="dropdown-item" id="lang_co" href="test?lang=co&m=CAL"><code>co&nbsp;&nbsp;&nbsp; </code>Corsican</a>
-<a class="dropdown-item" id="lang_cs" href="test?lang=cs&m=CAL"><code>cs&nbsp;&nbsp;&nbsp; </code>Czech</a>
-<a class="dropdown-item" id="lang_da" href="test?lang=da&m=CAL"><code>da&nbsp;&nbsp;&nbsp; </code>Danish</a>
-<a class="dropdown-item" id="lang_de" href="test?lang=de&m=CAL"><code>de&nbsp;&nbsp;&nbsp; </code>German</a>
-<a class="dropdown-item" id="lang_eo" href="test?lang=eo&m=CAL"><code>eo&nbsp;&nbsp;&nbsp; </code>Esperanto</a>
-<a class="dropdown-item" id="lang_es" href="test?lang=es&m=CAL"><code>es&nbsp;&nbsp;&nbsp; </code>Spanish</a>
-<a class="dropdown-item" id="lang_et" href="test?lang=et&m=CAL"><code>et&nbsp;&nbsp;&nbsp; </code>Estonian</a>
-<a class="dropdown-item" id="lang_fi" href="test?lang=fi&m=CAL"><code>fi&nbsp;&nbsp;&nbsp; </code>Finnish</a>
-<a class="dropdown-item" id="lang_fr" href="test?lang=fr&m=CAL"><code>fr&nbsp;&nbsp;&nbsp; </code>French</a>
-<a class="dropdown-item" id="lang_he" href="test?lang=he&m=CAL"><code>he&nbsp;&nbsp;&nbsp; </code>Hebrew</a>
-<a class="dropdown-item" id="lang_is" href="test?lang=is&m=CAL"><code>is&nbsp;&nbsp;&nbsp; </code>Icelandic</a>
-<a class="dropdown-item" id="lang_it" href="test?lang=it&m=CAL"><code>it&nbsp;&nbsp;&nbsp; </code>Italian</a>
-<a class="dropdown-item" id="lang_lt" href="test?lang=lt&m=CAL"><code>lt&nbsp;&nbsp;&nbsp; </code>Lithuanian</a>
-<a class="dropdown-item" id="lang_lv" href="test?lang=lv&m=CAL"><code>lv&nbsp;&nbsp;&nbsp; </code>Latvian</a>
-<a class="dropdown-item" id="lang_nl" href="test?lang=nl&m=CAL"><code>nl&nbsp;&nbsp;&nbsp; </code>Dutch</a>
-<a class="dropdown-item" id="lang_no" href="test?lang=no&m=CAL"><code>no&nbsp;&nbsp;&nbsp; </code>Norwegian</a>
-<a class="dropdown-item" id="lang_oc" href="test?lang=oc&m=CAL"><code>oc&nbsp;&nbsp;&nbsp; </code>Occitan</a>
-<a class="dropdown-item" id="lang_pl" href="test?lang=pl&m=CAL"><code>pl&nbsp;&nbsp;&nbsp; </code>Polish</a>
-<a class="dropdown-item" id="lang_pt" href="test?lang=pt&m=CAL"><code>pt&nbsp;&nbsp;&nbsp; </code>Portuguese</a>
-<a class="dropdown-item" id="lang_pt-br" href="test?lang=pt-br&m=CAL"><code>pt-br </code>Brazilian-Portuguese</a>
-<a class="dropdown-item" id="lang_ro" href="test?lang=ro&m=CAL"><code>ro&nbsp;&nbsp;&nbsp; </code>Romanian</a>
-<a class="dropdown-item" id="lang_ru" href="test?lang=ru&m=CAL"><code>ru&nbsp;&nbsp;&nbsp; </code>Russian</a>
-<a class="dropdown-item" id="lang_sk" href="test?lang=sk&m=CAL"><code>sk&nbsp;&nbsp;&nbsp; </code>Slovak</a>
-<a class="dropdown-item" id="lang_sl" href="test?lang=sl&m=CAL"><code>sl&nbsp;&nbsp;&nbsp; </code>Slovenian</a>
-<a class="dropdown-item" id="lang_sv" href="test?lang=sv&m=CAL"><code>sv&nbsp;&nbsp;&nbsp; </code>Swedish</a>
-<a class="dropdown-item" id="lang_tr" href="test?lang=tr&m=CAL"><code>tr&nbsp;&nbsp;&nbsp; </code>Turkish</a>
-<a class="dropdown-item" id="lang_zh" href="test?lang=zh&m=CAL"><code>zh&nbsp;&nbsp;&nbsp; </code>Chinese</a>
+<a class="dropdown-item" id="lang_af" href="test?lang=af&m=CAL&yg=2025&mg=10&dg=30"><code>af&nbsp;&nbsp;&nbsp; </code>Afrikaans</a>
+<a class="dropdown-item" id="lang_ar" href="test?lang=ar&m=CAL&yg=2025&mg=10&dg=30"><code>ar&nbsp;&nbsp;&nbsp; </code>Arabic</a>
+<a class="dropdown-item" id="lang_bg" href="test?lang=bg&m=CAL&yg=2025&mg=10&dg=30"><code>bg&nbsp;&nbsp;&nbsp; </code>Bulgarian</a>
+<a class="dropdown-item" id="lang_br" href="test?lang=br&m=CAL&yg=2025&mg=10&dg=30"><code>br&nbsp;&nbsp;&nbsp; </code>Breton</a>
+<a class="dropdown-item" id="lang_ca" href="test?lang=ca&m=CAL&yg=2025&mg=10&dg=30"><code>ca&nbsp;&nbsp;&nbsp; </code>Catalan</a>
+<a class="dropdown-item" id="lang_co" href="test?lang=co&m=CAL&yg=2025&mg=10&dg=30"><code>co&nbsp;&nbsp;&nbsp; </code>Corsican</a>
+<a class="dropdown-item" id="lang_cs" href="test?lang=cs&m=CAL&yg=2025&mg=10&dg=30"><code>cs&nbsp;&nbsp;&nbsp; </code>Czech</a>
+<a class="dropdown-item" id="lang_da" href="test?lang=da&m=CAL&yg=2025&mg=10&dg=30"><code>da&nbsp;&nbsp;&nbsp; </code>Danish</a>
+<a class="dropdown-item" id="lang_de" href="test?lang=de&m=CAL&yg=2025&mg=10&dg=30"><code>de&nbsp;&nbsp;&nbsp; </code>German</a>
+<a class="dropdown-item" id="lang_eo" href="test?lang=eo&m=CAL&yg=2025&mg=10&dg=30"><code>eo&nbsp;&nbsp;&nbsp; </code>Esperanto</a>
+<a class="dropdown-item" id="lang_es" href="test?lang=es&m=CAL&yg=2025&mg=10&dg=30"><code>es&nbsp;&nbsp;&nbsp; </code>Spanish</a>
+<a class="dropdown-item" id="lang_et" href="test?lang=et&m=CAL&yg=2025&mg=10&dg=30"><code>et&nbsp;&nbsp;&nbsp; </code>Estonian</a>
+<a class="dropdown-item" id="lang_fi" href="test?lang=fi&m=CAL&yg=2025&mg=10&dg=30"><code>fi&nbsp;&nbsp;&nbsp; </code>Finnish</a>
+<a class="dropdown-item" id="lang_fr" href="test?lang=fr&m=CAL&yg=2025&mg=10&dg=30"><code>fr&nbsp;&nbsp;&nbsp; </code>French</a>
+<a class="dropdown-item" id="lang_he" href="test?lang=he&m=CAL&yg=2025&mg=10&dg=30"><code>he&nbsp;&nbsp;&nbsp; </code>Hebrew</a>
+<a class="dropdown-item" id="lang_is" href="test?lang=is&m=CAL&yg=2025&mg=10&dg=30"><code>is&nbsp;&nbsp;&nbsp; </code>Icelandic</a>
+<a class="dropdown-item" id="lang_it" href="test?lang=it&m=CAL&yg=2025&mg=10&dg=30"><code>it&nbsp;&nbsp;&nbsp; </code>Italian</a>
+<a class="dropdown-item" id="lang_lt" href="test?lang=lt&m=CAL&yg=2025&mg=10&dg=30"><code>lt&nbsp;&nbsp;&nbsp; </code>Lithuanian</a>
+<a class="dropdown-item" id="lang_lv" href="test?lang=lv&m=CAL&yg=2025&mg=10&dg=30"><code>lv&nbsp;&nbsp;&nbsp; </code>Latvian</a>
+<a class="dropdown-item" id="lang_nl" href="test?lang=nl&m=CAL&yg=2025&mg=10&dg=30"><code>nl&nbsp;&nbsp;&nbsp; </code>Dutch</a>
+<a class="dropdown-item" id="lang_no" href="test?lang=no&m=CAL&yg=2025&mg=10&dg=30"><code>no&nbsp;&nbsp;&nbsp; </code>Norwegian</a>
+<a class="dropdown-item" id="lang_oc" href="test?lang=oc&m=CAL&yg=2025&mg=10&dg=30"><code>oc&nbsp;&nbsp;&nbsp; </code>Occitan</a>
+<a class="dropdown-item" id="lang_pl" href="test?lang=pl&m=CAL&yg=2025&mg=10&dg=30"><code>pl&nbsp;&nbsp;&nbsp; </code>Polish</a>
+<a class="dropdown-item" id="lang_pt" href="test?lang=pt&m=CAL&yg=2025&mg=10&dg=30"><code>pt&nbsp;&nbsp;&nbsp; </code>Portuguese</a>
+<a class="dropdown-item" id="lang_pt-br" href="test?lang=pt-br&m=CAL&yg=2025&mg=10&dg=30"><code>pt-br </code>Brazilian-Portuguese</a>
+<a class="dropdown-item" id="lang_ro" href="test?lang=ro&m=CAL&yg=2025&mg=10&dg=30"><code>ro&nbsp;&nbsp;&nbsp; </code>Romanian</a>
+<a class="dropdown-item" id="lang_ru" href="test?lang=ru&m=CAL&yg=2025&mg=10&dg=30"><code>ru&nbsp;&nbsp;&nbsp; </code>Russian</a>
+<a class="dropdown-item" id="lang_sk" href="test?lang=sk&m=CAL&yg=2025&mg=10&dg=30"><code>sk&nbsp;&nbsp;&nbsp; </code>Slovak</a>
+<a class="dropdown-item" id="lang_sl" href="test?lang=sl&m=CAL&yg=2025&mg=10&dg=30"><code>sl&nbsp;&nbsp;&nbsp; </code>Slovenian</a>
+<a class="dropdown-item" id="lang_sv" href="test?lang=sv&m=CAL&yg=2025&mg=10&dg=30"><code>sv&nbsp;&nbsp;&nbsp; </code>Swedish</a>
+<a class="dropdown-item" id="lang_tr" href="test?lang=tr&m=CAL&yg=2025&mg=10&dg=30"><code>tr&nbsp;&nbsp;&nbsp; </code>Turkish</a>
+<a class="dropdown-item" id="lang_zh" href="test?lang=zh&m=CAL&yg=2025&mg=10&dg=30"><code>zh&nbsp;&nbsp;&nbsp; </code>Chinese</a>
 </div>
 </div>
 <!-- Connections info -->
@@ -270,7 +270,7 @@ data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <div class="d-flex flex-column justify-content-md-end align-self-center ml-1 ml-md-3 ml-lg-4">
 <div class="ml-auto mb-0">
 <a role="button" class="mr-1"
-href="test?templ=templm&m=CAL"
+href="test?templ=templm&m=CAL&yg=2025&mg=10&dg=30"
 data-toggle="tooltip"
 title="templm">
 <i class="fab fa-markdown" aria-hidden="true"></i>
