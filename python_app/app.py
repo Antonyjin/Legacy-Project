@@ -264,7 +264,8 @@ def _rewrite_absolute_urls(html: bytes) -> bytes:
                 return f"href={quote_char}{path}{query}{quote_char}"
 
         except Exception:
-            pass
+            # On parse failure, keep original content (safe fallback)
+            return match.group(0)
 
         return match.group(0)  # Return unchanged if we can't parse it
 
