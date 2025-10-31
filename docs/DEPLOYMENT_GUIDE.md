@@ -14,27 +14,81 @@ This guide covers deployment of the GeneWeb application in various environments.
 
 ---
 
-## 📦 Current Deployment (OCaml Binaries)
+## 📦 Recommended Deployment (Python Proxy + OCaml)
 
-### Local Development
+The Python Flask proxy serves the app at port 2318 and forwards to OCaml `gwd` at 2317 by default. This preserves legacy behavior while enabling gradual Python migration.
 
-**macOS**:
+### Local (Recommended)
+
 ```bash
+# From repo root
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+# Start OCaml gwd (backend)
 cd GeneWeb
-./geneweb.sh
-# Access: http://localhost:2317/test
+./gw/gwd -hd ./gw -bd ./bases -p 2317 -lang en &
+cd ..
+
+# Start Python proxy (front)
+export BACKEND=ocaml
+export FLASK_PORT=2318
+python -m python_app.app &
+
+# Access
+open http://localhost:2318/test
 ```
 
-**Linux**:
-```bash
-# Download Linux binaries
-wget https://github.com/geneweb/geneweb/releases/download/v7.1-beta/geneweb-7.1-beta-linux-x86_64.tar.gz
-tar -xzf geneweb-7.1-beta-linux-x86_64.tar.gz -C gw-linux
+Notes:
+- Use `BACKEND=python` to try migrated functions when available.
+- Bind gwd/proxy to 127.0.0.1 behind a reverse proxy when internet‑facing.
 
-# Run
-cd GeneWeb
-gw-linux/gw/gwd -hd ./gw -bd ./bases -p 2317 -lang en
+### Systemd units (example)
+
+`/etc/systemd/system/gwd.service`:
 ```
+[Unit]
+Description=GeneWeb gwd
+After=network.target
+
+[Service]
+User=geneweb
+WorkingDirectory=/opt/Legacy-Project/GeneWeb
+ExecStart=/opt/Legacy-Project/GeneWeb/gw/gwd -hd /opt/Legacy-Project/GeneWeb/gw -bd /opt/Legacy-Project/GeneWeb/bases -p 2317 -lang en
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+`/etc/systemd/system/geneweb-proxy.service`:
+```
+[Unit]
+Description=GeneWeb Python proxy
+After=network.target gwd.service
+
+[Service]
+User=geneweb
+WorkingDirectory=/opt/Legacy-Project
+Environment=BACKEND=ocaml
+Environment=FLASK_PORT=2318
+Environment=GENEWEB_DIR=/opt/Legacy-Project/GeneWeb
+ExecStart=/opt/Legacy-Project/venv/bin/python -m python_app.app
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable:
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now gwd.service geneweb-proxy.service
+```
+
+### OCaml Only (legacy/debug)
+See README for direct `gwd` startup on 2317 if you do not need the proxy.
 
 ### Prerequisites
 - macOS or Linux
@@ -62,7 +116,7 @@ export GW_LANG=en          # Default language (en, fr, etc.)
 geneweb:latest
 ├─ Base: debian:slim or alpine
 ├─ OCaml binaries (gwd, gwsetup, ged2gwb, gwb2ged)
-├─ Python environment (for migrated functions)
+├─ Python environment (Flask proxy)
 ├─ Templates & assets
 └─ Exposed ports: 2317 (gwd), 2316 (gwsetup)
 ```
@@ -73,17 +127,25 @@ geneweb:latest
 version: '3.8'
 
 services:
-  geneweb:
-    build: .
+  gwd:
+    build: ./GeneWeb
     ports:
-      - "2317:2317"  # Web interface
-      - "2316:2316"  # Admin interface
+      - "2317:2317"
+      - "2316:2316"
     volumes:
-      - ./bases:/app/bases  # Database files
-      - ./logs:/app/logs    # Log files
+      - ./GeneWeb/bases:/app/bases
+    restart: unless-stopped
+
+  proxy:
+    build: .
     environment:
-      - GW_LANG=en
-      - LOG_LEVEL=info
+      - BACKEND=ocaml
+      - FLASK_PORT=2318
+      - GENEWEB_DIR=/app/GeneWeb
+    ports:
+      - "2318:2318"
+    depends_on:
+      - gwd
     restart: unless-stopped
 
   # Future: PostgreSQL for migrated Python backend
