@@ -239,7 +239,7 @@ def _rewrite_absolute_urls(html: bytes) -> bytes:
             # Extract port from netloc (format: host:port)
             netloc = parsed.netloc
             if ":" in netloc:
-                host_part, port_part = netloc.rsplit(":", 1)
+                _, port_part = netloc.rsplit(":", 1)
                 try:
                     port = int(port_part)
                 except ValueError:
@@ -283,7 +283,7 @@ def _rewrite_absolute_urls(html: bytes) -> bytes:
 # ---- Admin passthrough (gwsetup) for demo ----
 @app.route("/admin", methods=["GET", "POST"])
 @app.route("/admin/<path:subpath>", methods=["GET", "POST"])
-def admin_passthrough(subpath: str = ""):
+def admin_passthrough(subpath: str = ""):  # pylint: disable=too-many-locals
     bridge = OCamlBridge()
     try:
         # Remove /admin prefix from subpath before forwarding to gwsetup

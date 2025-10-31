@@ -228,7 +228,7 @@ class OCamlBridge:
         body, ctype, _, _ = self.proxy_admin_raw_full(path, method, params)
         return body, ctype
 
-    def proxy_admin_raw_full(
+    def proxy_admin_raw_full(  # pylint: disable=too-many-arguments,too-many-positional-arguments,too-many-locals
         self,
         path: str,
         method: str = "GET",
@@ -248,8 +248,6 @@ class OCamlBridge:
         url = f"http://{self.config.OCAML_GWD_HOST}:{self.config.OCAML_GWSETUP_PORT}{path}"
 
         # Build request kwargs
-        from typing import Any, Dict
-
         kwargs: Dict[str, Any] = {"timeout": 10.0}
 
         # Check if path already contains query string
