@@ -45,6 +45,7 @@ class OCamlBridge:
             ["pkill", "-f", f"gwd.*-p {port}"],
             check=False,
             capture_output=True,
+            shell=False,
         )
         time.sleep(0.5)
 
@@ -65,6 +66,7 @@ class OCamlBridge:
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
+            shell=False,
         )
 
         # Wait a bit for daemonization
@@ -91,6 +93,7 @@ class OCamlBridge:
             ["pkill", "-f", f"gwd.*-p {port}"],
             check=False,
             capture_output=True,
+            shell=False,
         )
 
         self.gwd_process = None
@@ -110,7 +113,7 @@ class OCamlBridge:
         url = f"http://localhost:{port}/{self.config.BASE_NAME}"
 
         try:
-            response = requests.get(url, timeout=1.0)
+            response = requests.get(url, timeout=1.0)  # nosec B310 - internal HTTP to geneweb
             return response.status_code == 200
         except requests.RequestException:
             return False
@@ -138,6 +141,7 @@ class OCamlBridge:
             capture_output=True,
             text=True,
             check=True,
+            shell=False,
         )
 
     def import_gedcom(self, gedcom_path: Path, base_name: str) -> None:
@@ -163,6 +167,7 @@ class OCamlBridge:
             capture_output=True,
             text=True,
             check=True,
+            shell=False,
         )
 
     def proxy_request(
@@ -193,7 +198,7 @@ class OCamlBridge:
 
             url += "?" + urllib.parse.urlencode(params)
 
-        response = requests.request(method, url, timeout=10.0)
+        response = requests.request(method, url, timeout=10.0)  # nosec B310 - internal HTTP to geneweb
         response.raise_for_status()
 
         return response.text
@@ -216,7 +221,7 @@ class OCamlBridge:
 
             url += "?" + urllib.parse.urlencode(params)
 
-        r = requests.request(method, url, timeout=10.0)
+        r = requests.request(method, url, timeout=10.0)  # nosec B310 - internal HTTP to geneweb
         r.raise_for_status()
         content_type = r.headers.get("Content-Type", "application/octet-stream")
         return r.content, content_type
@@ -275,7 +280,7 @@ class OCamlBridge:
 
                 url += "?" + urllib.parse.urlencode(params)
 
-        r = requests.request(method, url, **kwargs)
+        r = requests.request(method, url, **kwargs)  # nosec B310 - internal HTTP to geneweb
         r.raise_for_status()
 
         content_type = r.headers.get("Content-Type", "text/html; charset=utf-8")
