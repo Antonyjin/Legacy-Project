@@ -11,7 +11,9 @@ Usage:
 Issue: MIG-INF-001 (#225)
 """
 
+import re
 import sys
+from urllib.parse import urlparse
 
 from flask import Flask, Response, redirect, request
 
@@ -87,39 +89,261 @@ def _proxy_static(path: str) -> Response:
         return Response(str(exc), status=502)
 
 
-@app.route('/css/<path:subpath>')
+@app.route("/css/<path:subpath>")
 def static_css(subpath: str):
     return _proxy_static(f"/css/{subpath}")
 
 
-@app.route('/js/<path:subpath>')
+@app.route("/js/<path:subpath>")
 def static_js(subpath: str):
     return _proxy_static(f"/js/{subpath}")
 
 
-@app.route('/images/<path:subpath>')
+@app.route("/images/<path:subpath>")
 def static_images(subpath: str):
     return _proxy_static(f"/images/{subpath}")
 
 
-@app.route('/webfonts/<path:subpath>')
+@app.route("/webfonts/<path:subpath>")
 def static_webfonts(subpath: str):
     return _proxy_static(f"/webfonts/{subpath}")
 
 
+def _rewrite_admin_urls(html: bytes) -> bytes:
+    """
+    Rewrite URLs in HTML to add /admin prefix for gwsetup.
+
+    Handles:
+    - href="..." links
+    - action="..." form actions
+    - src="..." for some resources
+    """
+    html_str = html.decode("utf-8", errors="ignore")
+
+    def rewrite_url(match):
+        """Rewrite a single URL attribute."""
+        quote = match.group(1)  # The quote character (" or ')
+        url = match.group(2)  # The URL content
+
+        # Skip absolute URLs, data URIs, mailto, anchors, and already rewritten URLs
+        if url.startswith(("http://", "https://", "//", "mailto:", "#", "/admin/", "data:")):
+            return match.group(0)  # Return unchanged
+
+        # Rewrite relative URLs to include /admin prefix
+        # Remove leading slash if present, then add /admin prefix
+        clean_url = url.lstrip("/")
+        return f"href={quote}/admin/{clean_url}{quote}"
+
+    def rewrite_action(match):
+        """Rewrite a form action URL."""
+        quote = match.group(1)
+        url = match.group(2)
+
+        if url.startswith(("http://", "https://", "//", "#", "/admin/")):
+            return match.group(0)
+
+        clean_url = url.lstrip("/")
+        return f"action={quote}/admin/{clean_url}{quote}"
+
+    def rewrite_src(match):
+        """Rewrite a src URL."""
+        quote = match.group(1)
+        url = match.group(2)
+
+        if url.startswith(("http://", "https://", "//", "/admin/", "data:")):
+            return match.group(0)
+
+        clean_url = url.lstrip("/")
+        return f"src={quote}/admin/{clean_url}{quote}"
+
+    # Rewrite href attributes
+    html_str = re.sub(r'href=(["\'])([^"\']*)\1', rewrite_url, html_str)
+
+    # Rewrite form action attributes
+    html_str = re.sub(r'action=(["\'])([^"\']*)\1', rewrite_action, html_str)
+
+    # Rewrite src attributes for images/css
+    html_str = re.sub(r'src=(["\'])([^"\']*)\1', rewrite_src, html_str)
+
+    return html_str.encode("utf-8")
+
+
+def _rewrite_redirect_url(location: str) -> str:
+    """
+    Rewrite redirect URLs to go through the proxy.
+
+    Converts:
+    - http://geneweb:2317/test -> /test
+    - http://geneweb:2316/gwsetup -> /admin/gwsetup
+    - Absolute URLs to the backend -> relative URLs through proxy
+    """
+
+    try:
+        parsed = urlparse(location)
+        backend_host = f"{Config.OCAML_GWD_HOST}:{Config.OCAML_GWD_PORT}"
+        admin_host = f"{Config.OCAML_GWD_HOST}:{Config.OCAML_GWSETUP_PORT}"
+
+        # If it's a redirect to the backend gwd
+        if parsed.netloc == backend_host or parsed.netloc.endswith(f":{Config.OCAML_GWD_PORT}"):
+            # Convert to relative URL (proxied through main routes)
+            return parsed.path + ("?" + parsed.query if parsed.query else "")
+
+        # If it's a redirect to gwsetup
+        if parsed.netloc == admin_host or parsed.netloc.endswith(f":{Config.OCAML_GWSETUP_PORT}"):
+            # Convert to /admin prefix
+            path = parsed.path
+            if not path.startswith("/admin"):
+                path = "/admin" + path
+            return path + ("?" + parsed.query if parsed.query else "")
+
+        # If it's already a relative URL or different domain, return as-is
+        if not parsed.netloc:
+            # Already relative, but might need /admin prefix if it's a gwsetup path
+            if parsed.path.startswith("/gwsetup") or parsed.path == "/":
+                if not parsed.path.startswith("/admin"):
+                    return "/admin" + parsed.path + ("?" + parsed.query if parsed.query else "")
+            return location
+
+        return location
+    except Exception:
+        # If parsing fails, return as-is
+        return location
+
+
+def _rewrite_absolute_urls(html: bytes) -> bytes:
+    """
+    Rewrite absolute URLs in HTML that point to backend to use proxy instead.
+
+    Converts URLs like:
+    - http://geneweb:2317/test?lang=en -> /test?lang=en
+    - http://geneweb:2316/gwsetup -> /admin/gwsetup
+    """
+
+    html_str = html.decode("utf-8", errors="ignore")
+    backend_port = Config.OCAML_GWD_PORT
+    admin_port = Config.OCAML_GWSETUP_PORT
+
+    def rewrite_absolute_url(match):
+        """Rewrite an absolute URL in href attribute."""
+        quote_char = match.group(1)
+        host = match.group(2)
+        port = match.group(3)
+        path_and_query = match.group(4)
+
+        # Reconstruct full URL for parsing
+        url = f"http://{host}:{port}{path_and_query}"
+
+        try:
+            parsed = urlparse(url)
+
+            # Extract port from netloc (format: host:port)
+            netloc = parsed.netloc
+            if ":" in netloc:
+                host_part, port_part = netloc.rsplit(":", 1)
+                try:
+                    port = int(port_part)
+                except ValueError:
+                    port = None
+            else:
+                port = None
+
+            # Check if URL points to backend gwd (port 2317)
+            if port == backend_port or (netloc.endswith(f":{backend_port}")):
+                # Convert to relative URL (goes through main proxy routes)
+                path = parsed.path
+                query = ("?" + parsed.query) if parsed.query else ""
+                return f"href={quote_char}{path}{query}{quote_char}"
+
+            # Check if URL points to gwsetup (port 2316)
+            if port == admin_port or (netloc.endswith(f":{admin_port}")):
+                # Add /admin prefix
+                path = parsed.path
+                if not path.startswith("/admin"):
+                    path = "/admin" + path
+                query = ("?" + parsed.query) if parsed.query else ""
+                return f"href={quote_char}{path}{query}{quote_char}"
+
+        except Exception:
+            pass
+
+        return match.group(0)  # Return unchanged if we can't parse it
+
+    # Pattern to match absolute HTTP URLs in href attributes
+    # Matches: href="http://host:port/path" where port is 2316 or 2317
+    html_str = re.sub(
+        r'href=(["\'])http://([^"\']+?):(2316|2317)([^"\']*)\1',
+        rewrite_absolute_url,
+        html_str,
+        flags=re.IGNORECASE,
+    )
+
+    return html_str.encode("utf-8")
+
+
 # ---- Admin passthrough (gwsetup) for demo ----
-@app.route('/admin')
-@app.route('/admin/<path:subpath>')
+@app.route("/admin", methods=["GET", "POST"])
+@app.route("/admin/<path:subpath>", methods=["GET", "POST"])
 def admin_passthrough(subpath: str = ""):
     bridge = OCamlBridge()
     try:
+        # Remove /admin prefix from subpath before forwarding to gwsetup
+        # If subpath starts with admin, strip it
+        if subpath.startswith("admin/"):
+            subpath = subpath[6:]  # Remove "admin/" prefix
+
         path = "/" + subpath if subpath else "/"
-        # preserve query string
+
+        # Preserve original query string (GeneWeb uses semicolons, not &)
+        # Use request.query_string directly to maintain semicolon format
         qs = request.query_string.decode("utf-8")
         if qs:
             path = f"{path}?{qs}"
-        body, ctype = bridge.proxy_admin_raw(path)
-        return Response(body, mimetype=ctype)
+
+        # Handle POST data
+        data = None
+        files = None
+        if request.method == "POST":
+            # Forward form data as data for POST
+            # For POST, GeneWeb expects form-encoded data with semicolons
+            data = dict(request.form)
+            # Also handle files if any
+            if request.files:
+                files = {}
+                for k, f in request.files.items():
+                    # Reset file pointer
+                    f.seek(0)
+                    files[k] = (f.filename, f.read(), f.content_type)
+                    f.seek(0)  # Reset for potential reuse
+
+        # Proxy the request with the appropriate method
+        # Pass path with query string already included (for GET)
+        # Pass data/files separately (for POST)
+        body, ctype, status_code, headers = bridge.proxy_admin_raw_full(
+            path, method=request.method, params=None, data=data, files=files
+        )
+
+        # Rewrite Location headers to use proxy host/port
+        rewritten_headers = {}
+        for key, value in headers.items():
+            if key.lower() == "location":
+                # Rewrite redirect URLs to go through proxy
+                rewritten_location = _rewrite_redirect_url(value)
+                rewritten_headers[key] = rewritten_location
+            else:
+                rewritten_headers[key] = value
+
+        # Only rewrite URLs if it's HTML content
+        # Static assets (images, css, js) should be served as-is
+        if ctype.startswith("text/html"):
+            body = _rewrite_admin_urls(body)
+            # Also rewrite absolute URLs in HTML that point to backend
+            body = _rewrite_absolute_urls(body)
+
+        response = Response(body, status=status_code, mimetype=ctype)
+        for key, value in rewritten_headers.items():
+            response.headers[key] = value
+
+        return response
     except Exception as exc:  # pylint: disable=broad-except
         return Response(str(exc), status=502)
 

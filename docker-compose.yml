@@ -13,7 +13,7 @@ services:
     #   GWSETUP_IP: "0.0.0.0"   # allow access from host browser to gwsetup
     volumes:
       - ./GeneWeb/bases:/usr/local/share/geneweb/share/data
-      - ./GeneWeb/gw/etc:/usr/local/share/geneweb/etc
+      # Note: etc directory is not mounted so launch script can write gwsetup_only dynamically
     healthcheck:
       test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/2317 && echo -e \"GET /test HTTP/1.0\\r\\n\\r\\n\" >&3 && head -n 1 <&3 | grep -q HTTP' "]
       interval: 10s
@@ -32,7 +32,7 @@ services:
       - "23182:23182"
     environment:
       BACKEND: "ocaml"
-      FLASK_HOST: "127.0.0.1"
+      FLASK_HOST: "0.0.0.0"
       FLASK_PORT: "23182"
       BASE_NAME: "test"
       OCAML_GWD_HOST: "geneweb"
@@ -42,7 +42,7 @@ services:
     depends_on:
       geneweb:
         condition: service_healthy
-    # default docker network (no static IPs)
+    # default docker network (no static IPs
     networks:
       - geneweb-network
 

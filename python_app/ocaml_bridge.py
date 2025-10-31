@@ -51,10 +51,14 @@ class OCamlBridge:
         # Start gwd
         cmd = [
             str(self.config.OCAML_GWD_PATH),
-            "-hd", str(self.config.GW_DIR),
-            "-bd", str(self.config.BASES_DIR),
-            "-p", str(port),
-            "-lang", self.config.DEFAULT_LANG,
+            "-hd",
+            str(self.config.GW_DIR),
+            "-bd",
+            str(self.config.BASES_DIR),
+            "-p",
+            str(port),
+            "-lang",
+            self.config.DEFAULT_LANG,
         ]
 
         process = subprocess.Popen(  # nosec B603
@@ -124,7 +128,8 @@ class OCamlBridge:
         """
         cmd = [
             str(self.config.OCAML_GWB2GED_PATH),
-            "-o", str(output_path),
+            "-o",
+            str(output_path),
             str(self.config.BASES_DIR / f"{base_name}.gwb"),
         ]
 
@@ -148,7 +153,8 @@ class OCamlBridge:
         """
         cmd = [
             str(self.config.OCAML_GED2GWB_PATH),
-            "-o", str(self.config.BASES_DIR / f"{base_name}.gwb"),
+            "-o",
+            str(self.config.BASES_DIR / f"{base_name}.gwb"),
             str(gedcom_path),
         ]
 
@@ -159,7 +165,9 @@ class OCamlBridge:
             check=True,
         )
 
-    def proxy_request(self, path: str, method: str = "GET", params: Optional[Dict[str, Any]] = None) -> str:
+    def proxy_request(
+        self, path: str, method: str = "GET", params: Optional[Dict[str, Any]] = None
+    ) -> str:
         """
         Proxy HTTP request to OCaml gwd.
 
@@ -182,6 +190,7 @@ class OCamlBridge:
 
         if params:
             import urllib.parse
+
             url += "?" + urllib.parse.urlencode(params)
 
         response = requests.request(method, url, timeout=10.0)
@@ -189,7 +198,9 @@ class OCamlBridge:
 
         return response.text
 
-    def proxy_request_raw(self, path: str, method: str = "GET", params: Optional[Dict[str, Any]] = None) -> tuple[bytes, str]:
+    def proxy_request_raw(
+        self, path: str, method: str = "GET", params: Optional[Dict[str, Any]] = None
+    ) -> tuple[bytes, str]:
         """
         Proxy HTTP request to OCaml gwd and return raw bytes and content type.
 
@@ -202,6 +213,7 @@ class OCamlBridge:
         url = f"http://{self.config.OCAML_GWD_HOST}:{self.config.OCAML_GWD_PORT}{path}"
         if params:
             import urllib.parse
+
             url += "?" + urllib.parse.urlencode(params)
 
         r = requests.request(method, url, timeout=10.0)
@@ -209,15 +221,67 @@ class OCamlBridge:
         content_type = r.headers.get("Content-Type", "application/octet-stream")
         return r.content, content_type
 
-    def proxy_admin_raw(self, path: str, method: str = "GET", params: Optional[Dict[str, Any]] = None) -> tuple[bytes, str]:
+    def proxy_admin_raw(
+        self, path: str, method: str = "GET", params: Optional[Dict[str, Any]] = None
+    ) -> tuple[bytes, str]:
         """Proxy to gwsetup (admin) for demo use."""
+        body, ctype, _, _ = self.proxy_admin_raw_full(path, method, params)
+        return body, ctype
+
+    def proxy_admin_raw_full(
+        self,
+        path: str,
+        method: str = "GET",
+        params: Optional[Dict[str, Any]] = None,
+        data: Optional[Dict[str, Any]] = None,
+        files: Optional[Dict] = None,
+    ) -> tuple[bytes, str, int, Dict[str, str]]:
+        """
+        Proxy to gwsetup (admin) with full response details.
+
+        Returns:
+            tuple: (body, content_type, status_code, headers)
+        """
         if not path.startswith("/"):
             path = "/" + path
+
         url = f"http://{self.config.OCAML_GWD_HOST}:{self.config.OCAML_GWSETUP_PORT}{path}"
-        if params:
-            import urllib.parse
-            url += "?" + urllib.parse.urlencode(params)
-        r = requests.request(method, url, timeout=10.0)
+
+        # Build request kwargs
+        from typing import Any, Dict
+
+        kwargs: Dict[str, Any] = {"timeout": 10.0}
+
+        # Check if path already contains query string
+        has_query_string = "?" in path
+
+        if method == "POST":
+            if data:
+                kwargs["data"] = data
+            if params and not has_query_string:
+                # For POST, add params to URL if data is not provided and no query string exists
+                if not data:
+                    import urllib.parse
+
+                    url += "?" + urllib.parse.urlencode(params)
+                else:
+                    # Merge params into data
+                    if isinstance(data, dict):
+                        data.update(params)
+            if files:
+                kwargs["files"] = files
+        else:
+            # For GET, add params to URL only if path doesn't already have query string
+            if params and not has_query_string:
+                import urllib.parse
+
+                url += "?" + urllib.parse.urlencode(params)
+
+        r = requests.request(method, url, **kwargs)
         r.raise_for_status()
+
         content_type = r.headers.get("Content-Type", "text/html; charset=utf-8")
-        return r.content, content_type
+        status_code = r.status_code
+        headers = dict(r.headers)
+
+        return r.content, content_type, status_code, headers

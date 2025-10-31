@@ -43,15 +43,12 @@ init() {
 		set_db_config "$(echo "${setting#GENEWEB_CONFIG_}" | cut -f1 -d=)" "$(echo "${setting#GENEWEB_CONFIG_}" | cut -f2 -d=)"
 	done
 
-    # # Configure gwsetup allowlist
-    # mkdir -p ${GENEWEB_HOME}/etc
-    # if [ -n "${GWSETUP_IP}" ]; then
-    #     echo "${GWSETUP_IP}" | tr -d '\r' > ${GENEWEB_HOME}/etc/gwsetup_only
-    # else
-    #     echo "0.0.0.0" > ${GENEWEB_HOME}/etc/gwsetup_only
-    # fi
+	# Configure gwsetup allowlist - allow access from any IP by default
+	mkdir -p ${GENEWEB_HOME}/etc
+	echo "0.0.0.0" > ${GENEWEB_HOME}/etc/gwsetup_only
+	gwlaunch_log "-- Configured gwsetup to allow access from any IP (0.0.0.0)"
 
-    # gwlaunch_log "Setting correct ownership of geneweb data."
+	gwlaunch_log "Setting correct ownership of geneweb data."
 	sudo chown -R geneweb:geneweb ${GENEWEB_HOME}/share/data
 	sudo chown -R geneweb:geneweb ${GENEWEB_HOME}/etc
 	sudo chown -R geneweb:geneweb ${GENEWEB_HOME}/log
