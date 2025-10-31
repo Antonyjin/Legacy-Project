@@ -1,73 +1,155 @@
-# 🚀 Deployment Guide
+# Deployment Guide
 
-**Status**: 📝 DRAFT - Will be completed during Week 2 sprint  
-**Last Updated**: October 21, 2024
+This guide covers deploying the GeneWeb application to various environments.
 
----
+## Table of Contents
 
-## Overview
+1. [Prerequisites](#prerequisites)
+2. [Local Development Setup](#local-development-setup)
+3. [Docker Setup](#docker-setup)
+4. [Production Deployment](#production-deployment)
+5. [Environment Configuration](#environment-configuration)
+6. [Troubleshooting](#troubleshooting)
 
-This guide covers deployment of the GeneWeb application in various environments.
+## Prerequisites
 
-**Current State**: OCaml binaries + manual deployment  
-**Planned**: Docker containerization + automated deployment (Week 2-3)
+### System Requirements
+- **OS**: macOS, Linux, or Windows (WSL2)
+- **Python**: 3.11+
+- **OCaml**: 4.14+ (for legacy binary compatibility)
+- **Disk Space**: 500MB+ (for application + databases)
+- **Memory**: 2GB+ recommended
 
----
+### Software Requirements
+- Git
+- Docker & Docker Compose (optional, for containerized deployment)
+- pip (Python package manager)
+- curl (for health checks)
 
-## 📦 Current Deployment (OCaml Binaries)
+## Local Development Setup
 
-### Local Development
+### 1. Clone Repository
 
-**macOS**:
 ```bash
-cd GeneWeb
-./geneweb.sh
-# Access: http://localhost:2317/test
+git clone https://github.com/Antonyjin/Legacy-Project.git
+cd Legacy-Project
 ```
 
-**Linux**:
-```bash
-# Download Linux binaries
-wget https://github.com/geneweb/geneweb/releases/download/v7.1-beta/geneweb-7.1-beta-linux-x86_64.tar.gz
-tar -xzf geneweb-7.1-beta-linux-x86_64.tar.gz -C gw-linux
+### 2. Setup Python Environment
 
-# Run
-cd GeneWeb
-gw-linux/gw/gwd -hd ./gw -bd ./bases -p 2317 -lang en
+```bash
+# Create virtual environment
+python3 -m venv venv
+
+# Activate virtual environment
+source venv/bin/activate  # macOS/Linux
+# or
+venv\Scripts\activate     # Windows
+
+# Install dependencies
+pip install -r requirements.txt
 ```
+
+### 3. Configure Environment
+
+Create `.env` file in project root:
+
+```env
+# Application
+PORT=2317
+FLASK_ENV=development
+LOG_LEVEL=debug
+
+# Database
+DATABASE_PATH=./GeneWeb/bases
+
+# Backend
+BACKEND=ocaml  # or 'python' for migrated functions
+
+# Logging
+LOG_FILE=./logs/app.log
+```
+
+### 4. Start OCaml Backend
+
+```bash
+# Navigate to GeneWeb directory
+cd GeneWeb
+
+# Start gwd daemon on port 23179
+./gw/gwd -hd ./gw -bd ./bases -p 23179 -lang en &
+
+# Verify it's running
+curl http://localhost:23179/test
+
+# Return to project root
+cd ..
+```
+
+### 5. Run Application
+
+```bash
+# With OCaml backend
+BACKEND=ocaml python -m python_app.app
+
+# With Python backend (uses migrated functions)
+BACKEND=python python -m python_app.app
+
+# Access at http://localhost:2317
+```
+
+### 6. Verify Deployment
+
+```bash
+# Check application health
+curl http://localhost:2317/health
+
+# Check gwd
+curl http://localhost:23179/test?p=Charles&n=Windsor
+
+# View logs
+tail -f logs/app.log
+```
+
+## Docker Setup
 
 ### Prerequisites
-- macOS or Linux
-- Web browser
-- Terminal access
+- Docker 20.10+
+- Docker Compose 1.29+
 
-### Environment Variables
+### Single Container
+
+#### Build Image
+
 ```bash
-# Optional
-export GW_PORT=2317        # Web server port
-export GW_SETUP_PORT=2316  # Admin interface port
-export GW_LANG=en          # Default language (en, fr, etc.)
+docker build -t geneweb:latest .
 ```
 
----
+#### Run Container
 
-## 🐳 Docker Deployment (Planned - Week 2)
-
-**Issues**: #120 (Dockerfile), #121 (docker-compose)  
-**Status**: To be implemented
-
-### Planned Architecture
-
-```
-geneweb:latest
-├─ Base: debian:slim or alpine
-├─ OCaml binaries (gwd, gwsetup, ged2gwb, gwb2ged)
-├─ Python environment (for migrated functions)
-├─ Templates & assets
-└─ Exposed ports: 2317 (gwd), 2316 (gwsetup)
+```bash
+docker run \
+  -p 2317:2317 \
+  -v $(pwd)/GeneWeb/bases:/app/bases \
+  -v $(pwd)/logs:/app/logs \
+  -e LOG_LEVEL=info \
+  -e BACKEND=ocaml \
+  geneweb:latest
 ```
 
-### Planned docker-compose.yml
+#### Access Application
+
+```bash
+# Web interface
+curl http://localhost:2317/health
+
+# View logs
+docker logs <container_id>
+```
+
+### Docker Compose
+
+#### Create docker-compose.yml
 
 ```yaml
 version: '3.8'
@@ -75,269 +157,573 @@ version: '3.8'
 services:
   geneweb:
     build: .
+    container_name: geneweb
     ports:
-      - "2317:2317"  # Web interface
-      - "2316:2316"  # Admin interface
+      - "2317:2317"
     volumes:
-      - ./bases:/app/bases  # Database files
-      - ./logs:/app/logs    # Log files
+      - ./GeneWeb/bases:/app/bases
+      - ./logs:/app/logs
     environment:
-      - GW_LANG=en
-      - LOG_LEVEL=info
+      PORT: 2317
+      FLASK_ENV: production
+      LOG_LEVEL: info
+      BACKEND: ocaml
+      DATABASE_PATH: /app/bases
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2317/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
 
-  # Future: PostgreSQL for migrated Python backend
-  # postgres:
-  #   image: postgres:15
-  #   ...
+  # Optional: Reverse proxy (nginx)
+  nginx:
+    image: nginx:alpine
+    container_name: geneweb-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - geneweb
+    restart: unless-stopped
 ```
 
-### Planned Commands
+#### Deploy with Compose
 
 ```bash
-# Build image
-docker build -t geneweb:latest .
-
-# Run with docker-compose
+# Start services
 docker-compose up -d
 
 # View logs
 docker-compose logs -f geneweb
 
-# Stop
+# Stop services
 docker-compose down
 
-# Access application
-open http://localhost:2317/test
+# Rebuild after code changes
+docker-compose up -d --build
 ```
 
----
+#### Environment File (.env)
 
-## ☁️ Production Deployment (Planned - Week 3)
+Create `.env` file for docker-compose:
 
-**Issues**: #142 (Deploy to prod), #143 (Test deployment)  
-**Status**: To be implemented
+```env
+# Compose
+COMPOSE_PROJECT_NAME=geneweb
+
+# Application
+PORT=2317
+FLASK_ENV=production
+LOG_LEVEL=info
+BACKEND=ocaml
+
+# Database path (inside container)
+DATABASE_PATH=/app/bases
+```
+
+## Production Deployment
 
 ### Deployment Options
 
-#### Option 1: VPS (Digital Ocean / Linode / Hetzner)
-**Pros**: Full control, cost-effective  
-**Cons**: Manual management
+Choose one of the following deployment targets:
 
-**Steps** (to be detailed):
-1. Provision VPS (Ubuntu 22.04 LTS)
-2. Install Docker & docker-compose
-3. Clone repository
-4. Run `docker-compose up -d`
-5. Configure nginx reverse proxy
-6. Setup SSL (Let's Encrypt)
+#### Option 1: VPS (AWS, DigitalOcean, Linode)
 
-#### Option 2: AWS ECS/Fargate
-**Pros**: Managed, scalable  
-**Cons**: More complex, higher cost
-
-#### Option 3: Heroku
-**Pros**: Simplest, git-based deploy  
-**Cons**: Limited customization
-
-#### Option 4: Static Export (Future)
-For Python version: pre-render static HTML + JavaScript SPA
-
----
-
-## 🔐 Security Considerations
-
-### Current
-- ⚠️ No authentication on gwd (public genealogy data)
-- ⚠️ Wizard mode requires caution (data modification)
-- ✅ GEDCOM exports respect privacy settings
-
-### Planned
-- [ ] HTTPS/TLS termination
-- [ ] Basic authentication for admin interface
-- [ ] Rate limiting
-- [ ] Input validation
-- [ ] Security headers
-- [ ] Regular updates
-
----
-
-## 📊 Monitoring & Logging
-
-### Current Logging
 ```bash
-# gwd logs
-tail -f GeneWeb/gwd.out
+# SSH into server
+ssh ubuntu@your-server.com
 
-# gwsetup logs
-tail -f GeneWeb/gwsetup.out
+# Clone repository
+git clone https://github.com/Antonyjin/Legacy-Project.git
+cd Legacy-Project
+
+# Setup
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+# Configure systemd service
+sudo tee /etc/systemd/system/geneweb.service > /dev/null <<EOF
+[Unit]
+Description=GeneWeb Application
+After=network.target
+
+[Service]
+Type=simple
+User=geneweb
+WorkingDirectory=/home/geneweb/Legacy-Project
+ExecStart=/home/geneweb/Legacy-Project/venv/bin/python -m python_app.app
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Enable and start service
+sudo systemctl daemon-reload
+sudo systemctl enable geneweb
+sudo systemctl start geneweb
+
+# Check status
+sudo systemctl status geneweb
 ```
 
-### Planned Monitoring (Week 3)
-- [ ] Application logs (structured JSON)
-- [ ] Access logs (nginx)
-- [ ] Error tracking (Sentry or similar)
-- [ ] Uptime monitoring
-- [ ] Performance metrics
+#### Option 2: Heroku
 
----
-
-## 🔄 CI/CD Pipeline (Week 2)
-
-**Issue**: #117 (GitHub Actions workflow)
-
-### Planned Workflow
-
-```yaml
-name: CI/CD
-
-on: [push, pull_request]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-      - name: Run tests
-        run: pytest tests/python/ --cov=tests
-      - name: Upload coverage
-        uses: codecov/codecov-action@v3
-
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build Docker image
-        run: docker build -t geneweb:${{ github.sha }} .
-      - name: Push to registry
-        # if: github.ref == 'refs/heads/main'
-        run: echo "Push to Docker Hub or GH Container Registry"
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Deploy to production
-        run: echo "SSH to server and docker-compose pull && up"
-```
-
----
-
-## 🧪 Smoke Tests After Deployment
-
-### Manual Checklist
 ```bash
-# 1. Home page loads
-curl http://localhost:2317/test | grep "GeneWeb"
+# Install Heroku CLI
+curl https://cli.heroku.com/install.sh | sh
 
-# 2. Person page works
-curl http://localhost:2317/test?p=Charles&n=Windsor | grep "Charles"
+# Login
+heroku login
 
-# 3. French localization
-curl http://localhost:2317/test?lang=fr | grep "Accueil"
+# Create app
+heroku create geneweb-app
 
-# 4. GEDCOM export works
-curl "http://localhost:2317/test?m=GEDCOM" > test.ged
-wc -l test.ged  # Should have >100 lines
+# Add buildpack
+heroku buildpacks:add heroku/python
 
-# 5. Admin interface (if enabled)
-curl http://localhost:2316 | grep "gwsetup"
+# Set environment variables
+heroku config:set FLASK_ENV=production LOG_LEVEL=info
+
+# Deploy
+git push heroku main
+
+# View logs
+heroku logs --tail
+
+# Open app
+heroku open
 ```
 
-### Automated (Issue #143)
+#### Option 3: AWS (ECS/Fargate)
+
 ```bash
-# Run smoke tests
-pytest tests/python/integration/test_deployment_smoke.py -v
+# Build and push image
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin YOUR_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
+
+docker build -t geneweb:latest .
+docker tag geneweb:latest YOUR_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/geneweb:latest
+docker push YOUR_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/geneweb:latest
+
+# Create ECS task definition (geneweb-task.json)
+# Deploy with CloudFormation or AWS Console
 ```
 
----
+#### Option 4: Docker on VPS (Recommended)
 
-## 📁 File Structure
+```bash
+# SSH into server
+ssh ubuntu@your-server.com
 
+# Install Docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
+
+# Clone and deploy
+git clone https://github.com/Antonyjin/Legacy-Project.git
+cd Legacy-Project
+
+# Create .env file
+cat > .env <<EOF
+PORT=2317
+FLASK_ENV=production
+LOG_LEVEL=info
+BACKEND=ocaml
+DATABASE_PATH=/app/bases
+EOF
+
+# Start with docker-compose
+docker-compose up -d
+
+# Verify
+curl http://localhost:2317/health
 ```
-Legacy-Project/
-├── Dockerfile                    # (Week 2) Container definition
-├── docker-compose.yml            # (Week 2) Orchestration
-├── .dockerignore                 # Files to exclude from image
-├── scripts/
-│   └── deploy.sh                 # (Week 3) Deployment automation
-├── GeneWeb/
-│   ├── gw/                       # Binaries
-│   ├── bases/                    # Databases (volume mount)
-│   ├── logs/                     # Logs (volume mount)
-│   └── geneweb.sh                # Local dev launcher
-└── .github/
-    └── workflows/
-        └── ci.yml                # (Week 2) CI/CD pipeline
+
+### SSL/HTTPS Setup
+
+#### Using Let's Encrypt with nginx
+
+```bash
+# Install certbot
+sudo apt-get install certbot python3-certbot-nginx
+
+# Get certificate
+sudo certbot certonly --standalone -d yourdomain.com
+
+# Configure nginx reverse proxy
+sudo tee /etc/nginx/sites-available/geneweb > /dev/null <<EOF
+server {
+    listen 443 ssl http2;
+    server_name yourdomain.com;
+
+    ssl_certificate /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;
+
+    location / {
+        proxy_pass http://localhost:2317;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+    }
+}
+
+server {
+    listen 80;
+    server_name yourdomain.com;
+    return 301 https://\$server_name\$request_uri;
+}
+EOF
+
+# Enable site
+sudo ln -s /etc/nginx/sites-available/geneweb /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
+
+# Auto-renew certificates
+sudo systemctl enable certbot.timer
+sudo systemctl start certbot.timer
 ```
 
----
+## Environment Configuration
 
-## 🆘 Troubleshooting
+### Environment Variables
 
-### Port Already in Use
+```env
+# Flask
+FLASK_ENV=production              # development, production
+FLASK_DEBUG=0                      # Disable debug mode in production
+SECRET_KEY=your-secret-key         # For session encryption
+
+# Application
+PORT=2317                          # Application port
+LOG_LEVEL=info                     # debug, info, warning, error
+
+# Database
+DATABASE_PATH=/app/bases           # Path to GWB databases
+DATABASE_TIMEOUT=30                # Connection timeout (seconds)
+
+# Backend
+BACKEND=ocaml                      # ocaml or python
+
+# Logging
+LOG_FILE=/app/logs/app.log        # Log file path
+LOG_MAX_SIZE=104857600            # 100MB max log file size
+LOG_BACKUP_COUNT=10               # Keep 10 rotated log files
+
+# Performance
+WORKERS=4                          # Number of worker processes
+WORKER_THREADS=2                  # Threads per worker
+TIMEOUT=30                         # Request timeout (seconds)
+
+# Monitoring
+METRICS_ENABLED=true               # Enable metrics collection
+SENTRY_DSN=                        # Sentry error tracking (optional)
+```
+
+### Configuration File (.env)
+
+```env
+# Application
+PORT=2317
+FLASK_ENV=production
+LOG_LEVEL=info
+
+# Database
+DATABASE_PATH=/var/geneweb/bases
+
+# Backend
+BACKEND=ocaml
+
+# Logging
+LOG_FILE=/var/log/geneweb/app.log
+```
+
+## Health Checks
+
+### Application Health Endpoint
+
+```bash
+# Check application health
+curl http://localhost:2317/health
+
+# Expected response:
+# {"status": "healthy", "timestamp": "2025-10-31T10:00:00Z"}
+```
+
+### Readiness Check
+
+```bash
+# Check if application is ready
+curl http://localhost:2317/ready
+
+# Expected response when ready:
+# {"status": "ready"}
+```
+
+### Liveness Check
+
+```bash
+# Check if application is alive
+curl http://localhost:2317/alive
+
+# Expected response:
+# {"status": "alive"}
+```
+
+## Monitoring & Logs
+
+### View Application Logs
+
+```bash
+# Local logs
+tail -f logs/app.log
+
+# Docker logs
+docker-compose logs -f geneweb
+
+# Systemd logs
+sudo journalctl -u geneweb -f
+
+# Filter by level
+tail -f logs/app.log | grep ERROR
+```
+
+### Log Rotation
+
+Logs are automatically rotated when reaching max size.
+
+Configuration in `python_app/app.py`:
+```python
+handler = RotatingFileHandler(
+    LOG_FILE,
+    maxBytes=104857600,  # 100MB
+    backupCount=10
+)
+```
+
+### Monitoring Metrics
+
+Access metrics endpoint (if enabled):
+
+```bash
+curl http://localhost:2317/metrics
+```
+
+## Troubleshooting
+
+### Common Issues
+
+#### Port Already in Use
+
 ```bash
 # Find process using port
-lsof -ti:2317 | xargs kill -9
+lsof -i :2317
 
-# Or change port
-docker-compose down
-# Edit docker-compose.yml ports
-docker-compose up -d
+# Kill process
+kill -9 <PID>
+
+# Or use pkill
+pkill -f "python.*app.py"
 ```
 
-### Database Not Found
+#### Database Not Found
+
 ```bash
-# Check volume mounts
-docker-compose ps
+# Check database path
+ls -la /path/to/bases/
+
+# Verify DATABASE_PATH environment variable
+echo $DATABASE_PATH
+
+# Create bases directory if missing
+mkdir -p /app/bases
+```
+
+#### OCaml Backend Not Running
+
+```bash
+# Check if gwd is running
+ps aux | grep gwd
+
+# Start gwd
+cd GeneWeb
+./gw/gwd -hd ./gw -bd ./bases -p 23179 -lang en &
+cd ..
+```
+
+#### Connection Refused
+
+```bash
+# Check application is running
+curl http://localhost:2317/health
+
+# Check logs for errors
+tail -f logs/app.log
+
+# Verify port configuration
+echo $PORT
+```
+
+#### Docker Container Exits Immediately
+
+```bash
+# Check logs
 docker-compose logs geneweb
 
-# Ensure bases/ directory exists and has .gwb files
-ls -la GeneWeb/bases/
+# Check health status
+docker ps
+
+# Rebuild image
+docker-compose up -d --build
 ```
 
-### Container Won't Start
+### Debug Mode
+
+Enable debug logging:
+
 ```bash
-# View logs
-docker-compose logs geneweb
+# Set environment variable
+export LOG_LEVEL=debug
+export FLASK_DEBUG=1
 
-# Check Dockerfile syntax
-docker build -t geneweb:test .
-
-# Enter container for debugging
-docker-compose run --entrypoint /bin/bash geneweb
+# Run application
+python -m python_app.app
 ```
 
+### Performance Issues
+
+Check system resources:
+
+```bash
+# CPU and memory usage
+top
+
+# Disk space
+df -h
+
+# Network connections
+netstat -an | grep 2317
+
+# Application metrics
+curl http://localhost:2317/metrics
+```
+
+## Backup & Recovery
+
+### Backup Database
+
+```bash
+# Backup GWB database
+cp -r GeneWeb/bases GeneWeb/bases.backup.$(date +%Y%m%d)
+
+# Compress backup
+tar -czf geneweb-backup-$(date +%Y%m%d).tar.gz GeneWeb/bases
+```
+
+### Backup Logs
+
+```bash
+# Backup application logs
+tar -czf logs-backup-$(date +%Y%m%d).tar.gz logs/
+```
+
+### Restore from Backup
+
+```bash
+# Restore database
+cp -r GeneWeb/bases.backup.YYYYMMDD GeneWeb/bases
+
+# Restart application
+docker-compose restart geneweb
+```
+
+## Performance Tuning
+
+### Python Application Tuning
+
+```python
+# In python_app/app.py
+app = Flask(__name__)
+app.config['JSON_SORT_KEYS'] = False
+app.config['PROPAGATE_EXCEPTIONS'] = True
+app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = False
+```
+
+### System Tuning
+
+```bash
+# Increase file descriptors
+ulimit -n 65536
+
+# Tune network settings
+sudo sysctl -w net.core.somaxconn=65536
+sudo sysctl -w net.ipv4.tcp_max_syn_backlog=65536
+```
+
+## Security Best Practices
+
+### 1. Use HTTPS
+
+Always use HTTPS in production (See SSL/HTTPS Setup above).
+
+### 2. Environment Variables
+
+Never commit secrets to git. Use `.env` file with:
+```bash
+echo ".env" >> .gitignore
+```
+
+### 3. Firewall Rules
+
+```bash
+# Allow only necessary ports
+sudo ufw allow 22/tcp    # SSH
+sudo ufw allow 80/tcp    # HTTP
+sudo ufw allow 443/tcp   # HTTPS
+sudo ufw enable
+```
+
+### 4. Access Control
+
+```bash
+# Restrict file permissions
+chmod 600 .env
+chmod 700 logs/
+
+# Set correct ownership
+chown geneweb:geneweb /var/geneweb/bases
+```
+
+### 5. Regular Updates
+
+```bash
+# Update Python dependencies
+pip install --upgrade pip
+pip install -r requirements.txt --upgrade
+
+# Update system packages
+sudo apt-get update && sudo apt-get upgrade
+```
+
+## Support
+
+For issues or questions:
+
+- Check [Troubleshooting](#troubleshooting) section
+- Review [README.md](../README.md)
+- Check [GitHub Issues](https://github.com/Antonyjin/Legacy-Project/issues)
+- Review logs for error messages
+
 ---
 
-## 📞 Support
-
-- **Issues**: https://github.com/Antonyjin/Legacy-Project/issues
-- **Wiki**: https://github.com/Antonyjin/Legacy-Project/wiki
-- **Deployment Issues**: Label with `deployment`
-
----
-
-## 🗓️ Implementation Timeline
-
-| Week | Tasks | Issues |
-|------|-------|--------|
-| **Week 1** (Oct 8-15) | Tests foundation | #97-111 |
-| **Week 2** (Oct 16-22) | Docker + CI/CD | #117-121 |
-| **Week 3** (Oct 23-29) | Production deploy | #142-143 |
-
-**Status**: Week 2-3 tasks are planned but not yet implemented. This guide will be updated as implementation progresses.
-
----
-
-**Last Updated**: October 21, 2024  
-**Next Update**: October 22, 2024 (after Docker implementation)  
-**Defense Date**: October 29, 2024
-
+**Last Updated**: October 31, 2025  
+**Version**: 1.0.0
