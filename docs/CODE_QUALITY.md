@@ -366,3 +366,18 @@ hatch run audit
 
 Hatch uses the configuration in `pyproject.toml` to create an isolated environment with all required tools and dependencies.
 
+
+## Python Quality Gates
+
+All code under `python_app/` must pass the following checks locally and in CI:
+
+- Format: `black python_app`
+- Lint: `ruff check python_app` and `pylint python_app`
+- Types: `mypy python_app`
+- Security: `bandit -q -r python_app -lll`
+
+Notes:
+- Subprocess calls must use `shell=False` and fixed arg lists. Add `# nosec B603/B607` with rationale when needed.
+- Internal HTTP requests to `geneweb` are permitted with timeouts; tag with `# nosec B310` and a short reason.
+- Avoid bare `except/pass`; handle or return a safe fallback.
+

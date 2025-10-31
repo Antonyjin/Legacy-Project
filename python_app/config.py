@@ -31,7 +31,10 @@ class Config:
     GW_DIR = GENEWEB_DIR / "gw"
 
     # OCaml gwd configuration (when BACKEND=ocaml or for bridge calls)
+    OCAML_GWD_HOST = os.getenv("OCAML_GWD_HOST", "127.0.0.1")
     OCAML_GWD_PORT = int(os.getenv("OCAML_GWD_PORT", "2317"))
+    OCAML_GWSETUP_PORT = int(os.getenv("OCAML_GWSETUP_PORT", "2316"))
+    OCAML_REMOTE = os.getenv("OCAML_REMOTE", "false").lower() == "true"
     OCAML_GWD_PATH = GW_DIR / "gwd"
     OCAML_GWB2GED_PATH = GW_DIR / "gwb2ged"
     OCAML_GED2GWB_PATH = GW_DIR / "ged2gwb"
@@ -61,15 +64,14 @@ class Config:
         if cls.BACKEND not in [Backend.OCAML, Backend.PYTHON]:
             raise ValueError(f"Invalid BACKEND: {cls.BACKEND}. Must be 'ocaml' or 'python'")
 
-        if cls.is_ocaml_backend():
+        if cls.is_ocaml_backend() and not cls.OCAML_REMOTE:
             if not cls.OCAML_GWD_PATH.exists():
                 raise FileNotFoundError(
                     f"OCaml gwd not found at {cls.OCAML_GWD_PATH}. "
                     "Set GENEWEB_DIR to point to GeneWeb directory."
                 )
-
-        if not cls.BASES_DIR.exists():
-            raise FileNotFoundError(
-                f"Bases directory not found at {cls.BASES_DIR}. "
-                "Set GENEWEB_DIR to point to GeneWeb directory."
-            )
+            if not cls.BASES_DIR.exists():
+                raise FileNotFoundError(
+                    f"Bases directory not found at {cls.BASES_DIR}. "
+                    "Set GENEWEB_DIR to point to GeneWeb directory."
+                )

@@ -48,3 +48,19 @@ If a legitimate change affects output (template update, intentional wording chan
 1) Update code/templates.
 2) Recreate goldens locally: `run_golden.sh create`.
 3) Review diffs, commit the new references, and mention in PR description.
+
+## Stabilizing calendar goldens
+
+GeneWeb calendar pages are time-dependent by default. To keep golden outputs stable in CI:
+
+- We pin calendar routes to a fixed date using the proper parameter names:
+  - Gregorian: `?m=CAL&yg=YYYY&mg=MM&dg=DD`
+- The golden runner (`scripts/golden/run_golden.sh`) uses:
+  - `calendar::?m=CAL&yg=2025&mg=10&dg=30`
+  - `calendar_fixed::?m=CAL&yg=1999&mg=12&dg=15`
+
+This avoids diffs caused by the current day of week, lunar phase, or Julian day.
+
+### Adding new routes
+- Prefer fixed parameters for any time-dependent page.
+- Keep query strings exactly as served by GeneWeb (semicolon usage is allowed elsewhere, but calendar routes use `&`).

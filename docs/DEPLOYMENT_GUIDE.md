@@ -333,3 +333,15 @@ Planned items do not yet have a committed timeline. This guide will be updated a
 
 **Last Updated**: October 31, 2025
 
+
+## GeneWeb + Proxy deployment notes
+
+- Ports (default in docker-compose):
+  - gwd: host 23179 → container 2317
+  - gwsetup: host 23176 → container 2316
+  - Python proxy: host 23182 → container 23182
+- The `etc` directory is no longer mounted; the container writes `etc/gwsetup_only` on startup.
+  - `gwsetup_only` contains `0.0.0.0` to allow admin access from the host during development.
+  - In production, replace with a specific host IP if needed.
+- Access the admin UI via the proxy at `/admin` (e.g., `http://localhost:23182/admin`).
+

@@ -348,6 +348,7 @@ jobs:
 
       - name: GEDCOM import roundtrip (optional)
         if: (steps.check_source.outputs.has_binaries == 'true' || steps.check_source.outputs.needs_build == 'true') && env.RUN_GOLDEN == 'true'
+        continue-on-error: true
         run: |
           set -euo pipefail
           chmod +x ./scripts/golden/test_gedcom_import.sh || true

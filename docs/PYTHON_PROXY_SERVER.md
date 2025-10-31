@@ -261,3 +261,41 @@ pkill -f "python.*python_app"
 **Status**: ✅ Infrastructure complete, routes proxy to OCaml  
 **Next Phase**: Implement Python database access and template rendering
 
+# Python Proxy Server – Operational Notes
+
+## Admin passthrough (/admin)
+- Requests to `/admin[/...]` are proxied to GeneWeb gwsetup (port 2316 inside the network).
+- The proxy rewrites links in returned HTML so navigation stays under `/admin`:
+  - `href`, `action`, and `src` attributes are rewritten to add `/admin` when needed.
+  - Absolute URLs like `http://geneweb:2316/gwsetup?...` become `/admin/gwsetup?...`.
+
+## Semicolon query parameters
+- GeneWeb uses semicolons (`;`) as separators (e.g., `lang=en;v=list.htm`).
+- The proxy preserves the original `request.query_string` to avoid converting `;` to `&`.
+
+## Redirect rewriting
+- `Location` headers from gwsetup/gwd are rewritten so redirects go through the proxy:
+  - Backend URLs like `http://geneweb:2317/test?...` become `/test?...` (relative).
+  - Admin URLs like `http://geneweb:2316/gwsetup?...` become `/admin/gwsetup?...`.
+
+## POST and file uploads
+- The proxy forwards form-encoded POST bodies and file uploads to gwsetup.
+- For GET, the query string is appended to the backend URL verbatim.
+
+## Security and hardening
+- All HTTP requests are internal (container network/localhost) and have timeouts.
+- Subprocess calls use fixed argument lists with `shell=False`.
+- Bandit suppressions are scoped and documented:
+  - `# nosec B603/B607` for safe subprocess usage (no shell, fixed args).
+  - `# nosec B310` for internal HTTP to GeneWeb.
+- Avoids bare `except/pass`; failures fall back to returning original content.
+
+## Ports and targets
+- gwd (frontend) default test port: 23179 (mapped from 2317)
+- gwsetup (admin) default test port: 23176 (mapped from 2316)
+- Proxy listens on 23182 (Flask)
+
+## Known limitations
+- HTML rewriting is best-effort and targeted to `href`, `action`, and `src`.
+- If upstream changes markup significantly, additional rewrite rules may be needed.
+

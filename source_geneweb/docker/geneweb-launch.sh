@@ -43,6 +43,11 @@ init() {
 		set_db_config "$(echo "${setting#GENEWEB_CONFIG_}" | cut -f1 -d=)" "$(echo "${setting#GENEWEB_CONFIG_}" | cut -f2 -d=)"
 	done
 
+	# Configure gwsetup allowlist - allow access from any IP by default
+	mkdir -p ${GENEWEB_HOME}/etc
+	echo "0.0.0.0" > ${GENEWEB_HOME}/etc/gwsetup_only
+	gwlaunch_log "-- Configured gwsetup to allow access from any IP (0.0.0.0)"
+
 	gwlaunch_log "Setting correct ownership of geneweb data."
 	sudo chown -R geneweb:geneweb ${GENEWEB_HOME}/share/data
 	sudo chown -R geneweb:geneweb ${GENEWEB_HOME}/etc
@@ -54,12 +59,8 @@ init() {
 start() {
 	cd ${GENEWEB_HOME}/share/data || exit 1
 
-	gwlaunch_log "Starting gwsetup."
-	${GENEWEB_HOME}/share/dist/gw/gwsetup \
-	-daemon \
-	-gd ${GENEWEB_HOME}/share/dist/gw \
-	-only etc/gwsetup_only \
-	>>${GENEWEB_HOME}/log/gwsetup.log 2>&1
+    gwlaunch_log "Starting gwsetup."
+    ${GENEWEB_HOME}/share/dist/gw/gwsetup -daemon -gd ${GENEWEB_HOME}/share/dist/gw -only ${GENEWEB_HOME}/etc/gwsetup_only >> ${GENEWEB_HOME}/log/gwsetup.log 2>&1
 	gwlaunch_log "-- Started gwsetup!"
 
 	GWD_AUTH_FILE=${GWD_AUTH_FILE:=${GENEWEB_HOME}/etc/gwd_passwd}
@@ -83,8 +84,8 @@ start() {
 
 	gwlaunch_log "Launch complete! -------------------------------------------------------"
 
-	tail -f ${GENEWEB_HOME}/log/gwsetup.log | sed "s/^/$(date +%Y-%m-%d_%H:%M:%S) gwsetup: /" & \
-	tail -f ${GENEWEB_HOME}/log/gwd.log | sed "s/^/$(date +%Y-%m-%d_%H:%M:%S) gwd: /"
+	sudo tail -f ${GENEWEB_HOME}/log/gwsetup.log | sed "s/^/$(date +%Y-%m-%d_%H:%M:%S) gwsetup: /" & \
+	sudo tail -f ${GENEWEB_HOME}/log/gwd.log | sed "s/^/$(date +%Y-%m-%d_%H:%M:%S) gwd: /"
 
 }
 

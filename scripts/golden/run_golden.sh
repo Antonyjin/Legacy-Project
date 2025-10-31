@@ -93,7 +93,8 @@ home::
 home_fr::?lang=fr
 person_charles::?p=Charles&n=Windsor
 family_charles::?m=F&p=charles&n=windsor
-calendar::?m=CAL
+# Use a fixed date to avoid volatility in CI (Gregorian year-month-day)
+calendar::?m=CAL&yg=2025&mg=10&dg=30
 firstnames::?m=P
 surnames::?m=N
 statistics::?m=STAT
@@ -103,7 +104,7 @@ ancestors_charles::?m=A&p=Charles&n=Windsor
 search_zero::?m=S&v=zzzzzz
 firstnames_c::?m=P&v=c
 surnames_w::?m=N&v=w
-calendar_fixed::?m=CAL&y=1999&m=12
+calendar_fixed::?m=CAL&yg=1999&mg=12&dg=15
 "
 # Note: Relationship page (?m=C or ?m=REL) requires Sosa reference configuration
 # See docs/Issues/ISSUE_85_SKIPPED.md for details

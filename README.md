@@ -98,7 +98,7 @@ cd GeneWeb
 ```
 
 **Access application:**
-- 🌐 **Main app**: http://localhost:2317/test  
+- 🌐 **Main app**: http://localhost:2317/test
 - ⚙️ **Admin panel**: http://localhost:2316
 - 📄 **Landing page**: Open `GeneWeb/START.htm` in browser
 
@@ -570,4 +570,20 @@ BACKEND=python python -m python_app.app
 ```
 
 **Need help?** Start with the [Wiki Home](https://github.com/Antonyjin/Legacy-Project/wiki), check [CI Workflow Guide](docs/CI_WORKFLOW_GUIDE.md), or ask in Issues! 🚀
+
+---
+
+## 📚 Additional Documentation
+
+### Deployment & Operations
+- **[Deployment Guide](docs/DEPLOYMENT_GUIDE.md)** - Complete guide for local, Docker, and production deployment
+- **[CI/CD Guide](docs/CI_CD_GUIDE.md)** - How the CI/CD pipeline works and how to debug issues
+
+### Architecture & Technical Decisions
+The following architectural decision records document all major decisions made during the project:
+
+- **[ADR-004: Migration Strategy](docs/adr/ADR-004-migration-strategy.md)** - Phased, test-driven approach with black-box testing
+- **[ADR-005: Testing Approach](docs/adr/ADR-005-testing-approach.md)** - Four-tier testing strategy (unit, integration, golden, smoke)
+- **[ADR-006: Deployment Platform](docs/adr/ADR-006-deployment-platform.md)** - Docker on VPS with docker-compose
+- **[ADR-007: CI/CD Pipeline](docs/adr/ADR-007-cicd-pipeline.md)** - GitHub Actions-based automation
 
