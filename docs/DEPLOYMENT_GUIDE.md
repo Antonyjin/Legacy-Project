@@ -341,3 +341,15 @@ docker-compose run --entrypoint /bin/bash geneweb
 **Next Update**: October 22, 2024 (after Docker implementation)  
 **Defense Date**: October 29, 2024
 
+
+## GeneWeb + Proxy deployment notes
+
+- Ports (default in docker-compose):
+  - gwd: host 23179 → container 2317
+  - gwsetup: host 23176 → container 2316
+  - Python proxy: host 23182 → container 23182
+- The `etc` directory is no longer mounted; the container writes `etc/gwsetup_only` on startup.
+  - `gwsetup_only` contains `0.0.0.0` to allow admin access from the host during development.
+  - In production, replace with a specific host IP if needed.
+- Access the admin UI via the proxy at `/admin` (e.g., `http://localhost:23182/admin`).
+

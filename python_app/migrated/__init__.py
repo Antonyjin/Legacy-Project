@@ -5,15 +5,8 @@ This module imports all migrated Python utility functions.
 When BACKEND=python, these functions are used instead of OCaml equivalents.
 """
 
-# Import all migrated utilities
-import sys
-from pathlib import Path
-
-# Add tests/python to path to import utils
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "tests" / "python"))
-
-# Import utility modules
-from utils import (
+# Import all migrated utilities from runtime utils package
+from python_app.utils import (
     FORBIDDEN_CHAR, LOCALE_SEPARATORS, Calendar, Date, Dgreg, Dmy, Dtext,
     NotComparable, Precision, arabian_of_roman, compare_date, compare_dmy,
     compare_dmy_opt, contains_forbidden_char, escape_html, extract_all_params,

@@ -4,7 +4,7 @@
 2 NAME gwb2ged
 2 CORP INRIA
 3 ADDR http://www.geneweb.org
-2 DATA test_import.gwb
+2 DATA <base>.gwb
 1 DATE <normalized>
 2 TIME <normalized>
 1 FILE export2.ged

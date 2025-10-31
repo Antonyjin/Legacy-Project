@@ -45,22 +45,28 @@ class OCamlBridge:
             ["pkill", "-f", f"gwd.*-p {port}"],
             check=False,
             capture_output=True,
+            shell=False,
         )
         time.sleep(0.5)
 
         # Start gwd
         cmd = [
             str(self.config.OCAML_GWD_PATH),
-            "-hd", str(self.config.GW_DIR),
-            "-bd", str(self.config.BASES_DIR),
-            "-p", str(port),
-            "-lang", self.config.DEFAULT_LANG,
+            "-hd",
+            str(self.config.GW_DIR),
+            "-bd",
+            str(self.config.BASES_DIR),
+            "-p",
+            str(port),
+            "-lang",
+            self.config.DEFAULT_LANG,
         ]
 
         process = subprocess.Popen(  # nosec B603
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
+            shell=False,
         )
 
         # Wait a bit for daemonization
@@ -87,6 +93,7 @@ class OCamlBridge:
             ["pkill", "-f", f"gwd.*-p {port}"],
             check=False,
             capture_output=True,
+            shell=False,
         )
 
         self.gwd_process = None
@@ -106,7 +113,7 @@ class OCamlBridge:
         url = f"http://localhost:{port}/{self.config.BASE_NAME}"
 
         try:
-            response = requests.get(url, timeout=1.0)
+            response = requests.get(url, timeout=1.0)  # nosec B310 - internal HTTP to geneweb
             return response.status_code == 200
         except requests.RequestException:
             return False
@@ -124,7 +131,8 @@ class OCamlBridge:
         """
         cmd = [
             str(self.config.OCAML_GWB2GED_PATH),
-            "-o", str(output_path),
+            "-o",
+            str(output_path),
             str(self.config.BASES_DIR / f"{base_name}.gwb"),
         ]
 
@@ -133,6 +141,7 @@ class OCamlBridge:
             capture_output=True,
             text=True,
             check=True,
+            shell=False,
         )
 
     def import_gedcom(self, gedcom_path: Path, base_name: str) -> None:
@@ -148,7 +157,8 @@ class OCamlBridge:
         """
         cmd = [
             str(self.config.OCAML_GED2GWB_PATH),
-            "-o", str(self.config.BASES_DIR / f"{base_name}.gwb"),
+            "-o",
+            str(self.config.BASES_DIR / f"{base_name}.gwb"),
             str(gedcom_path),
         ]
 
@@ -157,9 +167,12 @@ class OCamlBridge:
             capture_output=True,
             text=True,
             check=True,
+            shell=False,
         )
 
-    def proxy_request(self, path: str, method: str = "GET", params: Optional[Dict[str, Any]] = None) -> str:
+    def proxy_request(
+        self, path: str, method: str = "GET", params: Optional[Dict[str, Any]] = None
+    ) -> str:
         """
         Proxy HTTP request to OCaml gwd.
 
@@ -178,13 +191,100 @@ class OCamlBridge:
             path = "/" + path
 
         # Build URL
-        url = f"http://localhost:{self.config.OCAML_GWD_PORT}{path}"
+        url = f"http://{self.config.OCAML_GWD_HOST}:{self.config.OCAML_GWD_PORT}{path}"
 
         if params:
             import urllib.parse
+
             url += "?" + urllib.parse.urlencode(params)
 
-        response = requests.request(method, url, timeout=10.0)
+        response = requests.request(method, url, timeout=10.0)  # nosec B310 - internal HTTP to geneweb
         response.raise_for_status()
 
         return response.text
+
+    def proxy_request_raw(
+        self, path: str, method: str = "GET", params: Optional[Dict[str, Any]] = None
+    ) -> tuple[bytes, str]:
+        """
+        Proxy HTTP request to OCaml gwd and return raw bytes and content type.
+
+        Used for static assets (css/js/images/webfonts) so the proxy can
+        serve styled pages while still routing through Flask.
+        """
+        if not path.startswith("/"):
+            path = "/" + path
+
+        url = f"http://{self.config.OCAML_GWD_HOST}:{self.config.OCAML_GWD_PORT}{path}"
+        if params:
+            import urllib.parse
+
+            url += "?" + urllib.parse.urlencode(params)
+
+        r = requests.request(method, url, timeout=10.0)  # nosec B310 - internal HTTP to geneweb
+        r.raise_for_status()
+        content_type = r.headers.get("Content-Type", "application/octet-stream")
+        return r.content, content_type
+
+    def proxy_admin_raw(
+        self, path: str, method: str = "GET", params: Optional[Dict[str, Any]] = None
+    ) -> tuple[bytes, str]:
+        """Proxy to gwsetup (admin) for demo use."""
+        body, ctype, _, _ = self.proxy_admin_raw_full(path, method, params)
+        return body, ctype
+
+    def proxy_admin_raw_full(  # pylint: disable=too-many-arguments,too-many-positional-arguments,too-many-locals
+        self,
+        path: str,
+        method: str = "GET",
+        params: Optional[Dict[str, Any]] = None,
+        data: Optional[Dict[str, Any]] = None,
+        files: Optional[Dict] = None,
+    ) -> tuple[bytes, str, int, Dict[str, str]]:
+        """
+        Proxy to gwsetup (admin) with full response details.
+
+        Returns:
+            tuple: (body, content_type, status_code, headers)
+        """
+        if not path.startswith("/"):
+            path = "/" + path
+
+        url = f"http://{self.config.OCAML_GWD_HOST}:{self.config.OCAML_GWSETUP_PORT}{path}"
+
+        # Build request kwargs
+        kwargs: Dict[str, Any] = {"timeout": 10.0}
+
+        # Check if path already contains query string
+        has_query_string = "?" in path
+
+        if method == "POST":
+            if data:
+                kwargs["data"] = data
+            if params and not has_query_string:
+                # For POST, add params to URL if data is not provided and no query string exists
+                if not data:
+                    import urllib.parse
+
+                    url += "?" + urllib.parse.urlencode(params)
+                else:
+                    # Merge params into data
+                    if isinstance(data, dict):
+                        data.update(params)
+            if files:
+                kwargs["files"] = files
+        else:
+            # For GET, add params to URL only if path doesn't already have query string
+            if params and not has_query_string:
+                import urllib.parse
+
+                url += "?" + urllib.parse.urlencode(params)
+
+        r = requests.request(method, url, **kwargs)  # nosec B310 - internal HTTP to geneweb
+        r.raise_for_status()
+
+        content_type = r.headers.get("Content-Type", "text/html; charset=utf-8")
+        status_code = r.status_code
+        headers = dict(r.headers)
+
+        return r.content, content_type, status_code, headers

@@ -98,7 +98,7 @@ cd GeneWeb
 ```
 
 **Access application:**
-- 🌐 **Main app**: http://localhost:2317/test  
+- 🌐 **Main app**: http://localhost:2317/test
 - ⚙️ **Admin panel**: http://localhost:2316
 - 📄 **Landing page**: Open `GeneWeb/START.htm` in browser
 

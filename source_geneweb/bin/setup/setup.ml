@@ -340,6 +340,8 @@ let referer conf = Mutil.extract_param "referer: " '\r' conf.request
 let only_file_name =
   lazy
     (if !only_file = "" then Filename.concat !setup_dir "only.txt"
+     else if Sys.unix && String.length !only_file > 0 && !only_file.[0] = '/' then !only_file
+     else if not Sys.unix && String.length !only_file > 1 && !only_file.[1] = ':' then !only_file
      else Filename.concat !setup_dir !only_file)
 
 (* this set of macros are used within translations, hence the repeat of some *)
@@ -1763,9 +1765,12 @@ let only_addr () =
   let fname = Lazy.force only_file_name in
   match try Some (open_in fname) with Sys_error _ -> None with
   | Some ic ->
-      let v = try input_line ic with End_of_file -> local_addr in
+      let v = try 
+        let line = input_line ic in
+        String.trim line
+      with End_of_file -> local_addr in
       close_in ic;
-      v
+      if v = "" then local_addr else v
   | None -> local_addr
 
 let lindex s c =
@@ -1847,7 +1852,8 @@ let setup (addr, req) comm (env_str : Adef.encoded_string) =
   in
   let saddr = string_of_sockaddr addr in
   let s = only_addr () in
-  if s <> saddr then (
+  (* Allow 0.0.0.0 to mean "allow all addresses" *)
+  if s <> "0.0.0.0" && s <> saddr then (
     let conf = { conf with env = [ ("anon", saddr); ("o", s) ] } in
     Printf.eprintf "Invalid request from \"%s\"; only \"%s\" accepted.\n" saddr
       s;
