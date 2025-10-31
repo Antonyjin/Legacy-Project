@@ -10,7 +10,7 @@ def name_lower(name: str) -> str:
     if not name:
         return ""
 
-    result = []
+    result: list[str] = []
     special = False
 
     for char in name:
