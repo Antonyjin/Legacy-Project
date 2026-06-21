@@ -7,8 +7,8 @@ services:
       dockerfile: docker/Dockerfile
     container_name: geneweb
     ports:
-      - "23179:2317"   # gwd
-      - "23176:2316"   # gwsetup (optional)
+      - "127.0.0.1:23179:2317"   # gwd (loopback-only, for local dev/tests)
+      - "127.0.0.1:23176:2316"   # gwsetup (loopback-only, optional)
     # environment:
     #   GWSETUP_IP: "0.0.0.0"   # allow access from host browser to gwsetup
     volumes:

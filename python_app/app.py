@@ -349,14 +349,31 @@ def admin_passthrough(subpath: str = ""):  # pylint: disable=too-many-locals
         return Response(str(exc), status=502)
 
 
+@app.after_request
+def add_security_headers(response):
+    """Add security headers to all responses."""
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; style-src 'self' 'unsafe-inline'; "
+        "script-src 'self' 'unsafe-inline'; img-src 'self' data:;"
+    )
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    return response
+
+
 @app.route("/health")
 def health():
     """Health check endpoint."""
+    if Config.OCAML_REMOTE:
+        gwd_available = f"remote:{Config.OCAML_GWD_HOST}:{Config.OCAML_GWD_PORT}"
+    else:
+        gwd_available = str(Config.OCAML_GWD_PATH.exists())
     return {
         "status": "ok",
         "backend": Config.BACKEND.value,
         "base_name": Config.BASE_NAME,
-        "ocaml_gwd_available": Config.OCAML_GWD_PATH.exists(),
+        "ocaml_gwd_available": gwd_available,
     }
 
 
@@ -388,7 +405,10 @@ def main():
     print(f"Backend: {Config.BACKEND.value}")
     print(f"Base: {Config.BASE_NAME}")
     print(f"Listening on: http://{Config.FLASK_HOST}:{Config.FLASK_PORT}")
-    print(f"OCaml gwd available: {Config.OCAML_GWD_PATH.exists()}")
+    if Config.OCAML_REMOTE:
+        print(f"OCaml gwd available: remote at {Config.OCAML_GWD_HOST}:{Config.OCAML_GWD_PORT}")
+    else:
+        print(f"OCaml gwd available: {Config.OCAML_GWD_PATH.exists()}")
 
     if Config.is_python_backend():
         print("⚠️  Python backend enabled - using migrated functions")

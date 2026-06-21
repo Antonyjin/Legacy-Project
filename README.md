@@ -62,6 +62,28 @@ pkill -f gwd
 deactivate
 ```
 
+##### Proxy Quick Start (Local usage)
+
+Run OCaml gwd on 2317 and the Python proxy on 2318.
+
+```bash
+# Backend: OCaml gwd (2317)
+cd GeneWeb
+./gw/gwd -hd ./gw -bd ./bases -p 2317 -lang en &
+cd ..
+
+# Frontend: Python proxy (2318)
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+BACKEND=ocaml FLASK_PORT=2318 python -m python_app.app &
+
+# Access via proxy
+open http://localhost:2318/test
+```
+
+See `docs/DEPLOYMENT_GUIDE.md` for systemd and docker-compose examples.
+
 **Access test database:**
 - 🌐 **Main app**: http://localhost:23179/test
 - 👤 **Person page**: http://localhost:23179/test?p=Charles&n=Windsor
@@ -558,7 +580,7 @@ BACKEND=python python -m python_app.app
 
 ### Deployment & Operations
 - **[Deployment Guide](docs/DEPLOYMENT_GUIDE.md)** - Complete guide for local, Docker, and production deployment
-- **[CI/CD Guide](docs/CI_CD_GUIDE.md)** - How the CI/CD pipeline works and how to debug issues
+ - **[CI/CD Guide](docs/CI_WORKFLOW_GUIDE.md)** - How the CI/CD pipeline works and how to debug issues
 
 ### Architecture & Technical Decisions
 The following architectural decision records document all major decisions made during the project:
